@@ -10,7 +10,7 @@ npm start
 
 _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, for older npm versions run `npm install -g create-social-network` and then run `create-social-network my-app`)_
 
-Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
+After installation open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
 **Demo**: https://csn-demo.netlify.com/
 
@@ -25,15 +25,18 @@ Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
 ## Requirements and Configuration
 
-App by default uses MongoDB hosted on [mLab](https://mlab.com/) and [Cloudinary](https://cloudinary.com/) CDN for hosting images. We have created demo users for mLab and Cloudinary so you can run app locally without adding Mongo URL and Cloudinary Api Key, however when you start developing your application it is recommended to replace those information with your ones, so everybody has its own Database and CDN.
+App by default uses MongoDB hosted on [mLab](https://mlab.com/) and [Cloudinary](https://cloudinary.com/) CDN for hosting images. We have created demo user for mLab and Cloudinary so you can run app locally without adding Mongo URL and Cloudinary API Key, however when you start developing your application it is recommended to replace those information with your ones, so everybody has its own Database and CDN.
 
-**Replacing Mongo Url**
+### Replacing Mongo Url
+
 Replace `MONGO_URL` value in `api/.env` file with your `mLab` database url or with local one.
 
-**Replacing Cloudinary Api Key**
+### Replacing Cloudinary Api Key
+
 Grab `Cloud name` `API Key` and `API Secret` from Cloudinary dashboard and replace corresponding values inside `api/.env`
 
-**Mail Provider**
+### Mail Provider
+
 For password reset functionality you will need to replace Email Provider values also in `api/.env` file.
 
 ## Creating an App
@@ -89,7 +92,7 @@ cd my-network
 ```
 
 And start the application with `npm start` or `yarn start` that will run the app in development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000/](http://localhost:3000/) to view it in the browser.
 
 The page will automatically reload if you make changes to the code.
 
@@ -98,6 +101,7 @@ The page will automatically reload if you make changes to the code.
 In development mode we are starting `api` and `frontend` servers with one command, but we need to deploy them separately.
 
 [API Deployment](https://github.com/udilia/create-social-network/tree/master/api/README.md)
+
 [Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend/README.md)
 
 ## Credits
