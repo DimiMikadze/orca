@@ -1,0 +1,18 @@
+{
+  "name": "social-network",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:api": "npm start --prefix api",
+    "start:frontend": "npm start --prefix frontend",
+    "start": "concurrently \"npm run start:api\" \"npm run start:frontend\"",
+    "deploy:api": "git subtree push --prefix api heroku master"
+  },
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "devDependencies": {
+    "concurrently": "^4.1.2"
+  }
+}

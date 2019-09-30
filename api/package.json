@@ -1,0 +1,28 @@
+{
+  "name": "social-network-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.4.8",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.15.0",
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.16.4",
+    "graphql-tools": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.0",
+    "nodemailer": "^6.2.1",
+    "uuid": "^3.3.2",
+    "graphql": "^14.2.0",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}

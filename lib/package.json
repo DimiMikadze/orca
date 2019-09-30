@@ -1,0 +1,34 @@
+{
+  "name": "create-social-network",
+  "version": "1.1.4",
+  "description": "CLI for Create Social Network.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udilia/create-social-network.git",
+    "directory": "lib"
+  },
+  "engines": {
+    "node": ">=8.10"
+  },
+  "bugs": {
+    "url": "https://github.com/udilia/create-social-network/issues"
+  },
+  "files": [
+    "index.js",
+    "createSocialNetwork.js",
+    "utils"
+  ],
+  "bin": {
+    "create-social-network": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "cross-spawn": "^6.0.5",
+    "rimraf": "^3.0.0",
+    "validate-npm-package-name": "^3.0.0"
+  }
+}

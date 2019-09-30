@@ -1,0 +1,41 @@
+{
+  "name": "social-network-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.13",
+    "apollo-link-error": "^1.1.12",
+    "apollo-upload-client": "^10.0.0",
+    "graphql-tag": "^2.10.1",
+    "jwt-decode": "^2.2.0",
+    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.5",
+    "react-apollo": "^2.5.3",
+    "react-apollo-hooks": "^0.4.5",
+    "react-dom": "^16.8.5",
+    "react-helmet": "^5.2.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "styled-components": "^4.2.0",
+    "graphql": "^14.2.0",
+    "lodash": "^4.17.11"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
