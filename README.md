@@ -1,44 +1,109 @@
-# The Wall
+# Create Social Network
 
-## API GraphQL
+Create Social Network is a tool for building Social Network applications using React, Node, GraphQL and MongoDB. You can set up local Social Network by running one command.
 
-Create `.env` file with the following content
-
-(replace user, password and SECRET with your custom one)
-
-```
-# API PORT
-API_PORT=4000
-
-# API URL
-API_URL=http://localhost
-
-# CLIENT URL
-CLIENT_URL=http://localhost:3000
-
-# MONGO URL
-MONGO_URL=mongodb://tazokochievi:tazo123@ds155606.mlab.com:55606/the-wall
-
-# SECRET
-SECRET=mskfasjnfakjsnfkjasnfjkasnfjkansjk
-
-# CLOUDINARY
-CLOUDINARY_CLOUD_NAME=drwkapa8p
-CLOUDINARY_API_KEY=292887744273742
-CLOUDINARY_SECRET=kUsxrMtHmnO6eBe0JHRRAn_aFp4
+```sh
+npx create-social-network my-network
+cd my-network
+npm start
 ```
 
-npm install dependencies `npm i`
-start server `npm start`
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, for older npm versions run `npm install -g create-social-network` and then run `create-social-network my-app`)_
 
-## Client React App
+Then open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
-Create `.env` file with the following content
+**Demo**: https://csn-demo.netlify.com/
+
+## Features
+
+- **News Feed** Fresh posts from people you are following.
+- **Explore** New Posts and People.
+- **Follow** a particular user and get notified for their activity.
+- **Personalize Profile** With profile/cover photo and personal posts.
+- **Notifications** Get notified when someone follows you or likes/comments on your post.
+- **Authentication & authorization** with Password reset functionality.
+
+## Requirements and Configuration
+
+App by default uses MongoDB hosted on [mLab](https://mlab.com/) and [Cloudinary](https://cloudinary.com/) CDN for hosting images. We have created demo users for mLab and Cloudinary so you can run app locally without adding Mongo URL and Cloudinary Api Key, however when you start developing your application it is recommended to replace those information with your ones, so everybody has its own Database and CDN.
+
+**Replacing Mongo Url**
+Replace `MONGO_URL` value in `api/.env` file with your `mLab` database url or with local one.
+
+**Replacing Cloudinary Api Key**
+Grab `Cloud name` `API Key` and `API Secret` from Cloudinary dashboard and replace corresponding values inside `api/.env`
+
+**Mail Provider**
+For password reset functionality you will need to replace Email Provider values also in `api/.env` file.
+
+## Creating an App
+
+**You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local development machine**
+
+To create a new app, you may choose one of the following methods:
+
+### npx
+
+```sh
+npx create-social-network my-network
+```
+
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, for older npm versions run `npm install -g create-social-network` and then run `create-social-network my-app`)_
+
+### npm
+
+```sh
+npm init social-network my-network
+```
+
+_`npm init <initializer>` is available in npm 6+_
+
+### Yarn
+
+```sh
+yarn create social-network my-network
+```
+
+_`yarn create` is available in Yarn 0.25+_
+
+It will create a directory called `my-network` inside the current folder.
+Inside that directory, it will generate the initial project structure and install dependencies.
 
 ```
-# API URL
-REACT_APP_API_URL=http://localhost:4000/graphql
+my-network
+├── api
+|── frontend
+├── node_modules
+├── .gitignore
+├── netlify.toml
+├── package.json
+├── README.md
 ```
 
-npm install dependencies `npm i`
-start server `npm start`
+The app is organized as [Monorepo](https://en.wikipedia.org/wiki/Monorepo) using [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/)
+
+Once the installation is done, you can open your project folder:
+
+```sh
+cd my-network
+```
+
+And start the application with `npm start` or `yarn start` that will run the app in development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will automatically reload if you make changes to the code.
+
+## Deployment
+
+In development mode we are starting `api` and `frontend` servers with one command, but we need to deploy them separately.
+
+[API Deployment](https://github.com/udilia/create-social-network/tree/master/api/README.md)
+[Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend/README.md)
+
+## Credits
+
+Many ideas are taken from [Create React App](https://github.com/facebook/create-react-app) project.
+
+## License
+
+[MIT License](https://github.com/udilia/create-social-network/blob/master/LICENSE.md) Copyright 2019 [udilia](https://udilia.com/)

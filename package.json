@@ -12,7 +12,18 @@
     "api",
     "frontend"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udilia/create-social-network.git"
+  },
+  "bugs": {
+    "url": "https://github.com/udilia/create-social-network/issues"
+  },
+  "engines": {
+    "node": ">=8.10"
+  },
   "devDependencies": {
     "concurrently": "^4.1.2"
-  }
+  },
+  "license": "MIT"
 }
