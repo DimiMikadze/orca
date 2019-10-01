@@ -12,6 +12,10 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 
 After installation open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
+<p align='center'>
+<img src='https://res.cloudinary.com/dkkf9iqnd/image/upload/v1569913428/screencast_ab3gmw.gif' width='600' alt='npm start'>
+</p>
+
 **Demo**: https://csn-demo.netlify.com/
 
 ## Features
@@ -27,13 +31,13 @@ After installation open [http://localhost:3000/](http://localhost:3000/) to see 
 
 App by default uses MongoDB hosted on [mLab](https://mlab.com/) and [Cloudinary](https://cloudinary.com/) CDN for hosting images. We have created demo user for mLab and Cloudinary so you can run app locally without adding Mongo URL and Cloudinary API Key, however when you start developing your application it is recommended to replace those information with your ones, so everybody has its own Database and CDN.
 
-### Replacing Mongo Url
+### Replacing Mongo URL
 
 Replace `MONGO_URL` value in `api/.env` file with your `mLab` database url or with local one.
 
-### Replacing Cloudinary Api Key
+### Replacing Cloudinary API Key
 
-Grab `Cloud name` `API Key` and `API Secret` from Cloudinary dashboard and replace corresponding values inside `api/.env`
+Grab `Cloud name` `API Key` and `API Secret` from Cloudinary dashboard and replace corresponding values inside `api/.env` file.
 
 ### Mail Provider
 
@@ -100,14 +104,14 @@ The page will automatically reload if you make changes to the code.
 
 In development mode we are starting `api` and `frontend` servers with one command, but we need to deploy them separately.
 
-[API Deployment](https://github.com/udilia/create-social-network/tree/master/api/README.md)
+[API Deployment](https://github.com/udilia/create-social-network/tree/master/api#api-deployment-to-heroku)
 
-[Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend/README.md)
+[Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend#frontend-deployment-to-netlify)
 
 ## Credits
 
-Many ideas are taken from [Create React App](https://github.com/facebook/create-react-app) project.
+Many ideas for CLI tool and Readme file are taken from [Create React App](https://github.com/facebook/create-react-app) project.
 
 ## License
 
-[MIT License](https://github.com/udilia/create-social-network/blob/master/LICENSE.md) Copyright 2019 [udilia](https://udilia.com/)
+[MIT License](https://github.com/udilia/create-social-network/blob/master/LICENSE.md) Copyright (c) 2019 [udilia](https://udilia.com/)
