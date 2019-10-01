@@ -79,7 +79,7 @@ Inside that directory, it will generate the initial project structure and instal
 ```
 my-network
 ├── api
-|── frontend
+├── frontend
 ├── node_modules
 ├── .gitignore
 ├── netlify.toml
