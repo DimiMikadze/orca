@@ -108,6 +108,10 @@ In development mode we are starting `api` and `frontend` servers with one comman
 
 [Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend#frontend-deployment-to-netlify)
 
+## Contributing
+
+We'd love to have your helping hand on create-social-network! See [CONTRIBUTING.md](https://github.com/udilia/create-social-network/blob/master/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+
 ## Credits
 
 Many ideas for CLI tool and Readme file are taken from [Create React App](https://github.com/facebook/create-react-app) project.
