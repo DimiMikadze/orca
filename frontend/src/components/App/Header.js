@@ -17,7 +17,7 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import { useStore } from 'store';
 
 import { HEADER_HEIGHT } from 'constants/Layout';
-import { SiteInfo } from 'constants/SiteInfo';
+import SiteInfo from 'constants/SiteInfo.json';
 
 import * as Routes from 'routes';
 

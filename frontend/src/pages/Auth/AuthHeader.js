@@ -8,7 +8,7 @@ import SignIn from './SignIn';
 
 import * as Routes from 'routes';
 
-import { SiteInfo } from 'constants/SiteInfo';
+import SiteInfo from 'constants/SiteInfo.json';
 
 const Root = styled.div`
   position: fixed;
