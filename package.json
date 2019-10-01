@@ -6,7 +6,8 @@
     "start:api": "npm start --prefix api",
     "start:frontend": "npm start --prefix frontend",
     "start": "concurrently \"npm run start:api\" \"npm run start:frontend\"",
-    "deploy:api": "git subtree push --prefix api heroku master"
+    "deploy:api": "git subtree push --prefix api heroku master",
+    "format": "prettier --trailing-comma es5 --single-quote --write '**/*.{js,md,json}'"
   },
   "workspaces": [
     "api",
@@ -23,7 +24,24 @@
     "node": ">=8.10"
   },
   "devDependencies": {
-    "concurrently": "^4.1.2"
+    "concurrently": "^4.1.2",
+    "eslint": "^6.5.1",
+    "husky": "^3.0.7",
+    "lint-staged": "^9.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,md,css,html}": [
+      "prettier --trailing-comma es5 --single-quote --write",
+      "git add"
+    ],
+    "yarn.lock": [
+      "git rm --cached"
+    ]
   },
   "license": "MIT"
 }
