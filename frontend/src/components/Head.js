@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 
+import { SiteInfo } from 'constants/SiteInfo';
+
 /**
  * Component that manages changes to document head
  * currently we are editing only title, but you can add meta description, image ...
@@ -17,7 +19,7 @@ Head.propTypes = {
 };
 
 Head.defaultProps = {
-  title: 'Create Social Network',
+  title: SiteInfo.name,
 };
 
 export default Head;

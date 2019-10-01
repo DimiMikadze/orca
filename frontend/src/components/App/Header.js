@@ -17,6 +17,7 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import { useStore } from 'store';
 
 import { HEADER_HEIGHT } from 'constants/Layout';
+import { SiteInfo } from 'constants/SiteInfo';
 
 import * as Routes from 'routes';
 
@@ -181,15 +182,12 @@ const Header = ({ location, toggleSideBar }) => {
   useClickOutside(notificationRef, () => handleNotificationIconClick());
   useClickOutside(dropDownRef, () => handleUserIconClick());
 
-  useEffect(
-    () => {
-      return () => {
-        setIsUserDopDownOpen(false);
-        setIsNotificationOpen(false);
-      };
-    },
-    [location.pathname]
-  );
+  useEffect(() => {
+    return () => {
+      setIsUserDopDownOpen(false);
+      setIsNotificationOpen(false);
+    };
+  }, [location.pathname]);
 
   const handleUserIconClick = () => {
     if (isUserDropDownOpen) {
@@ -221,7 +219,7 @@ const Header = ({ location, toggleSideBar }) => {
             <MenuIcon />
           </Hamburger>
 
-          <Logo to={Routes.HOME}>Create Social Network</Logo>
+          <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
 
           <Spacing left="sm" right="md">
             <Search location={location} />

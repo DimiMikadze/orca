@@ -4,10 +4,11 @@ import styled from 'styled-components';
 
 import { A } from 'components/Text';
 import { Container } from 'components/Layout';
+import SignIn from './SignIn';
 
 import * as Routes from 'routes';
 
-import SignIn from './SignIn';
+import { SiteInfo } from 'constants/SiteInfo';
 
 const Root = styled.div`
   position: fixed;
@@ -60,7 +61,7 @@ const AuthHeader = ({ refetch }) => {
   return (
     <Root>
       <StyledContainer maxWidth="lg">
-        <Logo to={Routes.HOME}>Create Social Network</Logo>
+        <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
 
         <SignInContainer>
           <SignIn refetch={refetch} />

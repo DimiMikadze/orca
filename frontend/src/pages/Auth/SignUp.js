@@ -123,7 +123,7 @@ const SignUp = ({ history, refetch }) => {
       {(signup, { loading, error: apiError }) => {
         return (
           <Root maxWidth="lg">
-            <Head title="Create Social Network" />
+            <Head />
 
             <Welcome>
               <div>
