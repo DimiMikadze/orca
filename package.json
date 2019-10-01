@@ -26,7 +26,8 @@
   "devDependencies": {
     "concurrently": "^4.1.2",
     "husky": "^3.0.7",
-    "lint-staged": "^9.4.1"
+    "lint-staged": "^9.4.1",
+    "prettier": "^1.18.2"
   },
   "husky": {
     "hooks": {
