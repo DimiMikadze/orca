@@ -13,7 +13,7 @@ _([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7
 After installation open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
 <p align='center'>
-<img src='https://res.cloudinary.com/dkkf9iqnd/image/upload/v1569913428/screencast_ab3gmw.gif' width='600' alt='npm start'>
+<img src='https://res.cloudinary.com/dkkf9iqnd/image/upload/v1569913692/screencast_abbvuz.gif' width='600' alt='npm start'>
 </p>
 
 **Demo**: https://csn-demo.netlify.com/
