@@ -1,9 +1,9 @@
-import bcrypt from "bcryptjs";
-import { uploadToCloudinary } from "../utils/cloudinary";
-import { generateToken } from "../utils/generate-token";
-import { sendEmail } from "../utils/email";
+import bcrypt from 'bcryptjs';
+import { uploadToCloudinary } from '../utils/cloudinary';
+import { generateToken } from '../utils/generate-token';
+import { sendEmail } from '../utils/email';
 
-const AUTH_TOKEN_EXPIRY = "1y";
+const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
 
 const Query = {
@@ -14,19 +14,19 @@ const Query = {
     if (!authUser) return null;
 
     const user = await User.findOne({ email: authUser.email })
-      .populate({ path: "posts", options: { sort: { createdAt: "desc" } } })
-      .populate("likes")
-      .populate("followers")
-      .populate("following")
+      .populate({ path: 'posts', options: { sort: { createdAt: 'desc' } } })
+      .populate('likes')
+      .populate('followers')
+      .populate('following')
       .populate({
-        path: "notifications",
+        path: 'notifications',
         populate: [
-          { path: "author" },
-          { path: "follow" },
-          { path: "like", populate: { path: "post" } },
-          { path: "comment", populate: { path: "post" } }
+          { path: 'author' },
+          { path: 'follow' },
+          { path: 'like', populate: { path: 'post' } },
+          { path: 'comment', populate: { path: 'post' } },
         ],
-        match: { seen: false }
+        match: { seen: false },
       });
 
     user.newNotifications = user.notifications;
@@ -41,35 +41,40 @@ const Query = {
   getUser: async (root, { username }, { User }) => {
     const user = await User.findOne({ username })
       .populate({
-        path: "posts",
+        path: 'posts',
         populate: [
           {
-            path: "author",
+            path: 'author',
             populate: [
-              { path: "followers" },
-              { path: "following" },
+              { path: 'followers' },
+              { path: 'following' },
               {
-                path: "notifications",
+                path: 'notifications',
                 populate: [
-                  { path: "author" },
-                  { path: "follow" },
-                  { path: "like" },
-                  { path: "comment" }
-                ]
-              }
-            ]
+                  { path: 'author' },
+                  { path: 'follow' },
+                  { path: 'like' },
+                  { path: 'comment' },
+                ],
+              },
+            ],
           },
-          { path: "comments", populate: { path: "author" } },
-          { path: "likes" }
+          { path: 'comments', populate: { path: 'author' } },
+          { path: 'likes' },
         ],
-        options: { sort: { createdAt: "desc" } }
+        options: { sort: { createdAt: 'desc' } },
       })
-      .populate("likes")
-      .populate("followers")
-      .populate("following")
+      .populate('likes')
+      .populate('followers')
+      .populate('following')
       .populate({
-        path: "notifications",
-        populate: [{ path: "author" }, { path: "follow" }, { path: "like" }, { path: "comment" }]
+        path: 'notifications',
+        populate: [
+          { path: 'author' },
+          { path: 'follow' },
+          { path: 'like' },
+          { path: 'comment' },
+        ],
       });
 
     if (!user) {
@@ -86,36 +91,36 @@ const Query = {
    * @param {int} limit how many posts to limit
    */
   getUserPosts: async (root, { username, skip, limit }, { User, Post }) => {
-    const user = await User.findOne({ username }).select("_id");
+    const user = await User.findOne({ username }).select('_id');
 
     const query = { author: user._id };
     const count = await Post.find(query).countDocuments();
     const posts = await Post.find(query)
       .populate({
-        path: "author",
+        path: 'author',
         populate: [
-          { path: "following" },
-          { path: "followers" },
+          { path: 'following' },
+          { path: 'followers' },
           {
-            path: "notifications",
+            path: 'notifications',
             populate: [
-              { path: "author" },
-              { path: "follow" },
-              { path: "like" },
-              { path: "comment" }
-            ]
-          }
-        ]
+              { path: 'author' },
+              { path: 'follow' },
+              { path: 'like' },
+              { path: 'comment' },
+            ],
+          },
+        ],
       })
-      .populate("likes")
+      .populate('likes')
       .populate({
-        path: "comments",
-        options: { sort: { createdAt: "desc" } },
-        populate: { path: "author" }
+        path: 'comments',
+        options: { sort: { createdAt: 'desc' } },
+        populate: { path: 'author' },
       })
       .skip(skip)
       .limit(limit)
-      .sort({ createdAt: "desc" });
+      .sort({ createdAt: 'desc' });
 
     return { posts, count };
   },
@@ -129,22 +134,31 @@ const Query = {
   getUsers: async (root, { userId, skip, limit }, { User, Follow }) => {
     // Find user ids, that current user follows
     const userFollowing = [];
-    const follow = await Follow.find({ follower: userId }, { _id: 0 }).select("user");
+    const follow = await Follow.find({ follower: userId }, { _id: 0 }).select(
+      'user'
+    );
     follow.map(f => userFollowing.push(f.user));
 
     // Find users that user is not following
-    const query = { $and: [{ _id: { $ne: userId } }, { _id: { $nin: userFollowing } }] };
+    const query = {
+      $and: [{ _id: { $ne: userId } }, { _id: { $nin: userFollowing } }],
+    };
     const count = await User.where(query).countDocuments();
     const users = await User.find(query)
-      .populate("followers")
-      .populate("following")
+      .populate('followers')
+      .populate('following')
       .populate({
-        path: "notifications",
-        populate: [{ path: "author" }, { path: "follow" }, { path: "like" }, { path: "comment" }]
+        path: 'notifications',
+        populate: [
+          { path: 'author' },
+          { path: 'follow' },
+          { path: 'like' },
+          { path: 'comment' },
+        ],
       })
       .skip(skip)
       .limit(limit)
-      .sort({ createdAt: "desc" });
+      .sort({ createdAt: 'desc' });
 
     return { users, count };
   },
@@ -160,7 +174,10 @@ const Query = {
     }
 
     const users = User.find({
-      $or: [{ username: new RegExp(searchQuery, "i") }, { fullName: new RegExp(searchQuery, "i") }]
+      $or: [
+        { username: new RegExp(searchQuery, 'i') },
+        { fullName: new RegExp(searchQuery, 'i') },
+      ],
     }).limit(50);
 
     return users;
@@ -175,7 +192,10 @@ const Query = {
 
     // Find who user follows
     const userFollowing = [];
-    const following = await Follow.find({ follower: userId }, { _id: 0 }).select("user");
+    const following = await Follow.find(
+      { follower: userId },
+      { _id: 0 }
+    ).select('user');
     following.map(f => userFollowing.push(f.user));
     userFollowing.push(userId);
 
@@ -209,14 +229,16 @@ const Query = {
     const user = await User.findOne({
       email,
       passwordResetToken: token,
-      passwordResetTokenExpiry: { $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY }
+      passwordResetTokenExpiry: {
+        $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY,
+      },
     });
     if (!user) {
-      throw new Error("This token is either invalid or expired!");
+      throw new Error('This token is either invalid or expired!');
     }
 
-    return { message: "Success" };
-  }
+    return { message: 'Success' };
+  },
 };
 
 const Mutation = {
@@ -229,19 +251,21 @@ const Mutation = {
   signin: async (root, { input: { emailOrUsername, password } }, { User }) => {
     const user = await User.findOne().or([
       { email: emailOrUsername },
-      { username: emailOrUsername }
+      { username: emailOrUsername },
     ]);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
-      throw new Error("Invalid password");
+      throw new Error('Invalid password');
     }
 
-    return { token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY) };
+    return {
+      token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY),
+    };
   },
   /**
    * Signs up user
@@ -251,51 +275,59 @@ const Mutation = {
    * @param {string} username
    * @param {string} password
    */
-  signup: async (root, { input: { fullName, email, username, password } }, { User }) => {
+  signup: async (
+    root,
+    { input: { fullName, email, username, password } },
+    { User }
+  ) => {
     // Check if user with given email or username already exists
     const user = await User.findOne().or([{ email }, { username }]);
     if (user) {
-      const field = user.email === email ? "email" : "username";
+      const field = user.email === email ? 'email' : 'username';
       throw new Error(`User with given ${field} already exists`);
     }
 
     // Empty field validation
     if (!fullName || !email || !username || !password) {
-      throw new Error("All fields are required");
+      throw new Error('All fields are required');
     }
 
     // fullName validation
     if (fullName.length > 50) {
-      throw new Error("Full name no more than 50 characters");
+      throw new Error('Full name no more than 50 characters');
     }
 
     // Email validation
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailRegex.test(String(email).toLowerCase())) {
-      throw new Error("Enter a valid email address.");
+      throw new Error('Enter a valid email address.');
     }
 
     // Username validation
     const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
     if (!usernameRegex.test(username)) {
-      throw new Error("Usernames can only use letters, numbers, underscores and periods");
+      throw new Error(
+        'Usernames can only use letters, numbers, underscores and periods'
+      );
     } else if (username.length > 20) {
-      throw new Error("Username no more than 50 characters");
+      throw new Error('Username no more than 50 characters');
     }
 
     // Password validation
     if (password.length < 6) {
-      throw new Error("Password min 6 characters");
+      throw new Error('Password min 6 characters');
     }
 
     const newUser = await new User({
       fullName,
       email,
       username,
-      password
+      password,
     }).save();
 
-    return { token: generateToken(newUser, process.env.SECRET, AUTH_TOKEN_EXPIRY) };
+    return {
+      token: generateToken(newUser, process.env.SECRET, AUTH_TOKEN_EXPIRY),
+    };
   },
   /**
    * Requests reset password
@@ -310,7 +342,11 @@ const Mutation = {
     }
 
     // Set password reset token and it's expiry
-    const token = generateToken(user, process.env.SECRET, RESET_PASSWORD_TOKEN_EXPIRY);
+    const token = generateToken(
+      user,
+      process.env.SECRET,
+      RESET_PASSWORD_TOKEN_EXPIRY
+    );
     const tokenExpiry = Date.now() + RESET_PASSWORD_TOKEN_EXPIRY;
     await User.findOneAndUpdate(
       { _id: user.id },
@@ -319,13 +355,21 @@ const Mutation = {
     );
 
     // Email user reset link
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password?email=${email}&token=${token}`;
-    const mailOptions = { to: email, subject: "Password Reset", html: resetLink };
+    const resetLink = `${
+      process.env.FRONTEND_URL
+    }/reset-password?email=${email}&token=${token}`;
+    const mailOptions = {
+      to: email,
+      subject: 'Password Reset',
+      html: resetLink,
+    };
 
     await sendEmail(mailOptions);
 
     // Return success message
-    return { message: `A link to reset your password has been sent to ${email}` };
+    return {
+      message: `A link to reset your password has been sent to ${email}`,
+    };
   },
   /**
    * Resets user password
@@ -334,33 +378,41 @@ const Mutation = {
    * @param {string} token
    * @param {string} password
    */
-  resetPassword: async (root, { input: { email, token, password } }, { User }) => {
+  resetPassword: async (
+    root,
+    { input: { email, token, password } },
+    { User }
+  ) => {
     if (!password) {
-      throw new Error("Enter password and Confirm password.");
+      throw new Error('Enter password and Confirm password.');
     }
 
     if (password.length < 6) {
-      throw new Error("Password min 6 characters");
+      throw new Error('Password min 6 characters');
     }
 
     // Check if user exists and token is valid
     const user = await User.findOne({
       email,
       passwordResetToken: token,
-      passwordResetTokenExpiry: { $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY }
+      passwordResetTokenExpiry: {
+        $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY,
+      },
     });
     if (!user) {
-      throw new Error("This token is either invalid or expired!");
+      throw new Error('This token is either invalid or expired!');
     }
 
     // Update password, reset token and it's expiry
-    user.passwordResetToken = "";
-    user.passwordResetTokenExpiry = "";
+    user.passwordResetToken = '';
+    user.passwordResetTokenExpiry = '';
     user.password = password;
     await user.save();
 
     // Return success message
-    return { token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY) };
+    return {
+      token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY),
+    };
   },
   /**
    * Uploads user Profile or Cover photo
@@ -370,10 +422,14 @@ const Mutation = {
    * @param {string} imagePublicId
    * @param {bool} isCover is Cover or Profile photo
    */
-  uploadUserPhoto: async (root, { input: { id, image, imagePublicId, isCover } }, { User }) => {
+  uploadUserPhoto: async (
+    root,
+    { input: { id, image, imagePublicId, isCover } },
+    { User }
+  ) => {
     const { createReadStream } = await image;
     const stream = createReadStream();
-    const uploadImage = await uploadToCloudinary(stream, "user", imagePublicId);
+    const uploadImage = await uploadToCloudinary(stream, 'user', imagePublicId);
 
     if (uploadImage.secure_url) {
       const fieldsToUpdate = {};
@@ -390,14 +446,14 @@ const Mutation = {
         { ...fieldsToUpdate },
         { new: true }
       )
-        .populate("posts")
-        .populate("likes");
+        .populate('posts')
+        .populate('likes');
 
       return updatedUser;
     }
 
-    throw new Error("Something went wrong while uploading image to Cloudinary");
-  }
+    throw new Error('Something went wrong while uploading image to Cloudinary');
+  },
 };
 
 export default { Query, Mutation };

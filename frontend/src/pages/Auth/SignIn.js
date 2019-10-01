@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { Mutation } from 'react-apollo';
+import styled from 'styled-components';
 
-import { A } from "components/Text";
-import { Spacing } from "components/Layout";
-import { Error } from "components/Text";
-import { InputText, Button } from "components/Form";
+import { A } from 'components/Text';
+import { Spacing } from 'components/Layout';
+import { Error } from 'components/Text';
+import { InputText, Button } from 'components/Form';
 
-import { SIGN_IN } from "graphql/user";
+import { SIGN_IN } from 'graphql/user';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   display: flex;
@@ -40,12 +40,15 @@ const ForgotPassword = styled.div`
  * Sign In page
  */
 const SignIn = ({ history, location, refetch }) => {
-  const [values, setValues] = useState({ emailOrUsername: "", password: "" });
-  const [error, setError] = useState("");
+  const [values, setValues] = useState({ emailOrUsername: '', password: '' });
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    setError("");
-  }, [location.pathname]);
+  useEffect(
+    () => {
+      setError('');
+    },
+    [location.pathname]
+  );
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -56,13 +59,13 @@ const SignIn = ({ history, location, refetch }) => {
     e.preventDefault();
 
     if (!emailOrUsername || !password) {
-      setError("All fields are required");
+      setError('All fields are required');
       return;
     }
 
-    setError("");
+    setError('');
     signin().then(async ({ data }) => {
-      localStorage.setItem("token", data.signin.token);
+      localStorage.setItem('token', data.signin.token);
       await refetch();
       history.push(Routes.HOME);
     });
@@ -93,7 +96,10 @@ const SignIn = ({ history, location, refetch }) => {
   const { emailOrUsername, password } = values;
 
   return (
-    <Mutation mutation={SIGN_IN} variables={{ input: { emailOrUsername, password } }}>
+    <Mutation
+      mutation={SIGN_IN}
+      variables={{ input: { emailOrUsername, password } }}
+    >
       {(signin, { loading, error: apiError }) => (
         <form onSubmit={e => handleSubmit(e, signin)}>
           <Root>
@@ -135,7 +141,7 @@ const SignIn = ({ history, location, refetch }) => {
 
 SignIn.propTypes = {
   history: PropTypes.object.isRequired,
-  refetch: PropTypes.func.isRequired
+  refetch: PropTypes.func.isRequired,
 };
 
 export default withRouter(SignIn);

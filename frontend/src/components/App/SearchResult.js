@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { generatePath } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { generatePath } from 'react-router-dom';
 
-import { Spacing } from "components/Layout";
-import { A } from "components/Text";
-import { UserIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import { A } from 'components/Text';
+import { UserIcon } from 'components/icons';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   width: 100%;
@@ -81,10 +81,17 @@ const SearchResult = ({ users }) => {
   return (
     <Root>
       {users.map(user => (
-        <StyledA key={user.id} to={generatePath(Routes.USER_PROFILE, { username: user.username })}>
+        <StyledA
+          key={user.id}
+          to={generatePath(Routes.USER_PROFILE, { username: user.username })}
+        >
           <Item>
             <ImageContainer>
-              {user.image ? <Image src={user.image} /> : <UserIcon width="34" />}
+              {user.image ? (
+                <Image src={user.image} />
+              ) : (
+                <UserIcon width="34" />
+              )}
             </ImageContainer>
 
             <Spacing left="xs">
@@ -99,7 +106,7 @@ const SearchResult = ({ users }) => {
 };
 
 SearchResult.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired,
 };
 
 export default SearchResult;

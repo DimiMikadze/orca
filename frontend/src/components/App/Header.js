@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
-import { generatePath, withRouter } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+import { generatePath, withRouter } from 'react-router-dom';
 
-import { NotificationIcon, MenuIcon } from "components/icons";
-import { Container, Spacing } from "components/Layout";
-import { A } from "components/Text";
-import { Button } from "components/Form";
-import { UserIcon } from "components/icons";
-import SignOut from "./SignOut";
-import Notification from "./Notification";
-import Search from "./Search";
+import { NotificationIcon, MenuIcon } from 'components/icons';
+import { Container, Spacing } from 'components/Layout';
+import { A } from 'components/Text';
+import { Button } from 'components/Form';
+import { UserIcon } from 'components/icons';
+import SignOut from './SignOut';
+import Notification from './Notification';
+import Search from './Search';
 
-import { useClickOutside } from "hooks/useClickOutside";
+import { useClickOutside } from 'hooks/useClickOutside';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import { HEADER_HEIGHT } from "constants/Layout";
+import { HEADER_HEIGHT } from 'constants/Layout';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled(Container)`
   position: sticky;
@@ -181,12 +181,15 @@ const Header = ({ location, toggleSideBar }) => {
   useClickOutside(notificationRef, () => handleNotificationIconClick());
   useClickOutside(dropDownRef, () => handleUserIconClick());
 
-  useEffect(() => {
-    return () => {
-      setIsUserDopDownOpen(false);
-      setIsNotificationOpen(false);
-    };
-  }, [location.pathname]);
+  useEffect(
+    () => {
+      return () => {
+        setIsUserDopDownOpen(false);
+        setIsNotificationOpen(false);
+      };
+    },
+    [location.pathname]
+  );
 
   const handleUserIconClick = () => {
     if (isUserDropDownOpen) {
@@ -229,7 +232,9 @@ const Header = ({ location, toggleSideBar }) => {
           <Spacing right="md">
             <Button ghost onClick={handleNotificationIconClick}>
               {NewNotificationsData.length > 0 && (
-                <NotificationCount>{NewNotificationsData.length}</NotificationCount>
+                <NotificationCount>
+                  {NewNotificationsData.length}
+                </NotificationCount>
               )}
               <NotificationIcon />
             </Button>
@@ -237,7 +242,11 @@ const Header = ({ location, toggleSideBar }) => {
 
           <Button ghost onClick={handleUserIconClick}>
             <ImageContainer>
-              {auth.user.image ? <Image src={auth.user.image} /> : <UserIcon width={28} />}
+              {auth.user.image ? (
+                <Image src={auth.user.image} />
+              ) : (
+                <UserIcon width={28} />
+              )}
             </ImageContainer>
           </Button>
         </RightSide>
@@ -245,7 +254,9 @@ const Header = ({ location, toggleSideBar }) => {
         {isNotificationOpen && (
           <NotificationWrapper>
             {!newNotifications.length ? (
-              <NoNotification ref={notificationRef}>No new notifications</NoNotification>
+              <NoNotification ref={notificationRef}>
+                No new notifications
+              </NoNotification>
             ) : (
               newNotifications.map(notification => (
                 <Notification
@@ -260,7 +271,11 @@ const Header = ({ location, toggleSideBar }) => {
 
         {isUserDropDownOpen && (
           <DropDown ref={dropDownRef}>
-            <DropDownLink to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })}>
+            <DropDownLink
+              to={generatePath(Routes.USER_PROFILE, {
+                username: auth.user.username,
+              })}
+            >
               My Profile
             </DropDownLink>
 
@@ -276,7 +291,7 @@ const Header = ({ location, toggleSideBar }) => {
 
 Header.propTypes = {
   location: PropTypes.object.isRequired,
-  toggleSideBar: PropTypes.func.isRequired
+  toggleSideBar: PropTypes.func.isRequired,
 };
 
 export default withRouter(Header);

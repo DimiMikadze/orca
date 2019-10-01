@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Mutation } from "react-apollo";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Mutation } from 'react-apollo';
 
-import { LikeIcon } from "components/icons";
-import { Spacing } from "./Layout";
-import { Button } from "./Form";
+import { LikeIcon } from 'components/icons';
+import { Spacing } from './Layout';
+import { Button } from './Form';
 
-import { GET_FOLLOWED_POSTS, GET_POSTS } from "graphql/post";
-import { GET_AUTH_USER } from "graphql/user";
-import { CREATE_LIKE, DELETE_LIKE } from "graphql/like";
+import { GET_FOLLOWED_POSTS, GET_POSTS } from 'graphql/post';
+import { GET_AUTH_USER } from 'graphql/user';
+import { CREATE_LIKE, DELETE_LIKE } from 'graphql/like';
 
-import { NotificationType } from "constants/NotificationType";
+import { NotificationType } from 'constants/NotificationType';
 
-import { useNotifications } from "hooks/useNotifications";
+import { useNotifications } from 'hooks/useNotifications';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 const StyledButton = styled(Button)`
   padding: ${p => p.theme.spacing.xs} 0;
@@ -31,7 +31,9 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
 
   const notification = useNotifications();
 
-  const hasLiked = likes.find(l => l.user === auth.user.id && l.post === postId);
+  const hasLiked = likes.find(
+    l => l.user === auth.user.id && l.post === postId
+  );
 
   const handleButtonClick = async mutate => {
     setLoading(true);
@@ -44,22 +46,22 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
       postId,
       hasDone: hasLiked,
       notificationType: NotificationType.LIKE,
-      notificationTypeId: data.createLike ? data.createLike.id : null
+      notificationTypeId: data.createLike ? data.createLike.id : null,
     });
     setLoading(false);
   };
 
   // Detect which mutation to use
-  const operation = hasLiked ? "delete" : "create";
+  const operation = hasLiked ? 'delete' : 'create';
   const options = {
     create: {
       mutation: CREATE_LIKE,
-      variables: { postId, userId: auth.user.id }
+      variables: { postId, userId: auth.user.id },
     },
     delete: {
       mutation: DELETE_LIKE,
-      variables: { id: hasLiked ? hasLiked.id : null }
-    }
+      variables: { id: hasLiked ? hasLiked.id : null },
+    },
   };
 
   return (
@@ -69,7 +71,7 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
       refetchQueries={() => [
         { query: GET_AUTH_USER },
         { query: GET_POSTS, variables: { authUserId: auth.user.id } },
-        { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } }
+        { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
       ]}
     >
       {mutate => {
@@ -79,9 +81,9 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
             disabled={loading}
             text
             onClick={() => handleButtonClick(mutate)}
-            color={hasLiked && "primary.main"}
+            color={hasLiked && 'primary.main'}
           >
-            <LikeIcon color={hasLiked && "primary.main"} />
+            <LikeIcon color={hasLiked && 'primary.main'} />
             <Spacing inline left="xxs" />
             {withText && <b>Like</b>}
           </StyledButton>
@@ -96,7 +98,7 @@ Like.propTypes = {
   user: PropTypes.object.isRequired,
   likes: PropTypes.array,
   withText: PropTypes.bool,
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
 };
 
 export default Like;

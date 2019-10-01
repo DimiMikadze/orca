@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import theme from "theme";
+import { createGlobalStyle } from 'styled-components';
+import theme from 'theme';
 
 /**
  * Global styles for the application

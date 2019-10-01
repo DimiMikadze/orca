@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Mutation, withApollo } from "react-apollo";
+import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Mutation, withApollo } from 'react-apollo';
 
-import { GET_AUTH_USER, GET_USER } from "graphql/user";
-import { GET_POST, GET_POSTS, GET_FOLLOWED_POSTS } from "graphql/post";
-import { CREATE_COMMENT } from "graphql/comment";
+import { GET_AUTH_USER, GET_USER } from 'graphql/user';
+import { GET_POST, GET_POSTS, GET_FOLLOWED_POSTS } from 'graphql/post';
+import { CREATE_COMMENT } from 'graphql/comment';
 
-import { Textarea, Button } from "./Form";
+import { Textarea, Button } from './Form';
 
-import { NotificationType } from "constants/NotificationType";
+import { NotificationType } from 'constants/NotificationType';
 
-import { useNotifications } from "hooks/useNotifications";
+import { useNotifications } from 'hooks/useNotifications';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 const Form = styled.form`
   display: flex;
@@ -28,18 +28,21 @@ const Form = styled.form`
 const CreateComment = ({ post, focus }) => {
   const [{ auth }] = useStore();
   const notification = useNotifications();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const buttonEl = useRef(null);
   const TextareaEl = useRef(false);
 
-  useEffect(() => {
-    focus && TextareaEl.current.focus();
-  }, [focus]);
+  useEffect(
+    () => {
+      focus && TextareaEl.current.focus();
+    },
+    [focus]
+  );
 
   const handleSubmit = async (e, createComment) => {
     e.preventDefault();
     const { data } = await createComment();
-    setComment("");
+    setComment('');
 
     // Create notification on comment
     if (auth.user.id !== post.author.id) {
@@ -47,7 +50,7 @@ const CreateComment = ({ post, focus }) => {
         user: post.author,
         postId: post.id,
         notificationType: NotificationType.COMMENT,
-        notificationTypeId: data.createComment.id
+        notificationTypeId: data.createComment.id,
       });
     }
   };
@@ -68,7 +71,7 @@ const CreateComment = ({ post, focus }) => {
         { query: GET_USER, variables: { username: auth.user.username } },
         { query: GET_AUTH_USER },
         { query: GET_POSTS, variables: { authUserId: auth.user.id } },
-        { query: GET_POST, variables: { id: post.id } }
+        { query: GET_POST, variables: { id: post.id } },
       ]}
     >
       {(createComment, { loading }) => (
@@ -83,7 +86,7 @@ const CreateComment = ({ post, focus }) => {
 
           <Button
             type="submit"
-            color={comment ? "primary.main" : "grey[500]"}
+            color={comment ? 'primary.main' : 'grey[500]'}
             weight="bold"
             text
             ref={buttonEl}
@@ -100,7 +103,7 @@ const CreateComment = ({ post, focus }) => {
 CreateComment.propTypes = {
   post: PropTypes.object.isRequired,
   focus: PropTypes.bool,
-  client: PropTypes.object.isRequired
+  client: PropTypes.object.isRequired,
 };
 
 export default withApollo(CreateComment);

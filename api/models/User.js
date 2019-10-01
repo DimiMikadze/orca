@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
 
@@ -10,27 +10,27 @@ const userSchema = new Schema(
   {
     fullName: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       required: true,
       lowercase: true,
       trim: true,
-      unique: true
+      unique: true,
     },
     username: {
       type: String,
       required: true,
       lowercase: true,
       trim: true,
-      unique: true
+      unique: true,
     },
     passwordResetToken: String,
     passwordResetTokenExpiry: Date,
     password: {
       type: String,
-      required: true
+      required: true,
     },
     image: String,
     imagePublicId: String,
@@ -39,50 +39,50 @@ const userSchema = new Schema(
     posts: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Post"
-      }
+        ref: 'Post',
+      },
     ],
     likes: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Like"
-      }
+        ref: 'Like',
+      },
     ],
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Comment"
-      }
+        ref: 'Comment',
+      },
     ],
     followers: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Follow"
-      }
+        ref: 'Follow',
+      },
     ],
     following: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Follow"
-      }
+        ref: 'Follow',
+      },
     ],
     notifications: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Notification"
-      }
-    ]
+        ref: 'Notification',
+      },
+    ],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 /**
  * Hashes the users password when saving it to DB
  */
-userSchema.pre("save", function(next) {
-  if (!this.isModified("password")) {
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password')) {
     return next();
   }
 
@@ -98,4 +98,4 @@ userSchema.pre("save", function(next) {
   });
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);

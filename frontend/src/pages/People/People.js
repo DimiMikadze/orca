@@ -1,21 +1,21 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
 
-import { Container } from "components/Layout";
-import Skeleton from "components/Skeleton";
-import { Loading } from "components/Loading";
-import Empty from "components/Empty";
-import InfiniteScroll from "components/InfiniteScroll";
-import Head from "components/Head";
-import PeopleCard from "./PeopleCard";
+import { Container } from 'components/Layout';
+import Skeleton from 'components/Skeleton';
+import { Loading } from 'components/Loading';
+import Empty from 'components/Empty';
+import InfiniteScroll from 'components/InfiniteScroll';
+import Head from 'components/Head';
+import PeopleCard from './PeopleCard';
 
-import { GET_USERS } from "graphql/user";
+import { GET_USERS } from 'graphql/user';
 
-import { PEOPLE_PAGE_USERS_LIMIT } from "constants/DataLimit";
+import { PEOPLE_PAGE_USERS_LIMIT } from 'constants/DataLimit';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import { Query } from "react-apollo";
+import { Query } from 'react-apollo';
 
 const Root = styled(Container)`
   margin-top: ${p => p.theme.spacing.lg};
@@ -34,13 +34,21 @@ const PeopleContainer = styled.div`
  */
 const People = () => {
   const [{ auth }] = useStore();
-  const variables = { userId: auth.user.id, skip: 0, limit: PEOPLE_PAGE_USERS_LIMIT };
+  const variables = {
+    userId: auth.user.id,
+    skip: 0,
+    limit: PEOPLE_PAGE_USERS_LIMIT,
+  };
 
   return (
     <Root maxWidth="md">
       <Head title="Find new People" />
 
-      <Query query={GET_USERS} variables={variables} notifyOnNetworkStatusChange>
+      <Query
+        query={GET_USERS}
+        variables={variables}
+        notifyOnNetworkStatusChange
+      >
         {({ data, loading, fetchMore, networkStatus }) => {
           if (loading && networkStatus === 1) {
             return (
@@ -63,7 +71,8 @@ const People = () => {
               fetchMore={fetchMore}
             >
               {data => {
-                const showNextLoading = loading && networkStatus === 3 && count !== data.length;
+                const showNextLoading =
+                  loading && networkStatus === 3 && count !== data.length;
 
                 return (
                   <Fragment>

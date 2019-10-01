@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Mutation } from "react-apollo";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Mutation } from 'react-apollo';
+import styled from 'styled-components';
 
-import { GET_FOLLOWED_POSTS, GET_POSTS } from "graphql/post";
-import { GET_AUTH_USER, GET_USER } from "graphql/user";
-import { CREATE_FOLLOW, DELETE_FOLLOW } from "graphql/follow";
+import { GET_FOLLOWED_POSTS, GET_POSTS } from 'graphql/post';
+import { GET_AUTH_USER, GET_USER } from 'graphql/user';
+import { CREATE_FOLLOW, DELETE_FOLLOW } from 'graphql/follow';
 
-import { NotificationType } from "constants/NotificationType";
-import { HOME_PAGE_POSTS_LIMIT } from "constants/DataLimit";
+import { NotificationType } from 'constants/NotificationType';
+import { HOME_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import { useNotifications } from "hooks/useNotifications";
+import { useNotifications } from 'hooks/useNotifications';
 
 const Button = styled.button`
   height: 27px;
@@ -24,8 +24,10 @@ const Button = styled.button`
   border-radius: ${p => p.theme.radius.sm};
   color: ${p => !p.isFollowing && p.theme.colors.white};
   padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xs};
-  border: ${p => (p.isFollowing ? `1px solid ${p.theme.colors.grey[300]}` : "0")};
-  background-color: ${p => (p.isFollowing ? "transparent" : p.theme.colors.primary.main)};
+  border: ${p =>
+    p.isFollowing ? `1px solid ${p.theme.colors.grey[300]}` : '0'};
+  background-color: ${p =>
+    p.isFollowing ? 'transparent' : p.theme.colors.primary.main};
 
   &:hover {
     border-color: ${p => p.theme.colors.grey[400]};
@@ -51,22 +53,22 @@ const Follow = ({ user }) => {
       user,
       hasDone: isFollowing,
       notificationType: NotificationType.FOLLOW,
-      notificationTypeId: data.createFollow ? data.createFollow.id : null
+      notificationTypeId: data.createFollow ? data.createFollow.id : null,
     });
     setLoading(false);
   };
 
   // Detect which mutation to use
-  const operation = isFollowing ? "delete" : "create";
+  const operation = isFollowing ? 'delete' : 'create';
   const options = {
     create: {
       mutation: CREATE_FOLLOW,
-      variables: { userId: user.id, followerId: auth.user.id }
+      variables: { userId: user.id, followerId: auth.user.id },
     },
     delete: {
       mutation: DELETE_FOLLOW,
-      variables: { id: isFollowing ? isFollowing.id : null }
-    }
+      variables: { id: isFollowing ? isFollowing.id : null },
+    },
   };
 
   return (
@@ -78,9 +80,13 @@ const Follow = ({ user }) => {
         { query: GET_POSTS, variables: { authUserId: auth.user.id } },
         {
           query: GET_FOLLOWED_POSTS,
-          variables: { userId: auth.user.id, skip: 0, limit: HOME_PAGE_POSTS_LIMIT }
+          variables: {
+            userId: auth.user.id,
+            skip: 0,
+            limit: HOME_PAGE_POSTS_LIMIT,
+          },
         },
-        { query: GET_USER, variables: { username: user.username } }
+        { query: GET_USER, variables: { username: user.username } },
       ]}
     >
       {mutate => {
@@ -90,7 +96,7 @@ const Follow = ({ user }) => {
             disabled={loading}
             isFollowing={isFollowing}
           >
-            {isFollowing ? "Following" : "Follow"}
+            {isFollowing ? 'Following' : 'Follow'}
           </Button>
         );
       }}
@@ -99,7 +105,7 @@ const Follow = ({ user }) => {
 };
 
 Follow.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default Follow;

@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-import Confirm from "./Confirm";
-import { Overlay } from "./Layout";
+import Confirm from './Confirm';
+import { Overlay } from './Layout';
 
 const Root = styled.div`
   position: fixed;
@@ -33,7 +33,7 @@ const Modal = ({ children, open, onClose, type, ...otherProps }) => {
     <Root>
       <Overlay onClick={onClose} />
 
-      {type === "confirm" ? <Confirm {...otherProps} /> : children}
+      {type === 'confirm' ? <Confirm {...otherProps} /> : children}
     </Root>
   );
 };
@@ -42,7 +42,7 @@ Modal.propTypes = {
   children: PropTypes.node,
   open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(["", "confirm"])
+  type: PropTypes.oneOf(['', 'confirm']),
 };
 
 export default Modal;

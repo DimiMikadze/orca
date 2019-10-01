@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { Spacing } from "components/Layout";
-import { UploadImageIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import { UploadImageIcon } from 'components/icons';
 
 const Input = styled.input`
   display: none;
@@ -49,7 +49,7 @@ const PostImageUpload = ({ handleChange, label }) => (
 
 PostImageUpload.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
 };
 
 export default PostImageUpload;

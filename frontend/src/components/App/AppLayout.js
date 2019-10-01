@@ -1,26 +1,26 @@
-import React, { useEffect, useState, useRef } from "react";
-import { withRouter } from "react-router-dom";
-import { Switch, Route } from "react-router-dom";
-import styled from "styled-components";
+import React, { useEffect, useState, useRef } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Header from "components/App/Header";
-import NotFound from "components/NotFound";
-import SideBar from "./SideBar";
-import UserSuggestions from "./UserSuggestions";
+import Header from 'components/App/Header';
+import NotFound from 'components/NotFound';
+import SideBar from './SideBar';
+import UserSuggestions from './UserSuggestions';
 
-import Home from "pages/Home";
-import Profile from "pages/Profile";
-import Explore from "pages/Explore";
-import People from "pages/People";
-import Notifications from "pages/Notifications";
-import Post from "pages/Post/Post";
+import Home from 'pages/Home';
+import Profile from 'pages/Profile';
+import Explore from 'pages/Explore';
+import People from 'pages/People';
+import Notifications from 'pages/Notifications';
+import Post from 'pages/Post/Post';
 
-import { useWindowSize } from "hooks/useWindowSize";
-import { useClickOutside } from "hooks/useClickOutside";
+import { useWindowSize } from 'hooks/useWindowSize';
+import { useClickOutside } from 'hooks/useClickOutside';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
-import theme from "theme";
+import theme from 'theme';
 
 const Root = styled.div`
   display: flex;
@@ -63,7 +63,7 @@ const AppLayout = ({ location }) => {
   const isDesktop = windowSize.width >= parseInt(theme.screen.md, 10);
   const [isSideBarOpen, setIsSidebarOpen] = useState(isDesktop);
 
-  const sideBarRef = useRef("");
+  const sideBarRef = useRef('');
 
   useClickOutside(sideBarRef, () => {
     if (!isDesktop && isSideBarOpen) {
@@ -71,17 +71,23 @@ const AppLayout = ({ location }) => {
     }
   });
 
-  useEffect(() => {
-    setIsSidebarOpen(isDesktop);
-  }, [isDesktop]);
+  useEffect(
+    () => {
+      setIsSidebarOpen(isDesktop);
+    },
+    [isDesktop]
+  );
 
-  useEffect(() => {
-    return () => {
-      if (!isDesktop) {
-        setIsSidebarOpen(false);
-      }
-    };
-  }, [location.pathname, isDesktop]);
+  useEffect(
+    () => {
+      return () => {
+        if (!isDesktop) {
+          setIsSidebarOpen(false);
+        }
+      };
+    },
+    [location.pathname, isDesktop]
+  );
 
   return (
     <>
@@ -98,7 +104,11 @@ const AppLayout = ({ location }) => {
 
             <Route exact path={Routes.PEOPLE} component={People} />
 
-            <Route exact path={Routes.NOTIFICATIONS} component={Notifications} />
+            <Route
+              exact
+              path={Routes.NOTIFICATIONS}
+              component={Notifications}
+            />
 
             <Route exact path={Routes.USER_PROFILE} component={Profile} />
 

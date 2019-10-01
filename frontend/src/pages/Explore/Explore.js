@@ -1,25 +1,25 @@
-import React, { useState, Fragment } from "react";
-import styled from "styled-components";
-import { generatePath } from "react-router-dom";
-import { Query } from "react-apollo";
+import React, { useState, Fragment } from 'react';
+import styled from 'styled-components';
+import { generatePath } from 'react-router-dom';
+import { Query } from 'react-apollo';
 
-import { Container } from "components/Layout";
-import ExploreCard from "./ExploreCard";
-import Skeleton from "components/Skeleton";
-import PostPopup from "components/PostPopup";
-import Modal from "components/Modal";
-import InfiniteScroll from "components/InfiniteScroll";
-import Empty from "components/Empty";
-import { Loading } from "components/Loading";
-import Head from "components/Head";
+import { Container } from 'components/Layout';
+import ExploreCard from './ExploreCard';
+import Skeleton from 'components/Skeleton';
+import PostPopup from 'components/PostPopup';
+import Modal from 'components/Modal';
+import InfiniteScroll from 'components/InfiniteScroll';
+import Empty from 'components/Empty';
+import { Loading } from 'components/Loading';
+import Head from 'components/Head';
 
-import { GET_POSTS } from "graphql/post";
+import { GET_POSTS } from 'graphql/post';
 
-import { EXPLORE_PAGE_POSTS_LIMIT } from "constants/DataLimit";
+import { EXPLORE_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled(Container)`
   margin-top: ${p => p.theme.spacing.lg};
@@ -42,22 +42,30 @@ const Explore = () => {
   const [modalPostId, setModalPostId] = useState(null);
 
   const closeModal = () => {
-    window.history.pushState("", "", "/explore");
+    window.history.pushState('', '', '/explore');
     setModalPostId(null);
   };
 
   const openModal = postId => {
-    window.history.pushState("", "", generatePath(Routes.POST, { id: postId }));
+    window.history.pushState('', '', generatePath(Routes.POST, { id: postId }));
     setModalPostId(postId);
   };
 
-  const variables = { authUserId: auth.user.id, skip: 0, limit: EXPLORE_PAGE_POSTS_LIMIT };
+  const variables = {
+    authUserId: auth.user.id,
+    skip: 0,
+    limit: EXPLORE_PAGE_POSTS_LIMIT,
+  };
 
   return (
     <Root maxWidth="md">
       <Head title="Explore New Posts and Users" />
 
-      <Query query={GET_POSTS} variables={variables} notifyOnNetworkStatusChange>
+      <Query
+        query={GET_POSTS}
+        variables={variables}
+        notifyOnNetworkStatusChange
+      >
         {({ data, loading, fetchMore, networkStatus }) => {
           if (loading && networkStatus === 1) {
             return (
@@ -80,14 +88,18 @@ const Explore = () => {
               fetchMore={fetchMore}
             >
               {data => {
-                const showNextLoading = loading && networkStatus === 3 && count !== data.length;
+                const showNextLoading =
+                  loading && networkStatus === 3 && count !== data.length;
 
                 return (
                   <Fragment>
                     <PostsContainer>
                       {data.map(post => (
                         <Fragment key={post.id}>
-                          <Modal open={modalPostId === post.id} onClose={closeModal}>
+                          <Modal
+                            open={modalPostId === post.id}
+                            onClose={closeModal}
+                          >
                             <PostPopup id={post.id} closeModal={closeModal} />
                           </Modal>
 

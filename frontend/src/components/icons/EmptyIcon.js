@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * Delete (trash) icon
@@ -8,7 +8,12 @@ import React from "react";
  */
 export const EmptyIcon = () => {
   return (
-    <svg width="100" height="100" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="100"
+      height="100"
+      viewBox="0 0 184 152"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <g fill="none" fillRule="evenodd">
         <g transform="translate(24 31.67)">
           <ellipse
@@ -25,7 +30,7 @@ export const EmptyIcon = () => {
           />
           <path
             d="M101.537 86.214L80.63 61.102c-1.001-1.207-2.507-1.867-4.048-1.867H31.724c-1.54 0-3.047.66-4.048 1.867L6.769 86.214v13.792h94.768V86.214z"
-            fill='url("#linearGradient-1")'
+            fill="url(&quot;#linearGradient-1&quot;)"
             transform="translate(13.56)"
           />
           <path

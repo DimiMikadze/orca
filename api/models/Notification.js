@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -9,33 +9,33 @@ const notificationSchema = Schema(
   {
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
     post: Schema.Types.ObjectId,
     like: {
       type: Schema.Types.ObjectId,
-      ref: "Like"
+      ref: 'Like',
     },
     follow: {
       type: Schema.Types.ObjectId,
-      ref: "Follow"
+      ref: 'Follow',
     },
     comment: {
       type: Schema.Types.ObjectId,
-      ref: "Comment"
+      ref: 'Comment',
     },
     seen: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-export default mongoose.model("Notification", notificationSchema);
+export default mongoose.model('Notification', notificationSchema);

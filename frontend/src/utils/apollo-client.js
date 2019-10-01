@@ -1,19 +1,19 @@
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { onError } from "apollo-link-error";
-import { ApolloLink, Observable } from "apollo-link";
-const { createUploadLink } = require("apollo-upload-client");
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { onError } from 'apollo-link-error';
+import { ApolloLink, Observable } from 'apollo-link';
+const { createUploadLink } = require('apollo-upload-client');
 
 /**
  * Creates a Apollo Link, that adds authentication token to request
  */
 const createAuthLink = () => {
   const request = operation => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     operation.setContext({
       headers: {
-        authorization: token
-      }
+        authorization: token,
+      },
     });
   };
 
@@ -27,7 +27,7 @@ const createAuthLink = () => {
             handle = forward(operation).subscribe({
               next: observer.next.bind(observer),
               error: observer.error.bind(observer),
-              complete: observer.complete.bind(observer)
+              complete: observer.complete.bind(observer),
             });
           })
           .catch(observer.error.bind(observer));
@@ -45,10 +45,10 @@ const createAuthLink = () => {
 const handleErrors = () => {
   return onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      console.log("graphQLErrors", graphQLErrors);
+      console.log('graphQLErrors', graphQLErrors);
     }
     if (networkError) {
-      console.log("networkError", networkError);
+      console.log('networkError', networkError);
     }
   });
 };
@@ -65,6 +65,6 @@ export const createApolloClient = apiUrl => {
 
   return new ApolloClient({
     link: ApolloLink.from([handleErrors(), authLink, uploadLink]),
-    cache
+    cache,
   });
 };

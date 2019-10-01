@@ -1,10 +1,10 @@
-import cloudinary from "cloudinary";
-import uuid from "uuid/v4";
+import cloudinary from 'cloudinary';
+import uuid from 'uuid/v4';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
 /**
@@ -21,13 +21,16 @@ export const uploadToCloudinary = async (stream, folder, imagePublicId) => {
     : { public_id: `${folder}/${uuid()}` };
 
   return new Promise((resolve, reject) => {
-    const streamLoad = cloudinary.v2.uploader.upload_stream(options, (error, result) => {
-      if (result) {
-        resolve(result);
-      } else {
-        reject(error);
+    const streamLoad = cloudinary.v2.uploader.upload_stream(
+      options,
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
       }
-    });
+    );
 
     stream.pipe(streamLoad);
   });

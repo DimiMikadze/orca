@@ -1,21 +1,21 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { generatePath } from "react-router-dom";
-import styled from "styled-components";
-import { withApollo } from "react-apollo";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { generatePath } from 'react-router-dom';
+import styled from 'styled-components';
+import { withApollo } from 'react-apollo';
 
-import { A } from "components/Text";
-import { Spacing } from "components/Layout";
-import { UserIcon } from "components/icons";
+import { A } from 'components/Text';
+import { Spacing } from 'components/Layout';
+import { UserIcon } from 'components/icons';
 
-import { useClickOutside } from "hooks/useClickOutside";
+import { useClickOutside } from 'hooks/useClickOutside';
 
-import { GET_AUTH_USER } from "graphql/user";
-import { UPDATE_NOTIFICATION_SEEN } from "graphql/notification";
+import { GET_AUTH_USER } from 'graphql/user';
+import { UPDATE_NOTIFICATION_SEEN } from 'graphql/notification';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const NotificationItem = styled.div`
   display: flex;
@@ -88,30 +88,33 @@ const Notification = ({ notification, close, client }) => {
 
   useClickOutside(ref, close);
 
-  useEffect(() => {
-    const MutateOnRender = async () => {
-      // Update notification seen for user
-      try {
-        await client.mutate({
-          mutation: UPDATE_NOTIFICATION_SEEN,
-          variables: {
-            input: {
-              userId: auth.user.id
-            }
-          },
-          refetchQueries: () => [{ query: GET_AUTH_USER }]
-        });
-      } catch (err) {}
-    };
+  useEffect(
+    () => {
+      const MutateOnRender = async () => {
+        // Update notification seen for user
+        try {
+          await client.mutate({
+            mutation: UPDATE_NOTIFICATION_SEEN,
+            variables: {
+              input: {
+                userId: auth.user.id,
+              },
+            },
+            refetchQueries: () => [{ query: GET_AUTH_USER }],
+          });
+        } catch (err) {}
+      };
 
-    MutateOnRender();
-  }, [auth.user.id, auth.user.newNotifications.length, client]);
+      MutateOnRender();
+    },
+    [auth.user.id, auth.user.newNotifications.length, client]
+  );
 
   return (
     <NotificationItem ref={ref}>
       <A
         to={generatePath(Routes.USER_PROFILE, {
-          username: notification.author.username
+          username: notification.author.username,
         })}
       >
         <LeftSide>
@@ -145,7 +148,9 @@ const Notification = ({ notification, close, client }) => {
       {notification.comment && (
         <Action>
           commented on your photo
-          <A to={generatePath(Routes.POST, { id: notification.comment.post.id })}>
+          <A
+            to={generatePath(Routes.POST, { id: notification.comment.post.id })}
+          >
             <PostImage>
               <Image src={notification.comment.post.image} />
             </PostImage>
@@ -158,7 +163,7 @@ const Notification = ({ notification, close, client }) => {
 
 Notification.propTypes = {
   client: PropTypes.object.isRequired,
-  close: PropTypes.func
+  close: PropTypes.func,
 };
 
 export default withApollo(Notification);

@@ -1,15 +1,15 @@
-import React from "react";
-import { render } from "react-dom";
-import { ApolloProvider } from "react-apollo";
-import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
-import { ThemeProvider } from "styled-components";
-import { createApolloClient } from "utils/apollo-client";
-import { StoreProvider } from "store";
+import React from 'react';
+import { render } from 'react-dom';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ThemeProvider } from 'styled-components';
+import { createApolloClient } from 'utils/apollo-client';
+import { StoreProvider } from 'store';
 
-import "normalize.css";
-import theme from "theme";
+import 'normalize.css';
+import theme from 'theme';
 
-import App from "components/App/App";
+import App from 'components/App/App';
 
 // Create a Apollo client
 const API_URI = process.env.REACT_APP_API_URL;
@@ -25,5 +25,5 @@ render(
       </ThemeProvider>
     </ApolloHooksProvider>
   </ApolloProvider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );

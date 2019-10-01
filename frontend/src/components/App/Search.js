@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useApolloClient } from "react-apollo-hooks";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import { useApolloClient } from 'react-apollo-hooks';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { Loading } from "components/Loading";
-import { SearchIcon } from "components/icons";
-import SearchResult from "./SearchResult";
+import { Loading } from 'components/Loading';
+import { SearchIcon } from 'components/icons';
+import SearchResult from './SearchResult';
 
-import { useClickOutside } from "hooks/useClickOutside";
-import { useDebounce } from "hooks/useDebounce";
+import { useClickOutside } from 'hooks/useClickOutside';
+import { useDebounce } from 'hooks/useDebounce';
 
-import { SEARCH_USERS } from "graphql/user";
+import { SEARCH_USERS } from 'graphql/user';
 
 const Root = styled.div`
   max-width: 280px;
@@ -57,7 +57,7 @@ const Search = ({ location }) => {
   const client = useApolloClient();
 
   const [isOpenSearchResult, setIsOpenSearchResult] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -68,33 +68,39 @@ const Search = ({ location }) => {
   // Debounce search query value
   const debounceSearchQuery = useDebounce(searchQuery, 500);
 
-  useEffect(() => {
-    // Clear search input value, after location change
-    setSearchQuery("");
-  }, [location.pathname]);
+  useEffect(
+    () => {
+      // Clear search input value, after location change
+      setSearchQuery('');
+    },
+    [location.pathname]
+  );
 
-  useEffect(() => {
-    const search = async () => {
-      const { data } = await client.query({
-        query: SEARCH_USERS,
-        variables: { searchQuery: debounceSearchQuery }
-      });
+  useEffect(
+    () => {
+      const search = async () => {
+        const { data } = await client.query({
+          query: SEARCH_USERS,
+          variables: { searchQuery: debounceSearchQuery },
+        });
 
-      setUsers(data.searchUsers);
-      setLoading(false);
+        setUsers(data.searchUsers);
+        setLoading(false);
 
-      const openSearchResult = debounceSearchQuery !== "";
-      setIsOpenSearchResult(openSearchResult);
-    };
+        const openSearchResult = debounceSearchQuery !== '';
+        setIsOpenSearchResult(openSearchResult);
+      };
 
-    debounceSearchQuery ? search() : setIsOpenSearchResult(false);
+      debounceSearchQuery ? search() : setIsOpenSearchResult(false);
 
-    return () => setLoading(false);
-  }, [debounceSearchQuery, client]);
+      return () => setLoading(false);
+    },
+    [debounceSearchQuery, client]
+  );
 
   const handleInputChange = async e => {
     // Trim white space only from beginning
-    const value = e.target.value.replace(/^\s+/g, "");
+    const value = e.target.value.replace(/^\s+/g, '');
     setSearchQuery(value);
     if (value) {
       setLoading(true);
@@ -126,7 +132,7 @@ const Search = ({ location }) => {
 };
 
 Search.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 };
 
 export default Search;

@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { generatePath } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { generatePath } from 'react-router-dom';
 
-import { A } from "components/Text";
-import Follow from "components/Follow";
-import { UserIcon } from "components/icons";
-import { Spacing } from "components/Layout";
+import { A } from 'components/Text';
+import Follow from 'components/Follow';
+import { UserIcon } from 'components/icons';
+import { Spacing } from 'components/Layout';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 const Root = styled.div`
   display: flex;
@@ -57,14 +57,24 @@ const PostPopupInfo = ({ author }) => {
   return (
     <Root>
       <Author>
-        <A to={generatePath(Routes.USER_PROFILE, { username: author.username })}>
+        <A
+          to={generatePath(Routes.USER_PROFILE, { username: author.username })}
+        >
           <ImageContainer>
-            {author.image ? <Image src={author.image} /> : <UserIcon width="30" />}
+            {author.image ? (
+              <Image src={author.image} />
+            ) : (
+              <UserIcon width="30" />
+            )}
           </ImageContainer>
         </A>
 
         <Spacing left="xs" inline>
-          <A to={generatePath(Routes.USER_PROFILE, { username: author.username })}>
+          <A
+            to={generatePath(Routes.USER_PROFILE, {
+              username: author.username,
+            })}
+          >
             <UserName>{author.fullName}</UserName>
           </A>
         </Spacing>
@@ -76,7 +86,7 @@ const PostPopupInfo = ({ author }) => {
 };
 
 PostPopupInfo.propTypes = {
-  author: PropTypes.object.isRequired
+  author: PropTypes.object.isRequired,
 };
 
 export default PostPopupInfo;

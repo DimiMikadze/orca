@@ -1,5 +1,5 @@
-import React from "react";
-import theme from "theme";
+import React from 'react';
+import theme from 'theme';
 
 /**
  * Close (X) icon
@@ -8,7 +8,7 @@ import theme from "theme";
  * @param {string} color
  */
 export const CloseIcon = ({ width, color }) => {
-  const DEFAULT_WIDTH = "12";
+  const DEFAULT_WIDTH = '12';
   const DEFAULT_COLOR = theme.colors.text.secondary;
 
   return (

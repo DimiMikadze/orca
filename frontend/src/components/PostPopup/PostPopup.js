@@ -1,27 +1,27 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import styled from "styled-components";
-import { Query } from "react-apollo";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
+import { Query } from 'react-apollo';
 
-import { Loading } from "components/Loading";
-import { CloseIcon } from "components/icons";
-import CreateComment from "components/CreateComment";
-import { Spacing } from "components/Layout";
-import NotFound from "components/NotFound";
-import Head from "components/Head";
-import PostPopupInfo from "./PostPopupInfo";
-import PostPopupComments from "./PostPopupComments";
-import PostPopupOptions from "./PostPopupOptions";
+import { Loading } from 'components/Loading';
+import { CloseIcon } from 'components/icons';
+import CreateComment from 'components/CreateComment';
+import { Spacing } from 'components/Layout';
+import NotFound from 'components/NotFound';
+import Head from 'components/Head';
+import PostPopupInfo from './PostPopupInfo';
+import PostPopupComments from './PostPopupComments';
+import PostPopupOptions from './PostPopupOptions';
 
-import { GET_POST } from "graphql/post";
+import { GET_POST } from 'graphql/post';
 
 const Root = styled.div`
   margin: 0 auto;
   margin: ${p => !p.usedInModal && p.theme.spacing.lg} 0;
   box-shadow: ${p => p.theme.shadows.sm};
   border-radius: ${p => p.theme.radius.sm};
-  z-index: ${p => (p.usedInModal ? p.theme.zIndex.xl : "inherit")};
+  z-index: ${p => (p.usedInModal ? p.theme.zIndex.xl : 'inherit')};
   overflow: hidden;
   width: 100%;
 
@@ -31,16 +31,16 @@ const Root = styled.div`
 `;
 
 const Container = styled.div`
-  max-height: ${p => (p.usedInModal ? "600px" : "auto")};
-  overflow-y: ${p => (p.usedInModal ? "auto" : "inherit")};
+  max-height: ${p => (p.usedInModal ? '600px' : 'auto')};
+  overflow-y: ${p => (p.usedInModal ? 'auto' : 'inherit')};
   max-width: 1300px;
   background-color: ${p => p.theme.colors.white};
   display: flex;
   flex-direction: column;
 
   @media (min-width: ${p => p.theme.screen.md}) {
-    flex-direction: ${p => (p.usedInModal ? "row" : "column")};
-    max-height: ${p => (p.usedInModal ? "600px" : "auto")};
+    flex-direction: ${p => (p.usedInModal ? 'row' : 'column')};
+    max-height: ${p => (p.usedInModal ? '600px' : 'auto')};
     overflow-y: inherit;
   }
 `;
@@ -48,7 +48,7 @@ const Container = styled.div`
 const Left = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: ${p => (p.usedInModal ? "center" : "flex-start")};
+  align-items: ${p => (p.usedInModal ? 'center' : 'flex-start')};
   justify-content: center;
   background-color: ${p => p.theme.colors.black};
   width: 100%;
@@ -56,15 +56,15 @@ const Left = styled.div`
   @media (min-width: ${p => p.theme.screen.md}) {
     max-width: 1000px;
     min-width: 500px;
-    height: ${p => (p.usedInModal ? "600px" : "auto")};
+    height: ${p => (p.usedInModal ? '600px' : 'auto')};
   }
 `;
 
 const Image = styled.img`
   display: block;
   max-width: 100%;
-  width: ${p => !p.usedInModal && "100%"};
-  max-height: ${p => (p.usedInModal ? "600px" : "100%")};
+  width: ${p => !p.usedInModal && '100%'};
+  max-height: ${p => (p.usedInModal ? '600px' : '100%')};
 `;
 
 const Right = styled.div`
@@ -76,7 +76,7 @@ const Right = styled.div`
   background-color: ${p => p.theme.colors.white};
 
   @media (min-width: ${p => p.theme.screen.md}) {
-    width: ${p => (p.usedInModal ? "360px" : "100%")};
+    width: ${p => (p.usedInModal ? '360px' : '100%')};
     min-width: 360px;
   }
 `;
@@ -110,7 +110,9 @@ const PostPopup = ({ id, closeModal, usedInModal }) => {
 
         return (
           <Root usedInModal={usedInModal}>
-            <Head title={post.title ? post.title : `${post.author.username}'s post`} />
+            <Head
+              title={post.title ? post.title : `${post.author.username}'s post`}
+            />
 
             {closeModal && (
               <CloseModal onClick={closeModal}>
@@ -158,11 +160,11 @@ const PostPopup = ({ id, closeModal, usedInModal }) => {
 PostPopup.propTypes = {
   id: PropTypes.string.isRequired,
   closeModal: PropTypes.func,
-  usedInModal: PropTypes.bool.isRequired
+  usedInModal: PropTypes.bool.isRequired,
 };
 
 PostPopup.defaultProps = {
-  usedInModal: true
+  usedInModal: true,
 };
 
 export default withRouter(PostPopup);

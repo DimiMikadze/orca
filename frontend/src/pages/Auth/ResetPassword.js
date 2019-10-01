@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { Query, Mutation } from "react-apollo";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { Query, Mutation } from 'react-apollo';
 
-import { Spacing } from "components/Layout";
-import { H1, Error } from "components/Text";
-import { Loading } from "components/Loading";
-import { InputText, Button } from "components/Form";
-import Head from "components/Head";
+import { Spacing } from 'components/Layout';
+import { H1, Error } from 'components/Text';
+import { Loading } from 'components/Loading';
+import { InputText, Button } from 'components/Form';
+import Head from 'components/Head';
 
-import { VERIFY_RESET_PASSWORD_TOKEN, RESET_PASSWORD } from "graphql/user";
+import { VERIFY_RESET_PASSWORD_TOKEN, RESET_PASSWORD } from 'graphql/user';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   padding: 0 ${p => p.theme.spacing.sm};
@@ -39,8 +39,8 @@ const Container = styled.div`
  * Reset password page
  */
 const ResetPassword = ({ history, location, refetch }) => {
-  const [values, setValues] = useState({ password: "", confirmPassword: "" });
-  const [error, setError] = useState("");
+  const [values, setValues] = useState({ password: '', confirmPassword: '' });
+  const [error, setError] = useState('');
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -51,20 +51,20 @@ const ResetPassword = ({ history, location, refetch }) => {
     e.preventDefault();
 
     if (!password || !confirmPassword) {
-      setError("Enter password and Confirm password.");
+      setError('Enter password and Confirm password.');
       return;
     } else if (password.length < 6) {
-      setError("Password min 6 characters");
+      setError('Password min 6 characters');
       return;
     } else if (password !== confirmPassword) {
       setError("Passwords don't match.");
       return;
     }
 
-    setError("");
+    setError('');
     resetPassword()
       .then(async ({ data }) => {
-        localStorage.setItem("token", data.resetPassword.token);
+        localStorage.setItem('token', data.resetPassword.token);
         await refetch();
         history.push(Routes.HOME);
       })
@@ -76,8 +76,8 @@ const ResetPassword = ({ history, location, refetch }) => {
   const { password, confirmPassword } = values;
 
   const url = new URLSearchParams(location.search);
-  const email = url.get("email");
-  const token = url.get("token");
+  const email = url.get('email');
+  const token = url.get('token');
 
   return (
     <Root>
@@ -87,10 +87,14 @@ const ResetPassword = ({ history, location, refetch }) => {
         <Query query={VERIFY_RESET_PASSWORD_TOKEN} variables={{ email, token }}>
           {({ loading, error: apiError }) => {
             if (loading) return <Loading top="lg" />;
-            if (apiError) return <H1>This token is either invalid or expired!</H1>;
+            if (apiError)
+              return <H1>This token is either invalid or expired!</H1>;
 
             return (
-              <Mutation mutation={RESET_PASSWORD} variables={{ input: { email, password, token } }}>
+              <Mutation
+                mutation={RESET_PASSWORD}
+                variables={{ input: { email, password, token } }}
+              >
                 {(resetPassword, { loading, error: apiError }) => {
                   if (apiError) return <H1>{apiError}</H1>;
 
@@ -142,7 +146,7 @@ const ResetPassword = ({ history, location, refetch }) => {
 ResetPassword.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  refetch: PropTypes.func.isRequired
+  refetch: PropTypes.func.isRequired,
 };
 
 export default withRouter(ResetPassword);

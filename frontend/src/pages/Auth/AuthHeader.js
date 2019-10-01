@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { A } from "components/Text";
-import { Container } from "components/Layout";
+import { A } from 'components/Text';
+import { Container } from 'components/Layout';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
-import SignIn from "./SignIn";
+import SignIn from './SignIn';
 
 const Root = styled.div`
   position: fixed;
@@ -71,7 +71,7 @@ const AuthHeader = ({ refetch }) => {
 };
 
 AuthHeader.propTypes = {
-  refetch: PropTypes.func.isRequired
+  refetch: PropTypes.func.isRequired,
 };
 
 export default AuthHeader;

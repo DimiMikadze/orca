@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Overlay } from "components/Layout";
-import { AuthHeader, SignUp, ForgotPassword, ResetPassword } from "pages/Auth";
+import { Overlay } from 'components/Layout';
+import { AuthHeader, SignUp, ForgotPassword, ResetPassword } from 'pages/Auth';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
-import backgroundImage from "./background.jpeg";
+import backgroundImage from './background.jpeg';
 
 const Root = styled.div`
   background: url(${backgroundImage}) no-repeat top / cover;
@@ -50,8 +50,16 @@ const AuthLayout = ({ refetch }) => (
 
       <Pages>
         <Switch>
-          <Route exact path={Routes.HOME} render={() => <SignUp refetch={refetch} />} />
-          <Route exact path={Routes.FORGOT_PASSWORD} component={ForgotPassword} />
+          <Route
+            exact
+            path={Routes.HOME}
+            render={() => <SignUp refetch={refetch} />}
+          />
+          <Route
+            exact
+            path={Routes.FORGOT_PASSWORD}
+            component={ForgotPassword}
+          />
           <Route
             exact
             path={Routes.RESET_PASSWORD}
@@ -65,7 +73,7 @@ const AuthLayout = ({ refetch }) => (
 );
 
 AuthLayout.propTypes = {
-  refetch: PropTypes.func.isRequired
+  refetch: PropTypes.func.isRequired,
 };
 
 export default AuthLayout;

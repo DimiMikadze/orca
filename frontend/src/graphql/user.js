@@ -1,5 +1,9 @@
-import gql from "graphql-tag";
-import { postCommentsPayload, postAuthorPayload, postLikesPayload } from "./post";
+import gql from 'graphql-tag';
+import {
+  postCommentsPayload,
+  postAuthorPayload,
+  postLikesPayload,
+} from './post';
 
 /**
  * Records to select from user

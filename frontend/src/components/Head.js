@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 
 /**
  * Component that manages changes to document head
@@ -13,11 +13,11 @@ const Head = ({ title }) => (
 );
 
 Head.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 };
 
 Head.defaultProps = {
-  title: "Create Social Network"
+  title: 'Create Social Network',
 };
 
 export default Head;

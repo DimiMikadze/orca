@@ -1,23 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { generatePath } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { generatePath } from 'react-router-dom';
+import { Mutation } from 'react-apollo';
 
-import { CloseIcon } from "components/icons";
-import { UserIcon } from "components/icons";
-import { A } from "./Text";
-import { Spacing } from "./Layout";
+import { CloseIcon } from 'components/icons';
+import { UserIcon } from 'components/icons';
+import { A } from './Text';
+import { Spacing } from './Layout';
 
-import { GET_AUTH_USER, GET_USER } from "graphql/user";
-import { DELETE_COMMENT } from "graphql/comment";
-import { GET_POST, GET_POSTS, GET_FOLLOWED_POSTS } from "graphql/post";
+import { GET_AUTH_USER, GET_USER } from 'graphql/user';
+import { DELETE_COMMENT } from 'graphql/comment';
+import { GET_POST, GET_POSTS, GET_FOLLOWED_POSTS } from 'graphql/post';
 
-import { useNotifications } from "../hooks/useNotifications";
+import { useNotifications } from '../hooks/useNotifications';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const DeleteButton = styled.button`
   cursor: pointer;
@@ -63,7 +63,8 @@ const CommentSection = styled.div`
   position: relative;
   word-wrap: break-word;
   overflow: hidden;
-  padding: 0 ${p => p.theme.spacing.lg} ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xs};
+  padding: 0 ${p => p.theme.spacing.lg} ${p => p.theme.spacing.xxs}
+    ${p => p.theme.spacing.xs};
   background-color: ${p => p.theme.colors.grey[100]};
   border-radius: ${p => p.theme.radius.lg};
   margin-left: ${p => p.theme.spacing.xxs};
@@ -86,7 +87,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
         n => n.comment && n.comment.id === comment.id
       );
       notification.remove({
-        notificationId: isNotified.id
+        notificationId: isNotified.id,
       });
     }
   };
@@ -100,13 +101,17 @@ const Comment = ({ comment, postId, postAuthor }) => {
         { query: GET_USER, variables: { username: comment.author.username } },
         { query: GET_AUTH_USER },
         { query: GET_POSTS, variables: { authUserId: auth.user.id } },
-        { query: GET_POST, variables: { id: postId } }
+        { query: GET_POST, variables: { id: postId } },
       ]}
     >
       {deleteComment => {
         return (
           <Root>
-            <A to={generatePath(Routes.USER_PROFILE, { username: comment.author.username })}>
+            <A
+              to={generatePath(Routes.USER_PROFILE, {
+                username: comment.author.username,
+              })}
+            >
               <ImageContainer>
                 {comment.author.image ? (
                   <Image src={comment.author.image} />
@@ -118,7 +123,9 @@ const Comment = ({ comment, postId, postAuthor }) => {
 
             <CommentSection>
               {comment.author.id === auth.user.id && (
-                <DeleteButton onClick={() => handleDeleteComment(deleteComment)}>
+                <DeleteButton
+                  onClick={() => handleDeleteComment(deleteComment)}
+                >
                   <CloseIcon width="10" />
                 </DeleteButton>
               )}
@@ -126,7 +133,11 @@ const Comment = ({ comment, postId, postAuthor }) => {
               <Spacing top="xxs" />
 
               <Spacing inline right="xxs">
-                <A to={generatePath(Routes.USER_PROFILE, { username: comment.author.username })}>
+                <A
+                  to={generatePath(Routes.USER_PROFILE, {
+                    username: comment.author.username,
+                  })}
+                >
                   <UserName>{comment.author.fullName}</UserName>
                 </A>
               </Spacing>
@@ -143,7 +154,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
-  postAuthor: PropTypes.object.isRequired
+  postAuthor: PropTypes.object.isRequired,
 };
 
 export default Comment;

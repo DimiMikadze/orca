@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 // prettier-ignore
 
@@ -49,6 +49,8 @@ export const Loading = styled.div`
   margin: 0 auto;
   margin-top: ${p => p.top && p.theme.spacing[p.top]};
   margin-bottom: ${p => p.bottom && p.theme.spacing[p.bottom]};
-  color: ${p => (p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary)};
-  font-size: ${p => (p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm)};
+  color: ${p =>
+    p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary};
+  font-size: ${p =>
+    p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm};
 `;

@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { withApollo } from "react-apollo";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { withApollo } from 'react-apollo';
 
-import { Loading } from "components/Loading";
-import { UserIcon } from "components/icons";
+import { Loading } from 'components/Loading';
+import { UserIcon } from 'components/icons';
 
-import { GET_AUTH_USER, GET_USER, UPLOAD_PHOTO } from "graphql/user";
-import { GET_FOLLOWED_POSTS } from "graphql/post";
+import { GET_AUTH_USER, GET_USER, UPLOAD_PHOTO } from 'graphql/user';
+import { GET_FOLLOWED_POSTS } from 'graphql/post';
 
-import { MAX_USER_PROFILE_IMAGE_SIZE } from "constants/ImageSize";
+import { MAX_USER_PROFILE_IMAGE_SIZE } from 'constants/ImageSize';
 
-import { useGlobalMessage } from "hooks/useGlobalMessage";
+import { useGlobalMessage } from 'hooks/useGlobalMessage';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 const Input = styled.input`
   display: none;
@@ -42,7 +42,7 @@ const Label = styled.label`
   height: 180px;
   display: block;
   overflow: hidden;
-  cursor: ${p => p.authUser && "pointer"};
+  cursor: ${p => p.authUser && 'pointer'};
   border-radius: 50%;
   border: 4px solid ${p => p.theme.colors.grey[300]};
   background-color: ${p => p.theme.colors.white};
@@ -62,7 +62,13 @@ const Image = styled.img`
 /**
  * Displays and Updates user profile image
  */
-const ProfileImageUpload = ({ userId, image, imagePublicId, username, client }) => {
+const ProfileImageUpload = ({
+  userId,
+  image,
+  imagePublicId,
+  username,
+  client,
+}) => {
   const [{ auth }] = useStore();
 
   const [loading, setLoading] = useState(false);
@@ -73,13 +79,16 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username, client }) 
     setLoading(true);
 
     const file = e.target.files[0];
-    e.target.value = "";
+    e.target.value = '';
 
     if (!file) return;
 
     if (file.size >= MAX_USER_PROFILE_IMAGE_SIZE) {
       setLoading(false);
-      message.error(`File size should be less then ${MAX_USER_PROFILE_IMAGE_SIZE / 1000000}MB`);
+      message.error(
+        `File size should be less then ${MAX_USER_PROFILE_IMAGE_SIZE /
+          1000000}MB`
+      );
       return;
     }
 
@@ -90,8 +99,8 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username, client }) 
         refetchQueries: () => [
           { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
           { query: GET_AUTH_USER },
-          { query: GET_USER, variables: { username: auth.user.username } }
-        ]
+          { query: GET_USER, variables: { username: auth.user.username } },
+        ],
       });
     } catch (err) {
       message.error(err.graphQLErrors[0].message);
@@ -127,7 +136,7 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username, client }) 
       )}
 
       <Label authUser={authUser} htmlFor="image">
-        {authUser && <Overlay>{image ? "Update" : "Upload"}</Overlay>}
+        {authUser && <Overlay>{image ? 'Update' : 'Upload'}</Overlay>}
 
         {renderProfileImage()}
       </Label>
@@ -139,7 +148,7 @@ ProfileImageUpload.propTypes = {
   image: PropTypes.string,
   imagePublicId: PropTypes.string,
   userId: PropTypes.string.isRequired,
-  client: PropTypes.object.isRequired
+  client: PropTypes.object.isRequired,
 };
 
 export default withApollo(ProfileImageUpload);

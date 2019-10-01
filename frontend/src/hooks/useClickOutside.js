@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 /**
  * React hook that detects click outside an element
@@ -8,10 +8,10 @@ import { useEffect } from "react";
  */
 export const useClickOutside = (ref, handler) => {
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside, false);
+    document.addEventListener('click', handleClickOutside, false);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside, false);
+      document.removeEventListener('click', handleClickOutside, false);
     };
   });
 

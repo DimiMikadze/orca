@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -9,16 +9,16 @@ const followSchema = Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
     follower: {
       type: Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: 'User',
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-export default mongoose.model("Follow", followSchema);
+export default mongoose.model('Follow', followSchema);

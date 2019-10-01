@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { get } from "lodash";
+import styled from 'styled-components';
+import { get } from 'lodash';
 
 // prettier-ignore
 
@@ -70,7 +70,8 @@ export const InputText = styled.input`
   border-radius: ${p => p.theme.radius.sm};
   padding-left: ${p => p.theme.spacing.xs};
   border: 1px solid
-    ${p => (p.borderColor ? p.theme.colors[p.borderColor] : p.theme.colors.grey[300])};
+    ${p =>
+      p.borderColor ? p.theme.colors[p.borderColor] : p.theme.colors.grey[300]};
   color: ${p => p.theme.colors.text.secondary};
 
   &:focus {

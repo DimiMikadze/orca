@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -12,24 +12,24 @@ const postSchema = Schema(
     imagePublicId: String,
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: 'User',
     },
     likes: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Like"
-      }
+        ref: 'Like',
+      },
     ],
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Comment"
-      }
-    ]
+        ref: 'Comment',
+      },
+    ],
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-export default mongoose.model("Post", postSchema);
+export default mongoose.model('Post', postSchema);

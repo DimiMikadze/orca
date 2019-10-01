@@ -1,6 +1,6 @@
-import { useApolloClient } from "react-apollo-hooks";
-import { CREATE_NOTIFICATION, DELETE_NOTIFICATION } from "graphql/notification";
-import { useStore } from "store";
+import { useApolloClient } from 'react-apollo-hooks';
+import { CREATE_NOTIFICATION, DELETE_NOTIFICATION } from 'graphql/notification';
+import { useStore } from 'store';
 
 /**
  * React hook that Creates or Deletes a notification after like, follow or comment
@@ -17,10 +17,10 @@ export const useNotifications = () => {
     try {
       return await client.mutate({
         mutation,
-        variables: { input: { ...variables } }
+        variables: { input: { ...variables } },
       });
     } catch (error) {
-      console.error("Error while mutating a notification", error);
+      console.error('Error while mutating a notification', error);
     }
   };
 
@@ -33,25 +33,32 @@ export const useNotifications = () => {
       userId: user.id,
       postId,
       notificationType,
-      notificationTypeId
+      notificationTypeId,
     });
   };
 
   /**
    * Removes a notification
    */
-  const remove = ({ notificationId }) => mutate(DELETE_NOTIFICATION, { id: notificationId });
+  const remove = ({ notificationId }) =>
+    mutate(DELETE_NOTIFICATION, { id: notificationId });
 
   /**
    * Checks if user has already a notification and based on that Creates or Deletes a notification
    */
-  const toggle = ({ user, postId, notificationType, notificationTypeId, hasDone }) => {
+  const toggle = ({
+    user,
+    postId,
+    notificationType,
+    notificationTypeId,
+    hasDone,
+  }) => {
     const type = notificationType.toLowerCase();
     const isNotified = user.notifications.find(
       n => n[type] && hasDone && n[type].id === hasDone.id
     );
     const notificationId = isNotified ? isNotified.id : null;
-    const operation = notificationId ? "delete" : "create";
+    const operation = notificationId ? 'delete' : 'create';
     const options = {
       create: {
         mutation: CREATE_NOTIFICATION,
@@ -60,13 +67,13 @@ export const useNotifications = () => {
           userId: user.id,
           postId,
           notificationType,
-          notificationTypeId
-        }
+          notificationTypeId,
+        },
       },
       delete: {
         mutation: DELETE_NOTIFICATION,
-        variables: { id: notificationId }
-      }
+        variables: { id: notificationId },
+      },
     };
 
     return mutate(options[operation].mutation, options[operation].variables);

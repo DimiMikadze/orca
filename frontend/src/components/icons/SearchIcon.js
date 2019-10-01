@@ -1,5 +1,5 @@
-import React from "react";
-import theme from "theme";
+import React from 'react';
+import theme from 'theme';
 
 /**
  * Search icon
@@ -8,7 +8,7 @@ import theme from "theme";
  * @param {string} color
  */
 export const SearchIcon = ({ width, color }) => {
-  const DEFAULT_WIDTH = "16";
+  const DEFAULT_WIDTH = '16';
   const DEFAULT_COLOR = theme.colors.text.secondary;
 
   return (

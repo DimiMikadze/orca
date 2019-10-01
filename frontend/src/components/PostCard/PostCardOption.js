@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { generatePath } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { generatePath } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Button } from "components/Form";
-import Follow from "components/Follow";
+import { Button } from 'components/Form';
+import Follow from 'components/Follow';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   display: flex;
@@ -48,7 +48,9 @@ const PostCardOption = ({ postId, author, closeOption, deletePost }) => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(
-      `${process.env.REACT_APP_FRONTEND_URL}${generatePath(Routes.POST, { id: postId })}`
+      `${process.env.REACT_APP_FRONTEND_URL}${generatePath(Routes.POST, {
+        id: postId,
+      })}`
     );
     closeOption();
   };
@@ -82,7 +84,7 @@ PostCardOption.propTypes = {
   postId: PropTypes.string.isRequired,
   author: PropTypes.object.isRequired,
   closeOption: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired,
 };
 
 export default PostCardOption;

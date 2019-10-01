@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import { ApolloServer } from "apollo-server-express";
+import jwt from 'jsonwebtoken';
+import { ApolloServer } from 'apollo-server-express';
 
 /**
  * Checks if client is authenticated by checking authorization key from req headers
@@ -7,9 +7,9 @@ import { ApolloServer } from "apollo-server-express";
  * @param {obj} req
  */
 const checkAuthorization = async req => {
-  const token = req.headers["authorization"];
+  const token = req.headers['authorization'];
 
-  if (token !== "null") {
+  if (token !== 'null') {
     try {
       const authUser = await jwt.verify(token, process.env.SECRET);
 
@@ -42,6 +42,6 @@ export const createApolloServer = (schema, resolvers, models) => {
 
         return Object.assign({ authUser }, models);
       }
-    }
+    },
   });
 };

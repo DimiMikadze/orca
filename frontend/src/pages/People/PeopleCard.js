@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { generatePath } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { generatePath } from 'react-router-dom';
 
-import { A } from "components/Text";
-import { Spacing } from "components/Layout";
-import Follow from "components/Follow";
-import theme from "theme";
+import { A } from 'components/Text';
+import { Spacing } from 'components/Layout';
+import Follow from 'components/Follow';
+import theme from 'theme';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   width: 100%;
@@ -62,7 +62,7 @@ const UserName = styled.span`
  * Card component for rendering user info, meant to be used in Peoples page
  */
 const PeopleCard = ({ user }) => {
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState('');
 
   const { fullName, username, image } = user;
 
@@ -76,15 +76,15 @@ const PeopleCard = ({ user }) => {
   const splitFullName = () => {
     // If a fullName contains more word than two, take first two word
     const splitWords = fullName
-      .split(" ")
+      .split(' ')
       .slice(0, 2)
-      .join(" ");
+      .join(' ');
 
     // Take only first letters from split words
     const firstLetters = splitWords
-      .split(" ")
+      .split(' ')
       .map(a => a.charAt(0))
-      .join(" ");
+      .join(' ');
 
     return firstLetters;
   };
@@ -117,7 +117,7 @@ const PeopleCard = ({ user }) => {
 };
 
 PeopleCard.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default PeopleCard;

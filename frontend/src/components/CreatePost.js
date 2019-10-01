@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { Mutation } from "react-apollo";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { Mutation } from 'react-apollo';
+import styled from 'styled-components';
 
-import { UserIcon } from "components/icons";
-import { Spacing, Overlay, Container } from "components/Layout";
-import { Error } from "components/Text";
-import { Button } from "components/Form";
+import { UserIcon } from 'components/icons';
+import { Spacing, Overlay, Container } from 'components/Layout';
+import { Error } from 'components/Text';
+import { Button } from 'components/Form';
 
-import PostImageUpload from "pages/Home/PostImageUpload";
+import PostImageUpload from 'pages/Home/PostImageUpload';
 
-import { GET_FOLLOWED_POSTS, CREATE_POST } from "graphql/post";
-import { GET_AUTH_USER, GET_USER_POSTS } from "graphql/user";
+import { GET_FOLLOWED_POSTS, CREATE_POST } from 'graphql/post';
+import { GET_AUTH_USER, GET_USER_POSTS } from 'graphql/user';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import { PROFILE_PAGE_POSTS_LIMIT } from "constants/DataLimit";
-import { HOME_PAGE_POSTS_LIMIT } from "constants/DataLimit";
-import { MAX_POST_IMAGE_SIZE } from "constants/ImageSize";
+import { PROFILE_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
+import { HOME_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
+import { MAX_POST_IMAGE_SIZE } from 'constants/ImageSize';
 
-import { useGlobalMessage } from "hooks/useGlobalMessage";
+import { useGlobalMessage } from 'hooks/useGlobalMessage';
 
 const Root = styled(Container)`
   border: 0;
@@ -55,7 +55,7 @@ const Textarea = styled.textarea`
   outline: none;
   resize: none;
   transition: 0.1s ease-out;
-  height: ${p => (p.focus ? "80px" : "40px")};
+  height: ${p => (p.focus ? '80px' : '40px')};
   font-size: ${p => p.theme.font.size.xs};
   background-color: ${p => p.theme.colors.grey[100]};
   border-radius: ${p => p.theme.radius.md};
@@ -93,18 +93,18 @@ const Buttons = styled.div`
  */
 const CreatePost = () => {
   const [{ auth }] = useStore();
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
+  const [title, setTitle] = useState('');
+  const [image, setImage] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const message = useGlobalMessage();
 
   const handleReset = () => {
-    setTitle("");
-    setImage("");
+    setTitle('');
+    setImage('');
     setIsFocused(false);
-    setError("");
+    setError('');
   };
 
   const handleOnFocus = () => setIsFocused(true);
@@ -115,7 +115,9 @@ const CreatePost = () => {
     if (!file) return;
 
     if (file.size >= MAX_POST_IMAGE_SIZE) {
-      message.error(`File size should be less then ${MAX_POST_IMAGE_SIZE / 1000000}MB`);
+      message.error(
+        `File size should be less then ${MAX_POST_IMAGE_SIZE / 1000000}MB`
+      );
       return;
     }
 
@@ -140,13 +142,21 @@ const CreatePost = () => {
       refetchQueries={() => [
         {
           query: GET_FOLLOWED_POSTS,
-          variables: { userId: auth.user.id, skip: 0, limit: HOME_PAGE_POSTS_LIMIT }
+          variables: {
+            userId: auth.user.id,
+            skip: 0,
+            limit: HOME_PAGE_POSTS_LIMIT,
+          },
         },
         { query: GET_AUTH_USER },
         {
           query: GET_USER_POSTS,
-          variables: { username: auth.user.username, skip: 0, limit: PROFILE_PAGE_POSTS_LIMIT }
-        }
+          variables: {
+            username: auth.user.username,
+            skip: 0,
+            limit: PROFILE_PAGE_POSTS_LIMIT,
+          },
+        },
       ]}
     >
       {(createPost, { loading, error: apiError }) => {
@@ -156,11 +166,20 @@ const CreatePost = () => {
           <>
             {isFocused && <Overlay onClick={handleReset} />}
 
-            <Root zIndex={isFocused ? "md" : "xs"} color="white" radius="sm" padding="sm">
+            <Root
+              zIndex={isFocused ? 'md' : 'xs'}
+              color="white"
+              radius="sm"
+              padding="sm"
+            >
               <form onSubmit={e => handleSubmit(e, createPost)}>
                 <Wrapper>
                   <ImageContainer>
-                    {auth.user.image ? <Image src={auth.user.image} /> : <UserIcon width="40" />}
+                    {auth.user.image ? (
+                      <Image src={auth.user.image} />
+                    ) : (
+                      <UserIcon width="40" />
+                    )}
                   </ImageContainer>
 
                   <Textarea
@@ -173,7 +192,9 @@ const CreatePost = () => {
                     placeholder="Add a post"
                   />
 
-                  {!isFocused && <PostImageUpload handleChange={handlePostImageUpload} />}
+                  {!isFocused && (
+                    <PostImageUpload handleChange={handlePostImageUpload} />
+                  )}
                 </Wrapper>
 
                 {image && (
@@ -186,7 +207,10 @@ const CreatePost = () => {
 
                 {isFocused && (
                   <Options>
-                    <PostImageUpload label="Photo" handleChange={handlePostImageUpload} />
+                    <PostImageUpload
+                      label="Photo"
+                      handleChange={handlePostImageUpload}
+                    />
 
                     <Buttons>
                       <Button text type="button" onClick={handleReset}>
@@ -203,7 +227,9 @@ const CreatePost = () => {
                   (error && (
                     <Spacing top="xs" bottom="sm">
                       <Error size="xs">
-                        {apiError ? "Something went wrong, please try again." : error}
+                        {apiError
+                          ? 'Something went wrong, please try again.'
+                          : error}
                       </Error>
                     </Spacing>
                   ))}

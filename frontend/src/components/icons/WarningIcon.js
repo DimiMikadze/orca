@@ -1,5 +1,5 @@
-import React from "react";
-import theme from "theme";
+import React from 'react';
+import theme from 'theme';
 
 /**
  * Post like icon
@@ -8,7 +8,7 @@ import theme from "theme";
  * @param {string} color
  */
 export const WarningIcon = ({ width, color }) => {
-  const DEFAULT_WIDTH = "22";
+  const DEFAULT_WIDTH = '22';
   const DEFAULT_COLOR = theme.colors.white;
   return (
     <svg

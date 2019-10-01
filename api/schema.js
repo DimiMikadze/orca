@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 /**
  * GraphQL Schema that describes the main functionality of the API
@@ -299,7 +299,11 @@ const schema = gql`
     getPost(id: ID!): PostPayload
 
     # Gets notifications for specific user
-    getUserNotifications(userId: ID, skip: Int, limit: Int): NotificationsPayload
+    getUserNotifications(
+      userId: ID
+      skip: Int
+      limit: Int
+    ): NotificationsPayload
   }
 
   # ---------------------------------------------------------

@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { Spacing } from "components/Layout";
-import Like from "components/Like";
-import { PostCommentIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import Like from 'components/Like';
+import { PostCommentIcon } from 'components/icons';
 
 const Root = styled.div`
   border-top: 1px solid ${p => p.theme.colors.grey[300]};
@@ -44,7 +44,7 @@ const PostPopupOptions = ({ postId, postAuthor, postLikes }) => {
 PostPopupOptions.propTypes = {
   postId: PropTypes.string.isRequired,
   postAuthor: PropTypes.object.isRequired,
-  postLikes: PropTypes.array.isRequired
+  postLikes: PropTypes.array.isRequired,
 };
 
 export default PostPopupOptions;

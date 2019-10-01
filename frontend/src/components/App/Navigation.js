@@ -1,9 +1,14 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Spacing } from "components/Layout";
-import { ExploreIcon, NotificationIcon, HomeIcon, PeopleIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import {
+  ExploreIcon,
+  NotificationIcon,
+  HomeIcon,
+  PeopleIcon,
+} from 'components/icons';
 
 const Link = styled(NavLink)`
   text-decoration: none;

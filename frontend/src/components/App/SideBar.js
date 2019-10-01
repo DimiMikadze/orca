@@ -1,17 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { generatePath, withRouter, NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { generatePath, withRouter, NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Spacing } from "components/Layout";
-import Navigation from "./Navigation";
-import { UserIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import Navigation from './Navigation';
+import { UserIcon } from 'components/icons';
 
-import { SIDEBAR_DESKTOP_WIDTH, SIDEBAR_MOBILE_WIDTH, HEADER_HEIGHT } from "constants/Layout";
+import {
+  SIDEBAR_DESKTOP_WIDTH,
+  SIDEBAR_MOBILE_WIDTH,
+  HEADER_HEIGHT,
+} from 'constants/Layout';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
 const Root = styled.div`
   position: fixed;
@@ -72,7 +76,8 @@ const Image = styled.img`
 
 const FullName = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
-  color: ${p => (p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary)};
+  color: ${p =>
+    p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary};
 `;
 
 /**
@@ -81,7 +86,8 @@ const FullName = styled.div`
 const SideBar = ({ location, isOpen, sideBarRef }) => {
   const [{ auth }] = useStore();
 
-  const isAuthUsersProfilePage = auth.user.username === location.pathname.substring(1);
+  const isAuthUsersProfilePage =
+    auth.user.username === location.pathname.substring(1);
 
   return (
     <Root isOpen={isOpen} ref={sideBarRef}>
@@ -91,11 +97,17 @@ const SideBar = ({ location, isOpen, sideBarRef }) => {
         activeClassName="selected"
       >
         <ImageContainer>
-          {auth.user.image ? <Image src={auth.user.image} /> : <UserIcon width="20" />}
+          {auth.user.image ? (
+            <Image src={auth.user.image} />
+          ) : (
+            <UserIcon width="20" />
+          )}
         </ImageContainer>
 
         <Spacing left="xxs">
-          <FullName active={isAuthUsersProfilePage}>{auth.user.fullName}</FullName>
+          <FullName active={isAuthUsersProfilePage}>
+            {auth.user.fullName}
+          </FullName>
         </Spacing>
       </User>
 
@@ -108,7 +120,7 @@ const SideBar = ({ location, isOpen, sideBarRef }) => {
 
 SideBar.propTypes = {
   location: PropTypes.object.isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
 };
 
 export default withRouter(SideBar);

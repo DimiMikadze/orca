@@ -1,4 +1,4 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo } from 'react';
 
 /**
  * Compares inputs and console logs changes
@@ -13,7 +13,7 @@ const compareInputs = (inputKeys, oldInputs, newInputs) => {
     const newInput = newInputs[key];
 
     if (oldInput !== newInput) {
-      console.log("change detected", key, "old:", oldInput, "new:", newInput);
+      console.log('change detected', key, 'old:', oldInput, 'new:', newInput);
     }
   });
 };

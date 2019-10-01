@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // prettier-ignore
 
@@ -57,5 +57,10 @@ export const Overlay = styled.div`
   bottom: 0;
   left: 0;
   z-index: ${p => p.theme.zIndex.md};
-  background-color: rgba(0, 0, 0, ${p => (p.transparency ? p.transparency : "0.8")});
+  background-color: rgba(
+    0,
+    0,
+    0,
+    ${p => (p.transparency ? p.transparency : '0.8')}
+  );
 `;

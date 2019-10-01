@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withApollo } from "react-apollo";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withApollo } from 'react-apollo';
+import { withRouter } from 'react-router-dom';
 
-import { Button } from "components/Form";
+import { Button } from 'components/Form';
 
-import * as Routes from "routes";
+import * as Routes from 'routes';
 
-import { useStore } from "store";
-import { CLEAR_AUTH_USER } from "store/auth";
+import { useStore } from 'store';
+import { CLEAR_AUTH_USER } from 'store/auth';
 
 /**
  * Component that signs out the user
@@ -18,7 +18,7 @@ const SignOut = ({ client, history }) => {
 
   const handleSignOut = () => {
     dispatch({ type: CLEAR_AUTH_USER });
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     client.resetStore();
     history.push(Routes.HOME);
   };
@@ -32,7 +32,7 @@ const SignOut = ({ client, history }) => {
 
 SignOut.propTypes = {
   history: PropTypes.object.isRequired,
-  client: PropTypes.object.isRequired
+  client: PropTypes.object.isRequired,
 };
 
 export default withRouter(withApollo(SignOut));

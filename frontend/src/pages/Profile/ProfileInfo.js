@@ -1,14 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { H1 } from "components/Text";
-import { Spacing } from "components/Layout";
-import Follow from "components/Follow";
-import ProfileImageUpload from "./ProfileImageUpload";
-import ProfileCoverUpload from "./ProfileCoverUpload";
+import { H1 } from 'components/Text';
+import { Spacing } from 'components/Layout';
+import Follow from 'components/Follow';
+import ProfileImageUpload from './ProfileImageUpload';
+import ProfileCoverUpload from './ProfileCoverUpload';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 const Root = styled.div`
   display: flex;
@@ -108,7 +108,7 @@ const ProfileInfo = ({ user }) => {
 };
 
 ProfileInfo.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
 export default ProfileInfo;

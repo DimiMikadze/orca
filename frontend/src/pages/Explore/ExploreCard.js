@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { Spacing } from "components/Layout";
-import { LikeIcon, PostCommentIcon } from "components/icons";
+import { Spacing } from 'components/Layout';
+import { LikeIcon, PostCommentIcon } from 'components/icons';
 
 const Overlay = styled.div`
   position: absolute;
@@ -46,18 +46,21 @@ const Photo = styled.div`
 const ExploreCard = ({ openPostPopup, image, countLikes, countComments }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = image;
+  useEffect(
+    () => {
+      const img = new Image();
+      img.src = image;
 
-    img.onload = () => {
-      setImageLoaded(true);
-    };
+      img.onload = () => {
+        setImageLoaded(true);
+      };
 
-    return () => {
-      img.onload = null;
-    };
-  }, [image]);
+      return () => {
+        img.onload = null;
+      };
+    },
+    [image]
+  );
 
   return (
     <Root>
@@ -82,7 +85,7 @@ ExploreCard.propTypes = {
   openPostPopup: PropTypes.func.isRequired,
   image: PropTypes.string.isRequired,
   countLikes: PropTypes.number.isRequired,
-  countComments: PropTypes.number.isRequired
+  countComments: PropTypes.number.isRequired,
 };
 
 export default ExploreCard;

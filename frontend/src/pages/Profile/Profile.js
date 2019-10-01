@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { Query } from "react-apollo";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { Query } from 'react-apollo';
 
-import Skeleton from "components/Skeleton";
-import { Container, Spacing } from "components/Layout";
-import ProfileInfo from "./ProfileInfo";
-import CreatePost from "components/CreatePost";
-import ProfilePosts from "./ProfilePosts";
-import NotFound from "components/NotFound";
-import Head from "components/Head";
+import Skeleton from 'components/Skeleton';
+import { Container, Spacing } from 'components/Layout';
+import ProfileInfo from './ProfileInfo';
+import CreatePost from 'components/CreatePost';
+import ProfilePosts from './ProfilePosts';
+import NotFound from 'components/NotFound';
+import Head from 'components/Head';
 
-import { GET_USER } from "graphql/user";
+import { GET_USER } from 'graphql/user';
 
-import { useStore } from "store";
+import { useStore } from 'store';
 
 /**
  * User Profile Page
@@ -63,7 +63,7 @@ const Profile = ({ match }) => {
 };
 
 Profile.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 export default withRouter(Profile);

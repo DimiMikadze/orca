@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { EmptyIcon } from "components/icons";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { EmptyIcon } from 'components/icons';
 
 const Container = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Empty = ({ text }) => (
 );
 
 Empty.propTypes = {
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 };
 
 export default Empty;
