@@ -90,17 +90,21 @@ const RightSide = styled.div`
 `;
 
 const NotificationCount = styled.span`
-  color: red;
   top: -6px;
   left: 10px;
   position: absolute;
-  height: 18px;
-  width: 18px;
+  height: 22px;
+  width: 22px;
   padding: 2px;
+  letter-spacing: -1px;
   border-radius: 50%;
   color: ${p => p.theme.colors.white};
   background-color: ${p => p.theme.colors.error.main};
   font-size: ${p => p.theme.font.size.xxs};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const NotificationWrapper = styled.div`

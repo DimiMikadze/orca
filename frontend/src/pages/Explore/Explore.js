@@ -70,7 +70,7 @@ const Explore = () => {
           if (loading && networkStatus === 1) {
             return (
               <PostsContainer>
-                <Skeleton height={200} count={9} />
+                <Skeleton height={200} count={EXPLORE_PAGE_POSTS_LIMIT} />
               </PostsContainer>
             );
           }
