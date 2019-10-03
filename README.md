@@ -16,7 +16,7 @@ After installation open [http://localhost:3000/](http://localhost:3000/) to see 
 <img src='https://res.cloudinary.com/dkkf9iqnd/image/upload/v1569913692/screencast_abbvuz.gif' alt='npm start'>
 </p>
 
-## Screenshots
+## Screenshots of some pages
 
 |                                          Home                                          |                                          Profile                                          |                                          Explore                                          |
 | :------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
