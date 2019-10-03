@@ -16,7 +16,15 @@ After installation open [http://localhost:3000/](http://localhost:3000/) to see 
 <img src='https://res.cloudinary.com/dkkf9iqnd/image/upload/v1569913692/screencast_abbvuz.gif' alt='npm start'>
 </p>
 
-**Demo**: https://csn-demo.netlify.com/
+## Screenshots
+
+|                                          Home                                          |                                          Profile                                          |                                          Explore                                          |
+| :------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
+| ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/home-min_owba13.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/profile-min_ifoino.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/explore-min_rplwu5.png) |
+
+## Demo
+
+https://csn-demo.netlify.com/
 
 ## Features
 
