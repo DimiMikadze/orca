@@ -8,7 +8,7 @@ cd my-network
 npm start
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, for older npm versions run `npm install -g create-social-network` and then run `create-social-network my-app`)_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/DimiMikadze/142aba2c0a898843d765b3e4870870ce))_
 
 After installation open [http://localhost:3000/](http://localhost:3000/) to see your app.
 
@@ -63,7 +63,7 @@ To create a new app, you may choose one of the following methods:
 npx create-social-network my-network
 ```
 
-_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, for older npm versions run `npm install -g create-social-network` and then run `create-social-network my-app`)_
+_([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/DimiMikadze/142aba2c0a898843d765b3e4870870ce))_
 
 ### npm
 
