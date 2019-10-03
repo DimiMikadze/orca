@@ -49,7 +49,13 @@ const Notifications = () => {
       >
         {({ data, loading, fetchMore, networkStatus }) => {
           if (loading && networkStatus === 1)
-            return <Skeleton height={56} bottom="xxs" count={8} />;
+            return (
+              <Skeleton
+                height={56}
+                bottom="xxs"
+                count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT}
+              />
+            );
 
           const { notifications, count } = data.getUserNotifications;
 

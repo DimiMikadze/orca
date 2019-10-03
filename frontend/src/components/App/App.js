@@ -10,6 +10,7 @@ import { useStore } from 'store';
 import { SET_AUTH_USER } from 'store/auth';
 
 import Message from 'components/Message';
+import { Loading } from 'components/Loading';
 import AuthLayout from 'pages/Auth/AuthLayout';
 import AppLayout from './AppLayout';
 import ScrollToTop from './ScrollToTop';
@@ -28,7 +29,7 @@ const App = () => {
       }
     >
       {({ loading, refetch }) => {
-        if (loading) return null;
+        if (loading) return <Loading top="xl" />;
 
         return (
           <Router>
