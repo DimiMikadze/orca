@@ -24,7 +24,7 @@ After installation open [http://localhost:3000/](http://localhost:3000/) to see 
 
 ## Demo
 
-https://csn-demo.netlify.com/
+https://worldexplorer.netlify.com/
 
 ## Features
 
