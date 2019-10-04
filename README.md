@@ -1,6 +1,6 @@
 # Create Social Network ![npm](https://img.shields.io/npm/dm/create-social-network) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
-Create Social Network is a tool for building Social Network applications using React, Node, GraphQL and MongoDB. You can set up local Social Network by running one command.
+Create Social Network is a educational project. Its main idea is to demonstrate how one can build large scalable project with React, Node, GraphQL, MongoDB and related technologies. However you get the core functionality of social network by running one command and then you can build more on top of that. 
 
 ```sh
 npx create-social-network my-network
