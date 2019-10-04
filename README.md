@@ -118,7 +118,7 @@ In development mode we are starting `api` and `frontend` servers with one comman
 
 ## Contributing
 
-We'd love to have your helping hand on create-social-network! See [CONTRIBUTING.md](https://github.com/udilia/create-social-network/blob/master/CONTRIBUTING.md) for more information on what we're looking for and how to get started.
+Please read our [CONTRIBUTING.md](https://github.com/udilia/create-social-network/blob/master/CONTRIBUTING.md) before submitting a Pull Request to the project.
 
 ## Credits
 
