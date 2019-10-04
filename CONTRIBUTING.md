@@ -1,8 +1,8 @@
 # Contributing to Create Social Network
 
-Create Social Network is a open source educational project maintained by [udilia](https://udilia.com/). Its main idea is to demonstrate how one can build large scalable project with Javascript and related technologies, however users get the core functionality of social network by running one command and then they can build more on top of that.
+Create Social Network is a open source educational project maintained by [udilia](https://udilia.com/).
 
-Our main responsibility is to be up to date with used technologies, keep basic features of social network and don't add tailored ones for specific users.
+Our main responsibility is to be up to date with used technologies, keep core features of social network and don't add tailored ones for specific users.
 
 All efforts to contribute are highly appreciated, we recommend you talk to a maintainer prior to spending a lot of time making a pull request that may not align with the project roadmap.
 
