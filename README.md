@@ -37,7 +37,11 @@ https://worldexplorer.netlify.com/
 
 ## Requirements and Configuration
 
+You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local development machine
+
 App by default uses MongoDB hosted on [mLab](https://mlab.com/) and [Cloudinary](https://cloudinary.com/) CDN for hosting images. We have created demo user for mLab and Cloudinary so you can run app locally without adding Mongo URL and Cloudinary API Key, however when you start developing your application it is recommended to replace those information with your ones, so everybody has its own Database and CDN.
+
+> Note demo database is being deleted and populated with demo data daily
 
 ### Replacing Mongo URL
 
@@ -52,8 +56,6 @@ Grab `Cloud name` `API Key` and `API Secret` from Cloudinary dashboard and repla
 For password reset functionality you will need to replace Email Provider values also in `api/.env` file.
 
 ## Creating an App
-
-**You’ll need to have Node 8.16.0 or Node 10.16.0 or later version on your local development machine**
 
 To create a new app, you may choose one of the following methods:
 
