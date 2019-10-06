@@ -117,6 +117,12 @@ const NotificationWrapper = styled.div`
   top: 60px;
   z-index: ${p => p.theme.zIndex.xl};
   box-shadow: ${p => p.theme.shadows.xl};
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    transform: scale(1.05);
+  }
 
   @media (min-width: ${p => p.theme.screen.sm}) {
     width: 500px;
