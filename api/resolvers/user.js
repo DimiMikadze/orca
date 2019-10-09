@@ -296,6 +296,9 @@ const Mutation = {
     if (fullName.length > 40) {
       throw new Error('Full name no more than 40 characters.');
     }
+    if (fullName.length < 4) {
+      throw new Error('Full name min 4 characters.');
+    }
 
     // Email validation
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -312,6 +315,9 @@ const Mutation = {
     }
     if (username.length > 20) {
       throw new Error('Username no more than 50 characters.');
+    }
+    if (username.length < 3) {
+      throw new Error('Username min 3 characters.');
     }
     const frontEndPages = [
       'forgot-password',
