@@ -255,12 +255,12 @@ const Mutation = {
     ]);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not found.');
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
-      throw new Error('Invalid password');
+      throw new Error('Invalid password.');
     }
 
     return {
@@ -284,17 +284,17 @@ const Mutation = {
     const user = await User.findOne().or([{ email }, { username }]);
     if (user) {
       const field = user.email === email ? 'email' : 'username';
-      throw new Error(`User with given ${field} already exists`);
+      throw new Error(`User with given ${field} already exists.`);
     }
 
     // Empty field validation
     if (!fullName || !email || !username || !password) {
-      throw new Error('All fields are required');
+      throw new Error('All fields are required.');
     }
 
-    // fullName validation
-    if (fullName.length > 50) {
-      throw new Error('Full name no more than 50 characters');
+    // FullName validation
+    if (fullName.length > 40) {
+      throw new Error('Full name no more than 40 characters.');
     }
 
     // Email validation
@@ -307,15 +307,27 @@ const Mutation = {
     const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
     if (!usernameRegex.test(username)) {
       throw new Error(
-        'Usernames can only use letters, numbers, underscores and periods'
+        'Usernames can only use letters, numbers, underscores and periods.'
       );
-    } else if (username.length > 20) {
-      throw new Error('Username no more than 50 characters');
+    }
+    if (username.length > 20) {
+      throw new Error('Username no more than 50 characters.');
+    }
+    const frontEndPages = [
+      'forgot-password',
+      'reset-password',
+      'explore',
+      'people',
+      'notifications',
+      'post',
+    ];
+    if (frontEndPages.includes(username)) {
+      throw new Error("This username isn't available. Please try another.");
     }
 
     // Password validation
     if (password.length < 6) {
-      throw new Error('Password min 6 characters');
+      throw new Error('Password min 6 characters.');
     }
 
     const newUser = await new User({
@@ -338,7 +350,7 @@ const Mutation = {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      throw new Error(`No such user found for email ${email}`);
+      throw new Error(`No such user found for email ${email}.`);
     }
 
     // Set password reset token and it's expiry
@@ -355,9 +367,7 @@ const Mutation = {
     );
 
     // Email user reset link
-    const resetLink = `${
-      process.env.FRONTEND_URL
-    }/reset-password?email=${email}&token=${token}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?email=${email}&token=${token}`;
     const mailOptions = {
       to: email,
       subject: 'Password Reset',
@@ -388,7 +398,7 @@ const Mutation = {
     }
 
     if (password.length < 6) {
-      throw new Error('Password min 6 characters');
+      throw new Error('Password min 6 characters.');
     }
 
     // Check if user exists and token is valid
@@ -400,7 +410,7 @@ const Mutation = {
       },
     });
     if (!user) {
-      throw new Error('This token is either invalid or expired!');
+      throw new Error('This token is either invalid or expired!.');
     }
 
     // Update password, reset token and it's expiry
@@ -452,7 +462,9 @@ const Mutation = {
       return updatedUser;
     }
 
-    throw new Error('Something went wrong while uploading image to Cloudinary');
+    throw new Error(
+      'Something went wrong while uploading image to Cloudinary.'
+    );
   },
 };
 

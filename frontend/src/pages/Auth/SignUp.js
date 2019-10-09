@@ -113,6 +113,26 @@ const SignUp = ({ history, refetch }) => {
     });
   };
 
+  const renderErrors = apiError => {
+    let errorMessage;
+
+    if (error) {
+      errorMessage = error;
+    } else if (apiError) {
+      errorMessage = apiError.graphQLErrors[0].message;
+    }
+
+    if (errorMessage) {
+      return (
+        <Spacing bottom="sm" top="sm">
+          <Error>{errorMessage}</Error>
+        </Spacing>
+      );
+    }
+
+    return null;
+  };
+
   const { fullName, email, password, username } = values;
 
   return (
@@ -180,14 +200,7 @@ const SignUp = ({ history, refetch }) => {
                   />
                 </Spacing>
 
-                {apiError ||
-                  (error && (
-                    <Spacing bottom="sm" top="sm">
-                      <Error>
-                        {apiError ? apiError.graphQLErrors[0].message : error}
-                      </Error>
-                    </Spacing>
-                  ))}
+                {renderErrors(apiError)}
 
                 <Spacing top="sm" />
                 <Button size="large" disabled={loading}>
