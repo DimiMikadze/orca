@@ -43,12 +43,9 @@ const SignIn = ({ history, location, refetch }) => {
   const [values, setValues] = useState({ emailOrUsername: '', password: '' });
   const [error, setError] = useState('');
 
-  useEffect(
-    () => {
-      setError('');
-    },
-    [location.pathname]
-  );
+  useEffect(() => {
+    setError('');
+  }, [location.pathname]);
 
   const handleChange = e => {
     const { name, value } = e.target;

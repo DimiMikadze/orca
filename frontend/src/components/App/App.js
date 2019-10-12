@@ -24,9 +24,9 @@ const App = () => {
   return (
     <Query
       query={GET_AUTH_USER}
-      onCompleted={data =>
-        dispatch({ type: SET_AUTH_USER, payload: data.getAuthUser })
-      }
+      onCompleted={data => {
+        dispatch({ type: SET_AUTH_USER, payload: data.getAuthUser });
+      }}
     >
       {({ loading, refetch }) => {
         if (loading) return <Loading top="xl" />;

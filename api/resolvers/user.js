@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+
 import { uploadToCloudinary } from '../utils/cloudinary';
 import { generateToken } from '../utils/generate-token';
 import { sendEmail } from '../utils/email';

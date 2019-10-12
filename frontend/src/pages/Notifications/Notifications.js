@@ -48,7 +48,7 @@ const Notifications = () => {
         notifyOnNetworkStatusChange
       >
         {({ data, loading, fetchMore, networkStatus }) => {
-          if (loading && networkStatus === 1)
+          if (loading && networkStatus === 1) {
             return (
               <Skeleton
                 height={56}
@@ -56,11 +56,13 @@ const Notifications = () => {
                 count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT}
               />
             );
+          }
 
           const { notifications, count } = data.getUserNotifications;
 
-          if (!notifications.length)
+          if (!notifications.length) {
             return <Empty text="No notifications yet." />;
+          }
 
           return (
             <InfiniteScroll

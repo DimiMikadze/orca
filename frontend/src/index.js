@@ -12,8 +12,9 @@ import theme from 'theme';
 import App from 'components/App/App';
 
 // Create a Apollo client
-const API_URI = process.env.REACT_APP_API_URL;
-const apolloClient = createApolloClient(API_URI);
+const API_URL = process.env.REACT_APP_API_URL;
+const WEBSOCKET_API_URL = process.env.REACT_APP_WEBSOCKET_API_URL;
+const apolloClient = createApolloClient(API_URL, WEBSOCKET_API_URL);
 
 render(
   <ApolloProvider client={apolloClient}>
