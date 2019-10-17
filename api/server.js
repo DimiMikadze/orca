@@ -1,5 +1,6 @@
 import {} from 'dotenv/config';
 import express from 'express';
+import { createServer } from 'http';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
@@ -10,10 +11,7 @@ import { createApolloServer } from './utils/apollo-server';
 
 // Connect to database
 mongoose
-  .connect(
-    process.env.MONGO_URL,
-    { useNewUrlParser: true }
-  )
+  .connect(process.env.MONGO_URL, { useNewUrlParser: true })
   .then(() => console.log('DB connected'))
   .catch(err => console.error(err));
 
@@ -31,7 +29,15 @@ app.use(cors(corsOptions));
 const server = createApolloServer(schema, resolvers, models);
 server.applyMiddleware({ app, path: '/graphql' });
 
+// Create http server and add subscriptions to it
+const httpServer = createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
+// Listen to HTTP and WebSocket server
 const PORT = process.env.PORT || process.env.API_PORT;
-app.listen(PORT, () =>
-  console.log(`🚀 API ready at ${PORT}${server.graphqlPath}`)
-);
+httpServer.listen({ port: PORT }, () => {
+  console.log(`server ready at http://localhost:${PORT}${server.graphqlPath}`);
+  console.log(
+    `Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`
+  );
+});

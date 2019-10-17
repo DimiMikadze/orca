@@ -300,7 +300,7 @@ const schema = gql`
 
     # Gets notifications for specific user
     getUserNotifications(
-      userId: ID
+      userId: ID!
       skip: Int
       limit: Int
     ): NotificationsPayload
