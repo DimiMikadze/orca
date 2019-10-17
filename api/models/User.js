@@ -72,6 +72,12 @@ const userSchema = new Schema(
         ref: 'Notification',
       },
     ],
+    messages: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,

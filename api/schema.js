@@ -44,6 +44,15 @@ const schema = gql`
     updatedAt: String
   }
 
+  type Message {
+    id: ID!
+    sender: User!
+    receiver: User!
+    message: String!
+    createdAt: String
+    updateAt: String
+  }
+
   type File {
     filename: String!
     mimetype: String!
@@ -169,6 +178,16 @@ const schema = gql`
     id: ID!
   }
 
+  input CreateMessageInput {
+    sender: ID!
+    receiver: ID!
+    message: String!
+  }
+
+  input DeleteMessageInput {
+    id: ID!
+  }
+
   input CreateNotificationInput {
     userId: ID!
     authorId: ID!
@@ -264,6 +283,14 @@ const schema = gql`
     createdAt: String
   }
 
+  type MessagePayload {
+    id: ID!
+    receiver: UserPayload
+    sender: UserPayload
+    message: String
+    createdAt: String
+  }
+
   # ---------------------------------------------------------
   # Query Root
   # ---------------------------------------------------------
@@ -304,6 +331,12 @@ const schema = gql`
       skip: Int
       limit: Int
     ): NotificationsPayload
+
+    # Gets user's messages
+    getMessages(authUserId: ID!, userId: ID!): [MessagePayload]
+
+    # Gets user's conversations
+    getConversations(authUserId: ID!): [UserPayload]
   }
 
   # ---------------------------------------------------------
@@ -357,6 +390,12 @@ const schema = gql`
 
     # Updates notification seen values for user
     updateNotificationSeen(input: UpdateNotificationSeenInput!): Boolean
+
+    # Creates a message
+    createMessage(input: CreateMessageInput!): MessagePayload
+
+    # Deletes a message
+    deleteMessage(input: DeleteMessageInput!): MessagePayload
   }
 `;
 

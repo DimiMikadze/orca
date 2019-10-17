@@ -4,6 +4,7 @@ import likeResolver from './like';
 import followResolver from './follow';
 import commentResolver from './comment';
 import notificationResolver from './notification';
+import message from './message';
 
 export default [
   userResolver,
@@ -12,4 +13,5 @@ export default [
   followResolver,
   commentResolver,
   notificationResolver,
+  message,
 ];

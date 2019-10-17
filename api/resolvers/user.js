@@ -240,6 +240,22 @@ const Query = {
 
     return { message: 'Success' };
   },
+
+  /**
+   * Get users with whom authUser had a conversation
+   *
+   * @param {string} authUserId
+   */
+  getConversations: async (root, { authUserId }, { User }) => {
+    const user = await User.findById(authUserId)
+      .select('messages')
+      .populate({
+        path: 'messages',
+        options: { sort: { createdAt: 'desc' } },
+      });
+
+    return user.messages;
+  },
 };
 
 const Mutation = {
