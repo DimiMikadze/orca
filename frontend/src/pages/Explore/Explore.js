@@ -24,13 +24,18 @@ import * as Routes from 'routes';
 const Root = styled(Container)`
   margin-top: ${p => p.theme.spacing.lg};
   margin-bottom: ${p => p.theme.spacing.sm};
+
+  @media (min-width: ${p => p.theme.screen.lg}) {
+    margin-left: ${p => p.theme.spacing.lg};
+    padding: 0;
+  }
 `;
 
 const PostsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 3fr));
   grid-auto-rows: auto;
-  grid-gap: 10px;
+  grid-gap: 20px;
 `;
 
 /**
@@ -70,7 +75,7 @@ const Explore = () => {
           if (loading && networkStatus === 1) {
             return (
               <PostsContainer>
-                <Skeleton height={200} count={EXPLORE_PAGE_POSTS_LIMIT} />
+                <Skeleton height={300} count={EXPLORE_PAGE_POSTS_LIMIT} />
               </PostsContainer>
             );
           }

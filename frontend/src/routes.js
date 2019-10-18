@@ -16,4 +16,8 @@ export const PEOPLE = '/people';
 
 export const NOTIFICATIONS = '/notifications';
 
+export const MESSAGES = '/messages';
+
+export const MESSAGES_DETAIL = '/messages/:username';
+
 export const POST = '/post/:id';

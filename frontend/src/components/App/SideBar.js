@@ -35,7 +35,9 @@ const Root = styled.div`
     position: sticky;
     top: 100px;
     margin-left: ${p => (p.isOpen ? 0 : `-${SIDEBAR_DESKTOP_WIDTH}px`)};
-    width: ${SIDEBAR_DESKTOP_WIDTH}px;
+    flex-basis: ${SIDEBAR_DESKTOP_WIDTH}px;
+    flex-grow: 0;
+    flex-shrink: 0;
     box-shadow: none;
     background-color: transparent;
   }

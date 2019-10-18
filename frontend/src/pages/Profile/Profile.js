@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo';
+import styled from 'styled-components';
 
 import Skeleton from 'components/Skeleton';
 import { Container, Spacing } from 'components/Layout';
@@ -15,6 +16,15 @@ import { GET_USER } from 'graphql/user';
 
 import { useStore } from 'store';
 
+const Root = styled.div`
+  width: 100%;
+
+  @media (min-width: ${p => p.theme.screen.lg}) {
+    margin-left: ${p => p.theme.spacing.lg};
+    padding: 0;
+  }
+`;
+
 /**
  * User Profile Page
  */
@@ -23,7 +33,7 @@ const Profile = ({ match }) => {
   const { username } = match.params;
 
   return (
-    <>
+    <Root>
       <Head title={username} />
 
       <Query query={GET_USER} variables={{ username }}>
@@ -58,7 +68,7 @@ const Profile = ({ match }) => {
           );
         }}
       </Query>
-    </>
+    </Root>
   );
 };
 

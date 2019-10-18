@@ -88,27 +88,24 @@ const Notification = ({ notification, close, client }) => {
 
   useClickOutside(ref, close);
 
-  useEffect(
-    () => {
-      const MutateOnRender = async () => {
-        // Update notification seen for user
-        try {
-          await client.mutate({
-            mutation: UPDATE_NOTIFICATION_SEEN,
-            variables: {
-              input: {
-                userId: auth.user.id,
-              },
+  useEffect(() => {
+    const MutateOnRender = async () => {
+      // Update notification seen for user
+      try {
+        await client.mutate({
+          mutation: UPDATE_NOTIFICATION_SEEN,
+          variables: {
+            input: {
+              userId: auth.user.id,
             },
-            refetchQueries: () => [{ query: GET_AUTH_USER }],
-          });
-        } catch (err) {}
-      };
+          },
+          refetchQueries: () => [{ query: GET_AUTH_USER }],
+        });
+      } catch (err) {}
+    };
 
-      MutateOnRender();
-    },
-    [auth.user.id, auth.user.newNotifications.length, client]
-  );
+    MutateOnRender();
+  }, [auth.user.id, auth.user.newNotifications.length, client]);
 
   return (
     <NotificationItem ref={ref}>

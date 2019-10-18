@@ -27,7 +27,7 @@ const Root = styled(Container)`
   background-color: ${p => p.theme.colors.white};
   z-index: ${p => p.theme.zIndex.md};
   height: ${HEADER_HEIGHT}px;
-  box-shadow: ${p => p.theme.shadows.md};
+  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
 
   @media (min-width: ${p => p.theme.screen.md}) {
     z-index: ${p => p.theme.zIndex.md};

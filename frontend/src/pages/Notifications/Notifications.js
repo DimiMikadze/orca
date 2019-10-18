@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Query } from 'react-apollo';
 
-import { Container } from 'components/Layout';
+import { Container, Content } from 'components/Layout';
 import { Loading } from 'components/Loading';
 import Skeleton from 'components/Skeleton';
 import Notification from 'components/App/Notification';
@@ -39,64 +39,66 @@ const Notifications = () => {
   };
 
   return (
-    <Root maxWidth="md">
-      <Head title={`${auth.user.username}'s Notifications`} />
+    <Content>
+      <Root maxWidth="md">
+        <Head title={`${auth.user.username}'s Notifications`} />
 
-      <Query
-        query={GET_USER_NOTIFICATION}
-        variables={variables}
-        notifyOnNetworkStatusChange
-      >
-        {({ data, loading, fetchMore, networkStatus }) => {
-          if (loading && networkStatus === 1) {
+        <Query
+          query={GET_USER_NOTIFICATION}
+          variables={variables}
+          notifyOnNetworkStatusChange
+        >
+          {({ data, loading, fetchMore, networkStatus }) => {
+            if (loading && networkStatus === 1) {
+              return (
+                <Skeleton
+                  height={56}
+                  bottom="xxs"
+                  count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT}
+                />
+              );
+            }
+
+            const { notifications, count } = data.getUserNotifications;
+
+            if (!notifications.length) {
+              return <Empty text="No notifications yet." />;
+            }
+
             return (
-              <Skeleton
-                height={56}
-                bottom="xxs"
-                count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT}
-              />
+              <InfiniteScroll
+                data={notifications}
+                dataKey="getUserNotifications.notifications"
+                count={parseInt(count)}
+                variables={variables}
+                fetchMore={fetchMore}
+              >
+                {data => {
+                  const showNextLoading =
+                    loading && networkStatus === 3 && count !== data.length;
+
+                  return (
+                    <>
+                      <List>
+                        {data.map(notification => (
+                          <Notification
+                            key={notification.id}
+                            notification={notification}
+                            close={() => false}
+                          />
+                        ))}
+                      </List>
+
+                      {showNextLoading && <Loading top="lg" />}
+                    </>
+                  );
+                }}
+              </InfiniteScroll>
             );
-          }
-
-          const { notifications, count } = data.getUserNotifications;
-
-          if (!notifications.length) {
-            return <Empty text="No notifications yet." />;
-          }
-
-          return (
-            <InfiniteScroll
-              data={notifications}
-              dataKey="getUserNotifications.notifications"
-              count={parseInt(count)}
-              variables={variables}
-              fetchMore={fetchMore}
-            >
-              {data => {
-                const showNextLoading =
-                  loading && networkStatus === 3 && count !== data.length;
-
-                return (
-                  <>
-                    <List>
-                      {data.map(notification => (
-                        <Notification
-                          key={notification.id}
-                          notification={notification}
-                          close={() => false}
-                        />
-                      ))}
-                    </List>
-
-                    {showNextLoading && <Loading top="lg" />}
-                  </>
-                );
-              }}
-            </InfiniteScroll>
-          );
-        }}
-      </Query>
-    </Root>
+          }}
+        </Query>
+      </Root>
+    </Content>
   );
 };
 

@@ -4,45 +4,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Loading } from 'components/Loading';
-import { SearchIcon } from 'components/icons';
+import SearchInput from 'components/SearchInput';
 import SearchResult from './SearchResult';
 
 import { useClickOutside } from 'hooks/useClickOutside';
 import { useDebounce } from 'hooks/useDebounce';
 
 import { SEARCH_USERS } from 'graphql/user';
-
-const Root = styled.div`
-  max-width: 280px;
-  position: relative;
-  z-index: ${p => p.theme.zIndex.xl};
-`;
-
-const IconContainer = styled.div`
-  position: absolute;
-  top: 12px;
-  left: 10px;
-`;
-
-const Input = styled.input`
-  outline: 0;
-  height: 40px;
-  width: 100%;
-  border: 0;
-  border-radius: ${p => p.theme.radius.sm};
-  padding-left: ${p => p.theme.spacing.lg};
-  padding-right: ${p => p.theme.spacing.lg};
-  color: ${p => p.theme.colors.text.main};
-  font-size: ${p => p.theme.font.size.xs};
-  background-color: ${p => p.theme.colors.grey[200]};
-  transition: border-color 0.1s;
-
-  &:focus {
-    &::placeholder {
-      color: ${p => p.theme.colors.grey[500]};
-    }
-  }
-`;
 
 const StyledLoading = styled(Loading)`
   position: absolute;
@@ -68,35 +36,29 @@ const Search = ({ location }) => {
   // Debounce search query value
   const debounceSearchQuery = useDebounce(searchQuery, 500);
 
-  useEffect(
-    () => {
-      // Clear search input value, after location change
-      setSearchQuery('');
-    },
-    [location.pathname]
-  );
+  useEffect(() => {
+    // Clear search input value, after location change
+    setSearchQuery('');
+  }, [location.pathname]);
 
-  useEffect(
-    () => {
-      const search = async () => {
-        const { data } = await client.query({
-          query: SEARCH_USERS,
-          variables: { searchQuery: debounceSearchQuery },
-        });
+  useEffect(() => {
+    const search = async () => {
+      const { data } = await client.query({
+        query: SEARCH_USERS,
+        variables: { searchQuery: debounceSearchQuery },
+      });
 
-        setUsers(data.searchUsers);
-        setLoading(false);
+      setUsers(data.searchUsers);
+      setLoading(false);
 
-        const openSearchResult = debounceSearchQuery !== '';
-        setIsOpenSearchResult(openSearchResult);
-      };
+      const openSearchResult = debounceSearchQuery !== '';
+      setIsOpenSearchResult(openSearchResult);
+    };
 
-      debounceSearchQuery ? search() : setIsOpenSearchResult(false);
+    debounceSearchQuery ? search() : setIsOpenSearchResult(false);
 
-      return () => setLoading(false);
-    },
-    [debounceSearchQuery, client]
-  );
+    return () => setLoading(false);
+  }, [debounceSearchQuery, client]);
 
   const handleInputChange = async e => {
     // Trim white space only from beginning
@@ -110,24 +72,17 @@ const Search = ({ location }) => {
   const handleInputFocus = () => searchQuery && setIsOpenSearchResult(true);
 
   return (
-    <Root>
-      <IconContainer>
-        <SearchIcon />
-      </IconContainer>
-
-      <Input
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        value={searchQuery}
-        ref={inputRef}
-        type="text"
-        placeholder="Search People"
-      />
-
+    <SearchInput
+      onChange={handleInputChange}
+      onFocus={handleInputFocus}
+      value={searchQuery}
+      inputRef={inputRef}
+      placeholder="Search People"
+    >
       {loading && <StyledLoading size="xxs" />}
 
       {isOpenSearchResult && <SearchResult users={users} />}
-    </Root>
+    </SearchInput>
   );
 };
 

@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { matchPath } from 'react-router';
 import { generatePath } from 'react-router-dom';
 import { Query } from 'react-apollo';
 
@@ -76,8 +78,14 @@ const UserName = styled.div`
 /**
  * Displays user suggestions
  */
-const UserSuggestions = () => {
+const UserSuggestions = ({ pathname }) => {
   const [{ auth }] = useStore();
+
+  const hideUserSuggestions = matchPath(pathname, {
+    path: [Routes.MESSAGES, Routes.PEOPLE, Routes.EXPLORE, Routes.USER_PROFILE],
+  });
+
+  if (hideUserSuggestions) return null;
 
   return (
     <Query query={USER_SUGGESTIONS} variables={{ userId: auth.user.id }}>
@@ -132,6 +140,10 @@ const UserSuggestions = () => {
       }}
     </Query>
   );
+};
+
+UserSuggestions.propTypes = {
+  pathname: PropTypes.string.isRequired,
 };
 
 export default UserSuggestions;

@@ -19,13 +19,18 @@ import { Query } from 'react-apollo';
 
 const Root = styled(Container)`
   margin-top: ${p => p.theme.spacing.lg};
+
+  @media (min-width: ${p => p.theme.screen.lg}) {
+    margin-left: ${p => p.theme.spacing.lg};
+    padding: 0;
+  }
 `;
 
 const PeopleContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
   grid-auto-rows: auto;
-  grid-gap: 10px;
+  grid-gap: 20px;
   margin-bottom: ${p => p.theme.spacing.lg};
 `;
 
