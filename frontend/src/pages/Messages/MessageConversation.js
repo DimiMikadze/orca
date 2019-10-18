@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { useMutation } from '@apollo/react-hooks';
 
 import { Button, Textarea } from 'components/Form';
 import { CloseIcon, SendIcon } from 'components/icons';
-import chatData from './chat.json';
+
+import { CREATE_MESSAGE, DELETE_MESSAGE } from 'graphql/messages';
 
 const Root = styled.div`
   padding: 0 ${p => p.theme.spacing.sm};
@@ -11,6 +14,8 @@ const Root = styled.div`
   height: 100vh;
   margin-top: -120px;
   padding-top: 120px;
+  display: flex;
+  flex-direction: column;
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -31,6 +36,10 @@ const Root = styled.div`
       visibility: visible;
     }
   }
+`;
+
+const Conversation = styled.div`
+  flex: 1;
 `;
 
 const DeleteIconButton = styled(Button)`
@@ -87,12 +96,13 @@ const Message = styled.div`
     p.userMessage ? p.theme.colors.primary.light : p.theme.colors.grey[200]};
 `;
 
-const TextareaContainer = styled.div`
+const Form = styled.form`
   background-color: ${p => p.theme.colors.white};
   position: sticky;
   bottom: 0;
   width: 100%;
   display: flex;
+  padding: ${p => p.theme.spacing.xxs};
   padding-left: ${p => p.theme.spacing.sm};
   padding-right: ${p => p.theme.spacing.md};
 `;
@@ -108,37 +118,97 @@ const SendIconButton = styled(Button)`
   align-self: center;
 `;
 
-const MessageConversation = () => {
+const MessageConversation = ({ messages, authUser, chatUser }) => {
+  const [messageText, setMessageText] = useState('');
+  const [createMessage] = useMutation(CREATE_MESSAGE);
+  const [deleteMessage] = useMutation(DELETE_MESSAGE);
+
+  const sendMessage = e => {
+    e.preventDefault();
+
+    setMessageText('');
+    createMessage({
+      variables: {
+        input: {
+          sender: authUser.id,
+          receiver: chatUser.id,
+          message: messageText,
+        },
+      },
+    });
+  };
+
+  const onEnterPress = e => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      sendMessage(e);
+    }
+  };
+
+  const removeMessage = id => {
+    deleteMessage({
+      variables: {
+        input: {
+          id,
+        },
+      },
+    });
+  };
+
   return (
     <Root>
-      <div>
-        {chatData.map(chat => (
-          <MessageWrapper userMessage={chat.id === 2}>
-            {chat.id !== 2 && <Image src={chat.image} alt={chat.fullName} />}
-            <Message userMessage={chat.id === 2}>
-              {chat.message}
+      <Conversation>
+        {messages.map(message => {
+          const isAuthUserReceiver = authUser.id === message.sender.id;
 
-              <DeleteIconButton ghost userMessage={chat.id === 2}>
-                <CloseIcon width="10" />
-              </DeleteIconButton>
-            </Message>
+          return (
+            <MessageWrapper userMessage={isAuthUserReceiver} key={message.id}>
+              {!isAuthUserReceiver && (
+                <Image
+                  src={message.sender.image}
+                  alt={message.sender.fullName}
+                />
+              )}
 
-            <MessageDate userMessage={chat.id === 2}>
-              {chat.createdAt}
-            </MessageDate>
-          </MessageWrapper>
-        ))}
-      </div>
+              <Message userMessage={isAuthUserReceiver}>
+                {message.message}
 
-      <TextareaContainer>
-        <StyledTextarea />
+                <DeleteIconButton
+                  ghost
+                  userMessage={isAuthUserReceiver}
+                  onClick={() => removeMessage(message.id)}
+                >
+                  <CloseIcon width="10" />
+                </DeleteIconButton>
+              </Message>
 
-        <SendIconButton ghost>
+              <MessageDate userMessage={isAuthUserReceiver}>
+                {message.createdAt}
+              </MessageDate>
+            </MessageWrapper>
+          );
+        })}
+      </Conversation>
+
+      <Form onSubmit={sendMessage}>
+        <StyledTextarea
+          placeholder="Type a message"
+          value={messageText}
+          onChange={e => setMessageText(e.target.value)}
+          onKeyDown={onEnterPress}
+        />
+
+        <SendIconButton type="submit" ghost>
           <SendIcon width="28" />
         </SendIconButton>
-      </TextareaContainer>
+      </Form>
     </Root>
   );
+};
+
+MessageConversation.propTypes = {
+  messages: PropTypes.array.isRequired,
+  authUser: PropTypes.object.isRequired,
+  chatUser: PropTypes.object,
 };
 
 export default MessageConversation;

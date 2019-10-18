@@ -13,7 +13,7 @@ const Query = {
       ])
       .populate('sender')
       .populate('receiver')
-      .sort({ createdAt: 'desc' });
+      .sort({ createdAt: 'asc' });
 
     return specificMessage;
   },

@@ -257,3 +257,18 @@ export const USER_SUGGESTIONS = gql`
     }
   }
 `;
+
+/**
+ * Get users with whom authUser had a conversation
+ */
+export const GET_CONVERSATIONS = gql`
+  query($authUserId: ID!) {
+    getConversations(authUserId: $authUserId) {
+      id
+      username
+      fullName
+      image
+      createdAt
+    }
+  }
+`;

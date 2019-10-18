@@ -18,6 +18,6 @@ export const NOTIFICATIONS = '/notifications';
 
 export const MESSAGES = '/messages';
 
-export const MESSAGES_DETAIL = '/messages/:username';
+export const MESSAGES_DETAIL = '/messages/:userId';
 
 export const POST = '/post/:id';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useApolloClient } from 'react-apollo-hooks';
+import { useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

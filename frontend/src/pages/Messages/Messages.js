@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { useStore } from 'store';
+
 import { HEADER_HEIGHT } from 'constants/Layout';
 
-import MessagesUsers from './MessagesUsers';
+import MessagesChat from './MessagesChat';
 import MessagesDetail from './MessagesDetail';
 
 const Root = styled.div`
@@ -25,11 +27,13 @@ const Root = styled.div`
 `;
 
 const Messages = ({ match }) => {
+  const [{ auth }] = useStore();
+
   return (
     <Root>
-      <MessagesUsers />
+      <MessagesChat authUser={auth.user} match={match} />
 
-      <MessagesDetail match={match} />
+      <MessagesDetail match={match} authUser={auth.user} />
     </Root>
   );
 };

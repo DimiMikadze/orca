@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 import { createApolloClient } from 'utils/apollo-client';
 import { StoreProvider } from 'store';

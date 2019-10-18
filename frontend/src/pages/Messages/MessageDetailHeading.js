@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import usersData from './users.json';
-
-const Header = styled.div`
+const Root = styled.div`
+  position: relative;
+  background-color: ${p => p.theme.colors.white};
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 60px;
   border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  z-index: 1;
 `;
 
 const User = styled.div`
@@ -63,40 +64,52 @@ const Input = styled.input`
   flex: 1;
 `;
 
-const MessageDetailHeading = ({ match }) => {
-  if (match.params.username === 'new') {
+const MessageDetailHeading = ({ match, chatUser }) => {
+  const inputRef = useRef(null);
+
+  const onRootClick = () => {
+    inputRef.current.focus();
+  };
+
+  if (match.params.userId === 'new') {
     return (
-      <Header>
+      <Root onClick={onRootClick}>
         <InputContainer>
           <To>To:</To>
           <Input
+            ref={inputRef}
             type="text"
             placeholder="Type the name of a person"
             autoFocus
           />
         </InputContainer>
-      </Header>
+      </Root>
     );
   }
 
-  return (
-    <Header>
-      <User
-        key={usersData[0].username}
-        activeClassName="selected"
-        to={`/messages/${usersData[0].username}`}
-      >
-        <Image src={usersData[0].image} alt={usersData[0].fullName} />
-        <UserInfo>
-          <UserFullName>{usersData[0].fullName}</UserFullName>
-        </UserInfo>
-      </User>
-    </Header>
-  );
+  if (chatUser) {
+    return (
+      <Root>
+        <User
+          key={chatUser.username}
+          activeClassName="selected"
+          to={`/messages/${chatUser.username}`}
+        >
+          <Image src={chatUser.image} alt={chatUser.fullName} />
+          <UserInfo>
+            <UserFullName>{chatUser.fullName}</UserFullName>
+          </UserInfo>
+        </User>
+      </Root>
+    );
+  }
+
+  return null;
 };
 
 MessageDetailHeading.propTypes = {
   match: PropTypes.object.isRequired,
+  chatUser: PropTypes.object,
 };
 
 export default MessageDetailHeading;
