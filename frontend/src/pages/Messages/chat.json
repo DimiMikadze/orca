@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "Hi Tom, how are u? are you busy now? i want to talk with you"
+  },
+  {
+    "id": 2,
+    "fullName": "Tom Kochievi",
+    "username": "tom",
+    "image": "https://res.cloudinary.com/drwkapa8p/image/upload/v1570012541/demo-user/31f03a0f-905d-48af-bb9a-19fc46261364.jpg",
+    "createdAt": "1570104240165",
+    "message": "Hey dimi, i'm ok, and u? listen you."
+  },
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "Me too. What are you doing?"
+  },
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "?"
+  },
+  {
+    "id": 2,
+    "fullName": "Tom Kochievi",
+    "username": "tom",
+    "image": "https://res.cloudinary.com/drwkapa8p/image/upload/v1570012541/demo-user/31f03a0f-905d-48af-bb9a-19fc46261364.jpg",
+    "createdAt": "1570104240165",
+    "message": "I'm coding right now. WTF are you talking about? are u mad man ?"
+  },
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "Now I'm in GYM, I have workout"
+  },
+  {
+    "id": 2,
+    "fullName": "Tom Kochievi",
+    "username": "tom",
+    "image": "https://res.cloudinary.com/drwkapa8p/image/upload/v1570012541/demo-user/31f03a0f-905d-48af-bb9a-19fc46261364.jpg",
+    "createdAt": "1570104240165",
+    "message": "You wanna gain muscles bro? "
+  },
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "Yehhh.. course."
+  },
+
+  {
+    "id": 2,
+    "fullName": "Tom Kochievi",
+    "username": "tom",
+    "image": "https://res.cloudinary.com/drwkapa8p/image/upload/v1570012541/demo-user/31f03a0f-905d-48af-bb9a-19fc46261364.jpg",
+    "createdAt": "1570104240165",
+    "message": "dont scare me bro "
+  },
+  {
+    "id": 1,
+    "fullName": "Dimi Mikadze",
+    "username": "dimi",
+    "image": "https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570104134/demo-user/dc1c8e8a-b50b-4a48-b86c-0d3eb023767e.jpg",
+    "createdAt": "1570104240165",
+    "message": "I'll try it ))"
+  }
+]

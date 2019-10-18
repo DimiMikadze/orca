@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import MessageConversation from './MessageConversation';
 import MessagesDetailHeading from './MessageDetailHeading';
 
 const Root = styled.div`
@@ -13,6 +14,7 @@ const MessagesDetail = ({ match }) => {
   return (
     <Root>
       <MessagesDetailHeading match={match} />
+      <MessageConversation />
     </Root>
   );
 };

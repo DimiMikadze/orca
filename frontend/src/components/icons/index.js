@@ -20,3 +20,4 @@ export { SuccessIcon } from './SuccessIcon';
 export { EmptyIcon } from './EmptyIcon';
 export { NotFoundIcon } from './NotFoundIcon';
 export { EnvelopeIcon } from './EnvelopeIcon';
+export { SendIcon } from './SendIcon';
