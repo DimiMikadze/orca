@@ -73,12 +73,18 @@ export const createApolloClient = (apiUrl, websocketApiUrl) => {
   const wsLink = new WebSocketLink({
     uri: websocketApiUrl,
     options: {
+      timeout: 60000,
       reconnect: true,
       connectionParams: {
         authorization: authToken,
       },
     },
   });
+
+  // Temporary fix for early websocket closure resulting in websocket connections not being instantiated
+  // https://github.com/apollographql/subscriptions-transport-ws/issues/377
+  wsLink.subscriptionClient.maxConnectTimeGenerator.duration = () =>
+    wsLink.subscriptionClient.maxConnectTimeGenerator.max;
 
   // Split links, so we can send data to each link
   // depending on what kind of operation is being sent

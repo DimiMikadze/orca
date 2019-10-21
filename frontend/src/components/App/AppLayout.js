@@ -83,11 +83,7 @@ const AppLayout = ({ location }) => {
 
           <Route exact path={Routes.NOTIFICATIONS} component={Notifications} />
 
-          <Route
-            exact
-            path={[Routes.MESSAGES, Routes.MESSAGES_DETAIL]}
-            component={Messages}
-          />
+          <Route exact path={Routes.MESSAGES} component={Messages} />
 
           <Route exact path={Routes.USER_PROFILE} component={Profile} />
 

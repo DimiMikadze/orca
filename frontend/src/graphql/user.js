@@ -27,6 +27,7 @@ export const GET_USER = gql`
   query($username: String!) {
     getUser(username: $username) {
       ${userPayload}
+      isOnline
       posts {
         id
       }
@@ -268,7 +269,20 @@ export const GET_CONVERSATIONS = gql`
       username
       fullName
       image
+      isOnline
       createdAt
+    }
+  }
+`;
+
+/**
+ * Checks if user is online in real time
+ */
+export const IS_USER_ONLINE_SUBSCRIPTION = gql`
+  subscription($authUserId: ID!, $userId: ID!) {
+    isUserOnline(authUserId: $authUserId, userId: $userId) {
+      userId
+      isOnline
     }
   }
 `;

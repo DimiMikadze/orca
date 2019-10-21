@@ -95,7 +95,7 @@ const Navigation = () => {
       <Link
         exact
         activeClassName="selected"
-        to={generatePath(Routes.MESSAGES_DETAIL, { userId: 'new' })}
+        to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
       >
         <ListItem>
           <EnvelopeIcon width={18} />

@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import * as Routes from 'routes';
+
 const Root = styled.div`
   position: relative;
   background-color: ${p => p.theme.colors.white};
@@ -71,7 +73,7 @@ const MessageDetailHeading = ({ match, chatUser }) => {
     inputRef.current.focus();
   };
 
-  if (match.params.userId === 'new') {
+  if (match.params.userId === Routes.NEW_ID_VALUE) {
     return (
       <Root onClick={onRootClick}>
         <InputContainer>

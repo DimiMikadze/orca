@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Button, Textarea } from 'components/Form';
-import { CloseIcon, SendIcon } from 'components/icons';
+import { SendIcon } from 'components/icons';
 
-import { CREATE_MESSAGE, DELETE_MESSAGE } from 'graphql/messages';
+import { CREATE_MESSAGE } from 'graphql/messages';
+
+import { currentDate } from 'utils/date';
 
 const Root = styled.div`
   padding: 0 ${p => p.theme.spacing.sm};
@@ -42,14 +44,6 @@ const Conversation = styled.div`
   flex: 1;
 `;
 
-const DeleteIconButton = styled(Button)`
-  right: -${p => p.theme.spacing.sm};
-  left: -${p => p.userMessage && p.theme.spacing.sm};
-  position: absolute;
-  align-self: center;
-  display: none;
-`;
-
 const MessageDate = styled.span`
   position: absolute;
   bottom: -${p => p.theme.spacing.sm};
@@ -57,6 +51,7 @@ const MessageDate = styled.span`
   right: -${p => p.userMessage && 0};
   display: none;
   font-size: ${p => p.theme.font.size.xxs};
+  color: ${p => p.theme.colors.text.secondary};
 `;
 
 const MessageWrapper = styled.div`
@@ -64,10 +59,6 @@ const MessageWrapper = styled.div`
   position: relative;
   justify-content: ${p => p.userMessage && 'flex-end'};
   margin: ${p => p.theme.spacing.md} 0;
-
-  &:hover ${DeleteIconButton} {
-    display: block;
-  }
 
   &:hover ${MessageDate} {
     display: block;
@@ -118,10 +109,18 @@ const SendIconButton = styled(Button)`
   align-self: center;
 `;
 
-const MessageConversation = ({ messages, authUser, chatUser }) => {
+const MessageConversation = ({ messages, authUser, chatUser, data }) => {
+  const bottomRef = useRef(null);
+
   const [messageText, setMessageText] = useState('');
+
   const [createMessage] = useMutation(CREATE_MESSAGE);
-  const [deleteMessage] = useMutation(DELETE_MESSAGE);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView();
+    }
+  }, [bottomRef, data]);
 
   const sendMessage = e => {
     e.preventDefault();
@@ -144,16 +143,6 @@ const MessageConversation = ({ messages, authUser, chatUser }) => {
     }
   };
 
-  const removeMessage = id => {
-    deleteMessage({
-      variables: {
-        input: {
-          id,
-        },
-      },
-    });
-  };
-
   return (
     <Root>
       <Conversation>
@@ -171,22 +160,15 @@ const MessageConversation = ({ messages, authUser, chatUser }) => {
 
               <Message userMessage={isAuthUserReceiver}>
                 {message.message}
-
-                <DeleteIconButton
-                  ghost
-                  userMessage={isAuthUserReceiver}
-                  onClick={() => removeMessage(message.id)}
-                >
-                  <CloseIcon width="10" />
-                </DeleteIconButton>
               </Message>
 
               <MessageDate userMessage={isAuthUserReceiver}>
-                {message.createdAt}
+                {currentDate(message.createdAt)}
               </MessageDate>
             </MessageWrapper>
           );
         })}
+        <div ref={bottomRef} />
       </Conversation>
 
       <Form onSubmit={sendMessage}>
@@ -209,6 +191,7 @@ MessageConversation.propTypes = {
   messages: PropTypes.array.isRequired,
   authUser: PropTypes.object.isRequired,
   chatUser: PropTypes.object,
+  data: PropTypes.any,
 };
 
 export default MessageConversation;

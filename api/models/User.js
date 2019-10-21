@@ -36,6 +36,10 @@ const userSchema = new Schema(
     imagePublicId: String,
     coverImage: String,
     coverImagePublicId: String,
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
     posts: [
       {
         type: Schema.Types.ObjectId,

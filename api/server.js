@@ -11,7 +11,10 @@ import { createApolloServer } from './utils/apollo-server';
 
 // Connect to database
 mongoose
-  .connect(process.env.MONGO_URL, { useNewUrlParser: true })
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log('DB connected'))
   .catch(err => console.error(err));
 

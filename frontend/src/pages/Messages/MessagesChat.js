@@ -105,12 +105,7 @@ const UserFullName = styled.div`
   color: ${p => p.theme.colors.text.primary};
 `;
 
-const UserCreatedAt = styled.span`
-  font-size: ${p => p.theme.font.size.xxs};
-  color: ${p => p.theme.colors.text.secondary};
-`;
-
-const MessagesChat = ({ authUser, match }) => {
+const MessagesChat = ({ authUser }) => {
   const { data, loading } = useQuery(GET_CONVERSATIONS, {
     variables: { authUserId: authUser.id },
   });
@@ -123,7 +118,7 @@ const MessagesChat = ({ authUser, match }) => {
         <NewMessage
           exact
           activeClassName="selected"
-          to={generatePath(Routes.MESSAGES_DETAIL, { userId: 'new' })}
+          to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
         >
           <PencilIcon />
         </NewMessage>
@@ -152,7 +147,6 @@ const MessagesChat = ({ authUser, match }) => {
 
               <UserInfo>
                 <UserFullName>{user.fullName}</UserFullName>
-                <UserCreatedAt>{user.createdAt}</UserCreatedAt>
               </UserInfo>
             </User>
           ))}

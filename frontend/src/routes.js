@@ -16,8 +16,11 @@ export const PEOPLE = '/people';
 
 export const NOTIFICATIONS = '/notifications';
 
-export const MESSAGES = '/messages';
-
-export const MESSAGES_DETAIL = '/messages/:userId';
+export const MESSAGES = '/messages/:userId';
 
 export const POST = '/post/:id';
+
+/**
+ * Value that's used in place of id when creating something new.
+ */
+export const NEW_ID_VALUE = 'new';

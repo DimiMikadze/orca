@@ -22,6 +22,7 @@ const schema = gql`
     imagePublicId: String
     coverImage: File
     coverImagePublicId: String
+    isOnline: Boolean
     posts: [PostPayload]
     likes: [Like]
     comments: [Comment]
@@ -184,10 +185,6 @@ const schema = gql`
     message: String!
   }
 
-  input DeleteMessageInput {
-    id: ID!
-  }
-
   input CreateNotificationInput {
     userId: ID!
     authorId: ID!
@@ -217,6 +214,7 @@ const schema = gql`
     imagePublicId: String
     coverImage: String
     coverImagePublicId: String
+    isOnline: Boolean
     posts: [PostPayload]
     likes: [Like]
     followers: [Follow]
@@ -289,6 +287,11 @@ const schema = gql`
     sender: UserPayload
     message: String
     createdAt: String
+  }
+
+  type IsUserOnlinePayload {
+    userId: ID!
+    isOnline: Boolean
   }
 
   # ---------------------------------------------------------
@@ -393,9 +396,15 @@ const schema = gql`
 
     # Creates a message
     createMessage(input: CreateMessageInput!): MessagePayload
+  }
 
-    # Deletes a message
-    deleteMessage(input: DeleteMessageInput!): MessagePayload
+  # ---------------------------------------------------------
+  # Mutation Root
+  # ---------------------------------------------------------
+  type Subscription {
+    messageCreated(authUserId: ID!, userId: ID!): MessagePayload
+
+    isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
   }
 `;
 

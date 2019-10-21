@@ -28,7 +28,7 @@ import { useStore } from 'store';
 
 import * as Routes from 'routes';
 
-import { timeAgo } from 'utils/time-ago';
+import { timeAgo } from 'utils/date';
 
 const Root = styled.div`
   width: 100%;
@@ -192,8 +192,6 @@ const PostCard = ({
     setIsOptionOpen(false);
   };
 
-  const postCreated = new Date(parseInt(createdAt));
-
   return (
     <>
       <Root>
@@ -222,7 +220,7 @@ const PostCard = ({
 
             <Spacing left="xs">
               <Name>{author.fullName}</Name>
-              <CreatedAt>{timeAgo(postCreated)}</CreatedAt>
+              <CreatedAt>{timeAgo(createdAt)}</CreatedAt>
             </Spacing>
           </Author>
 

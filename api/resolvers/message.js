@@ -1,3 +1,8 @@
+import { withFilter } from 'apollo-server';
+
+import { pubSub } from '../utils/apollo-server';
+import { MESSAGE_CREATED } from '../constants/Subscriptions';
+
 const Query = {
   /**
    * Gets user's specific conversation
@@ -32,11 +37,19 @@ const Mutation = {
     { input: { message, sender, receiver } },
     { Message, User }
   ) => {
-    const newMessage = await new Message({
+    let newMessage = await new Message({
       message,
       sender,
       receiver,
     }).save();
+
+    newMessage = await newMessage
+      .populate('sender')
+      .populate('receiver')
+      .execPopulate();
+
+    // Publish message created event
+    pubSub.publish(MESSAGE_CREATED, { messageCreated: newMessage });
 
     // Check if user already had a conversation
     // if not push their ids to users collection
@@ -54,17 +67,28 @@ const Mutation = {
 
     return newMessage;
   },
+};
 
+const Subscription = {
   /**
-   * Deletes a message
-   *
-   * @param {string} id
+   * Subscribes to message created event
    */
-  deleteMessage: async (root, { input: { id } }, { Message }) => {
-    const message = await Message.findByIdAndRemove(id);
+  messageCreated: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(MESSAGE_CREATED),
+      (payload, variables) => {
+        const { sender, receiver } = payload.messageCreated;
+        const { authUserId, userId } = variables;
 
-    return message;
+        const isSender = sender.id === authUserId || sender.id === userId;
+        const isReceiver = receiver.id === authUserId || receiver.id === userId;
+
+        const result = isSender || isReceiver;
+
+        return result;
+      }
+    ),
   },
 };
 
-export default { Mutation, Query };
+export default { Mutation, Query, Subscription };

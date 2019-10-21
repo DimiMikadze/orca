@@ -28,22 +28,38 @@ export const GET_MESSAGES = gql`
 `;
 
 /**
- * Creates a message
+ * Gets user's specific conversation in real time
  */
-export const CREATE_MESSAGE = gql`
-  mutation($input: CreateMessageInput!) {
-    createMessage(input: $input) {
+export const GET_MESSAGES_SUBSCRIPTION = gql`
+  subscription($authUserId: ID!, $userId: ID!) {
+    messageCreated(authUserId: $authUserId, userId: $userId) {
       id
+      receiver {
+        id
+        username
+        fullName
+        image
+        createdAt
+      }
+      sender {
+        id
+        username
+        fullName
+        image
+        createdAt
+      }
+      message
+      createdAt
     }
   }
 `;
 
 /**
- * Deletes a message
+ * Creates a message
  */
-export const DELETE_MESSAGE = gql`
-  mutation($input: DeleteMessageInput!) {
-    deleteMessage(input: $input) {
+export const CREATE_MESSAGE = gql`
+  mutation($input: CreateMessageInput!) {
+    createMessage(input: $input) {
       id
     }
   }
