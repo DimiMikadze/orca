@@ -61,6 +61,7 @@ export const CREATE_MESSAGE = gql`
   mutation($input: CreateMessageInput!) {
     createMessage(input: $input) {
       id
+      isFirstMessage
     }
   }
 `;

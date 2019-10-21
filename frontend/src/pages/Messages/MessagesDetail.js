@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/react-hooks';
 
 import { LoadingDots } from 'components/Loading';
-import MessageConversation from './MessageConversation';
-import MessagesDetailHeading from './MessageDetailHeading';
+import MessageConversation from './MessagesConversation';
+import MessagesDetailHeading from './MessagesDetailHeading';
 
 import { GET_MESSAGES, GET_MESSAGES_SUBSCRIPTION } from 'graphql/messages';
+import { GET_USER } from 'graphql/user';
 
 import * as Routes from 'routes';
 
@@ -17,7 +18,16 @@ const Root = styled.div`
 `;
 
 const MessagesDetail = ({ match, authUser }) => {
-  const { subscribeToMore, data, loading } = useQuery(GET_MESSAGES, {
+  const { data, loading } = useQuery(GET_USER, {
+    variables: { id: match.params.userId },
+    skip: match.params.userId === Routes.NEW_ID_VALUE,
+  });
+
+  const {
+    subscribeToMore,
+    data: messages,
+    loading: messagesLoading,
+  } = useQuery(GET_MESSAGES, {
     variables: { authUserId: authUser.id, userId: match.params.userId },
     skip: match.params.userId === Routes.NEW_ID_VALUE,
   });
@@ -31,10 +41,19 @@ const MessagesDetail = ({ match, authUser }) => {
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
 
-          const newMessage = subscriptionData.data.messageCreated;
-          const mergeMessages = [...prev.getMessages, newMessage];
+          // Check if are not duplicating
+          const msgId = subscriptionData.data.messageCreated.id;
+          let prevMsgId = null;
+          if (prev.getMessages && prev.getMessages.length > 0) {
+            prevMsgId = prev.getMessages[prev.getMessages.length - 1].id;
+          }
+          if (msgId === prevMsgId) return prev;
 
-          return { getMessages: mergeMessages };
+          // Merge messages
+          const newMessage = subscriptionData.data.messageCreated;
+          const mergedMessages = [...prev.getMessages, newMessage];
+
+          return { getMessages: mergedMessages };
         },
       });
     };
@@ -42,7 +61,7 @@ const MessagesDetail = ({ match, authUser }) => {
     subscribeToNewMessages();
   }, [authUser.id, match.params.userId, subscribeToMore]);
 
-  if (loading) {
+  if (loading || messagesLoading) {
     return (
       <Root>
         <LoadingDots />
@@ -50,10 +69,9 @@ const MessagesDetail = ({ match, authUser }) => {
     );
   }
 
-  let chatUser;
-  if (data && data.getMessages.length > 0) {
-    const user = data.getMessages[0];
-    chatUser = user.receiver.id === authUser.id ? user.sender : user.receiver;
+  let chatUser = null;
+  if (data && data.getUser) {
+    chatUser = data.getUser;
   }
 
   return (
@@ -62,9 +80,9 @@ const MessagesDetail = ({ match, authUser }) => {
 
       <MessageConversation
         authUser={authUser}
-        messages={data ? data.getMessages : []}
+        messages={messages ? messages.getMessages : []}
         chatUser={chatUser}
-        data={data}
+        data={messages}
         match={match}
       />
     </Root>

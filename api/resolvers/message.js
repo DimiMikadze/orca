@@ -18,7 +18,7 @@ const Query = {
       ])
       .populate('sender')
       .populate('receiver')
-      .sort({ createdAt: 'asc' });
+      .sort({ updatedAt: 'asc' });
 
     return specificMessage;
   },
@@ -63,6 +63,8 @@ const Mutation = {
         { _id: receiver },
         { $push: { messages: sender } }
       );
+
+      newMessage.isFirstMessage = true;
     }
 
     return newMessage;

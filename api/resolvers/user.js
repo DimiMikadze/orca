@@ -47,8 +47,17 @@ const Query = {
    *
    * @param {string} username
    */
-  getUser: async (root, { username }, { User }) => {
-    const user = await User.findOne({ username })
+  getUser: async (root, { username, id }, { User }) => {
+    if (!username && !id) {
+      throw new Error('username or id is required params.');
+    }
+
+    if (username && id) {
+      throw new Error('please pass only username or only id as a paran');
+    }
+
+    const query = username ? { username: username } : { _id: id };
+    const user = await User.findOne(query)
       .populate({
         path: 'posts',
         populate: [
@@ -87,7 +96,7 @@ const Query = {
       });
 
     if (!user) {
-      throw new Error("User with given username doesn't exists.");
+      throw new Error("User with given params doesn't exists.");
     }
 
     return user;
@@ -259,7 +268,7 @@ const Query = {
       .select('messages')
       .populate({
         path: 'messages',
-        options: { sort: { createdAt: 'desc' } },
+        options: { sort: { createdAt: 'asc' } },
       });
 
     return user.messages;

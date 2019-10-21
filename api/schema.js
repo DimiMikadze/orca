@@ -287,6 +287,7 @@ const schema = gql`
     sender: UserPayload
     message: String
     createdAt: String
+    isFirstMessage: Boolean
   }
 
   type IsUserOnlinePayload {
@@ -304,8 +305,8 @@ const schema = gql`
     # Gets the currently logged in user
     getAuthUser: UserPayload
 
-    # Gets user by username
-    getUser(username: String!): UserPayload
+    # Gets user by username or by id
+    getUser(username: String, id: ID): UserPayload
 
     # Gets user posts by username
     getUserPosts(username: String!, skip: Int, limit: Int): UserPostsPayload

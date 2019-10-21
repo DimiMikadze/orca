@@ -7,6 +7,7 @@ import { Button, Textarea } from 'components/Form';
 import { SendIcon } from 'components/icons';
 
 import { CREATE_MESSAGE } from 'graphql/messages';
+import { GET_CONVERSATIONS } from 'graphql/user';
 
 import { currentDate } from 'utils/date';
 
@@ -132,9 +133,19 @@ const MessageConversation = ({ messages, authUser, chatUser, data, match }) => {
       variables: {
         input: {
           sender: authUser.id,
-          receiver: chatUser.id,
+          receiver: chatUser ? chatUser.id : null,
           message: messageText,
         },
+      },
+      refetchQueries: ({ data }) => {
+        if (data && data.createMessage && data.createMessage.isFirstMessage) {
+          return [
+            {
+              query: GET_CONVERSATIONS,
+              variables: { authUserId: authUser.id },
+            },
+          ];
+        }
       },
     });
   };
@@ -173,7 +184,7 @@ const MessageConversation = ({ messages, authUser, chatUser, data, match }) => {
         <div ref={bottomRef} />
       </Conversation>
 
-      {match.params.userId !== Routes.NEW_ID_VALUE && (
+      {match.params.userId !== Routes.NEW_ID_VALUE && chatUser && (
         <Form onSubmit={sendMessage}>
           <StyledTextarea
             placeholder="Type a message"

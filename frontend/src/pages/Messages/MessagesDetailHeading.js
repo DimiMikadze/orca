@@ -60,7 +60,7 @@ const To = styled.div`
 `;
 
 const MessageDetailHeading = ({ location, match, chatUser }) => {
-  if (match.params.userId === Routes.NEW_ID_VALUE) {
+  if (match.params.userId === Routes.NEW_ID_VALUE || !chatUser) {
     return (
       <Root>
         <InputContainer>
