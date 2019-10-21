@@ -22,7 +22,7 @@ const Input = styled.input`
   width: 100%;
   border: 0;
   border-radius: ${p => p.theme.radius.sm};
-  padding-left: ${p => p.theme.spacing.lg};
+  padding-left: ${p => (p.hideIcon ? p.theme.spacing.xs : p.theme.spacing.lg)};
   padding-right: ${p => p.theme.spacing.lg};
   color: ${p => p.theme.colors.text.main};
   font-size: ${p => p.theme.font.size.xs};
@@ -49,13 +49,17 @@ const SearchInput = ({
   inputRef,
   backgroundColor,
   placeholder,
+  hideIcon,
   children,
+  autoFocus,
 }) => {
   return (
     <Root>
-      <IconContainer>
-        <SearchIcon />
-      </IconContainer>
+      {!hideIcon && (
+        <IconContainer>
+          <SearchIcon />
+        </IconContainer>
+      )}
 
       <Input
         onChange={onChange}
@@ -65,6 +69,8 @@ const SearchInput = ({
         backgroundColor={backgroundColor}
         type="text"
         placeholder={placeholder}
+        hideIcon={hideIcon}
+        autoFocus={autoFocus}
       />
 
       {children}
@@ -79,7 +85,9 @@ SearchInput.propTypes = {
   ref: PropTypes.object,
   backgroundColor: PropTypes.string,
   placeholder: PropTypes.string,
+  hideIcon: PropTypes.bool,
   children: PropTypes.node,
+  autoFocus: PropTypes.bool,
 };
 
 export default SearchInput;

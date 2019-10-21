@@ -69,7 +69,7 @@ const NoSearchResult = styled.div`
 /**
  * Displays search result, meant to be used in Search component
  */
-const SearchResult = ({ users }) => {
+const SearchResult = ({ users, forMessage }) => {
   if (users.length < 1) {
     return (
       <Root>
@@ -83,7 +83,11 @@ const SearchResult = ({ users }) => {
       {users.map(user => (
         <StyledA
           key={user.id}
-          to={generatePath(Routes.USER_PROFILE, { username: user.username })}
+          to={
+            forMessage
+              ? generatePath(Routes.MESSAGES, { userId: user.id })
+              : generatePath(Routes.USER_PROFILE, { username: user.username })
+          }
         >
           <Item>
             <ImageContainer>
@@ -107,6 +111,7 @@ const SearchResult = ({ users }) => {
 
 SearchResult.propTypes = {
   users: PropTypes.array.isRequired,
+  forMessage: PropTypes.bool,
 };
 
 export default SearchResult;

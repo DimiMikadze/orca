@@ -27,6 +27,7 @@ const MessagesDetail = ({ match, authUser }) => {
       return subscribeToMore({
         document: GET_MESSAGES_SUBSCRIPTION,
         variables: { authUserId: authUser.id, userId: match.params.userId },
+        skip: match.params.userId === Routes.NEW_ID_VALUE,
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
 
@@ -64,6 +65,7 @@ const MessagesDetail = ({ match, authUser }) => {
         messages={data ? data.getMessages : []}
         chatUser={chatUser}
         data={data}
+        match={match}
       />
     </Root>
   );

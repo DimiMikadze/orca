@@ -10,6 +10,8 @@ import { CREATE_MESSAGE } from 'graphql/messages';
 
 import { currentDate } from 'utils/date';
 
+import * as Routes from 'routes';
+
 const Root = styled.div`
   padding: 0 ${p => p.theme.spacing.sm};
   overflow-y: auto;
@@ -109,7 +111,7 @@ const SendIconButton = styled(Button)`
   align-self: center;
 `;
 
-const MessageConversation = ({ messages, authUser, chatUser, data }) => {
+const MessageConversation = ({ messages, authUser, chatUser, data, match }) => {
   const bottomRef = useRef(null);
 
   const [messageText, setMessageText] = useState('');
@@ -171,18 +173,20 @@ const MessageConversation = ({ messages, authUser, chatUser, data }) => {
         <div ref={bottomRef} />
       </Conversation>
 
-      <Form onSubmit={sendMessage}>
-        <StyledTextarea
-          placeholder="Type a message"
-          value={messageText}
-          onChange={e => setMessageText(e.target.value)}
-          onKeyDown={onEnterPress}
-        />
+      {match.params.userId !== Routes.NEW_ID_VALUE && (
+        <Form onSubmit={sendMessage}>
+          <StyledTextarea
+            placeholder="Type a message"
+            value={messageText}
+            onChange={e => setMessageText(e.target.value)}
+            onKeyDown={onEnterPress}
+          />
 
-        <SendIconButton type="submit" ghost>
-          <SendIcon width="28" />
-        </SendIconButton>
-      </Form>
+          <SendIconButton type="submit" ghost>
+            <SendIcon width="28" />
+          </SendIconButton>
+        </Form>
+      )}
     </Root>
   );
 };
@@ -192,6 +196,7 @@ MessageConversation.propTypes = {
   authUser: PropTypes.object.isRequired,
   chatUser: PropTypes.object,
   data: PropTypes.any,
+  match: PropTypes.object.isRequired,
 };
 
 export default MessageConversation;

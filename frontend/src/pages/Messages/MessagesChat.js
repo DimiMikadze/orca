@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { NavLink, generatePath } from 'react-router-dom';
+import { NavLink, generatePath, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_CONVERSATIONS } from 'graphql/user';
 
-import SearchInput from 'components/SearchInput';
+import Search from 'components/Search';
 import { PencilIcon } from 'components/icons';
 import { LoadingDots } from 'components/Loading';
 
@@ -105,7 +105,7 @@ const UserFullName = styled.div`
   color: ${p => p.theme.colors.text.primary};
 `;
 
-const MessagesChat = ({ authUser }) => {
+const MessagesChat = ({ location, authUser }) => {
   const { data, loading } = useQuery(GET_CONVERSATIONS, {
     variables: { authUserId: authUser.id },
   });
@@ -125,11 +125,11 @@ const MessagesChat = ({ authUser }) => {
       </HeadingContainer>
 
       <SearchInputContainer>
-        <SearchInput
+        <Search
+          location={location}
           backgroundColor="white"
-          placeholder="Search Messages"
-          onChange={() => {}}
-          value=""
+          forMessage
+          placeholder="Search message"
         />
       </SearchInputContainer>
 
@@ -157,7 +157,8 @@ const MessagesChat = ({ authUser }) => {
 };
 
 MessagesChat.propTypes = {
+  location: PropTypes.object.isRequired,
   authUser: PropTypes.object.isRequired,
 };
 
-export default MessagesChat;
+export default withRouter(MessagesChat);

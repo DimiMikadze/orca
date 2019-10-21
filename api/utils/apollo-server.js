@@ -77,7 +77,7 @@ export const createApolloServer = (schema, resolvers, models) => {
 
         // Get socket's context
         const c = await context.initPromise;
-        if (c.authUser) {
+        if (c && c.authUser) {
           // Publish user isOnline false
           pubSub.publish(IS_USER_ONLINE, {
             isUserOnline: {

@@ -8,9 +8,9 @@ import { Container, Spacing } from 'components/Layout';
 import { A } from 'components/Text';
 import { Button } from 'components/Form';
 import { UserIcon } from 'components/icons';
+import Search from 'components/Search';
 import SignOut from './SignOut';
 import Notification from './Notification';
-import Search from './Search';
 
 import { useClickOutside } from 'hooks/useClickOutside';
 
@@ -226,7 +226,7 @@ const Header = ({ location, toggleSideBar }) => {
           <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
 
           <Spacing left="sm" right="md">
-            <Search location={location} />
+            <Search location={location} placeholder="Search people" />
           </Spacing>
         </LeftSide>
 

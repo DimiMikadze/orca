@@ -1,6 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+
+import Search from 'components/Search';
 
 import * as Routes from 'routes';
 
@@ -46,7 +49,7 @@ const InputContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  align-items: center;
   padding: 0 ${p => p.theme.spacing.sm};
   color: ${p => p.theme.colors.text.secondary};
   font-size: ${p => p.theme.font.size.xs};
@@ -56,31 +59,17 @@ const To = styled.div`
   margin-top: 1px;
 `;
 
-const Input = styled.input`
-  width: 100%;
-  outline: none;
-  margin-left: ${p => p.theme.spacing.xs};
-  font-size: ${p => p.theme.font.size.xs};
-  color: ${p => p.theme.colors.text.secondary};
-  border: 0;
-  flex: 1;
-`;
-
-const MessageDetailHeading = ({ match, chatUser }) => {
-  const inputRef = useRef(null);
-
-  const onRootClick = () => {
-    inputRef.current.focus();
-  };
-
+const MessageDetailHeading = ({ location, match, chatUser }) => {
   if (match.params.userId === Routes.NEW_ID_VALUE) {
     return (
-      <Root onClick={onRootClick}>
+      <Root>
         <InputContainer>
           <To>To:</To>
-          <Input
-            ref={inputRef}
-            type="text"
+          <Search
+            location={location}
+            backgroundColor="white"
+            hideIcon
+            forMessage
             placeholder="Type the name of a person"
             autoFocus
           />
@@ -114,4 +103,4 @@ MessageDetailHeading.propTypes = {
   chatUser: PropTypes.object,
 };
 
-export default MessageDetailHeading;
+export default withRouter(MessageDetailHeading);

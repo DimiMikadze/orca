@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Loading } from 'components/Loading';
-import SearchInput from 'components/SearchInput';
+import SearchInput from './SearchInput';
 import SearchResult from './SearchResult';
 
 import { useClickOutside } from 'hooks/useClickOutside';
@@ -19,9 +19,17 @@ const StyledLoading = styled(Loading)`
 `;
 
 /**
- * Renders search input, meant to be used in Header component
+ * Renders search input
  */
-const Search = ({ location }) => {
+const Search = ({
+  location,
+  hideIcon,
+  forMessage,
+  backgroundColor,
+  placeholder,
+  autoFocus,
+  ...others
+}) => {
   const client = useApolloClient();
 
   const [isOpenSearchResult, setIsOpenSearchResult] = useState(false);
@@ -30,7 +38,7 @@ const Search = ({ location }) => {
   const [loading, setLoading] = useState(false);
 
   // Close search result on click outside
-  const inputRef = React.useRef(null);
+  const inputRef = useRef(null);
   useClickOutside(inputRef, () => setIsOpenSearchResult(false));
 
   // Debounce search query value
@@ -77,17 +85,28 @@ const Search = ({ location }) => {
       onFocus={handleInputFocus}
       value={searchQuery}
       inputRef={inputRef}
-      placeholder="Search People"
+      placeholder={placeholder}
+      hideIcon={hideIcon}
+      backgroundColor={backgroundColor}
+      autoFocus={autoFocus}
+      {...others}
     >
       {loading && <StyledLoading size="xxs" />}
 
-      {isOpenSearchResult && <SearchResult users={users} />}
+      {isOpenSearchResult && (
+        <SearchResult users={users} forMessage={forMessage} />
+      )}
     </SearchInput>
   );
 };
 
 Search.propTypes = {
   location: PropTypes.object.isRequired,
+  hideIcon: PropTypes.bool,
+  forMessage: PropTypes.bool,
+  backgroundColor: PropTypes.string,
+  placeholder: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 export default Search;
