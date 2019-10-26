@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, generatePath } from 'react-router-dom';
 
 import Search from 'components/Search';
+import { A } from 'components/Text';
 
 import * as Routes from 'routes';
 
@@ -45,6 +46,11 @@ const UserFullName = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
 `;
 
+const UserName = styled.div`
+  font-size: ${p => p.theme.font.size.xxs};
+  color: ${p => p.theme.colors.text.hint};
+`;
+
 const InputContainer = styled.div`
   width: 100%;
   display: flex;
@@ -60,6 +66,18 @@ const To = styled.div`
 `;
 
 const MessageDetailHeading = ({ location, match, chatUser }) => {
+  const renderLinkedUserTag = () => {
+    return (
+      <A
+        to={generatePath(Routes.USER_PROFILE, {
+          username: chatUser.username,
+        })}
+      >
+        <UserName>@{chatUser.username}</UserName>
+      </A>
+    );
+  };
+
   if (match.params.userId === Routes.NEW_ID_VALUE || !chatUser) {
     return (
       <Root>
@@ -79,6 +97,7 @@ const MessageDetailHeading = ({ location, match, chatUser }) => {
   }
 
   if (chatUser) {
+    console.log(chatUser.isOnline);
     return (
       <Root>
         <User
@@ -89,6 +108,7 @@ const MessageDetailHeading = ({ location, match, chatUser }) => {
           <Image src={chatUser.image} alt={chatUser.fullName} />
           <UserInfo>
             <UserFullName>{chatUser.fullName}</UserFullName>
+            {renderLinkedUserTag()}
           </UserInfo>
         </User>
       </Root>
