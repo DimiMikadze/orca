@@ -105,6 +105,18 @@ const UserFullName = styled.div`
   color: ${p => p.theme.colors.text.primary};
 `;
 
+const Online = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: ${p => p.theme.colors.success};
+  margin-left: ${p => p.theme.spacing.sm};
+  border-radius: 50%;
+`;
+
+const Offline = styled(Online)`
+  background-color: ${p => p.theme.colors.grey[300]};
+`;
+
 const MessagesChat = ({ location, authUser }) => {
   const { data, loading } = useQuery(GET_CONVERSATIONS, {
     variables: { authUserId: authUser.id },
@@ -148,6 +160,7 @@ const MessagesChat = ({ location, authUser }) => {
               <UserInfo>
                 <UserFullName>{user.fullName}</UserFullName>
               </UserInfo>
+              {user.isOnline ? <Online /> : <Offline />}
             </User>
           ))}
         </UserContainer>
