@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_CONVERSATIONS } from 'graphql/user';
 
 import Search from 'components/Search';
-import { PencilIcon } from 'components/icons';
+import { PencilIcon, UserIcon } from 'components/icons';
 import { LoadingDots } from 'components/Loading';
 
 import * as Routes from 'routes';
@@ -110,6 +110,14 @@ const MessagesChat = ({ location, authUser }) => {
     variables: { authUserId: authUser.id },
   });
 
+  const renderUserImage = ({ fullName, image }) => {
+    return image ? (
+      <Image src={image} alt={fullName} />
+    ) : (
+      <UserIcon width="50" />
+    );
+  };
+
   return (
     <Root>
       <HeadingContainer>
@@ -143,7 +151,7 @@ const MessagesChat = ({ location, authUser }) => {
               activeClassName="selected"
               to={`/messages/${user.id}`}
             >
-              <Image src={user.image} alt={user.fullName} />
+              {renderUserImage(user)}
 
               <UserInfo>
                 <UserFullName>{user.fullName}</UserFullName>

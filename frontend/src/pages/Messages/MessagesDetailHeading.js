@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import Search from 'components/Search';
+import { UserIcon } from 'components/icons';
 
 import * as Routes from 'routes';
 
@@ -60,6 +61,14 @@ const To = styled.div`
 `;
 
 const MessageDetailHeading = ({ location, match, chatUser }) => {
+  const renderUserImage = ({ fullName, image }) => {
+    return image ? (
+      <Image src={image} alt={fullName} />
+    ) : (
+      <UserIcon width="40" />
+    );
+  };
+
   if (match.params.userId === Routes.NEW_ID_VALUE || !chatUser) {
     return (
       <Root>
@@ -86,7 +95,7 @@ const MessageDetailHeading = ({ location, match, chatUser }) => {
           activeClassName="selected"
           to={`/messages/${chatUser.username}`}
         >
-          <Image src={chatUser.image} alt={chatUser.fullName} />
+          {renderUserImage(chatUser)}
           <UserInfo>
             <UserFullName>{chatUser.fullName}</UserFullName>
           </UserInfo>
