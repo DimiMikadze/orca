@@ -91,6 +91,10 @@ const Image = styled.img`
   border-radius: 50%;
 `;
 
+const OnlineStatusImage = styled.div`
+  position: relative;
+`;
+
 const UserInfo = styled.div`
   display: none;
   padding-left: ${p => p.theme.spacing.xs};
@@ -111,6 +115,12 @@ const Online = styled.div`
   background-color: ${p => p.theme.colors.success};
   margin-left: ${p => p.theme.spacing.sm};
   border-radius: 50%;
+  position: absolute;
+  bottom: 5px;
+  left: 35px;
+  margin: 0;
+  border: 2px solid #f5f5f5;
+  box-sizing: content-box;
 `;
 
 const Offline = styled(Online)`
@@ -155,12 +165,14 @@ const MessagesChat = ({ location, authUser }) => {
               activeClassName="selected"
               to={`/messages/${user.id}`}
             >
-              <Image src={user.image} alt={user.fullName} />
+              <OnlineStatusImage>
+                <Image src={user.image} alt={user.fullName} />
+                {user.isOnline ? <Online /> : <Offline />}
+              </OnlineStatusImage>
 
               <UserInfo>
                 <UserFullName>{user.fullName}</UserFullName>
               </UserInfo>
-              {user.isOnline ? <Online /> : <Offline />}
             </User>
           ))}
         </UserContainer>
