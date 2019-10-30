@@ -107,7 +107,7 @@ const StyledTextarea = styled(Textarea)`
   background-color: ${p => p.theme.colors.grey[200]};
 `;
 
-const SendIconButton = styled(Button)`
+const SendButton = styled(Button)`
   margin-left: ${p => p.theme.spacing.sm};
   align-self: center;
 `;
@@ -136,6 +136,8 @@ const MessagesChatConversation = ({
 
   const sendMessage = e => {
     e.preventDefault();
+
+    if (!messageText) return;
 
     setMessageText('');
     createMessage({
@@ -202,9 +204,9 @@ const MessagesChatConversation = ({
             onKeyDown={onEnterPress}
           />
 
-          <SendIconButton type="submit" ghost>
-            <SendIcon width="28" />
-          </SendIconButton>
+          <SendButton type="submit" ghost>
+            <SendIcon width="28" color="grey[300]" />
+          </SendButton>
         </Form>
       )}
     </Root>
