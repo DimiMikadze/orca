@@ -59,7 +59,10 @@ const To = styled.div`
   margin-top: 1px;
 `;
 
-const MessageDetailHeading = ({ location, match, chatUser }) => {
+/**
+ * Heading component for messages chat
+ */
+const MessagesChatHeading = ({ location, match, chatUser }) => {
   if (match.params.userId === Routes.NEW_ID_VALUE || !chatUser) {
     return (
       <Root>
@@ -98,9 +101,9 @@ const MessageDetailHeading = ({ location, match, chatUser }) => {
   return null;
 };
 
-MessageDetailHeading.propTypes = {
+MessagesChatHeading.propTypes = {
   match: PropTypes.object.isRequired,
   chatUser: PropTypes.object,
 };
 
-export default withRouter(MessageDetailHeading);
+export default withRouter(MessagesChatHeading);

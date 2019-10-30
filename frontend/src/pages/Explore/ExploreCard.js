@@ -43,6 +43,9 @@ const Photo = styled.div`
   background-color: ${p => p.theme.colors.grey[300]};
 `;
 
+/**
+ * Card component, meant to be used in Explore page
+ */
 const ExploreCard = ({ openPostPopup, image, countLikes, countComments }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 

@@ -6,8 +6,8 @@ import { useStore } from 'store';
 
 import { HEADER_HEIGHT } from 'constants/Layout';
 
+import MessagesUsers from './MessagesUsers';
 import MessagesChat from './MessagesChat';
-import MessagesDetail from './MessagesDetail';
 
 const Root = styled.div`
   background-color: ${p => p.theme.colors.white};
@@ -26,14 +26,17 @@ const Root = styled.div`
   }
 `;
 
+/**
+ * Messages page
+ */
 const Messages = ({ match }) => {
   const [{ auth }] = useStore();
 
   return (
     <Root>
-      <MessagesChat authUser={auth.user} match={match} />
+      <MessagesUsers authUser={auth.user} match={match} />
 
-      <MessagesDetail match={match} authUser={auth.user} />
+      <MessagesChat match={match} authUser={auth.user} />
     </Root>
   );
 };

@@ -112,7 +112,16 @@ const SendIconButton = styled(Button)`
   align-self: center;
 `;
 
-const MessageConversation = ({ messages, authUser, chatUser, data, match }) => {
+/**
+ * Component that renders messages conversations UI
+ */
+const MessagesChatConversation = ({
+  messages,
+  authUser,
+  chatUser,
+  data,
+  match,
+}) => {
   const bottomRef = useRef(null);
 
   const [messageText, setMessageText] = useState('');
@@ -202,7 +211,7 @@ const MessageConversation = ({ messages, authUser, chatUser, data, match }) => {
   );
 };
 
-MessageConversation.propTypes = {
+MessagesChatConversation.propTypes = {
   messages: PropTypes.array.isRequired,
   authUser: PropTypes.object.isRequired,
   chatUser: PropTypes.object,
@@ -210,4 +219,4 @@ MessageConversation.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default MessageConversation;
+export default MessagesChatConversation;
