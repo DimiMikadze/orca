@@ -4,9 +4,9 @@ import { withFilter } from 'apollo-server';
 import { uploadToCloudinary } from '../utils/cloudinary';
 import { generateToken } from '../utils/generate-token';
 import { sendEmail } from '../utils/email';
-
 import { pubSub } from '../utils/apollo-server';
-import { IS_USER_ONLINE } from '../constants/Subscriptions';
+
+import { IS_USER_ONLINE, NEW_CONVERSATION } from '../constants/Subscriptions';
 
 const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
@@ -53,7 +53,7 @@ const Query = {
     }
 
     if (username && id) {
-      throw new Error('please pass only username or only id as a paran');
+      throw new Error('please pass only username or only id as a param');
     }
 
     const query = username ? { username: username } : { _id: id };
@@ -510,12 +510,23 @@ const Mutation = {
 
 const Subscription = {
   /**
-   * Subscribes to us isOnline changed event
+   * Subscribes to user's isOnline change event
    */
   isUserOnline: {
     subscribe: withFilter(
       () => pubSub.asyncIterator(IS_USER_ONLINE),
       (payload, variables, { authUser }) => variables.authUserId === authUser.id
+    ),
+  },
+
+  /**
+   * Subscribes to new conversations event
+   */
+  newConversation: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(NEW_CONVERSATION),
+      (payload, variables, { authUser }) =>
+        authUser && authUser.id === payload.newConversation.receiverId
     ),
   },
 };

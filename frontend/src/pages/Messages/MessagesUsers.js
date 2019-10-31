@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink, generatePath, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_CONVERSATIONS } from 'graphql/user';
+import { GET_NEW_CONVERSATIONS_SUBSCRIPTION } from 'graphql/messages';
 
 import Search from 'components/Search';
 import { PencilIcon } from 'components/icons';
@@ -109,9 +110,29 @@ const UserFullName = styled.div`
  * Component that renders users, with whom auth user had a chat
  */
 const MessagesUsers = ({ location, authUser }) => {
-  const { data, loading } = useQuery(GET_CONVERSATIONS, {
+  const { subscribeToMore, data, loading } = useQuery(GET_CONVERSATIONS, {
     variables: { authUserId: authUser.id },
   });
+
+  useEffect(() => {
+    const subscribeToNewConversations = () => {
+      return subscribeToMore({
+        document: GET_NEW_CONVERSATIONS_SUBSCRIPTION,
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev;
+
+          // Merge users
+          const newUser = subscriptionData.data.newConversation;
+          delete newUser['receiverId'];
+          const mergedUsers = [...prev.getConversations, newUser];
+
+          return { getConversations: mergedUsers };
+        },
+      });
+    };
+
+    subscribeToNewConversations();
+  }, [subscribeToMore]);
 
   return (
     <Root>

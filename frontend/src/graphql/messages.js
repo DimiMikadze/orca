@@ -65,3 +65,19 @@ export const CREATE_MESSAGE = gql`
     }
   }
 `;
+
+/**
+ * Get user's new conversation in real time
+ */
+export const GET_NEW_CONVERSATIONS_SUBSCRIPTION = gql`
+  subscription {
+    newConversation {
+      id
+      username
+      fullName
+      image
+      isOnline
+      createdAt
+    }
+  }
+`;

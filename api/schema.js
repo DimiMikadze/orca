@@ -406,6 +406,8 @@ const schema = gql`
     messageCreated(authUserId: ID!, userId: ID!): MessagePayload
 
     isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
+
+    newConversation: UserPayload
   }
 `;
 

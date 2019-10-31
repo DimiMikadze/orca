@@ -14,6 +14,7 @@ export default {
       bold: '600',
     },
     size: {
+      tiny: '11px',
       xxs: '13px',
       xs: '14px',
       sm: '16px',

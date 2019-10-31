@@ -21,9 +21,11 @@ const Root = styled.div`
  * Messages chat wrapper
  */
 const MessagesChat = ({ match, authUser }) => {
+  const { userId } = match.params;
+
   const { data, loading } = useQuery(GET_USER, {
-    variables: { id: match.params.userId },
-    skip: match.params.userId === Routes.NEW_ID_VALUE,
+    variables: { id: userId },
+    skip: userId === Routes.NEW_ID_VALUE,
   });
 
   const {
@@ -31,21 +33,20 @@ const MessagesChat = ({ match, authUser }) => {
     data: messages,
     loading: messagesLoading,
   } = useQuery(GET_MESSAGES, {
-    variables: { authUserId: authUser.id, userId: match.params.userId },
-    skip: match.params.userId === Routes.NEW_ID_VALUE,
+    variables: { authUserId: authUser.id, userId },
+    skip: userId === Routes.NEW_ID_VALUE,
   });
 
   useEffect(() => {
     const subscribeToNewMessages = () => {
       return subscribeToMore({
         document: GET_MESSAGES_SUBSCRIPTION,
-        variables: { authUserId: authUser.id, userId: match.params.userId },
-        skip: match.params.userId === Routes.NEW_ID_VALUE,
+        variables: { authUserId: authUser.id, userId },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
 
-          // Check if are not duplicating
-          const msgId = subscriptionData.data.messageCreated.id;
+          // Check if we are not duplicating
+          const { id: msgId } = subscriptionData.data.messageCreated;
           let prevMsgId = null;
           if (prev.getMessages && prev.getMessages.length > 0) {
             prevMsgId = prev.getMessages[prev.getMessages.length - 1].id;
@@ -61,8 +62,10 @@ const MessagesChat = ({ match, authUser }) => {
       });
     };
 
-    subscribeToNewMessages();
-  }, [authUser.id, match.params.userId, subscribeToMore]);
+    if (userId !== Routes.NEW_ID_VALUE) {
+      subscribeToNewMessages();
+    }
+  }, [authUser.id, userId, subscribeToMore]);
 
   if (loading || messagesLoading) {
     return (

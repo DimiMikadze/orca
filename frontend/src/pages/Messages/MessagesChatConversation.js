@@ -53,7 +53,7 @@ const MessageDate = styled.span`
   left: ${p => !p.userMessage && p.theme.spacing.lg};
   right: -${p => p.userMessage && 0};
   display: none;
-  font-size: ${p => p.theme.font.size.xxs};
+  font-size: ${p => p.theme.font.size.tiny};
   color: ${p => p.theme.colors.text.secondary};
 `;
 

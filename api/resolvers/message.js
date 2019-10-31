@@ -1,7 +1,7 @@
 import { withFilter } from 'apollo-server';
 
 import { pubSub } from '../utils/apollo-server';
-import { MESSAGE_CREATED } from '../constants/Subscriptions';
+import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
 
 const Query = {
   /**
@@ -53,7 +53,7 @@ const Mutation = {
 
     // Check if user already had a conversation
     // if not push their ids to users collection
-    const senderUser = await User.findById(sender).select('messages');
+    const senderUser = await User.findById(sender);
     if (!senderUser.messages.includes(receiver)) {
       await User.findOneAndUpdate(
         { _id: sender },
@@ -65,6 +65,19 @@ const Mutation = {
       );
 
       newMessage.isFirstMessage = true;
+
+      // Publish message created event
+      pubSub.publish(NEW_CONVERSATION, {
+        newConversation: {
+          receiverId: receiver,
+          fullName: senderUser.fullName,
+          createdAt: newMessage.createdAt,
+          id: senderUser.id,
+          image: senderUser.image,
+          isOnline: senderUser.isOnline,
+          username: senderUser.username,
+        },
+      });
     }
 
     return newMessage;
