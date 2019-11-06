@@ -8,7 +8,7 @@ import { Query } from 'react-apollo';
 import { Loading } from 'components/Loading';
 import { H3, A } from 'components/Text';
 import { Spacing } from 'components/Layout';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import { useStore } from 'store';
 
@@ -49,20 +49,6 @@ const ListItem = styled.li`
   &:last-child {
     margin-bottom: 0;
   }
-`;
-
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const FullName = styled.div`
@@ -113,13 +99,7 @@ const UserSuggestions = ({ pathname }) => {
                       username: user.username,
                     })}
                   >
-                    <ImageContainer>
-                      {user.image ? (
-                        <Image src={user.image} alt={user.fullName} />
-                      ) : (
-                        <UserIcon width="30" />
-                      )}
-                    </ImageContainer>
+                    <Avatar image={user.image} />
                   </A>
 
                   <Spacing left="xs">

@@ -5,9 +5,9 @@ import { generatePath } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 
 import { CloseIcon } from 'components/icons';
-import { UserIcon } from 'components/icons';
 import { A } from './Text';
 import { Spacing } from './Layout';
+import Avatar from 'components/Avatar';
 
 import { GET_AUTH_USER, GET_USER } from 'graphql/user';
 import { DELETE_COMMENT } from 'graphql/comment';
@@ -39,19 +39,6 @@ const Root = styled.div`
   &:hover ${DeleteButton} {
     display: block;
   }
-`;
-
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const UserName = styled.div`
@@ -112,13 +99,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
                 username: comment.author.username,
               })}
             >
-              <ImageContainer>
-                {comment.author.image ? (
-                  <Image src={comment.author.image} />
-                ) : (
-                  <UserIcon width="30" />
-                )}
-              </ImageContainer>
+              <Avatar image={comment.author.image} />
             </A>
 
             <CommentSection>

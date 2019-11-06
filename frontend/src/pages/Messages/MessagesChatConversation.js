@@ -5,6 +5,8 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Button, Textarea } from 'components/Form';
 import { SendIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
+import { Spacing } from 'components/Layout';
 
 import { CREATE_MESSAGE } from 'graphql/messages';
 import { GET_CONVERSATIONS } from 'graphql/user';
@@ -66,14 +68,6 @@ const MessageWrapper = styled.div`
   &:hover ${MessageDate} {
     display: block;
   }
-`;
-
-const Image = styled.img`
-  width: 28px;
-  height: 28px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: ${p => p.theme.spacing.xs};
 `;
 
 const Message = styled.div`
@@ -176,10 +170,9 @@ const MessagesChatConversation = ({
           return (
             <MessageWrapper userMessage={isAuthUserReceiver} key={message.id}>
               {!isAuthUserReceiver && (
-                <Image
-                  src={message.sender.image}
-                  alt={message.sender.fullName}
-                />
+                <Spacing right="xs">
+                  <Avatar image={message.sender.image} />
+                </Spacing>
               )}
 
               <Message userMessage={isAuthUserReceiver}>

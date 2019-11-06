@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import Search from 'components/Search';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -26,13 +27,6 @@ const User = styled.div`
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-`;
-
-const Image = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
 `;
 
 const UserInfo = styled.div`
@@ -89,7 +83,8 @@ const MessagesChatHeading = ({ location, match, chatUser }) => {
           activeClassName="selected"
           to={`/messages/${chatUser.username}`}
         >
-          <Image src={chatUser.image} alt={chatUser.fullName} />
+          <Avatar image={chatUser.image} size={40} />
+
           <UserInfo>
             <UserFullName>{chatUser.fullName}</UserFullName>
           </UserInfo>

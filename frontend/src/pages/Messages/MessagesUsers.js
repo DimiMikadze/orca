@@ -10,6 +10,7 @@ import { GET_NEW_CONVERSATIONS_SUBSCRIPTION } from 'graphql/messages';
 import Search from 'components/Search';
 import { PencilIcon } from 'components/icons';
 import { LoadingDots } from 'components/Loading';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -83,13 +84,6 @@ const User = styled(NavLink)`
   &.selected {
     background-color: ${p => p.theme.colors.grey[100]};
   }
-`;
-
-const Image = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
 `;
 
 const UserInfo = styled.div`
@@ -167,7 +161,7 @@ const MessagesUsers = ({ location, authUser }) => {
               activeClassName="selected"
               to={`/messages/${user.id}`}
             >
-              <Image src={user.image} alt={user.fullName} />
+              <Avatar image={user.image} size={50} />
 
               <UserInfo>
                 <UserFullName>{user.fullName}</UserFullName>

@@ -7,10 +7,10 @@ import { NotificationIcon, MenuIcon } from 'components/icons';
 import { Container, Spacing } from 'components/Layout';
 import { A } from 'components/Text';
 import { Button } from 'components/Form';
-import { UserIcon } from 'components/icons';
 import Search from 'components/Search';
 import SignOut from './SignOut';
 import Notification from './Notification';
+import Avatar from 'components/Avatar';
 
 import { useClickOutside } from 'hooks/useClickOutside';
 
@@ -128,20 +128,6 @@ const NoNotification = styled.div`
   padding: ${p => p.theme.spacing.xs};
 `;
 
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const DropDown = styled.div`
   text-align: center;
   position: absolute;
@@ -243,13 +229,7 @@ const Header = ({ location, toggleSideBar }) => {
           </Spacing>
 
           <Button ghost onClick={handleUserIconClick}>
-            <ImageContainer>
-              {auth.user.image ? (
-                <Image src={auth.user.image} />
-              ) : (
-                <UserIcon width={28} />
-              )}
-            </ImageContainer>
+            <Avatar image={auth.user.image} />
           </Button>
         </RightSide>
 

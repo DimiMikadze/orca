@@ -5,7 +5,7 @@ import { generatePath } from 'react-router-dom';
 
 import { Spacing } from 'components/Layout';
 import { A } from 'components/Text';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -35,21 +35,6 @@ const Item = styled.div`
   flex-direction: row;
   align-items: center;
   padding: ${p => p.theme.spacing.xs};
-`;
-
-const ImageContainer = styled.div`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
 `;
 
 const Name = styled.div`
@@ -90,13 +75,7 @@ const SearchResult = ({ users, forMessage }) => {
           }
         >
           <Item>
-            <ImageContainer>
-              {user.image ? (
-                <Image src={user.image} />
-              ) : (
-                <UserIcon width="34" />
-              )}
-            </ImageContainer>
+            <Avatar image={user.image} size={34} />
 
             <Spacing left="xs">
               <Name>{user.fullName}</Name>

@@ -6,7 +6,7 @@ import { withApollo } from 'react-apollo';
 
 import { A } from 'components/Text';
 import { Spacing } from 'components/Layout';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import { useClickOutside } from 'hooks/useClickOutside';
 
@@ -36,20 +36,6 @@ const LeftSide = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const ThumbContainer = styled.div`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  overflow: hidden;
-`;
-
-const Thumb = styled.img`
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
 `;
 
 const Name = styled.div`
@@ -115,13 +101,7 @@ const Notification = ({ notification, close, client }) => {
         })}
       >
         <LeftSide>
-          <ThumbContainer>
-            {notification.author.image ? (
-              <Thumb src={notification.author.image} />
-            ) : (
-              <UserIcon width="34" />
-            )}
-          </ThumbContainer>
+          <Avatar image={notification.author.image} size={34} />
 
           <Spacing left="xs" />
 
