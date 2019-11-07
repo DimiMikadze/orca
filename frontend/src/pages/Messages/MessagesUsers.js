@@ -18,6 +18,7 @@ const Root = styled.div`
   width: 80px;
   height: 100%;
   border-right: 1px solid ${p => p.theme.colors.grey[300]};
+  padding: 0 ${p => p.theme.spacing.xxs};
 
   @media (min-width: ${p => p.theme.screen.lg}) {
     width: 330px;
@@ -59,7 +60,7 @@ const NewMessage = styled(NavLink)`
   align-items: center;
 `;
 
-const SearchInputContainer = styled.div`
+const SearchContainer = styled.div`
   display: none;
   border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
 
@@ -73,31 +74,66 @@ const UserContainer = styled.div`
 `;
 
 const User = styled(NavLink)`
-  margin: 0 ${p => p.theme.spacing.xxs};
+  width: 100%;
   padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xxs};
+  margin-bottom: ${p => p.theme.spacing.xxs};
   border-radius: ${p => p.theme.radius.md};
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   text-decoration: none;
+  color: ${p => p.theme.colors.text.primary};
+
+  @media (max-width: ${p => p.theme.screen.lg}) {
+    ${p =>
+      !p.seen &&
+      `
+        background-color: ${p.theme.colors.primary.light};
+      `};
+  }
 
   &.selected {
     background-color: ${p => p.theme.colors.grey[100]};
   }
 `;
 
-const UserInfo = styled.div`
+const Info = styled.div`
+  width: 100%;
   display: none;
-  padding-left: ${p => p.theme.spacing.xs};
+  padding: 0 ${p => p.theme.spacing.xs};
 
   @media (min-width: ${p => p.theme.screen.lg}) {
     display: block;
   }
 `;
 
-const UserFullName = styled.div`
+const FullNameUnSeen = styled.div`
+  width: 100%;
   font-size: ${p => p.theme.font.size.sm};
-  color: ${p => p.theme.colors.text.primary};
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FullName = styled.div`
+  text-overflow: ellipsis;
+  width: 100%;
+`;
+
+const UnSeen = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: ${p => p.theme.colors.primary.light};
+  border-radius: 50%;
+`;
+
+const LastMessage = styled.div`
+  margin-top: ${p => p.theme.spacing.xxs};
+  font-size: ${p => p.theme.font.size.xxs};
+  color: ${p => p.theme.colors.grey[500]};
+  text-overflow: ellipsis;
 `;
 
 /**
@@ -118,7 +154,7 @@ const MessagesUsers = ({ location, authUser }) => {
           // Merge users
           const newUser = subscriptionData.data.newConversation;
           delete newUser['receiverId'];
-          const mergedUsers = [...prev.getConversations, newUser];
+          const mergedUsers = [newUser, ...prev.getConversations];
 
           return { getConversations: mergedUsers };
         },
@@ -142,32 +178,47 @@ const MessagesUsers = ({ location, authUser }) => {
         </NewMessage>
       </HeadingContainer>
 
-      <SearchInputContainer>
+      <SearchContainer>
         <Search
           location={location}
           backgroundColor="white"
           forMessage
           placeholder="Search message"
         />
-      </SearchInputContainer>
+      </SearchContainer>
 
       {loading && <LoadingDots top="xl" />}
 
       {!loading && (
         <UserContainer>
-          {data.getConversations.map(user => (
-            <User
-              key={user.id}
-              activeClassName="selected"
-              to={`/messages/${user.id}`}
-            >
-              <Avatar image={user.image} size={50} />
+          {data.getConversations.map(user => {
+            const unseen = !user.lastMessageSender && !user.seen;
 
-              <UserInfo>
-                <UserFullName>{user.fullName}</UserFullName>
-              </UserInfo>
-            </User>
-          ))}
+            return (
+              <User
+                key={user.id}
+                activeClassName="selected"
+                to={`/messages/${user.id}`}
+                seen={unseen ? 0 : 1}
+              >
+                <span>
+                  <Avatar image={user.image} size={50} />
+                </span>
+
+                <Info>
+                  <FullNameUnSeen>
+                    <FullName>{user.fullName}</FullName>
+
+                    {unseen && <UnSeen />}
+                  </FullNameUnSeen>
+
+                  <LastMessage>
+                    {user.lastMessageSender && 'You:'} {user.lastMessage}
+                  </LastMessage>
+                </Info>
+              </User>
+            );
+          })}
         </UserContainer>
       )}
     </Root>

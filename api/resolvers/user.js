@@ -6,7 +6,7 @@ import { generateToken } from '../utils/generate-token';
 import { sendEmail } from '../utils/email';
 import { pubSub } from '../utils/apollo-server';
 
-import { IS_USER_ONLINE, NEW_CONVERSATION } from '../constants/Subscriptions';
+import { IS_USER_ONLINE } from '../constants/Subscriptions';
 
 const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
@@ -257,22 +257,6 @@ const Query = {
 
     return { message: 'Success' };
   },
-
-  /**
-   * Get users with whom authUser had a conversation
-   *
-   * @param {string} authUserId
-   */
-  getConversations: async (root, { authUserId }, { User }) => {
-    const user = await User.findById(authUserId)
-      .select('messages')
-      .populate({
-        path: 'messages',
-        options: { sort: { createdAt: 'asc' } },
-      });
-
-    return user.messages;
-  },
 };
 
 const Mutation = {
@@ -516,17 +500,6 @@ const Subscription = {
     subscribe: withFilter(
       () => pubSub.asyncIterator(IS_USER_ONLINE),
       (payload, variables, { authUser }) => variables.authUserId === authUser.id
-    ),
-  },
-
-  /**
-   * Subscribes to new conversations event
-   */
-  newConversation: {
-    subscribe: withFilter(
-      () => pubSub.asyncIterator(NEW_CONVERSATION),
-      (payload, variables, { authUser }) =>
-        authUser && authUser.id === payload.newConversation.receiverId
     ),
   },
 };

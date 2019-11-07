@@ -16,6 +16,10 @@ const messageSchema = Schema(
       ref: 'User',
     },
     message: String,
+    seen: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

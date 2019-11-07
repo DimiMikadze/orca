@@ -201,6 +201,11 @@ const schema = gql`
     userId: ID!
   }
 
+  input UpdateMessageSeenInput {
+    sender: ID
+    receiver: ID!
+  }
+
   # ---------------------------------------------------------
   # Return Payloads
   # ---------------------------------------------------------
@@ -221,6 +226,7 @@ const schema = gql`
     following: [Follow]
     notifications: [NotificationPayload]
     newNotifications: [NotificationPayload]
+    unseenMessage: Boolean
     createdAt: String
     updatedAt: String
   }
@@ -286,6 +292,7 @@ const schema = gql`
     receiver: UserPayload
     sender: UserPayload
     message: String
+    seen: Boolean
     createdAt: String
     isFirstMessage: Boolean
   }
@@ -293,6 +300,18 @@ const schema = gql`
   type IsUserOnlinePayload {
     userId: ID!
     isOnline: Boolean
+  }
+
+  type ConversationsPayload {
+    id: ID!
+    username: String
+    fullName: String
+    image: String
+    isOnline: Boolean
+    seen: Boolean
+    lastMessage: String
+    lastMessageSender: Boolean
+    lastMessageCreatedAt: String
   }
 
   # ---------------------------------------------------------
@@ -340,7 +359,7 @@ const schema = gql`
     getMessages(authUserId: ID!, userId: ID!): [MessagePayload]
 
     # Gets user's conversations
-    getConversations(authUserId: ID!): [UserPayload]
+    getConversations(authUserId: ID!): [ConversationsPayload]
   }
 
   # ---------------------------------------------------------
@@ -397,6 +416,9 @@ const schema = gql`
 
     # Creates a message
     createMessage(input: CreateMessageInput!): MessagePayload
+
+    # Updates message seen values for user
+    updateMessageSeen(input: UpdateMessageSeenInput!): Boolean
   }
 
   # ---------------------------------------------------------
@@ -407,7 +429,7 @@ const schema = gql`
 
     isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
 
-    newConversation: UserPayload
+    newConversation: ConversationsPayload
   }
 `;
 

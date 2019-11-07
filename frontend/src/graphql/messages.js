@@ -77,7 +77,19 @@ export const GET_NEW_CONVERSATIONS_SUBSCRIPTION = gql`
       fullName
       image
       isOnline
-      createdAt
+      seen
+      lastMessage
+      lastMessageSender
+      lastMessageCreatedAt
     }
+  }
+`;
+
+/**
+ * Updates message seen property
+ */
+export const UPDATE_MESSAGE_SEEN = gql`
+  mutation($input: UpdateMessageSeenInput!) {
+    updateMessageSeen(input: $input)
   }
 `;

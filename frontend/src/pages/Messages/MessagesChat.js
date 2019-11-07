@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 
 import { LoadingDots } from 'components/Loading';
 import MessagesChatConversation from './MessagesChatConversation';
 import MessagesChatHeading from './MessagesChatHeading';
 
-import { GET_MESSAGES, GET_MESSAGES_SUBSCRIPTION } from 'graphql/messages';
-import { GET_USER } from 'graphql/user';
+import {
+  GET_MESSAGES,
+  GET_MESSAGES_SUBSCRIPTION,
+  UPDATE_MESSAGE_SEEN,
+} from 'graphql/messages';
+import { GET_USER, GET_CONVERSATIONS } from 'graphql/user';
 
 import * as Routes from 'routes';
 
@@ -22,6 +26,8 @@ const Root = styled.div`
  */
 const MessagesChat = ({ match, authUser }) => {
   const { userId } = match.params;
+
+  const client = useApolloClient();
 
   const { data, loading } = useQuery(GET_USER, {
     variables: { id: userId },
@@ -66,6 +72,33 @@ const MessagesChat = ({ match, authUser }) => {
       subscribeToNewMessages();
     }
   }, [authUser.id, userId, subscribeToMore]);
+
+  useEffect(() => {
+    const MutateOnRender = async () => {
+      // Update notification seen for user
+      try {
+        await client.mutate({
+          mutation: UPDATE_MESSAGE_SEEN,
+          variables: {
+            input: {
+              receiver: authUser.id,
+              sender: userId,
+            },
+          },
+          refetchQueries: () => [
+            {
+              query: GET_CONVERSATIONS,
+              variables: { authUserId: authUser.id },
+            },
+          ],
+        });
+      } catch (err) {}
+    };
+
+    if (userId !== Routes.NEW_ID_VALUE) {
+      MutateOnRender();
+    }
+  }, [authUser.id, client, userId]);
 
   if (loading || messagesLoading) {
     return (

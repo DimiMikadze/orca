@@ -270,7 +270,10 @@ export const GET_CONVERSATIONS = gql`
       fullName
       image
       isOnline
-      createdAt
+      seen
+      lastMessage
+      lastMessageSender
+      lastMessageCreatedAt
     }
   }
 `;
