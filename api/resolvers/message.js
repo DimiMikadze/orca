@@ -149,7 +149,6 @@ const Mutation = {
       pubSub.publish(NEW_CONVERSATION, {
         newConversation: {
           receiverId: receiver,
-
           id: senderUser.id,
           username: senderUser.username,
           fullName: senderUser.fullName,
@@ -200,12 +199,12 @@ const Subscription = {
         const { sender, receiver } = payload.messageCreated;
         const { authUserId, userId } = variables;
 
-        const isSender = sender.id === authUserId || sender.id === userId;
-        const isReceiver = receiver.id === authUserId || receiver.id === userId;
+        const isAuthUserSenderOrReceiver =
+          authUserId === sender.id || authUserId === receiver.id;
+        const isUserSenderOrReceiver =
+          userId === sender.id || userId === receiver.id;
 
-        const result = isSender || isReceiver;
-
-        return result;
+        return isAuthUserSenderOrReceiver && isUserSenderOrReceiver;
       }
     ),
   },
