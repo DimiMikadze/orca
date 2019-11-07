@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useQuery, useApolloClient } from '@apollo/react-hooks';
@@ -41,64 +41,55 @@ const MessagesChat = ({ match, authUser }) => {
   } = useQuery(GET_MESSAGES, {
     variables: { authUserId: authUser.id, userId },
     skip: userId === Routes.NEW_ID_VALUE,
+    fetchPolicy: 'network-only',
   });
 
-  useEffect(() => {
-    const subscribeToNewMessages = () => {
-      return subscribeToMore({
-        document: GET_MESSAGES_SUBSCRIPTION,
-        variables: { authUserId: authUser.id, userId },
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
-
-          // Check if we are not duplicating
-          const { id: msgId } = subscriptionData.data.messageCreated;
-          let prevMsgId = null;
-          if (prev.getMessages && prev.getMessages.length > 0) {
-            prevMsgId = prev.getMessages[prev.getMessages.length - 1].id;
-          }
-          if (msgId === prevMsgId) return prev;
-
-          // Merge messages
-          const newMessage = subscriptionData.data.messageCreated;
-          const mergedMessages = [...prev.getMessages, newMessage];
-
-          return { getMessages: mergedMessages };
-        },
-      });
-    };
-
-    if (userId !== Routes.NEW_ID_VALUE) {
-      subscribeToNewMessages();
-    }
-  }, [authUser.id, userId, subscribeToMore]);
-
-  useEffect(() => {
-    const MutateOnRender = async () => {
-      // Update notification seen for user
-      try {
-        await client.mutate({
-          mutation: UPDATE_MESSAGE_SEEN,
-          variables: {
-            input: {
-              receiver: authUser.id,
-              sender: userId,
-            },
+  const updateMessageSeen = useCallback(async () => {
+    try {
+      await client.mutate({
+        mutation: UPDATE_MESSAGE_SEEN,
+        variables: {
+          input: {
+            receiver: authUser.id,
+            sender: userId,
           },
-          refetchQueries: () => [
-            {
-              query: GET_CONVERSATIONS,
-              variables: { authUserId: authUser.id },
-            },
-          ],
-        });
-      } catch (err) {}
-    };
-
-    if (userId !== Routes.NEW_ID_VALUE) {
-      MutateOnRender();
-    }
+        },
+        refetchQueries: () => [
+          {
+            query: GET_CONVERSATIONS,
+            variables: { authUserId: authUser.id },
+          },
+        ],
+      });
+    } catch (err) {}
   }, [authUser.id, client, userId]);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMore({
+      document: GET_MESSAGES_SUBSCRIPTION,
+      variables: { authUserId: authUser.id, userId },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+
+        updateMessageSeen();
+
+        const newMessage = subscriptionData.data.messageCreated;
+        const mergedMessages = [...prev.getMessages, newMessage];
+
+        return { getMessages: mergedMessages };
+      },
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [authUser.id, userId, subscribeToMore, updateMessageSeen]);
+
+  useEffect(() => {
+    if (userId !== Routes.NEW_ID_VALUE) {
+      updateMessageSeen();
+    }
+  }, [userId, updateMessageSeen]);
 
   if (loading || messagesLoading) {
     return (

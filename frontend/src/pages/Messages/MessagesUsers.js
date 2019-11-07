@@ -145,23 +145,23 @@ const MessagesUsers = ({ location, authUser }) => {
   });
 
   useEffect(() => {
-    const subscribeToNewConversations = () => {
-      return subscribeToMore({
-        document: GET_NEW_CONVERSATIONS_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
+    const unsubscribe = subscribeToMore({
+      document: GET_NEW_CONVERSATIONS_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
 
-          // Merge users
-          const newUser = subscriptionData.data.newConversation;
-          delete newUser['receiverId'];
-          const mergedUsers = [newUser, ...prev.getConversations];
+        // Merge users
+        const newUser = subscriptionData.data.newConversation;
+        delete newUser['receiverId'];
+        const mergedUsers = [newUser, ...prev.getConversations];
 
-          return { getConversations: mergedUsers };
-        },
-      });
+        return { getConversations: mergedUsers };
+      },
+    });
+
+    return () => {
+      unsubscribe();
     };
-
-    subscribeToNewConversations();
   }, [subscribeToMore]);
 
   return (
