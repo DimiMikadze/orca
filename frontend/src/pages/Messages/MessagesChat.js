@@ -12,7 +12,7 @@ import {
   GET_MESSAGES_SUBSCRIPTION,
   UPDATE_MESSAGE_SEEN,
 } from 'graphql/messages';
-import { GET_USER, GET_CONVERSATIONS } from 'graphql/user';
+import { GET_USER, GET_CONVERSATIONS, GET_AUTH_USER } from 'graphql/user';
 
 import * as Routes from 'routes';
 
@@ -59,6 +59,7 @@ const MessagesChat = ({ match, authUser }) => {
             query: GET_CONVERSATIONS,
             variables: { authUserId: authUser.id },
           },
+          { query: GET_AUTH_USER },
         ],
       });
     } catch (err) {}

@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink, generatePath } from 'react-router-dom';
-import { useApolloClient } from '@apollo/react-hooks';
-
-import { UPDATE_MESSAGE_SEEN } from 'graphql/messages';
-import { GET_AUTH_USER } from 'graphql/user';
 
 import Avatar from 'components/Avatar';
 import { A } from 'components/Text';
@@ -13,8 +9,6 @@ import { A } from 'components/Text';
 import { timeAgo } from 'utils/date';
 
 import * as Routes from 'routes';
-
-import { useStore } from 'store';
 
 const Root = styled.div`
   position: absolute;
@@ -50,10 +44,6 @@ const Link = styled(A)`
     color: ${p => p.theme.colors.primary.main};
     text-decoration: underline;
   }
-`;
-
-const Empty = styled.div`
-  padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.xs};
 `;
 
 const User = styled(NavLink)`
@@ -101,28 +91,6 @@ const CreatedAt = styled.div`
  * Component that renders Header Message's dropdown
  */
 const HeaderMessageDropdown = ({ messageRef, dropdownData }) => {
-  const [{ auth }] = useStore();
-  const client = useApolloClient();
-
-  useEffect(() => {
-    const updateMessageSeen = async userId => {
-      try {
-        await client.mutate({
-          mutation: UPDATE_MESSAGE_SEEN,
-          variables: {
-            input: {
-              receiver: auth.user.id,
-              sender: userId,
-            },
-          },
-          refetchQueries: () => [{ query: GET_AUTH_USER }],
-        });
-      } catch (err) {}
-    };
-
-    dropdownData.map(u => updateMessageSeen(u.id));
-  }, [auth.user.id, client, dropdownData]);
-
   return (
     <Root ref={messageRef}>
       <Heading>
@@ -133,30 +101,26 @@ const HeaderMessageDropdown = ({ messageRef, dropdownData }) => {
         </Link>
       </Heading>
 
-      {!dropdownData.length ? (
-        <Empty>No new messages.</Empty>
-      ) : (
-        dropdownData.map(user => (
-          <User
-            key={user.id}
-            to={generatePath(Routes.MESSAGES, { userId: user.id })}
-          >
-            <span>
-              <Avatar image={user.image} size={50} />
-            </span>
+      {dropdownData.map(user => (
+        <User
+          key={user.id}
+          to={generatePath(Routes.MESSAGES, { userId: user.id })}
+        >
+          <span>
+            <Avatar image={user.image} size={50} />
+          </span>
 
-            <Info>
-              <div>
-                <FullName>{user.fullName}</FullName>
+          <Info>
+            <div>
+              <FullName>{user.fullName}</FullName>
 
-                <LastMessage>{user.lastMessage}</LastMessage>
-              </div>
+              <LastMessage>{user.lastMessage}</LastMessage>
+            </div>
 
-              <CreatedAt>{timeAgo(user.lastMessageCreatedAt)}</CreatedAt>
-            </Info>
-          </User>
-        ))
-      )}
+            <CreatedAt>{timeAgo(user.lastMessageCreatedAt)}</CreatedAt>
+          </Info>
+        </User>
+      ))}
     </Root>
   );
 };

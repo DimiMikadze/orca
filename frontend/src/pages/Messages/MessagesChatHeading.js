@@ -78,7 +78,10 @@ const MessagesChatHeading = ({ location, match, chatUser }) => {
   const [{ auth }] = useStore();
 
   const { data, loading } = useSubscription(IS_USER_ONLINE_SUBSCRIPTION, {
-    variables: { authUserId: auth.user.id, userId: chatUser.id },
+    variables: {
+      authUserId: auth.user.id,
+      userId: chatUser ? chatUser.id : null,
+    },
     skip: !chatUser,
   });
 
