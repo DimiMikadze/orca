@@ -32,6 +32,11 @@ const App = () => {
         const oldConversations = prev.getAuthUser.newConversations;
         const { newConversation } = subscriptionData.data;
 
+        // Don't show message notification in Header if user already is on messages page
+        if (window.location.href.split('/')[3] === 'messages') {
+          return prev;
+        }
+
         // If authUser already has unseen message from that user,
         // remove old message, so we can show the new one
         const index = oldConversations.findIndex(
