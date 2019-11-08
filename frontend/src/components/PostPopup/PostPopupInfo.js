@@ -5,8 +5,8 @@ import { generatePath } from 'react-router-dom';
 
 import { A } from 'components/Text';
 import Follow from 'components/Follow';
-import { UserIcon } from 'components/icons';
 import { Spacing } from 'components/Layout';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -29,19 +29,6 @@ const Author = styled.div`
   margin-right: ${p => p.theme.spacing.sm};
 `;
 
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const UserName = styled.div`
   max-width: 100%;
   font-size: ${p => p.theme.font.size.xs};
@@ -60,13 +47,7 @@ const PostPopupInfo = ({ author }) => {
         <A
           to={generatePath(Routes.USER_PROFILE, { username: author.username })}
         >
-          <ImageContainer>
-            {author.image ? (
-              <Image src={author.image} />
-            ) : (
-              <UserIcon width="30" />
-            )}
-          </ImageContainer>
+          <Avatar image={author.image} />
         </A>
 
         <Spacing left="xs" inline>

@@ -52,6 +52,7 @@ ${p => p.ghost && `
     border-radius: 0;
     background-color: transparent;
     padding: 0;
+    text-align: left;
   `};
 
   ${p => p.fullWidth && `

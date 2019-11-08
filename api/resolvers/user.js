@@ -1,8 +1,13 @@
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
+import { withFilter } from 'apollo-server';
 
 import { uploadToCloudinary } from '../utils/cloudinary';
 import { generateToken } from '../utils/generate-token';
 import { sendEmail } from '../utils/email';
+import { pubSub } from '../utils/apollo-server';
+
+import { IS_USER_ONLINE } from '../constants/Subscriptions';
 
 const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
@@ -11,10 +16,14 @@ const Query = {
   /**
    * Gets the currently logged in user
    */
-  getAuthUser: async (root, args, { authUser, User }) => {
+  getAuthUser: async (root, args, { authUser, Message, User }) => {
     if (!authUser) return null;
 
-    const user = await User.findOne({ email: authUser.email })
+    // If user is authenticated, update it's isOnline field to true
+    const user = await User.findOneAndUpdate(
+      { email: authUser.email },
+      { isOnline: true }
+    )
       .populate({ path: 'posts', options: { sort: { createdAt: 'desc' } } })
       .populate('likes')
       .populate('followers')
@@ -32,6 +41,59 @@ const Query = {
 
     user.newNotifications = user.notifications;
 
+    // Find unseen messages
+    const lastUnseenMessages = await Message.aggregate([
+      {
+        $match: {
+          receiver: mongoose.Types.ObjectId(authUser.id),
+          seen: false,
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+      {
+        $group: {
+          _id: '$sender',
+          doc: {
+            $first: '$$ROOT',
+          },
+        },
+      },
+      { $replaceRoot: { newRoot: '$doc' } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'sender',
+          foreignField: '_id',
+          as: 'sender',
+        },
+      },
+    ]);
+
+    // Transform data
+    const newConversations = [];
+    lastUnseenMessages.map(u => {
+      const user = {
+        id: u.sender[0]._id,
+        username: u.sender[0].username,
+        fullName: u.sender[0].fullName,
+        image: u.sender[0].image,
+        lastMessage: u.message,
+        lastMessageCreatedAt: u.createdAt,
+      };
+
+      newConversations.push(user);
+    });
+
+    // Sort users by last created messages date
+    const sortedConversations = newConversations.sort((a, b) =>
+      b.lastMessageCreatedAt.toString().localeCompare(a.lastMessageCreatedAt)
+    );
+
+    // Attach new conversations to auth User
+    user.newConversations = sortedConversations;
+
     return user;
   },
   /**
@@ -39,8 +101,17 @@ const Query = {
    *
    * @param {string} username
    */
-  getUser: async (root, { username }, { User }) => {
-    const user = await User.findOne({ username })
+  getUser: async (root, { username, id }, { User }) => {
+    if (!username && !id) {
+      throw new Error('username or id is required params.');
+    }
+
+    if (username && id) {
+      throw new Error('please pass only username or only id as a param');
+    }
+
+    const query = username ? { username: username } : { _id: id };
+    const user = await User.findOne(query)
       .populate({
         path: 'posts',
         populate: [
@@ -79,7 +150,7 @@ const Query = {
       });
 
     if (!user) {
-      throw new Error("User with given username doesn't exists.");
+      throw new Error("User with given params doesn't exists.");
     }
 
     return user;
@@ -475,4 +546,16 @@ const Mutation = {
   },
 };
 
-export default { Query, Mutation };
+const Subscription = {
+  /**
+   * Subscribes to user's isOnline change event
+   */
+  isUserOnline: {
+    subscribe: withFilter(
+      () => pubSub.asyncIterator(IS_USER_ONLINE),
+      (payload, variables, { authUser }) => variables.authUserId === authUser.id
+    ),
+  },
+};
+
+export default { Query, Mutation, Subscription };

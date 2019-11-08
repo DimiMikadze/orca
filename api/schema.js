@@ -22,6 +22,7 @@ const schema = gql`
     imagePublicId: String
     coverImage: File
     coverImagePublicId: String
+    isOnline: Boolean
     posts: [PostPayload]
     likes: [Like]
     comments: [Comment]
@@ -42,6 +43,15 @@ const schema = gql`
     comments: [Comment]
     createdAt: String
     updatedAt: String
+  }
+
+  type Message {
+    id: ID!
+    sender: User!
+    receiver: User!
+    message: String!
+    createdAt: String
+    updateAt: String
   }
 
   type File {
@@ -169,6 +179,12 @@ const schema = gql`
     id: ID!
   }
 
+  input CreateMessageInput {
+    sender: ID!
+    receiver: ID!
+    message: String!
+  }
+
   input CreateNotificationInput {
     userId: ID!
     authorId: ID!
@@ -185,6 +201,11 @@ const schema = gql`
     userId: ID!
   }
 
+  input UpdateMessageSeenInput {
+    sender: ID
+    receiver: ID!
+  }
+
   # ---------------------------------------------------------
   # Return Payloads
   # ---------------------------------------------------------
@@ -198,12 +219,15 @@ const schema = gql`
     imagePublicId: String
     coverImage: String
     coverImagePublicId: String
+    isOnline: Boolean
     posts: [PostPayload]
     likes: [Like]
     followers: [Follow]
     following: [Follow]
     notifications: [NotificationPayload]
     newNotifications: [NotificationPayload]
+    newConversations: [ConversationsPayload]
+    unseenMessage: Boolean
     createdAt: String
     updatedAt: String
   }
@@ -264,6 +288,33 @@ const schema = gql`
     createdAt: String
   }
 
+  type MessagePayload {
+    id: ID!
+    receiver: UserPayload
+    sender: UserPayload
+    message: String
+    seen: Boolean
+    createdAt: String
+    isFirstMessage: Boolean
+  }
+
+  type IsUserOnlinePayload {
+    userId: ID!
+    isOnline: Boolean
+  }
+
+  type ConversationsPayload {
+    id: ID!
+    username: String
+    fullName: String
+    image: String
+    isOnline: Boolean
+    seen: Boolean
+    lastMessage: String
+    lastMessageSender: Boolean
+    lastMessageCreatedAt: String
+  }
+
   # ---------------------------------------------------------
   # Query Root
   # ---------------------------------------------------------
@@ -274,8 +325,8 @@ const schema = gql`
     # Gets the currently logged in user
     getAuthUser: UserPayload
 
-    # Gets user by username
-    getUser(username: String!): UserPayload
+    # Gets user by username or by id
+    getUser(username: String, id: ID): UserPayload
 
     # Gets user posts by username
     getUserPosts(username: String!, skip: Int, limit: Int): UserPostsPayload
@@ -304,6 +355,12 @@ const schema = gql`
       skip: Int
       limit: Int
     ): NotificationsPayload
+
+    # Gets user's messages
+    getMessages(authUserId: ID!, userId: ID!): [MessagePayload]
+
+    # Gets user's conversations
+    getConversations(authUserId: ID!): [ConversationsPayload]
   }
 
   # ---------------------------------------------------------
@@ -357,6 +414,23 @@ const schema = gql`
 
     # Updates notification seen values for user
     updateNotificationSeen(input: UpdateNotificationSeenInput!): Boolean
+
+    # Creates a message
+    createMessage(input: CreateMessageInput!): MessagePayload
+
+    # Updates message seen values for user
+    updateMessageSeen(input: UpdateMessageSeenInput!): Boolean
+  }
+
+  # ---------------------------------------------------------
+  # Mutation Root
+  # ---------------------------------------------------------
+  type Subscription {
+    messageCreated(authUserId: ID!, userId: ID!): MessagePayload
+
+    isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
+
+    newConversation: ConversationsPayload
   }
 `;
 

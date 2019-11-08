@@ -36,31 +36,31 @@ const Root = styled.div`
 
 const Photo = styled.div`
   width: 100%;
-  height: 200px;
+  height: 300px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-color: ${p => p.theme.colors.grey[300]};
 `;
 
+/**
+ * Card component, meant to be used in Explore page
+ */
 const ExploreCard = ({ openPostPopup, image, countLikes, countComments }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(
-    () => {
-      const img = new Image();
-      img.src = image;
+  useEffect(() => {
+    const img = new Image();
+    img.src = image;
 
-      img.onload = () => {
-        setImageLoaded(true);
-      };
+    img.onload = () => {
+      setImageLoaded(true);
+    };
 
-      return () => {
-        img.onload = null;
-      };
-    },
-    [image]
-  );
+    return () => {
+      img.onload = null;
+    };
+  }, [image]);
 
   return (
     <Root>

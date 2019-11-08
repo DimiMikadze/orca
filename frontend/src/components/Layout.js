@@ -22,6 +22,22 @@ export const Container = styled.div`
   border-radius: ${p => p.radius && p.theme.radius[p.radius]};
 `;
 
+export const Content = styled.div`
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  z-index: ${p => p.zIndex && p.theme.zIndex[p.zIndex]};
+  min-height: 500px;
+
+  @media (min-width: ${p => p.theme.screen.md}) {
+    width: ${p => p.theme.screen.xs};
+  }
+
+  @media (min-width: ${p => p.theme.screen.lg}) {
+    width: ${p => p.theme.screen.sm};
+  }
+`;
+
 /**
  * Adds margins to UI, using theme spacing options
  *

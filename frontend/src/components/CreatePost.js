@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
 
-import { UserIcon } from 'components/icons';
 import { Spacing, Overlay, Container } from 'components/Layout';
 import { Error } from 'components/Text';
 import { Button } from 'components/Form';
+import Avatar from 'components/Avatar';
 
 import PostImageUpload from 'pages/Home/PostImageUpload';
 
@@ -30,20 +30,6 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: ${p => p.theme.spacing.sm} 0;
-`;
-
-const ImageContainer = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const Textarea = styled.textarea`
@@ -174,13 +160,7 @@ const CreatePost = () => {
             >
               <form onSubmit={e => handleSubmit(e, createPost)}>
                 <Wrapper>
-                  <ImageContainer>
-                    {auth.user.image ? (
-                      <Image src={auth.user.image} />
-                    ) : (
-                      <UserIcon width="40" />
-                    )}
-                  </ImageContainer>
+                  <Avatar image={auth.user.image} size={40} />
 
                   <Textarea
                     type="textarea"

@@ -11,9 +11,9 @@ import { DotsIcon, PostCommentIcon } from 'components/icons';
 import { Spacing } from 'components/Layout';
 import { A, H3 } from 'components/Text';
 import { Button } from 'components/Form';
-import { UserIcon } from 'components/icons';
 import PostCardOption from 'components/PostCard/PostCardOption';
 import Modal from 'components/Modal';
+import Avatar from 'components/Avatar';
 
 import { GET_FOLLOWED_POSTS, DELETE_POST } from 'graphql/post';
 import { GET_AUTH_USER } from 'graphql/user';
@@ -28,7 +28,7 @@ import { useStore } from 'store';
 
 import * as Routes from 'routes';
 
-import { timeAgo } from 'utils/time-ago';
+import { timeAgo } from 'utils/date';
 
 const Root = styled.div`
   width: 100%;
@@ -58,21 +58,6 @@ const Author = styled(A)`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  display: inline-block;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const Name = styled.span`
@@ -192,8 +177,6 @@ const PostCard = ({
     setIsOptionOpen(false);
   };
 
-  const postCreated = new Date(parseInt(createdAt));
-
   return (
     <>
       <Root>
@@ -212,17 +195,11 @@ const PostCard = ({
               username: author.username,
             })}
           >
-            <ImageContainer>
-              {author.image ? (
-                <Image src={author.image} />
-              ) : (
-                <UserIcon width="30" />
-              )}
-            </ImageContainer>
+            <Avatar image={author.image} />
 
             <Spacing left="xs">
               <Name>{author.fullName}</Name>
-              <CreatedAt>{timeAgo(postCreated)}</CreatedAt>
+              <CreatedAt>{timeAgo(createdAt)}</CreatedAt>
             </Spacing>
           </Author>
 

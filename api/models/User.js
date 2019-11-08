@@ -36,6 +36,10 @@ const userSchema = new Schema(
     imagePublicId: String,
     coverImage: String,
     coverImagePublicId: String,
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
     posts: [
       {
         type: Schema.Types.ObjectId,
@@ -70,6 +74,12 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Notification',
+      },
+    ],
+    messages: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
       },
     ],
   },

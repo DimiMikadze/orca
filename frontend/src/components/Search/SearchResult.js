@@ -5,7 +5,7 @@ import { generatePath } from 'react-router-dom';
 
 import { Spacing } from 'components/Layout';
 import { A } from 'components/Text';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import * as Routes from 'routes';
 
@@ -37,21 +37,6 @@ const Item = styled.div`
   padding: ${p => p.theme.spacing.xs};
 `;
 
-const ImageContainer = styled.div`
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-`;
-
 const Name = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
 `;
@@ -69,7 +54,7 @@ const NoSearchResult = styled.div`
 /**
  * Displays search result, meant to be used in Search component
  */
-const SearchResult = ({ users }) => {
+const SearchResult = ({ users, forMessage }) => {
   if (users.length < 1) {
     return (
       <Root>
@@ -83,16 +68,14 @@ const SearchResult = ({ users }) => {
       {users.map(user => (
         <StyledA
           key={user.id}
-          to={generatePath(Routes.USER_PROFILE, { username: user.username })}
+          to={
+            forMessage
+              ? generatePath(Routes.MESSAGES, { userId: user.id })
+              : generatePath(Routes.USER_PROFILE, { username: user.username })
+          }
         >
           <Item>
-            <ImageContainer>
-              {user.image ? (
-                <Image src={user.image} />
-              ) : (
-                <UserIcon width="34" />
-              )}
-            </ImageContainer>
+            <Avatar image={user.image} size={34} />
 
             <Spacing left="xs">
               <Name>{user.fullName}</Name>
@@ -107,6 +90,7 @@ const SearchResult = ({ users }) => {
 
 SearchResult.propTypes = {
   users: PropTypes.array.isRequired,
+  forMessage: PropTypes.bool,
 };
 
 export default SearchResult;

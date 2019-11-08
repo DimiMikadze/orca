@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { matchPath } from 'react-router';
 import { generatePath } from 'react-router-dom';
 import { Query } from 'react-apollo';
 
 import { Loading } from 'components/Loading';
 import { H3, A } from 'components/Text';
 import { Spacing } from 'components/Layout';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import { useStore } from 'store';
 
@@ -49,20 +51,6 @@ const ListItem = styled.li`
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const FullName = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
   color: ${p =>
@@ -76,8 +64,14 @@ const UserName = styled.div`
 /**
  * Displays user suggestions
  */
-const UserSuggestions = () => {
+const UserSuggestions = ({ pathname }) => {
   const [{ auth }] = useStore();
+
+  const hideUserSuggestions = matchPath(pathname, {
+    path: [Routes.MESSAGES, Routes.PEOPLE, Routes.EXPLORE, Routes.USER_PROFILE],
+  });
+
+  if (hideUserSuggestions) return null;
 
   return (
     <Query query={USER_SUGGESTIONS} variables={{ userId: auth.user.id }}>
@@ -105,13 +99,7 @@ const UserSuggestions = () => {
                       username: user.username,
                     })}
                   >
-                    <ImageContainer>
-                      {user.image ? (
-                        <Image src={user.image} alt={user.fullName} />
-                      ) : (
-                        <UserIcon width="30" />
-                      )}
-                    </ImageContainer>
+                    <Avatar image={user.image} />
                   </A>
 
                   <Spacing left="xs">
@@ -132,6 +120,10 @@ const UserSuggestions = () => {
       }}
     </Query>
   );
+};
+
+UserSuggestions.propTypes = {
+  pathname: PropTypes.string.isRequired,
 };
 
 export default UserSuggestions;

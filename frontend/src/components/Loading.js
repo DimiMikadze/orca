@@ -54,3 +54,30 @@ export const Loading = styled.div`
   font-size: ${p =>
     p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm};
 `;
+
+/**
+ * Displays loading dots
+ */
+export const LoadingDots = styled.div`
+  &::after {
+    display: block;
+    animation: ellipsis 1s infinite;
+    content: '.';
+    text-align: center;
+    color: ${p =>
+      p.color ? p.theme.colors[p.color] : p.theme.colors.text.secondary};
+    font-size: ${p => p.theme.font.size.xl};
+  }
+
+  @keyframes ellipsis {
+    0% {
+      content: '.';
+    }
+    33% {
+      content: '..';
+    }
+    66% {
+      content: '...';
+    }
+  }
+`;

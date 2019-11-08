@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { Spacing } from 'components/Layout';
 import Navigation from './Navigation';
-import { UserIcon } from 'components/icons';
+import Avatar from 'components/Avatar';
 
 import {
   SIDEBAR_DESKTOP_WIDTH,
@@ -35,7 +35,9 @@ const Root = styled.div`
     position: sticky;
     top: 100px;
     margin-left: ${p => (p.isOpen ? 0 : `-${SIDEBAR_DESKTOP_WIDTH}px`)};
-    width: ${SIDEBAR_DESKTOP_WIDTH}px;
+    flex-basis: ${SIDEBAR_DESKTOP_WIDTH}px;
+    flex-grow: 0;
+    flex-shrink: 0;
     box-shadow: none;
     background-color: transparent;
   }
@@ -60,20 +62,6 @@ const User = styled(NavLink)`
   }
 `;
 
-const ImageContainer = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const FullName = styled.div`
   font-weight: ${p => p.theme.font.weight.bold};
   color: ${p =>
@@ -96,13 +84,7 @@ const SideBar = ({ location, isOpen, sideBarRef }) => {
         to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })}
         activeClassName="selected"
       >
-        <ImageContainer>
-          {auth.user.image ? (
-            <Image src={auth.user.image} />
-          ) : (
-            <UserIcon width="20" />
-          )}
-        </ImageContainer>
+        <Avatar image={auth.user.image} size={20} />
 
         <Spacing left="xxs">
           <FullName active={isAuthUsersProfilePage}>
