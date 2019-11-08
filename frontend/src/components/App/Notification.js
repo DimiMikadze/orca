@@ -75,8 +75,7 @@ const Notification = ({ notification, close, client }) => {
   useClickOutside(ref, close);
 
   useEffect(() => {
-    const MutateOnRender = async () => {
-      // Update notification seen for user
+    const updateNotificationSeen = async () => {
       try {
         await client.mutate({
           mutation: UPDATE_NOTIFICATION_SEEN,
@@ -90,7 +89,7 @@ const Notification = ({ notification, close, client }) => {
       } catch (err) {}
     };
 
-    MutateOnRender();
+    updateNotificationSeen();
   }, [auth.user.id, auth.user.newNotifications.length, client]);
 
   return (

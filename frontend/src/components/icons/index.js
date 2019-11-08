@@ -20,5 +20,6 @@ export { SuccessIcon } from './SuccessIcon';
 export { EmptyIcon } from './EmptyIcon';
 export { NotFoundIcon } from './NotFoundIcon';
 export { EnvelopeIcon } from './EnvelopeIcon';
+export { EnvelopeOpenIcon } from './EnvelopeOpenIcon';
 export { SendIcon } from './SendIcon';
 export { PencilIcon } from './PencilIcon';

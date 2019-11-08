@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { generatePath, withRouter } from 'react-router-dom';
 
 import Search from 'components/Search';
 import Avatar from 'components/Avatar';
@@ -81,7 +81,9 @@ const MessagesChatHeading = ({ location, match, chatUser }) => {
         <User
           key={chatUser.username}
           activeClassName="selected"
-          to={`/messages/${chatUser.username}`}
+          to={generatePath(Routes.MESSAGES, {
+            userId: Routes.NEW_ID_VALUE,
+          })}
         >
           <Avatar image={chatUser.image} size={40} />
 
