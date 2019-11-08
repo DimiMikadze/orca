@@ -58,6 +58,11 @@ export const createApolloServer = (schema, resolvers, models) => {
         if (connectionParams.authorization) {
           const user = await checkAuthorization(connectionParams.authorization);
 
+          console.log();
+          console.log('CONNECTION USER');
+          console.log(user);
+          console.log();
+
           // Publish user isOnline true
           pubSub.publish(IS_USER_ONLINE, {
             isUserOnline: {
@@ -77,7 +82,16 @@ export const createApolloServer = (schema, resolvers, models) => {
 
         // Get socket's context
         const c = await context.initPromise;
+
+        console.log();
+        console.log('DISCONNECT');
+        console.log(c);
+
         if (c && c.authUser) {
+          console.log('c.authUser');
+          console.log(c.authUser);
+          console.log();
+
           // Publish user isOnline false
           pubSub.publish(IS_USER_ONLINE, {
             isUserOnline: {
