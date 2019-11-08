@@ -72,7 +72,7 @@ const Home = () => {
         notifyOnNetworkStatusChange
       >
         {({ data, loading, fetchMore, networkStatus }) => {
-          if (loading && networkStatus === 1)
+          if (loading && networkStatus === 1) {
             return (
               <Skeleton
                 height={500}
@@ -81,6 +81,7 @@ const Home = () => {
                 count={HOME_PAGE_POSTS_LIMIT}
               />
             );
+          }
 
           const { posts, count } = data.getFollowedPosts;
 

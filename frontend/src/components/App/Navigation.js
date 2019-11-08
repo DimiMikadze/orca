@@ -56,7 +56,7 @@ const ListItem = styled.li`
 const Navigation = () => {
   return (
     <List>
-      <Link exact activeClassName="selected" to={generatePath(Routes.HOME)}>
+      <Link exact activeClassName="selected" to={Routes.HOME}>
         <ListItem>
           <HomeIcon />
           <Spacing right="sm" />
@@ -64,7 +64,7 @@ const Navigation = () => {
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to={generatePath(Routes.EXPLORE)}>
+      <Link exact activeClassName="selected" to={Routes.EXPLORE}>
         <ListItem>
           <ExploreIcon width={20} />
           <Spacing right="sm" />
@@ -72,7 +72,7 @@ const Navigation = () => {
         </ListItem>
       </Link>
 
-      <Link exact activeClassName="selected" to={generatePath(Routes.PEOPLE)}>
+      <Link exact activeClassName="selected" to={Routes.PEOPLE}>
         <ListItem>
           <PeopleIcon />
           <Spacing right="sm" />
@@ -80,11 +80,7 @@ const Navigation = () => {
         </ListItem>
       </Link>
 
-      <Link
-        exact
-        activeClassName="selected"
-        to={generatePath(Routes.NOTIFICATIONS)}
-      >
+      <Link exact activeClassName="selected" to={Routes.NOTIFICATIONS}>
         <ListItem>
           <NotificationIcon width={18} />
           <Spacing right="sm" />

@@ -144,23 +144,23 @@ const Mutation = {
       );
 
       newMessage.isFirstMessage = true;
-
-      // Publish message created event
-      pubSub.publish(NEW_CONVERSATION, {
-        newConversation: {
-          receiverId: receiver,
-          id: senderUser.id,
-          username: senderUser.username,
-          fullName: senderUser.fullName,
-          image: senderUser.image,
-          isOnline: senderUser.isOnline,
-          seen: false,
-          lastMessage: newMessage.message,
-          lastMessageSender: false,
-          lastMessageCreatedAt: newMessage.createdAt,
-        },
-      });
     }
+
+    // Publish message created event
+    pubSub.publish(NEW_CONVERSATION, {
+      newConversation: {
+        receiverId: receiver,
+        id: senderUser.id,
+        username: senderUser.username,
+        fullName: senderUser.fullName,
+        image: senderUser.image,
+        isOnline: senderUser.isOnline,
+        seen: false,
+        lastMessage: newMessage.message,
+        lastMessageSender: false,
+        lastMessageCreatedAt: newMessage.createdAt,
+      },
+    });
 
     return newMessage;
   },
