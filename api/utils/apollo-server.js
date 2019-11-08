@@ -52,16 +52,9 @@ export const createApolloServer = (schema, resolvers, models) => {
     },
     subscriptions: {
       onConnect: async (connectionParams, webSocket) => {
-        console.log('*** User has connected to WebSocket server ***');
-
         // Check if user is authenticated
         if (connectionParams.authorization) {
           const user = await checkAuthorization(connectionParams.authorization);
-
-          console.log();
-          console.log('CONNECTION USER');
-          console.log(user);
-          console.log();
 
           // Publish user isOnline true
           pubSub.publish(IS_USER_ONLINE, {
@@ -78,20 +71,9 @@ export const createApolloServer = (schema, resolvers, models) => {
         }
       },
       onDisconnect: async (webSocket, context) => {
-        console.log('*** User has been disconnected from WebSocket server ***');
-
         // Get socket's context
         const c = await context.initPromise;
-
-        console.log();
-        console.log('DISCONNECT');
-        console.log(c);
-
         if (c && c.authUser) {
-          console.log('c.authUser');
-          console.log(c.authUser);
-          console.log();
-
           // Publish user isOnline false
           pubSub.publish(IS_USER_ONLINE, {
             isUserOnline: {
