@@ -22,15 +22,12 @@ const Link = styled(NavLink)`
   border: 1px solid transparent;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.grey[100]};
   }
 
   &.selected {
     color: ${p => p.theme.colors.primary.main};
-    font-weight: ${p => p.theme.font.weight.bold};
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.grey[100]};
 
     svg path {
       fill: ${p => p.theme.colors.primary.main};

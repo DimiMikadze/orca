@@ -22,7 +22,7 @@ import { useGlobalMessage } from 'hooks/useGlobalMessage';
 
 const Root = styled(Container)`
   border: 0;
-  box-shadow: ${p => p.theme.shadows.sm};
+  border: 1px solid ${p => p.theme.colors.border.main};
 `;
 
 const Wrapper = styled.div`
@@ -65,7 +65,7 @@ const Options = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: 1px solid ${p => p.theme.colors.grey[200]};
+  border-top: 1px solid ${p => p.theme.colors.border.main};
   padding: ${p => p.theme.spacing.sm} 0;
 `;
 

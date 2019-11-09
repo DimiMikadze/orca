@@ -35,7 +35,7 @@ const Root = styled.div`
   border-radius: ${p => p.theme.radius.sm};
   padding-bottom: ${p => p.theme.spacing.xs};
   background-color: ${p => p.theme.colors.white};
-  box-shadow: ${p => p.theme.shadows.sm};
+  border: 1px solid ${p => p.theme.colors.border.main};
 `;
 
 const TopRow = styled.div`
@@ -98,7 +98,7 @@ const Icons = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid ${p => p.theme.colors.grey[300]};
+  border-top: 1px solid ${p => p.theme.colors.border.main};
 `;
 
 const Comments = styled.div`
@@ -113,7 +113,7 @@ const StyledButton = styled(Button)`
 
 const CommentLine = styled.div`
   margin-bottom: 5px;
-  border-top: 1px solid ${p => p.theme.colors.grey[300]};
+  border-top: 1px solid ${p => p.theme.colors.border.main};
 `;
 
 /**

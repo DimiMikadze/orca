@@ -44,7 +44,7 @@ const Label = styled.label`
   overflow: hidden;
   cursor: ${p => p.authUser && 'pointer'};
   border-radius: 50%;
-  border: 4px solid ${p => p.theme.colors.grey[300]};
+  border: 4px solid ${p => p.theme.colors.border.main};
   background-color: ${p => p.theme.colors.white};
 
   &:hover ${Overlay} {

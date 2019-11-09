@@ -23,7 +23,7 @@ const NotificationItem = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: ${p => p.theme.spacing.xs};
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   font-size: ${p => p.theme.font.size.xxs};
   background-color: ${p => p.theme.colors.white};
 

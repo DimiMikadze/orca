@@ -91,7 +91,7 @@ const CloseModal = styled.div`
 
 const Title = styled.div`
   font-size: ${p => p.theme.font.size.xs};
-  border-bottom: 1px solid ${p => p.theme.colors.grey[100]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.light};
   padding: ${p => p.theme.spacing.xs};
 `;
 

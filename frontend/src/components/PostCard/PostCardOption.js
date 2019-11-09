@@ -28,7 +28,7 @@ const FollowItem = styled.div`
 const StyledButton = styled(Button)`
   padding: ${p => p.theme.spacing.sm} 0;
   text-align: center;
-  border-top: 1px solid ${p => p.theme.colors.grey[300]} !important;
+  border-top: 1px solid ${p => p.theme.colors.border.main} !important;
 
   &:first-child {
     border-top: 0 !important ;

@@ -10,7 +10,7 @@ const Container = styled.div`
   margin-left: ${p => p.theme.spacing[p.left]};
   margin-right: ${p => p.theme.spacing[p.right]};
   margin-bottom: ${p => p.theme.spacing[p.bottom]};
-  background-color: ${p => p.theme.colors.grey[300]};
+  background-color: ${p => p.theme.colors.grey[200]};
   border-radius: ${p =>
     p.radius ? p.theme.radius[p.radius] : p.theme.radius.sm};
 `;

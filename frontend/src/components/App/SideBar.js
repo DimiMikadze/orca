@@ -28,7 +28,7 @@ const Root = styled.div`
   font-size: ${p => p.theme.font.size.xxs};
   z-index: ${p => p.theme.zIndex.sm};
   background-color: ${p => p.theme.colors.white};
-  box-shadow: ${p => p.theme.shadows.sm};
+  border-right: 1px solid ${p => p.theme.colors.border.main};
 
   @media (min-width: ${p => p.theme.screen.md}) {
     padding-top: 0;
@@ -38,8 +38,8 @@ const Root = styled.div`
     flex-basis: ${SIDEBAR_DESKTOP_WIDTH}px;
     flex-grow: 0;
     flex-shrink: 0;
-    box-shadow: none;
-    background-color: transparent;
+    border: 1px solid ${p => p.theme.colors.border.main};
+    border-radius: ${p => p.theme.radius.sm};
   }
 
   @media (max-width: ${p => p.theme.screen.md}) {
@@ -57,8 +57,7 @@ const User = styled(NavLink)`
 
   &:hover,
   &.selected {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid ${p => p.theme.colors.grey[300]};
+    background-color: ${p => p.theme.colors.border.light};
   }
 `;
 

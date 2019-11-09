@@ -21,8 +21,8 @@ const Root = styled.div`
 
   @media (min-width: ${p => p.theme.screen.md}) {
     margin-left: ${p => p.theme.spacing.lg};
-    border-left: 1px solid ${p => p.theme.colors.grey[300]};
-    border-right: 1px solid ${p => p.theme.colors.grey[300]};
+    border-left: 1px solid ${p => p.theme.colors.border.main};
+    border-right: 1px solid ${p => p.theme.colors.border.main};
   }
 `;
 

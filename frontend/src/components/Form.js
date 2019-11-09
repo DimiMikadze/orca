@@ -72,11 +72,13 @@ export const InputText = styled.input`
   padding-left: ${p => p.theme.spacing.xs};
   border: 1px solid
     ${p =>
-      p.borderColor ? p.theme.colors[p.borderColor] : p.theme.colors.grey[300]};
+      p.borderColor
+        ? p.theme.colors[p.borderColor]
+        : p.theme.colors.border.main};
   color: ${p => p.theme.colors.text.secondary};
 
   &:focus {
-    border-color: ${p => p.theme.colors.grey[400]};
+    border-color: ${p => p.theme.colors.border.main};
   }
 `;
 
@@ -107,5 +109,5 @@ export const Form = styled.form`
   border-radius: ${p => p.theme.radius.sm};
   padding: ${p => p.theme.spacing.lg} ${p => p.theme.spacing.sm};
   background-color: ${p => p.theme.colors.white};
-  border: 1px solid ${p => p.theme.colors.grey[300]};
+  border: 1px solid ${p => p.theme.colors.border.main};
 `;

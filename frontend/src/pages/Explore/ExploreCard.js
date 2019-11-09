@@ -25,7 +25,6 @@ const Root = styled.div`
   width: 100%;
   position: relative;
   cursor: pointer;
-  box-shadow: ${p => p.theme.shadows.sm};
   border-radius: ${p => p.theme.radius.sm};
   overflow: hidden;
 

@@ -31,7 +31,7 @@ export default {
     black: '#000000',
     white: '#fff',
     success: '#34a853',
-    body: '#f1f1f1',
+    body: '#fcfbfe',
 
     primary: {
       light: '#7986cb',
@@ -52,6 +52,12 @@ export default {
       secondary: 'rgba(0, 0, 0, 0.54)',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)',
+    },
+
+    border: {
+      light: '#f5f5f5',
+      main: '#e0e0e0',
+      dark: '#bdbdbd',
     },
 
     error: {

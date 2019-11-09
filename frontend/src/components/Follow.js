@@ -25,12 +25,12 @@ const Button = styled.button`
   color: ${p => !p.isFollowing && p.theme.colors.white};
   padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xs};
   border: ${p =>
-    p.isFollowing ? `1px solid ${p.theme.colors.grey[300]}` : '0'};
+    p.isFollowing ? `1px solid ${p.theme.colors.border.main}` : '0'};
   background-color: ${p =>
     p.isFollowing ? 'transparent' : p.theme.colors.primary.main};
 
   &:hover {
-    border-color: ${p => p.theme.colors.grey[400]};
+    border-color: ${p => p.theme.colors.border.dark};
   }
 `;
 

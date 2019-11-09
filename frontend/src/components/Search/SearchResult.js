@@ -17,7 +17,7 @@ const Root = styled.div`
   position: absolute;
   top: 50px;
   font-size: ${p => p.theme.font.size.xs};
-  box-shadow: ${p => p.theme.shadows.xl};
+  box-shadow: ${p => p.theme.shadows.sm};
   background-color: ${p => p.theme.colors.white};
 `;
 

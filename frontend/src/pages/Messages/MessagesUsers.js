@@ -17,8 +17,7 @@ import * as Routes from 'routes';
 const Root = styled.div`
   width: 80px;
   height: 100%;
-  border-right: 1px solid ${p => p.theme.colors.grey[300]};
-  padding: 0 ${p => p.theme.spacing.xxs};
+  border-right: 1px solid ${p => p.theme.colors.border.main};
 
   @media (min-width: ${p => p.theme.screen.lg}) {
     width: 330px;
@@ -26,7 +25,7 @@ const Root = styled.div`
 `;
 
 const HeadingContainer = styled.div`
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   height: 60px;
   padding: 0 ${p => p.theme.spacing.xs};
   display: flex;
@@ -62,7 +61,7 @@ const NewMessage = styled(NavLink)`
 
 const SearchContainer = styled.div`
   display: none;
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
 
   @media (min-width: ${p => p.theme.screen.lg}) {
     display: block;
@@ -71,6 +70,7 @@ const SearchContainer = styled.div`
 
 const UserContainer = styled.div`
   margin-top: ${p => p.theme.spacing.sm};
+  padding: 0 ${p => p.theme.spacing.xxs};
 `;
 
 const User = styled(NavLink)`

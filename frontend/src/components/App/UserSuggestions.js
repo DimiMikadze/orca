@@ -21,7 +21,7 @@ import * as Routes from 'routes';
 const Root = styled.div`
   display: none;
   background-color: ${p => p.theme.colors.white};
-  box-shadow: ${p => p.theme.shadows.sm};
+  border: 1px solid ${p => p.theme.colors.border.main};
   position: sticky;
   top: ${HEADER_HEIGHT + 40}px;
   right: 0;

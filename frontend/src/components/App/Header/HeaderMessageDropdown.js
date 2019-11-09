@@ -19,7 +19,7 @@ const Root = styled.div`
   right: 0;
   top: 60px;
   z-index: ${p => p.theme.zIndex.xl};
-  box-shadow: ${p => p.theme.shadows.xl};
+  box-shadow: ${p => p.theme.shadows.sm};
 
   @media (min-width: ${p => p.theme.screen.sm}) {
     width: 500px;
@@ -33,7 +33,6 @@ const Heading = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.xs};
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
 `;
 
 const Link = styled(A)`
@@ -55,6 +54,7 @@ const User = styled(NavLink)`
   align-items: center;
   text-decoration: none;
   color: ${p => p.theme.colors.text.primary};
+  border-top: 1px solid ${p => p.theme.colors.border.main};
 
   &:hover {
     background-color: ${p => p.theme.colors.grey[100]};

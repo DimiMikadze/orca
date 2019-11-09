@@ -91,8 +91,6 @@ const Form = styled.form`
   width: 100%;
   display: flex;
   padding: ${p => p.theme.spacing.xxs};
-  padding-left: ${p => p.theme.spacing.sm};
-  padding-right: ${p => p.theme.spacing.md};
 `;
 
 const StyledTextarea = styled(Textarea)`
@@ -198,7 +196,7 @@ const MessagesChatConversation = ({
           />
 
           <SendButton type="submit" ghost>
-            <SendIcon width="28" color="grey[300]" />
+            <SendIcon width="28" />
           </SendButton>
         </Form>
       )}

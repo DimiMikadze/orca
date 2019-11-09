@@ -18,8 +18,8 @@ const Root = styled.div`
   height: 280px;
   background-color: white;
   padding: ${p => p.theme.spacing.sm};
-  box-shadow: ${p => p.theme.shadows.sm};
   border-radius: ${p => p.theme.radius.sm};
+  border: 1px solid ${p => p.theme.colors.border.main};
   transition: border-color 0.1s;
 `;
 

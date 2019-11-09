@@ -24,7 +24,7 @@ import * as Routes from 'routes';
 
 const Empty = styled.div`
   padding: ${p => p.theme.spacing.sm};
-  border: 1px solid ${p => p.theme.colors.grey[300]};
+  border: 1px solid ${p => p.theme.colors.border.main};
   border-radius: ${p => p.theme.radius.sm};
   margin-top: ${p => p.theme.spacing.lg};
   background-color: ${p => p.theme.colors.white};

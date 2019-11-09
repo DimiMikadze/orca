@@ -20,7 +20,7 @@ const Root = styled.div`
   flex-direction: row;
   align-items: center;
   height: 60px;
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   z-index: 1;
 `;
 

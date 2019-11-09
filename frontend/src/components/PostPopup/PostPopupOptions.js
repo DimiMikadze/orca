@@ -7,8 +7,8 @@ import Like from 'components/Like';
 import { PostCommentIcon } from 'components/icons';
 
 const Root = styled.div`
-  border-top: 1px solid ${p => p.theme.colors.grey[300]};
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-top: 1px solid ${p => p.theme.colors.border.main};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   padding-bottom: ${p => p.theme.spacing.xs};
 `;
 

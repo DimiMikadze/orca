@@ -22,8 +22,8 @@ const Root = styled(Container)`
 
 const List = styled.div`
   overflow: hidden;
-  box-shadow: ${p => p.theme.shadows.sm};
   border-radius: ${p => p.theme.radius.sm};
+  border: 1px solid ${p => p.theme.colors.border.main};
 `;
 
 /**

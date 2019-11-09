@@ -18,7 +18,7 @@ const Root = styled.div`
   right: 0;
   top: 60px;
   z-index: ${p => p.theme.zIndex.xl};
-  box-shadow: ${p => p.theme.shadows.xl};
+  box-shadow: ${p => p.theme.shadows.sm};
 `;
 
 const CSS = css`

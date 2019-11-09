@@ -17,7 +17,7 @@ const Root = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${p => p.theme.colors.grey[300]};
+  border-bottom: 1px solid ${p => p.theme.colors.border.main};
   padding: ${p => p.theme.spacing.xs};
   margin-bottom: ${p => p.theme.spacing.xxs};
 `;
