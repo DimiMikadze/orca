@@ -28,6 +28,7 @@ const CSS = css`
 
   &:hover {
     background-color: ${p => p.theme.colors.grey[100]};
+    color: ${p => p.theme.colors.text.secondary};
   }
 `;
 

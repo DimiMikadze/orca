@@ -32,6 +32,8 @@ https://worldexplorer.netlify.com/
 
 ## Features
 
+- **Real Time** Messenger and Notification system
+- **User Status** Check if user is Online or Offline in real time
 - **News Feed** Fresh posts from people you are following.
 - **Explore** New Posts and People.
 - **Follow** a particular user and get notified for their activity.
