@@ -1,6 +1,6 @@
 # Create Social Network ![npm](https://img.shields.io/npm/dm/create-social-network) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)
 
-Create Social Network is a educational project. The main idea is to demonstrate how one can build a large scalable project with React, Node, GraphQL, MongoDB and other related technologies. However you get the core functionality of social network by running one command and then you can build more on top of that. 
+Create Social Network is a educational project. The main idea is to demonstrate how one can build a large scalable project with React, Node, GraphQL, MongoDB and other related technologies. However you get the core functionality of social network by running one command and then you can build more on top of that.
 
 ```sh
 npx create-social-network my-network
@@ -18,9 +18,13 @@ After installation open [http://localhost:3000/](http://localhost:3000/) to see 
 
 ## Screenshots of some pages
 
-|                                          Home                                          |                                          Profile                                          |                                          Explore                                          |
-| :------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/home-min_owba13.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/profile-min_ifoino.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1570092963/explore-min_rplwu5.png) |
+|                                        Home                                        |                                        Messages                                        |                                        Profile                                        |
+| :--------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: |
+| ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322911/home_nmms37.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322910/messages_kt8gts.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322910/profile_nzntwk.png) |
+
+|                                        People                                        |                                        Explore                                        |                                        Notifications                                        |
+| :----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322911/people_ag2to0.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322912/explore_uewztd.png) | ![](https://res.cloudinary.com/dkkf9iqnd/image/upload/v1573322910/notifications_yfxweb.png) |
 
 ## Demo
 
