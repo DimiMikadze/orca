@@ -63,6 +63,16 @@ const NotificationSchema = gql`
     notifications: [NotificationPayload]!
   }
 
+  enum NotificationOperationType {
+    CREATE
+    DELETE
+  }
+
+  type NotificationCreatedOrDeletedPayload {
+    operation: NotificationOperationType!
+    notification: NotificationPayload
+  }
+
   # ---------------------------------------------------------
   # Queries
   # ---------------------------------------------------------
@@ -87,6 +97,14 @@ const NotificationSchema = gql`
 
     # Updates notification seen values for user
     updateNotificationSeen(input: UpdateNotificationSeenInput!): Boolean
+  }
+
+  # ---------------------------------------------------------
+  # Subscriptions
+  # ---------------------------------------------------------
+  extend type Subscription {
+    # Subscribes to notification created or deleted event
+    notificationCreatedOrDeleted: NotificationCreatedOrDeletedPayload
   }
 `;
 

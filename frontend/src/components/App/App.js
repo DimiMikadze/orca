@@ -6,6 +6,7 @@ import { GlobalStyle } from './GlobalStyles';
 
 import { GET_AUTH_USER } from 'graphql/user';
 import { GET_NEW_CONVERSATIONS_SUBSCRIPTION } from 'graphql/messages';
+import { NOTIFICATION_CREATED_OR_DELETED } from 'graphql/notification';
 
 import Message from 'components/Message';
 import { Loading } from 'components/Loading';
@@ -19,9 +20,55 @@ import { useStore } from 'store';
  * Root component of the app
  */
 const App = () => {
-  const [{ message }, dispatch] = useStore();
+  const [{ message }] = useStore();
 
   const { loading, subscribeToMore, data, refetch } = useQuery(GET_AUTH_USER);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToMore({
+      document: NOTIFICATION_CREATED_OR_DELETED,
+      updateQuery: async (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+
+        const oldNotifications = prev.getAuthUser.newNotifications;
+        const {
+          operation,
+          notification,
+        } = subscriptionData.data.notificationCreatedOrDeleted;
+
+        let newNotifications;
+
+        if (operation === 'CREATE') {
+          // Don't show message notification in Header if user already is on notifications page
+          if (window.location.href.split('/')[3] === 'notifications') {
+            return prev;
+          }
+
+          // Add new notification
+          newNotifications = [notification, ...oldNotifications];
+        } else {
+          // Remove from notifications
+          const notifications = oldNotifications;
+          const index = notifications.findIndex(n => n.id === notification.id);
+          if (index > -1) {
+            notifications.splice(index, 1);
+          }
+
+          newNotifications = notifications;
+        }
+
+        // Attach new notifications to authUser
+        const authUser = prev.getAuthUser;
+        authUser.newNotifications = newNotifications;
+
+        return { getAuthUser: authUser };
+      },
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [subscribeToMore]);
 
   useEffect(() => {
     const unsubscribe = subscribeToMore({
@@ -60,7 +107,7 @@ const App = () => {
     return () => {
       unsubscribe();
     };
-  }, [subscribeToMore, dispatch]);
+  }, [subscribeToMore]);
 
   if (loading) return <Loading top="xl" />;
 
