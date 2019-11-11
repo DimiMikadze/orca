@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import * as Routes from 'routes';
 
-import { Spacing } from 'components/Layout';
 import {
   ExploreIcon,
   NotificationIcon,
@@ -19,18 +18,18 @@ const Link = styled(NavLink)`
   color: ${p => p.theme.colors.text.primary};
   display: block;
   padding-left: ${p => p.theme.spacing.xs};
-  border: 1px solid transparent;
 
-  &:hover {
-    background-color: ${p => p.theme.colors.grey[100]};
-  }
-
+  &:hover,
   &.selected {
     color: ${p => p.theme.colors.primary.main};
     background-color: ${p => p.theme.colors.grey[100]};
 
     svg path {
       fill: ${p => p.theme.colors.primary.main};
+    }
+
+    @media (min-width: ${p => p.theme.screen.md}) {
+      background-color: ${p => p.theme.colors.white};
     }
   }
 `;
@@ -44,7 +43,12 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   display: flex;
+  flex-direction: row;
   align-items: center;
+`;
+
+const Name = styled.div`
+  margin-left: ${p => p.theme.spacing.sm};
 `;
 
 /**
@@ -56,32 +60,28 @@ const Navigation = () => {
       <Link exact activeClassName="selected" to={Routes.HOME}>
         <ListItem>
           <HomeIcon />
-          <Spacing right="sm" />
-          Home
+          <Name>Home</Name>
         </ListItem>
       </Link>
 
       <Link exact activeClassName="selected" to={Routes.EXPLORE}>
         <ListItem>
           <ExploreIcon width={20} />
-          <Spacing right="sm" />
-          Explore
+          <Name>Explore</Name>
         </ListItem>
       </Link>
 
       <Link exact activeClassName="selected" to={Routes.PEOPLE}>
         <ListItem>
           <PeopleIcon />
-          <Spacing right="sm" />
-          People
+          <Name>People</Name>
         </ListItem>
       </Link>
 
       <Link exact activeClassName="selected" to={Routes.NOTIFICATIONS}>
         <ListItem>
           <NotificationIcon width={18} />
-          <Spacing right="sm" />
-          Notifications
+          <Name>Notifications</Name>
         </ListItem>
       </Link>
 
@@ -92,8 +92,7 @@ const Navigation = () => {
       >
         <ListItem>
           <EnvelopeIcon width={18} />
-          <Spacing right="sm" />
-          Messages
+          <Name>Messages</Name>
         </ListItem>
       </Link>
     </List>

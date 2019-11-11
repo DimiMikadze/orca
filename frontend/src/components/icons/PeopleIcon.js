@@ -8,7 +8,7 @@ import theme from 'theme';
  * @param {string} color
  */
 export const PeopleIcon = ({ width, color }) => {
-  const DEFAULT_WIDTH = '22';
+  const DEFAULT_WIDTH = '20';
   const DEFAULT_COLOR = theme.colors.text.secondary;
 
   return (

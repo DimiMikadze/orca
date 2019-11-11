@@ -38,8 +38,8 @@ const Root = styled.div`
     flex-basis: ${SIDEBAR_DESKTOP_WIDTH}px;
     flex-grow: 0;
     flex-shrink: 0;
-    border: 1px solid ${p => p.theme.colors.border.main};
-    border-radius: ${p => p.theme.radius.sm};
+    border: 0;
+    background-color: transparent;
   }
 
   @media (max-width: ${p => p.theme.screen.md}) {
@@ -57,7 +57,11 @@ const User = styled(NavLink)`
 
   &:hover,
   &.selected {
-    background-color: ${p => p.theme.colors.border.light};
+    background-color: ${p => p.theme.colors.grey[100]};
+
+    @media (min-width: ${p => p.theme.screen.md}) {
+      background-color: ${p => p.theme.colors.white};
+    }
   }
 `;
 

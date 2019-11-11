@@ -148,18 +148,21 @@ const MessagesUsers = ({ location, authUser }) => {
     const unsubscribe = subscribeToMore({
       document: GET_NEW_CONVERSATIONS_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
-        const { data } = subscriptionData;
-        if (!data) return prev;
-        if (prev.getConversations.some(u => u.id === data.newConversation.id)) {
+        if (!subscriptionData.data) return prev;
+
+        const { newConversation } = subscriptionData.data;
+        const oldConversations = prev.getConversations;
+
+        if (oldConversations.some(u => u.id === newConversation.id)) {
           return prev;
         }
 
-        // Merge users
-        const newUser = subscriptionData.data.newConversation;
-        delete newUser['receiverId'];
-        const mergedUsers = [newUser, ...prev.getConversations];
+        // Merge conversations
+        const conversations = newConversation;
+        delete conversations['receiverId'];
+        const mergedConversations = [newConversation, ...oldConversations];
 
-        return { getConversations: mergedUsers };
+        return { getConversations: mergedConversations };
       },
     });
 
