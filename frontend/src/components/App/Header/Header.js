@@ -43,11 +43,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
-    width: ${p => p.theme.screen.md};
-  }
-
-  @media (min-width: ${p => p.theme.screen.lg}) {
+  @media (min-width: ${p => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
     width: ${p => p.theme.screen.lg};
   }
 `;

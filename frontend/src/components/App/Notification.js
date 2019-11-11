@@ -92,6 +92,10 @@ const Notification = ({ notification, close, client }) => {
     updateNotificationSeen();
   }, [auth.user.id, auth.user.newNotifications.length, client]);
 
+  if (!notification.follow && !notification.like && !notification.comment) {
+    return null;
+  }
+
   return (
     <NotificationItem ref={ref}>
       <A
