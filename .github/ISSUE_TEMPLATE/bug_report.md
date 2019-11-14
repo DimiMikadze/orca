@@ -13,6 +13,7 @@ assignees: ''
 
 **System**
 
+Browser version:
 Node.js version:
 NPM or Yarn version:
 Operating system:
