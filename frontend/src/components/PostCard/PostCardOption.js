@@ -47,11 +47,16 @@ const PostCardOption = ({ postId, author, closeOption, deletePost }) => {
   const [{ auth }] = useStore();
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(
-      `${process.env.REACT_APP_FRONTEND_URL}${generatePath(Routes.POST, {
-        id: postId,
-      })}`
-    );
+    try {
+      navigator.clipboard.writeText(
+        `${process.env.REACT_APP_FRONTEND_URL}${generatePath(Routes.POST, {
+          id: postId,
+        })}`
+      );
+    } catch (error) {
+      console.error('Failed to read clipboard contents: ', error);
+    }
+
     closeOption();
   };
 
