@@ -239,7 +239,7 @@ const Query = {
    *
    * @param {string} searchQuery
    */
-  searchUsers: async (root, { searchQuery }, { User }) => {
+  searchUsers: async (root, { searchQuery }, { User, authUser }) => {
     // Return an empty array if searchQuery isn't presented
     if (!searchQuery) {
       return [];
@@ -250,6 +250,9 @@ const Query = {
         { username: new RegExp(searchQuery, 'i') },
         { fullName: new RegExp(searchQuery, 'i') },
       ],
+      _id: {
+        $ne: authUser.id,
+      },
     }).limit(50);
 
     return users;
