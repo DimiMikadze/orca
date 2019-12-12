@@ -128,18 +128,14 @@ The page will automatically reload if you make changes to the code.
 
 In development mode we are starting `api` and `frontend` servers with one command, but we need to deploy them separately.
 
-[API Deployment](https://github.com/udilia/create-social-network/tree/master/api#api-deployment-to-heroku)
+[API Deployment](https://github.com/dimimikadze/create-social-network/tree/master/api#api-deployment-to-heroku)
 
-[Frontend Deployment](https://github.com/udilia/create-social-network/tree/master/frontend#frontend-deployment-to-netlify)
+[Frontend Deployment](https://github.com/dimimikadze/create-social-network/tree/master/frontend#frontend-deployment-to-netlify)
 
 ## Contributing
 
-Please read our [CONTRIBUTING.md](https://github.com/udilia/create-social-network/blob/master/CONTRIBUTING.md) before submitting a Pull Request to the project.
-
-## Credits
-
-Many ideas for CLI tool and Readme file are taken from [Create React App](https://github.com/facebook/create-react-app) project.
+Please read our [CONTRIBUTING.md](https://github.com/dimimikadze/create-social-network/blob/master/CONTRIBUTING.md) before submitting a Pull Request to the project.
 
 ## License
 
-[MIT License](https://github.com/udilia/create-social-network/blob/master/LICENSE.md) Copyright (c) 2019 [udilia](https://udilia.com/)
+[MIT License](https://github.com/dimimikadze/create-social-network/blob/master/LICENSE.md) Copyright (c) 2019 [Dimi Mikadze](https://dimimikadze.com/)

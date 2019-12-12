@@ -4,14 +4,14 @@
   "description": "CLI for Create Social Network.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/udilia/create-social-network.git",
+    "url": "https://github.com/dimimikadze/create-social-network.git",
     "directory": "lib"
   },
   "engines": {
     "node": ">=8.10"
   },
   "bugs": {
-    "url": "https://github.com/udilia/create-social-network/issues"
+    "url": "https://github.com/dimimikadze/create-social-network/issues"
   },
   "files": [
     "index.js",
