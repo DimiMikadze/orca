@@ -7,7 +7,7 @@
     "start": "nodemon index.js"
   },
   "dependencies": {
-    "apollo-server": "^2.9.6",
+    "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.4.8",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.15.0",
