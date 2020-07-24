@@ -18,7 +18,7 @@
     "graphql": "^14.2.0",
     "graphql-tools": "^4.0.4",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mongoose": "^5.7.0",
     "nodemailer": "^6.2.1",
     "subscriptions-transport-ws": "^0.9.16",
