@@ -8,12 +8,12 @@ const Mutation = {
    */
   createComment: async (
     root,
-    { input: { comment, author, postId } },
-    { Comment, Post, User }
+    { input: { comment, postId } },
+    { Comment, Post, User, authUser }
   ) => {
     const newComment = await new Comment({
       comment,
-      author,
+      author: authUser.id,
       post: postId,
     }).save();
 
@@ -24,7 +24,7 @@ const Mutation = {
     );
     // Push comment to user collection
     await User.findOneAndUpdate(
-      { _id: author },
+      { _id: authUser.id },
       { $push: { comments: newComment.id } }
     );
 
@@ -35,8 +35,8 @@ const Mutation = {
    *
    * @param {string} id
    */
-  deleteComment: async (root, { input: { id } }, { Comment, User, Post }) => {
-    const comment = await Comment.findByIdAndRemove(id);
+  deleteComment: async (root, { input: { id } }, { Comment, User, Post, authUser }) => {
+    const comment = await Comment.findOneAndRemove({_id: id, author: authUser.id})
 
     // Delete comment from users collection
     await User.findOneAndUpdate(
