@@ -8,29 +8,17 @@ import React from 'react';
  */
 export const EmptyIcon = () => {
   return (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 184 152"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="100" height="100" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
       <g fill="none" fillRule="evenodd">
         <g transform="translate(24 31.67)">
-          <ellipse
-            fillOpacity=".8"
-            fill="#f5f5f7"
-            cx="67.797"
-            cy="106.89"
-            rx="67.797"
-            ry="12.668"
-          />
+          <ellipse fillOpacity=".8" fill="#f5f5f7" cx="67.797" cy="106.89" rx="67.797" ry="12.668" />
           <path
             d="M122.034 69.674L98.109 40.229c-1.148-1.386-2.826-2.225-4.593-2.225h-51.44c-1.766 0-3.444.839-4.592 2.225L13.56 69.674v15.383h108.475V69.674z"
             fill="#aeb8c2"
           />
           <path
             d="M101.537 86.214L80.63 61.102c-1.001-1.207-2.507-1.867-4.048-1.867H31.724c-1.54 0-3.047.66-4.048 1.867L6.769 86.214v13.792h94.768V86.214z"
-            fill="url(&quot;#linearGradient-1&quot;)"
+            fill='url("#linearGradient-1")'
             transform="translate(13.56)"
           />
           <path

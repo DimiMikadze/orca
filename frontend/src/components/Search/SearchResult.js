@@ -16,16 +16,16 @@ const Root = styled.div`
   overflow: auto;
   position: absolute;
   top: 50px;
-  font-size: ${p => p.theme.font.size.xs};
-  box-shadow: ${p => p.theme.shadows.sm};
-  background-color: ${p => p.theme.colors.white};
+  font-size: ${(p) => p.theme.font.size.xs};
+  box-shadow: ${(p) => p.theme.shadows.sm};
+  background-color: ${(p) => p.theme.colors.white};
 `;
 
 const StyledA = styled(A)`
   display: block;
 
   &:hover {
-    background-color: ${p => p.theme.colors.grey[100]};
+    background-color: ${(p) => p.theme.colors.grey[100]};
   }
 `;
 
@@ -34,21 +34,21 @@ const Item = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: ${p => p.theme.spacing.xs};
+  padding: ${(p) => p.theme.spacing.xs};
 `;
 
 const Name = styled.div`
-  font-weight: ${p => p.theme.font.weight.bold};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 `;
 
 const UserName = styled.div`
-  font-size: ${p => p.theme.font.size.xxs};
+  font-size: ${(p) => p.theme.font.size.xxs};
 `;
 
 const NoSearchResult = styled.div`
   text-align: center;
-  padding: ${p => p.theme.spacing.xs};
-  color: ${p => p.theme.colors.text.main};
+  padding: ${(p) => p.theme.spacing.xs};
+  color: ${(p) => p.theme.colors.text.main};
 `;
 
 /**
@@ -65,7 +65,7 @@ const SearchResult = ({ users, forMessage }) => {
 
   return (
     <Root>
-      {users.map(user => (
+      {users.map((user) => (
         <StyledA
           key={user.id}
           to={

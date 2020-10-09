@@ -1,17 +1,13 @@
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useQuery, useApolloClient } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/client';
 
 import { LoadingDots } from 'components/Loading';
 import MessagesChatConversation from './MessagesChatConversation';
 import MessagesChatHeading from './MessagesChatHeading';
 
-import {
-  GET_MESSAGES,
-  GET_MESSAGES_SUBSCRIPTION,
-  UPDATE_MESSAGE_SEEN,
-} from 'graphql/messages';
+import { GET_MESSAGES, GET_MESSAGES_SUBSCRIPTION, UPDATE_MESSAGE_SEEN } from 'graphql/messages';
 import { GET_USER, GET_CONVERSATIONS, GET_AUTH_USER } from 'graphql/user';
 
 import * as Routes from 'routes';
@@ -34,11 +30,7 @@ const MessagesChat = ({ match, authUser }) => {
     skip: userId === Routes.NEW_ID_VALUE,
   });
 
-  const {
-    subscribeToMore,
-    data: messages,
-    loading: messagesLoading,
-  } = useQuery(GET_MESSAGES, {
+  const { subscribeToMore, data: messages, loading: messagesLoading } = useQuery(GET_MESSAGES, {
     variables: { authUserId: authUser.id, userId },
     skip: userId === Routes.NEW_ID_VALUE,
     fetchPolicy: 'network-only',

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { generatePath, withRouter, Link } from 'react-router-dom';
-import { useSubscription } from '@apollo/react-hooks';
+import { useSubscription } from '@apollo/client';
 
 import Search from 'components/Search';
 import Avatar from 'components/Avatar';
@@ -15,12 +15,12 @@ import { useStore } from 'store';
 
 const Root = styled.div`
   position: relative;
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 60px;
-  border-bottom: 1px solid ${p => p.theme.colors.border.main};
+  border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
   z-index: 1;
 `;
 
@@ -29,9 +29,9 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 ${p => p.theme.spacing.sm};
-  color: ${p => p.theme.colors.text.secondary};
-  font-size: ${p => p.theme.font.size.xs};
+  padding: 0 ${(p) => p.theme.spacing.sm};
+  color: ${(p) => p.theme.colors.text.secondary};
+  font-size: ${(p) => p.theme.font.size.xs};
 `;
 
 const To = styled.div`
@@ -39,9 +39,9 @@ const To = styled.div`
 `;
 
 const User = styled(Link)`
-  margin: 0 ${p => p.theme.spacing.xxs};
-  padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xxs};
-  border-radius: ${p => p.theme.radius.md};
+  margin: 0 ${(p) => p.theme.spacing.xxs};
+  padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xxs};
+  border-radius: ${(p) => p.theme.radius.md};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -49,7 +49,7 @@ const User = styled(Link)`
 `;
 
 const Info = styled.div`
-  padding-left: ${p => p.theme.spacing.xs};
+  padding-left: ${(p) => p.theme.spacing.xs};
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -57,17 +57,17 @@ const Info = styled.div`
 `;
 
 const FullName = styled.div`
-  font-size: ${p => p.theme.font.size.sm};
-  color: ${p => p.theme.colors.text.primary};
-  font-weight: ${p => p.theme.font.weight.bold};
+  font-size: ${(p) => p.theme.font.size.sm};
+  color: ${(p) => p.theme.colors.text.primary};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 `;
 
 const Online = styled.div`
   display: inline-block;
   width: 8px;
   height: 8px;
-  background-color: ${p => p.theme.colors.success};
-  margin-left: ${p => p.theme.spacing.xs};
+  background-color: ${(p) => p.theme.colors.success};
+  margin-left: ${(p) => p.theme.spacing.xs};
   border-radius: 50%;
 `;
 

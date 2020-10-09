@@ -12,11 +12,7 @@ export const PostUserIcon = ({ width, color }) => {
   const DEFAULT_COLOR = theme.colors.text.secondary;
 
   return (
-    <svg
-      width={width || DEFAULT_WIDTH}
-      viewBox="0 0 64 64"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width={width || DEFAULT_WIDTH} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
       <g id="Layer_1">
         <circle cx="32" cy="32" fill="#4F5D73" r="32" />
         <path

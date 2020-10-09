@@ -3,7 +3,7 @@
  *
  * @param {string} date unix timestamp
  */
-export const timeAgo = unixTimestamp => {
+export const timeAgo = (unixTimestamp) => {
   const date = new Date(parseInt(unixTimestamp));
 
   const seconds = Math.floor((new Date() - date) / 1000);
@@ -41,22 +41,9 @@ export const timeAgo = unixTimestamp => {
  *
  * @param {string} date unix timestamp
  */
-export const currentDate = unixTimestamp => {
+export const currentDate = (unixTimestamp) => {
   const date = new Date(parseInt(unixTimestamp));
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   const month = months[date.getMonth() + 1];
   const day = date.getDay();

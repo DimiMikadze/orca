@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { withApollo } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import { Loading } from 'components/Loading';
 import { UserIcon } from 'components/icons';
@@ -31,7 +31,7 @@ const Overlay = styled.div`
   visibility: hidden;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.6);
-  color: ${p => p.theme.colors.white};
+  color: ${(p) => p.theme.colors.white};
   opacity: 0;
   transition: visibility 0.2s linear, opacity 0.2s linear;
 `;
@@ -42,10 +42,10 @@ const Label = styled.label`
   height: 180px;
   display: block;
   overflow: hidden;
-  cursor: ${p => p.authUser && 'pointer'};
+  cursor: ${(p) => p.authUser && 'pointer'};
   border-radius: 50%;
-  border: 4px solid ${p => p.theme.colors.border.main};
-  background-color: ${p => p.theme.colors.white};
+  border: 4px solid ${(p) => p.theme.colors.border.main};
+  background-color: ${(p) => p.theme.colors.white};
 
   &:hover ${Overlay} {
     opacity: 1;
@@ -62,20 +62,14 @@ const Image = styled.img`
 /**
  * Displays and Updates user profile image
  */
-const ProfileImageUpload = ({
-  userId,
-  image,
-  imagePublicId,
-  username,
-  client,
-}) => {
+const ProfileImageUpload = ({ userId, image, imagePublicId, username }) => {
   const [{ auth }] = useStore();
-
+  const client = useApolloClient();
   const [loading, setLoading] = useState(false);
 
   const message = useGlobalMessage();
 
-  const handleImageChange = async e => {
+  const handleImageChange = async (e) => {
     setLoading(true);
 
     const file = e.target.files[0];
@@ -85,10 +79,7 @@ const ProfileImageUpload = ({
 
     if (file.size >= MAX_USER_PROFILE_IMAGE_SIZE) {
       setLoading(false);
-      message.error(
-        `File size should be less then ${MAX_USER_PROFILE_IMAGE_SIZE /
-          1000000}MB`
-      );
+      message.error(`File size should be less then ${MAX_USER_PROFILE_IMAGE_SIZE / 1000000}MB`);
       return;
     }
 
@@ -114,11 +105,7 @@ const ProfileImageUpload = ({
       return <Loading top="xl" />;
     }
 
-    return image ? (
-      <Image src={image} alt="profile" accept="image/x-png,image/jpeg" />
-    ) : (
-      <UserIcon width="172" />
-    );
+    return image ? <Image src={image} alt="profile" accept="image/x-png,image/jpeg" /> : <UserIcon width="172" />;
   };
 
   const authUser = auth.user.id === userId;
@@ -126,13 +113,7 @@ const ProfileImageUpload = ({
   return (
     <>
       {authUser && (
-        <Input
-          name="image"
-          type="file"
-          id="image"
-          accept="image/x-png,image/jpeg"
-          onChange={handleImageChange}
-        />
+        <Input name="image" type="file" id="image" accept="image/x-png,image/jpeg" onChange={handleImageChange} />
       )}
 
       <Label authUser={authUser} htmlFor="image">
@@ -148,7 +129,6 @@ ProfileImageUpload.propTypes = {
   image: PropTypes.string,
   imagePublicId: PropTypes.string,
   userId: PropTypes.string.isRequired,
-  client: PropTypes.object.isRequired,
 };
 
-export default withApollo(ProfileImageUpload);
+export default ProfileImageUpload;

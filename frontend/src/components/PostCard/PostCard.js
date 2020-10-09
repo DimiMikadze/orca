@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { generatePath } from 'react-router-dom';
 import styled from 'styled-components';
-import { withApollo } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import Comment from 'components/Comment';
 import CreateComment from 'components/CreateComment';
@@ -19,10 +19,7 @@ import { GET_FOLLOWED_POSTS, DELETE_POST } from 'graphql/post';
 import { GET_AUTH_USER } from 'graphql/user';
 import { GET_USER_POSTS } from 'graphql/user';
 
-import {
-  HOME_PAGE_POSTS_LIMIT,
-  PROFILE_PAGE_POSTS_LIMIT,
-} from 'constants/DataLimit';
+import { HOME_PAGE_POSTS_LIMIT, PROFILE_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
 
 import { useStore } from 'store';
 
@@ -32,10 +29,10 @@ import { timeAgo } from 'utils/date';
 
 const Root = styled.div`
   width: 100%;
-  border-radius: ${p => p.theme.radius.sm};
-  padding-bottom: ${p => p.theme.spacing.xs};
-  background-color: ${p => p.theme.colors.white};
-  border: 1px solid ${p => p.theme.colors.border.main};
+  border-radius: ${(p) => p.theme.radius.sm};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
+  background-color: ${(p) => p.theme.colors.white};
+  border: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 const TopRow = styled.div`
@@ -43,13 +40,13 @@ const TopRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.sm};
+  padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.sm};
 `;
 
 const CreatedAt = styled.div`
-  font-size: ${p => p.theme.font.size.xxs};
-  color: ${p => p.theme.colors.text.hint};
-  border-bottom: 1px solid ${p => p.theme.colors.text.secondary};
+  font-size: ${(p) => p.theme.font.size.xxs};
+  color: ${(p) => p.theme.colors.text.hint};
+  border-bottom: 1px solid ${(p) => p.theme.colors.text.secondary};
   border: 0;
   margin-top: 2px;
 `;
@@ -61,9 +58,9 @@ const Author = styled(A)`
 `;
 
 const Name = styled.span`
-  font-size: ${p => p.theme.font.size.xs};
-  font-weight: ${p => p.theme.font.weight.bold};
-  color: ${p => p.theme.colors.primary.main};
+  font-size: ${(p) => p.theme.font.size.xs};
+  font-weight: ${(p) => p.theme.font.weight.bold};
+  color: ${(p) => p.theme.colors.primary.main};
 `;
 
 const Poster = styled.img`
@@ -72,7 +69,7 @@ const Poster = styled.img`
   max-height: 700px;
   object-fit: cover;
   cursor: pointer;
-  margin-bottom: ${p => p.theme.spacing.sm};
+  margin-bottom: ${(p) => p.theme.spacing.sm};
 `;
 
 const BottomRow = styled.div`
@@ -80,7 +77,7 @@ const BottomRow = styled.div`
 `;
 
 const CountAndIcons = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 `;
 
 const Count = styled.div`
@@ -88,9 +85,9 @@ const Count = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: ${p => p.theme.spacing.xs};
-  font-size: ${p => p.theme.font.size.xs};
-  color: ${p => p.theme.colors.text.secondary};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
+  font-size: ${(p) => p.theme.font.size.xs};
+  color: ${(p) => p.theme.colors.text.secondary};
 `;
 
 const Icons = styled.div`
@@ -98,40 +95,30 @@ const Icons = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid ${p => p.theme.colors.border.main};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 const Comments = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 `;
 
 const StyledButton = styled(Button)`
   padding: 0;
   padding-left: 4px;
-  font-size: ${p => p.theme.font.size.xxs};
+  font-size: ${(p) => p.theme.font.size.xxs};
 `;
 
 const CommentLine = styled.div`
   margin-bottom: 5px;
-  border-top: 1px solid ${p => p.theme.colors.border.main};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 /**
  * Component for rendering user post
  */
-const PostCard = ({
-  author,
-  imagePublicId,
-  comments,
-  title,
-  createdAt,
-  image,
-  likes,
-  postId,
-  openModal,
-  client,
-}) => {
+const PostCard = ({ author, imagePublicId, comments, title, createdAt, image, likes, postId, openModal }) => {
   const [{ auth }] = useStore();
+  const client = useApolloClient();
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
 
@@ -181,12 +168,7 @@ const PostCard = ({
     <>
       <Root>
         <Modal onClose={closeOption} open={isOptionOpen}>
-          <PostCardOption
-            postId={postId}
-            closeOption={closeOption}
-            author={author}
-            deletePost={deletePost}
-          />
+          <PostCardOption postId={postId} closeOption={closeOption} author={author} deletePost={deletePost} />
         </Modal>
 
         <TopRow>
@@ -225,13 +207,7 @@ const PostCard = ({
             </Count>
 
             <Icons>
-              <Like
-                fullWidth
-                withText
-                user={author}
-                postId={postId}
-                likes={likes}
-              />
+              <Like fullWidth withText user={author} postId={postId} likes={likes} />
 
               <Button fullWidth text onClick={toggleCreateComment}>
                 <PostCommentIcon /> <Spacing inline left="xxs" /> <b>Comment</b>
@@ -243,22 +219,14 @@ const PostCard = ({
             <>
               <Spacing top="xs">
                 <CommentLine />
-                <CreateComment
-                  post={{ id: postId, author }}
-                  focus={isCommentOpen}
-                />
+                <CreateComment post={{ id: postId, author }} focus={isCommentOpen} />
               </Spacing>
 
               {comments.length > 0 && <CommentLine />}
 
               <Comments>
-                {comments.map(comment => (
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    postId={postId}
-                    postAuthor={author}
-                  />
+                {comments.map((comment) => (
+                  <Comment key={comment.id} comment={comment} postId={postId} postAuthor={author} />
                 ))}
               </Comments>
             </>
@@ -279,7 +247,6 @@ PostCard.propTypes = {
   createdAt: PropTypes.string.isRequired,
   postId: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
-  client: PropTypes.object.isRequired,
 };
 
-export default withApollo(PostCard);
+export default PostCard;

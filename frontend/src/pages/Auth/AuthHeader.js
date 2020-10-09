@@ -28,24 +28,24 @@ const StyledContainer = styled(Container)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     justify-content: space-between;
   }
 `;
 
 const Logo = styled(A)`
   display: none;
-  color: ${p => p.theme.colors.white};
-  font-size: ${p => p.theme.font.size.sm};
-  font-weight: ${p => p.theme.font.weight.bold};
+  color: ${(p) => p.theme.colors.white};
+  font-size: ${(p) => p.theme.font.size.sm};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 
   &:hover {
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
   }
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     display: block;
   }
 `;

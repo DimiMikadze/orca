@@ -20,12 +20,12 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  z-index: ${p => p.theme.zIndex.lg};
+  z-index: ${(p) => p.theme.zIndex.lg};
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     justify-content: center;
   }
 `;
@@ -33,7 +33,7 @@ const Container = styled.div`
 const Pages = styled.div`
   margin-top: 80px;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     margin-top: -120px;
   }
 `;
@@ -51,21 +51,9 @@ const AuthLayout = ({ refetch }) => {
 
         <Pages>
           <Switch>
-            <Route
-              exact
-              path={Routes.HOME}
-              render={() => <SignUp refetch={refetch} />}
-            />
-            <Route
-              exact
-              path={Routes.FORGOT_PASSWORD}
-              component={ForgotPassword}
-            />
-            <Route
-              exact
-              path={Routes.RESET_PASSWORD}
-              render={() => <ResetPassword refetch={refetch} />}
-            />
+            <Route exact path={Routes.HOME} render={() => <SignUp refetch={refetch} />} />
+            <Route exact path={Routes.FORGOT_PASSWORD} component={ForgotPassword} />
+            <Route exact path={Routes.RESET_PASSWORD} render={() => <ResetPassword refetch={refetch} />} />
             <Redirect to={Routes.HOME} />
           </Switch>
         </Pages>

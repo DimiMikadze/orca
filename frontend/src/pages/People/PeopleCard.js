@@ -17,9 +17,9 @@ const Root = styled.div`
   align-items: center;
   height: 280px;
   background-color: white;
-  padding: ${p => p.theme.spacing.sm};
-  border-radius: ${p => p.theme.radius.sm};
-  border: 1px solid ${p => p.theme.colors.border.main};
+  padding: ${(p) => p.theme.spacing.sm};
+  border-radius: ${(p) => p.theme.radius.sm};
+  border: 1px solid ${(p) => p.theme.colors.border.main};
   transition: border-color 0.1s;
 `;
 
@@ -44,18 +44,18 @@ const InitialLetters = styled.div`
   width: 100%;
   height: 100%;
   text-transform: uppercase;
-  color: ${p => p.theme.colors.white};
-  font-size: ${p => p.theme.font.size.lg};
-  background-color: ${p => p.color};
+  color: ${(p) => p.theme.colors.white};
+  font-size: ${(p) => p.theme.font.size.lg};
+  background-color: ${(p) => p.color};
 `;
 
 const FullName = styled.span`
   max-width: 200px;
-  font-weight: ${p => p.theme.font.weight.bold};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 `;
 
 const UserName = styled.span`
-  font-size: ${p => p.theme.font.size.xs};
+  font-size: ${(p) => p.theme.font.size.xs};
 `;
 
 /**
@@ -75,15 +75,12 @@ const PeopleCard = ({ user }) => {
 
   const splitFullName = () => {
     // If a fullName contains more word than two, take first two word
-    const splitWords = fullName
-      .split(' ')
-      .slice(0, 2)
-      .join(' ');
+    const splitWords = fullName.split(' ').slice(0, 2).join(' ');
 
     // Take only first letters from split words
     const firstLetters = splitWords
       .split(' ')
-      .map(a => a.charAt(0))
+      .map((a) => a.charAt(0))
       .join(' ');
 
     return firstLetters;
@@ -93,11 +90,7 @@ const PeopleCard = ({ user }) => {
     <Root>
       <A to={generatePath(Routes.USER_PROFILE, { username })}>
         <ImageContainer>
-          {image ? (
-            <Image src={image} />
-          ) : (
-            <InitialLetters color={color}>{splitFullName()}</InitialLetters>
-          )}
+          {image ? <Image src={image} /> : <InitialLetters color={color}>{splitFullName()}</InitialLetters>}
         </ImageContainer>
       </A>
 

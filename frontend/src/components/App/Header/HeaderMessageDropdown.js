@@ -18,10 +18,10 @@ const Root = styled.div`
   background-color: white;
   right: 0;
   top: 60px;
-  z-index: ${p => p.theme.zIndex.xl};
-  box-shadow: ${p => p.theme.shadows.sm};
+  z-index: ${(p) => p.theme.zIndex.xl};
+  box-shadow: ${(p) => p.theme.shadows.sm};
 
-  @media (min-width: ${p => p.theme.screen.sm}) {
+  @media (min-width: ${(p) => p.theme.screen.sm}) {
     width: 500px;
     right: 90px;
   }
@@ -32,38 +32,38 @@ const Heading = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.xs};
+  padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.xs};
 `;
 
 const Link = styled(A)`
-  color: ${p => p.theme.colors.primary.main};
-  font-size: ${p => p.theme.font.size.xs};
+  color: ${(p) => p.theme.colors.primary.main};
+  font-size: ${(p) => p.theme.font.size.xs};
 
   &:hover {
-    color: ${p => p.theme.colors.primary.main};
+    color: ${(p) => p.theme.colors.primary.main};
     text-decoration: underline;
   }
 `;
 
 const User = styled(NavLink)`
   width: 100%;
-  padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.xxs};
+  padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.xxs};
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   text-decoration: none;
-  color: ${p => p.theme.colors.text.primary};
-  border-top: 1px solid ${p => p.theme.colors.border.main};
+  color: ${(p) => p.theme.colors.text.primary};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
 
   &:hover {
-    background-color: ${p => p.theme.colors.grey[100]};
+    background-color: ${(p) => p.theme.colors.grey[100]};
   }
 `;
 
 const Info = styled.div`
   width: 100%;
-  padding: 0 ${p => p.theme.spacing.xs};
+  padding: 0 ${(p) => p.theme.spacing.xs};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -76,15 +76,15 @@ const FullName = styled.div`
 `;
 
 const LastMessage = styled.div`
-  margin-top: ${p => p.theme.spacing.xxs};
-  font-size: ${p => p.theme.font.size.xxs};
-  color: ${p => p.theme.colors.grey[500]};
+  margin-top: ${(p) => p.theme.spacing.xxs};
+  font-size: ${(p) => p.theme.font.size.xxs};
+  color: ${(p) => p.theme.colors.grey[500]};
   text-overflow: ellipsis;
 `;
 
 const CreatedAt = styled.div`
-  font-size: ${p => p.theme.font.size.tiny};
-  color: ${p => p.theme.colors.text.secondary};
+  font-size: ${(p) => p.theme.font.size.tiny};
+  color: ${(p) => p.theme.colors.text.secondary};
 `;
 
 /**
@@ -94,18 +94,11 @@ const HeaderMessageDropdown = ({ messageRef, dropdownData }) => {
   return (
     <Root ref={messageRef}>
       <Heading>
-        <Link
-          to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
-        >
-          New Message
-        </Link>
+        <Link to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}>New Message</Link>
       </Heading>
 
-      {dropdownData.map(user => (
-        <User
-          key={user.id}
-          to={generatePath(Routes.MESSAGES, { userId: user.id })}
-        >
+      {dropdownData.map((user) => (
+        <User key={user.id} to={generatePath(Routes.MESSAGES, { userId: user.id })}>
           <span>
             <Avatar image={user.image} size={50} />
           </span>

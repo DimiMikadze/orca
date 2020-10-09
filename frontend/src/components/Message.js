@@ -2,13 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-import {
-  SuccessIcon,
-  InfoIcon,
-  WarningIcon,
-  ErrorIcon,
-  CloseIcon,
-} from 'components/icons';
+import { SuccessIcon, InfoIcon, WarningIcon, ErrorIcon, CloseIcon } from 'components/icons';
 import { Spacing } from './Layout';
 import { Button } from 'components/Form';
 
@@ -36,16 +30,16 @@ const fade = keyframes`
 const Root = styled.div`
   position: fixed;
   width: 100%;
-  box-shadow: ${p => p.theme.shadows.md};
-  padding: ${p => p.theme.spacing.sm};
-  z-index: ${p => p.theme.zIndex.xl};
+  box-shadow: ${(p) => p.theme.shadows.md};
+  padding: ${(p) => p.theme.spacing.sm};
+  z-index: ${(p) => p.theme.zIndex.xl};
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${p => p.color && p.color};
+  background-color: ${(p) => p.color && p.color};
   animation: ${fade} 0.3s ease-out forwards;
-  color: ${p => p.theme.colors.white};
+  color: ${(p) => p.theme.colors.white};
 `;
 
 const Close = styled(Button)`
@@ -60,20 +54,17 @@ const Close = styled(Button)`
 const Message = ({ children, type, autoClose }) => {
   const [, dispatch] = useStore();
 
-  useEffect(
-    () => {
-      if (autoClose) {
-        const timer = setTimeout(() => {
-          dispatch({ type: CLEAR_MESSAGE });
-        }, 5000);
+  useEffect(() => {
+    if (autoClose) {
+      const timer = setTimeout(() => {
+        dispatch({ type: CLEAR_MESSAGE });
+      }, 5000);
 
-        return () => {
-          clearTimeout(timer);
-        };
-      }
-    },
-    [dispatch, autoClose]
-  );
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [dispatch, autoClose]);
 
   const { success, info, warning, error } = theme.colors;
 
@@ -84,7 +75,7 @@ const Message = ({ children, type, autoClose }) => {
     ERROR: error.main,
   };
 
-  const MessageType = type => {
+  const MessageType = (type) => {
     const icons = {
       SUCCESS: <SuccessIcon />,
       INFO: <InfoIcon />,

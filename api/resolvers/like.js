@@ -5,11 +5,7 @@ const Mutation = {
    * @param {string} userId
    * @param {string} postId
    */
-  createLike: async (
-    root,
-    { input: { userId, postId } },
-    { Like, Post, User }
-  ) => {
+  createLike: async (root, { input: { userId, postId } }, { Like, Post, User }) => {
     const like = await new Like({ user: userId, post: postId }).save();
 
     // Push like to post collection
@@ -28,15 +24,9 @@ const Mutation = {
     const like = await Like.findByIdAndRemove(id);
 
     // Delete like from users collection
-    await User.findOneAndUpdate(
-      { _id: like.user },
-      { $pull: { likes: like.id } }
-    );
+    await User.findOneAndUpdate({ _id: like.user }, { $pull: { likes: like.id } });
     // Delete like from posts collection
-    await Post.findOneAndUpdate(
-      { _id: like.post },
-      { $pull: { likes: like.id } }
-    );
+    await Post.findOneAndUpdate({ _id: like.post }, { $pull: { likes: like.id } });
 
     return like;
   },

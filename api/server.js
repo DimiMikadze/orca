@@ -12,11 +12,13 @@ import { createApolloServer } from './utils/apollo-server';
 // Connect to database
 mongoose
   .connect(process.env.MONGO_URL, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,
+    useUnifiedTopology: true,
   })
   .then(() => console.log('DB connected'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // Initializes application
 const app = express();
@@ -40,7 +42,5 @@ server.installSubscriptionHandlers(httpServer);
 const PORT = process.env.PORT || process.env.API_PORT;
 httpServer.listen({ port: PORT }, () => {
   console.log(`server ready at http://localhost:${PORT}${server.graphqlPath}`);
-  console.log(
-    `Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`
-  );
+  console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });

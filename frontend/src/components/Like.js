@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { LikeIcon } from 'components/icons';
 import { Spacing } from './Layout';
@@ -18,7 +18,7 @@ import { useNotifications } from 'hooks/useNotifications';
 import { useStore } from 'store';
 
 const StyledButton = styled(Button)`
-  padding: ${p => p.theme.spacing.xs} 0;
+  padding: ${(p) => p.theme.spacing.xs} 0;
 `;
 
 /**
@@ -26,18 +26,34 @@ const StyledButton = styled(Button)`
  */
 const Like = ({ postId, user, likes, withText, fullWidth }) => {
   const [loading, setLoading] = useState(false);
-
   const [{ auth }] = useStore();
-
   const notification = useNotifications();
+  // Detect which mutation to use
+  const hasLiked = likes.find((l) => l.user === auth.user.id && l.post === postId);
+  const operation = hasLiked ? 'delete' : 'create';
+  const options = {
+    create: {
+      mutation: CREATE_LIKE,
+      variables: { postId, userId: auth.user.id },
+    },
+    delete: {
+      mutation: DELETE_LIKE,
+      variables: { id: hasLiked ? hasLiked.id : null },
+    },
+  };
+  const [mutate] = useMutation(options[operation].mutation, {
+    refetchQueries: [
+      { query: GET_AUTH_USER },
+      { query: GET_POSTS, variables: { authUserId: auth.user.id } },
+      { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
+    ],
+  });
 
-  const hasLiked = likes.find(
-    l => l.user === auth.user.id && l.post === postId
-  );
-
-  const handleButtonClick = async mutate => {
+  const handleButtonClick = async () => {
     setLoading(true);
-    const { data } = await mutate();
+    const { data } = await mutate({
+      variables: { input: { ...options[operation].variables } },
+    });
 
     // Create or delete notification for like
     if (auth.user.id === user.id) return setLoading(false);
@@ -51,45 +67,18 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
     setLoading(false);
   };
 
-  // Detect which mutation to use
-  const operation = hasLiked ? 'delete' : 'create';
-  const options = {
-    create: {
-      mutation: CREATE_LIKE,
-      variables: { postId, userId: auth.user.id },
-    },
-    delete: {
-      mutation: DELETE_LIKE,
-      variables: { id: hasLiked ? hasLiked.id : null },
-    },
-  };
-
   return (
-    <Mutation
-      mutation={options[operation].mutation}
-      variables={{ input: { ...options[operation].variables } }}
-      refetchQueries={() => [
-        { query: GET_AUTH_USER },
-        { query: GET_POSTS, variables: { authUserId: auth.user.id } },
-        { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
-      ]}
+    <StyledButton
+      fullWidth={fullWidth && fullWidth}
+      disabled={loading}
+      text
+      onClick={() => handleButtonClick(mutate)}
+      color={hasLiked && 'primary.main'}
     >
-      {mutate => {
-        return (
-          <StyledButton
-            fullWidth={fullWidth && fullWidth}
-            disabled={loading}
-            text
-            onClick={() => handleButtonClick(mutate)}
-            color={hasLiked && 'primary.main'}
-          >
-            <LikeIcon color={hasLiked && 'primary.main'} />
-            <Spacing inline left="xxs" />
-            {withText && <b>Like</b>}
-          </StyledButton>
-        );
-      }}
-    </Mutation>
+      <LikeIcon color={hasLiked && 'primary.main'} />
+      <Spacing inline left="xxs" />
+      {withText && <b>Like</b>}
+    </StyledButton>
   );
 };
 

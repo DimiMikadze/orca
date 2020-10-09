@@ -7,21 +7,21 @@ import Like from 'components/Like';
 import { PostCommentIcon } from 'components/icons';
 
 const Root = styled.div`
-  border-top: 1px solid ${p => p.theme.colors.border.main};
-  border-bottom: 1px solid ${p => p.theme.colors.border.main};
-  padding-bottom: ${p => p.theme.spacing.xs};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
+  border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
 `;
 
 const Icons = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: ${p => p.theme.spacing.sm};
+  margin-left: ${(p) => p.theme.spacing.sm};
 `;
 
 const Count = styled.div`
-  font-size: ${p => p.theme.font.size.xxs};
-  padding-left: ${p => p.theme.spacing.sm};
+  font-size: ${(p) => p.theme.font.size.xxs};
+  padding-left: ${(p) => p.theme.spacing.sm};
 `;
 
 /**

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 import { Button, Textarea } from 'components/Form';
 import { SendIcon } from 'components/icons';
@@ -16,7 +16,7 @@ import { currentDate } from 'utils/date';
 import * as Routes from 'routes';
 
 const Root = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
   overflow-y: auto;
   height: 100vh;
   margin-top: -120px;
@@ -29,12 +29,12 @@ const Root = styled.div`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${p => p.theme.colors.grey[500]};
-    border-radius: ${p => p.theme.radius.lg};
+    background-color: ${(p) => p.theme.colors.grey[500]};
+    border-radius: ${(p) => p.theme.radius.lg};
     visibility: hidden;
 
     &:hover {
-      background-color: ${p => p.theme.colors.grey[600]};
+      background-color: ${(p) => p.theme.colors.grey[600]};
     }
   }
 
@@ -51,19 +51,19 @@ const Conversation = styled.div`
 
 const MessageDate = styled.span`
   position: absolute;
-  bottom: -${p => p.theme.spacing.sm};
-  left: ${p => !p.userMessage && p.theme.spacing.lg};
-  right: -${p => p.userMessage && 0};
+  bottom: -${(p) => p.theme.spacing.sm};
+  left: ${(p) => !p.userMessage && p.theme.spacing.lg};
+  right: -${(p) => p.userMessage && 0};
   display: none;
-  font-size: ${p => p.theme.font.size.tiny};
-  color: ${p => p.theme.colors.text.secondary};
+  font-size: ${(p) => p.theme.font.size.tiny};
+  color: ${(p) => p.theme.colors.text.secondary};
 `;
 
 const MessageWrapper = styled.div`
   display: flex;
   position: relative;
-  justify-content: ${p => p.userMessage && 'flex-end'};
-  margin: ${p => p.theme.spacing.md} 0;
+  justify-content: ${(p) => p.userMessage && 'flex-end'};
+  margin: ${(p) => p.theme.spacing.md} 0;
 
   &:hover ${MessageDate} {
     display: block;
@@ -76,44 +76,37 @@ const Message = styled.div`
   position: relative;
   max-width: 300px;
   line-height: 21px;
-  font-size: ${p => p.theme.font.size.xs};
-  padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xs};
-  border-radius: ${p => p.theme.radius.lg};
-  color: ${p => p.userMessage && p.theme.colors.white};
-  background-color: ${p =>
-    p.userMessage ? p.theme.colors.primary.light : p.theme.colors.grey[200]};
+  font-size: ${(p) => p.theme.font.size.xs};
+  padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
+  border-radius: ${(p) => p.theme.radius.lg};
+  color: ${(p) => p.userMessage && p.theme.colors.white};
+  background-color: ${(p) => (p.userMessage ? p.theme.colors.primary.light : p.theme.colors.grey[200])};
 `;
 
 const Form = styled.form`
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
   position: sticky;
   bottom: 0;
   width: 100%;
   display: flex;
-  padding: ${p => p.theme.spacing.xxs};
+  padding: ${(p) => p.theme.spacing.xxs};
 `;
 
 const StyledTextarea = styled(Textarea)`
   height: 38px;
-  border-radius: ${p => p.theme.radius.lg};
-  background-color: ${p => p.theme.colors.grey[200]};
+  border-radius: ${(p) => p.theme.radius.lg};
+  background-color: ${(p) => p.theme.colors.grey[200]};
 `;
 
 const SendButton = styled(Button)`
-  margin-left: ${p => p.theme.spacing.sm};
+  margin-left: ${(p) => p.theme.spacing.sm};
   align-self: center;
 `;
 
 /**
  * Component that renders messages conversations UI
  */
-const MessagesChatConversation = ({
-  messages,
-  authUser,
-  chatUser,
-  data,
-  match,
-}) => {
+const MessagesChatConversation = ({ messages, authUser, chatUser, data, match }) => {
   const bottomRef = useRef(null);
 
   const [messageText, setMessageText] = useState('');
@@ -126,7 +119,7 @@ const MessagesChatConversation = ({
     }
   }, [bottomRef, data]);
 
-  const sendMessage = e => {
+  const sendMessage = (e) => {
     e.preventDefault();
 
     if (!messageText) return;
@@ -153,7 +146,7 @@ const MessagesChatConversation = ({
     });
   };
 
-  const onEnterPress = e => {
+  const onEnterPress = (e) => {
     if (e.keyCode === 13 && e.shiftKey === false) {
       sendMessage(e);
     }
@@ -162,7 +155,7 @@ const MessagesChatConversation = ({
   return (
     <Root>
       <Conversation>
-        {messages.map(message => {
+        {messages.map((message) => {
           const isAuthUserReceiver = authUser.id === message.sender.id;
 
           return (
@@ -173,13 +166,9 @@ const MessagesChatConversation = ({
                 </Spacing>
               )}
 
-              <Message userMessage={isAuthUserReceiver}>
-                {message.message}
-              </Message>
+              <Message userMessage={isAuthUserReceiver}>{message.message}</Message>
 
-              <MessageDate userMessage={isAuthUserReceiver}>
-                {currentDate(message.createdAt)}
-              </MessageDate>
+              <MessageDate userMessage={isAuthUserReceiver}>{currentDate(message.createdAt)}</MessageDate>
             </MessageWrapper>
           );
         })}
@@ -191,7 +180,7 @@ const MessagesChatConversation = ({
           <StyledTextarea
             placeholder="Type a message"
             value={messageText}
-            onChange={e => setMessageText(e.target.value)}
+            onChange={(e) => setMessageText(e.target.value)}
             onKeyDown={onEnterPress}
           />
 

@@ -6,10 +6,10 @@ import { Spacing } from './Layout';
 
 const Root = styled.div`
   margin: auto;
-  background-color: ${p => p.theme.colors.white};
-  padding: ${p => p.theme.spacing.sm};
-  border-radius: ${p => p.theme.radius.sm};
-  z-index: ${p => p.theme.zIndex.sm};
+  background-color: ${(p) => p.theme.colors.white};
+  padding: ${(p) => p.theme.spacing.sm};
+  border-radius: ${(p) => p.theme.radius.sm};
+  z-index: ${(p) => p.theme.zIndex.sm};
 `;
 
 const ButtonContainer = styled.div`

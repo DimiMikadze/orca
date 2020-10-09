@@ -15,7 +15,7 @@ export const useClickOutside = (ref, handler) => {
     };
   });
 
-  const handleClickOutside = event => {
+  const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       handler();
     }

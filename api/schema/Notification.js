@@ -78,11 +78,7 @@ const NotificationSchema = gql`
   # ---------------------------------------------------------
   extend type Query {
     # Gets notifications for specific user
-    getUserNotifications(
-      userId: ID!
-      skip: Int
-      limit: Int
-    ): NotificationsPayload
+    getUserNotifications(userId: ID!, skip: Int, limit: Int): NotificationsPayload
   }
 
   # ---------------------------------------------------------

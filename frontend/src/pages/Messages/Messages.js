@@ -10,7 +10,7 @@ import MessagesUsers from './MessagesUsers';
 import MessagesChat from './MessagesChat';
 
 const Root = styled.div`
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
   position: relative;
   margin-top: -${HEADER_HEIGHT}px;
   padding-top: ${HEADER_HEIGHT}px;
@@ -19,10 +19,10 @@ const Root = styled.div`
   display: flex;
   flex-direction: row;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
-    margin-left: ${p => p.theme.spacing.lg};
-    border-left: 1px solid ${p => p.theme.colors.border.main};
-    border-right: 1px solid ${p => p.theme.colors.border.main};
+  @media (min-width: ${(p) => p.theme.screen.md}) {
+    margin-left: ${(p) => p.theme.spacing.lg};
+    border-left: 1px solid ${(p) => p.theme.colors.border.main};
+    border-right: 1px solid ${(p) => p.theme.colors.border.main};
   }
 `;
 

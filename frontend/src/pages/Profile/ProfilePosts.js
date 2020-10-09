@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { generatePath } from 'react-router-dom';
 
 import Skeleton from 'components/Skeleton';
@@ -24,96 +24,76 @@ import * as Routes from 'routes';
 const ProfilePosts = ({ username }) => {
   const [isPostPopupOpen, setIsPostPopupOpen] = useState(false);
   const [modalPostId, setModalPostId] = useState('');
+  const variables = { username, skip: 0, limit: PROFILE_PAGE_POSTS_LIMIT };
+  const { data, loading, fetchMore, networkStatus } = useQuery(GET_USER_POSTS, {
+    variables,
+    notifyOnNetworkStatusChange: true,
+  });
 
-  const openModal = postId => {
+  const openModal = (postId) => {
     window.history.pushState('', '', generatePath(Routes.POST, { id: postId }));
     setModalPostId(postId);
     setIsPostPopupOpen(true);
   };
 
   const closeModal = () => {
-    window.history.pushState(
-      '',
-      '',
-      generatePath(Routes.USER_PROFILE, { username })
-    );
+    window.history.pushState('', '', generatePath(Routes.USER_PROFILE, { username }));
     setIsPostPopupOpen(false);
   };
 
-  const variables = { username, skip: 0, limit: PROFILE_PAGE_POSTS_LIMIT };
+  if (loading && networkStatus === 1) {
+    return <Skeleton height={500} bottom="lg" top="lg" count={PROFILE_PAGE_POSTS_LIMIT} />;
+  }
+
+  const { posts, count } = data.getUserPosts;
+  if (!posts.length > 0) {
+    return (
+      <Spacing bottom="lg">
+        <Empty text="No posts yet." />
+      </Spacing>
+    );
+  }
 
   return (
-    <Query
-      query={GET_USER_POSTS}
+    <InfiniteScroll
+      data={posts}
+      dataKey="getUserPosts.posts"
+      count={parseInt(count)}
       variables={variables}
-      notifyOnNetworkStatusChange
+      fetchMore={fetchMore}
     >
-      {({ data, loading, fetchMore, networkStatus }) => {
-        if (loading && networkStatus === 1) {
+      {(data) => {
+        return data.map((post, i) => {
+          const showNextLoading = loading && networkStatus === 3 && data.length - 1 === i;
+
           return (
-            <Skeleton
-              height={500}
-              bottom="lg"
-              top="lg"
-              count={PROFILE_PAGE_POSTS_LIMIT}
-            />
+            <Fragment key={post.id}>
+              {modalPostId === post.id && (
+                <Modal open={isPostPopupOpen} onClose={closeModal}>
+                  <PostPopup id={post.id} closeModal={closeModal} />
+                </Modal>
+              )}
+
+              <Spacing bottom="lg">
+                <PostCard
+                  author={post.author}
+                  postId={post.id}
+                  imagePublicId={post.imagePublicId}
+                  comments={post.comments}
+                  title={post.title}
+                  image={post.image}
+                  likes={post.likes}
+                  createdAt={post.createdAt}
+                  openModal={() => openModal(post.id)}
+                />
+              </Spacing>
+
+              {showNextLoading && <Loading top="lg" />}
+            </Fragment>
           );
-        }
-
-        const { posts, count } = data.getUserPosts;
-
-        if (!posts.length > 0) {
-          return (
-            <Spacing bottom="lg">
-              <Empty text="No posts yet." />
-            </Spacing>
-          );
-        }
-
-        return (
-          <InfiniteScroll
-            data={posts}
-            dataKey="getUserPosts.posts"
-            count={parseInt(count)}
-            variables={variables}
-            fetchMore={fetchMore}
-          >
-            {data => {
-              return data.map((post, i) => {
-                const showNextLoading =
-                  loading && networkStatus === 3 && data.length - 1 === i;
-
-                return (
-                  <Fragment key={post.id}>
-                    {modalPostId === post.id && (
-                      <Modal open={isPostPopupOpen} onClose={closeModal}>
-                        <PostPopup id={post.id} closeModal={closeModal} />
-                      </Modal>
-                    )}
-
-                    <Spacing bottom="lg">
-                      <PostCard
-                        author={post.author}
-                        postId={post.id}
-                        imagePublicId={post.imagePublicId}
-                        comments={post.comments}
-                        title={post.title}
-                        image={post.image}
-                        likes={post.likes}
-                        createdAt={post.createdAt}
-                        openModal={() => openModal(post.id)}
-                      />
-                    </Spacing>
-
-                    {showNextLoading && <Loading top="lg" />}
-                  </Fragment>
-                );
-              });
-            }}
-          </InfiniteScroll>
-        );
+        });
       }}
-    </Query>
+    </InfiniteScroll>
   );
 };
 

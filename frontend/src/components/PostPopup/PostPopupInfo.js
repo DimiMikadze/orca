@@ -17,22 +17,22 @@ const Root = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${p => p.theme.colors.border.main};
-  padding: ${p => p.theme.spacing.xs};
-  margin-bottom: ${p => p.theme.spacing.xxs};
+  border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
+  padding: ${(p) => p.theme.spacing.xs};
+  margin-bottom: ${(p) => p.theme.spacing.xxs};
 `;
 
 const Author = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-right: ${p => p.theme.spacing.sm};
+  margin-right: ${(p) => p.theme.spacing.sm};
 `;
 
 const UserName = styled.div`
   max-width: 100%;
-  font-size: ${p => p.theme.font.size.xs};
-  font-weight: ${p => p.theme.font.weight.bold};
+  font-size: ${(p) => p.theme.font.size.xs};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 `;
 
 /**
@@ -44,9 +44,7 @@ const PostPopupInfo = ({ author }) => {
   return (
     <Root>
       <Author>
-        <A
-          to={generatePath(Routes.USER_PROFILE, { username: author.username })}
-        >
+        <A to={generatePath(Routes.USER_PROFILE, { username: author.username })}>
           <Avatar image={author.image} />
         </A>
 

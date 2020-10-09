@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
 import { createApolloClient } from 'utils/apollo-client';
 import { StoreProvider } from 'store';
@@ -26,13 +25,11 @@ const apolloClient = createApolloClient(API_URL, websocketApiUrl);
 
 render(
   <ApolloProvider client={apolloClient}>
-    <ApolloHooksProvider client={apolloClient}>
-      <ThemeProvider theme={theme}>
-        <StoreProvider>
-          <App />
-        </StoreProvider>
-      </ThemeProvider>
-    </ApolloHooksProvider>
+    <ThemeProvider theme={theme}>
+      <StoreProvider>
+        <App />
+      </StoreProvider>
+    </ThemeProvider>
   </ApolloProvider>,
   document.getElementById('root')
 );

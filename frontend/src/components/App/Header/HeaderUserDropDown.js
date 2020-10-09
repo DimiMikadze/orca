@@ -14,21 +14,21 @@ const Root = styled.div`
   text-align: center;
   position: absolute;
   background-color: white;
-  line-height: ${p => p.theme.spacing.md};
+  line-height: ${(p) => p.theme.spacing.md};
   right: 0;
   top: 60px;
-  z-index: ${p => p.theme.zIndex.xl};
-  box-shadow: ${p => p.theme.shadows.sm};
+  z-index: ${(p) => p.theme.zIndex.xl};
+  box-shadow: ${(p) => p.theme.shadows.sm};
 `;
 
 const CSS = css`
   transition: background-color 0.1s;
   display: block;
-  padding: ${p => p.theme.spacing.sm} ${p => p.theme.spacing.xl};
+  padding: ${(p) => p.theme.spacing.sm} ${(p) => p.theme.spacing.xl};
 
   &:hover {
-    background-color: ${p => p.theme.colors.grey[100]};
-    color: ${p => p.theme.colors.text.secondary};
+    background-color: ${(p) => p.theme.colors.grey[100]};
+    color: ${(p) => p.theme.colors.text.secondary};
   }
 `;
 

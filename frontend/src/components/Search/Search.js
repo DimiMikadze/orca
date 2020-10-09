@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -21,15 +21,7 @@ const StyledLoading = styled(Loading)`
 /**
  * Renders search input
  */
-const Search = ({
-  location,
-  hideIcon,
-  forMessage,
-  backgroundColor,
-  placeholder,
-  autoFocus,
-  ...others
-}) => {
+const Search = ({ location, hideIcon, forMessage, backgroundColor, placeholder, autoFocus, ...others }) => {
   const client = useApolloClient();
 
   const [isOpenSearchResult, setIsOpenSearchResult] = useState(false);
@@ -68,7 +60,7 @@ const Search = ({
     return () => setLoading(false);
   }, [debounceSearchQuery, client]);
 
-  const handleInputChange = async e => {
+  const handleInputChange = async (e) => {
     // Trim white space only from beginning
     const value = e.target.value.replace(/^\s+/g, '');
     setSearchQuery(value);
@@ -93,9 +85,7 @@ const Search = ({
     >
       {loading && <StyledLoading size="xxs" />}
 
-      {isOpenSearchResult && (
-        <SearchResult users={users} forMessage={forMessage} />
-      )}
+      {isOpenSearchResult && <SearchResult users={users} forMessage={forMessage} />}
     </SearchInput>
   );
 };

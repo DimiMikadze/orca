@@ -7,17 +7,17 @@ import { Overlay } from './Layout';
 
 const Root = styled.div`
   position: fixed;
-  top: ${p => p.theme.spacing.sm};
+  top: ${(p) => p.theme.spacing.sm};
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: ${p => p.theme.zIndex.lg};
+  z-index: ${(p) => p.theme.zIndex.lg};
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     align-items: center;
     top: 0;
   }
