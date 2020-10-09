@@ -1,10 +1,4 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  Observable,
-  split,
-  InMemoryCache,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, Observable, split, InMemoryCache } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { onError } from '@apollo/client/link/error';
 import { WebSocketLink } from '@apollo/client/link/ws';
@@ -52,9 +46,7 @@ const handleErrors = () => {
   return onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       graphQLErrors.map(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
       );
     }
 

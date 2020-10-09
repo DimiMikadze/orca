@@ -31,10 +31,7 @@ const App = () => {
         if (!subscriptionData.data) return prev;
 
         const oldNotifications = prev.getAuthUser.newNotifications;
-        const {
-          operation,
-          notification,
-        } = subscriptionData.data.notificationCreatedOrDeleted;
+        const { operation, notification } = subscriptionData.data.notificationCreatedOrDeleted;
 
         let newNotifications;
 
@@ -49,9 +46,7 @@ const App = () => {
         } else {
           // Remove from notifications
           const notifications = oldNotifications;
-          const index = notifications.findIndex(
-            (n) => n.id === notification.id
-          );
+          const index = notifications.findIndex((n) => n.id === notification.id);
           if (index > -1) {
             notifications.splice(index, 1);
           }
@@ -88,9 +83,7 @@ const App = () => {
 
         // If authUser already has unseen message from that user,
         // remove old message, so we can show the new one
-        const index = oldConversations.findIndex(
-          (u) => u.id === newConversation.id
-        );
+        const index = oldConversations.findIndex((u) => u.id === newConversation.id);
         if (index > -1) {
           oldConversations.splice(index, 1);
         }
@@ -120,10 +113,7 @@ const App = () => {
       <ScrollToTop>
         <Switch>
           {data.getAuthUser ? (
-            <Route
-              exact
-              render={() => <AppLayout authUser={data.getAuthUser} />}
-            />
+            <Route exact render={() => <AppLayout authUser={data.getAuthUser} />} />
           ) : (
             <Route exact render={() => <AuthLayout refetch={refetch} />} />
           )}
@@ -131,10 +121,7 @@ const App = () => {
       </ScrollToTop>
 
       {message.content.text && (
-        <Message
-          type={message.content.type}
-          autoClose={message.content.autoClose}
-        >
+        <Message type={message.content.type} autoClose={message.content.autoClose}>
           {message.content.text}
         </Message>
       )}

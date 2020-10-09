@@ -27,9 +27,7 @@ const reducers = (store, action) => ({
  * Store context provider
  */
 export const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={useReducer(reducers, store)}>
-    {children}
-  </StoreContext.Provider>
+  <StoreContext.Provider value={useReducer(reducers, store)}>{children}</StoreContext.Provider>
 );
 
 /**

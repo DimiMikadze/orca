@@ -50,8 +50,7 @@ const CommentSection = styled.div`
   position: relative;
   word-wrap: break-word;
   overflow: hidden;
-  padding: 0 ${(p) => p.theme.spacing.lg} ${(p) => p.theme.spacing.xxs}
-    ${(p) => p.theme.spacing.xs};
+  padding: 0 ${(p) => p.theme.spacing.lg} ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
   background-color: ${(p) => p.theme.colors.grey[100]};
   border-radius: ${(p) => p.theme.radius.lg};
   margin-left: ${(p) => p.theme.spacing.xxs};
@@ -79,9 +78,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
 
     // Delete notification after comment deletion
     if (auth.user.id !== postAuthor.id) {
-      const isNotified = postAuthor.notifications.find(
-        (n) => n.comment && n.comment.id === comment.id
-      );
+      const isNotified = postAuthor.notifications.find((n) => n.comment && n.comment.id === comment.id);
       notification.remove({
         notificationId: isNotified.id,
       });

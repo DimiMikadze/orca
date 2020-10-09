@@ -71,9 +71,7 @@ const ProfileCoverUpload = ({ coverImagePublicId, coverImage, userId }) => {
     if (!file) return;
 
     if (file.size >= MAX_USER_COVER_IMAGE_SIZE) {
-      message.error(
-        `File size should be less then ${MAX_USER_COVER_IMAGE_SIZE / 1000000}MB`
-      );
+      message.error(`File size should be less then ${MAX_USER_COVER_IMAGE_SIZE / 1000000}MB`);
       setLoading(false);
       return;
     }

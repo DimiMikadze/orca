@@ -19,10 +19,7 @@ import { GET_FOLLOWED_POSTS, DELETE_POST } from 'graphql/post';
 import { GET_AUTH_USER } from 'graphql/user';
 import { GET_USER_POSTS } from 'graphql/user';
 
-import {
-  HOME_PAGE_POSTS_LIMIT,
-  PROFILE_PAGE_POSTS_LIMIT,
-} from 'constants/DataLimit';
+import { HOME_PAGE_POSTS_LIMIT, PROFILE_PAGE_POSTS_LIMIT } from 'constants/DataLimit';
 
 import { useStore } from 'store';
 
@@ -119,17 +116,7 @@ const CommentLine = styled.div`
 /**
  * Component for rendering user post
  */
-const PostCard = ({
-  author,
-  imagePublicId,
-  comments,
-  title,
-  createdAt,
-  image,
-  likes,
-  postId,
-  openModal,
-}) => {
+const PostCard = ({ author, imagePublicId, comments, title, createdAt, image, likes, postId, openModal }) => {
   const [{ auth }] = useStore();
   const client = useApolloClient();
   const [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -181,12 +168,7 @@ const PostCard = ({
     <>
       <Root>
         <Modal onClose={closeOption} open={isOptionOpen}>
-          <PostCardOption
-            postId={postId}
-            closeOption={closeOption}
-            author={author}
-            deletePost={deletePost}
-          />
+          <PostCardOption postId={postId} closeOption={closeOption} author={author} deletePost={deletePost} />
         </Modal>
 
         <TopRow>
@@ -225,13 +207,7 @@ const PostCard = ({
             </Count>
 
             <Icons>
-              <Like
-                fullWidth
-                withText
-                user={author}
-                postId={postId}
-                likes={likes}
-              />
+              <Like fullWidth withText user={author} postId={postId} likes={likes} />
 
               <Button fullWidth text onClick={toggleCreateComment}>
                 <PostCommentIcon /> <Spacing inline left="xxs" /> <b>Comment</b>
@@ -243,22 +219,14 @@ const PostCard = ({
             <>
               <Spacing top="xs">
                 <CommentLine />
-                <CreateComment
-                  post={{ id: postId, author }}
-                  focus={isCommentOpen}
-                />
+                <CreateComment post={{ id: postId, author }} focus={isCommentOpen} />
               </Spacing>
 
               {comments.length > 0 && <CommentLine />}
 
               <Comments>
                 {comments.map((comment) => (
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    postId={postId}
-                    postAuthor={author}
-                  />
+                  <Comment key={comment.id} comment={comment} postId={postId} postAuthor={author} />
                 ))}
               </Comments>
             </>

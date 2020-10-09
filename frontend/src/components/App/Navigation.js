@@ -4,32 +4,26 @@ import styled from 'styled-components';
 
 import * as Routes from 'routes';
 
-import {
-  ExploreIcon,
-  NotificationIcon,
-  HomeIcon,
-  PeopleIcon,
-  EnvelopeIcon,
-} from 'components/icons';
+import { ExploreIcon, NotificationIcon, HomeIcon, PeopleIcon, EnvelopeIcon } from 'components/icons';
 
 const Link = styled(NavLink)`
   text-decoration: none;
   transition: color 0.1s;
-  color: ${p => p.theme.colors.text.primary};
+  color: ${(p) => p.theme.colors.text.primary};
   display: block;
-  padding-left: ${p => p.theme.spacing.xs};
+  padding-left: ${(p) => p.theme.spacing.xs};
 
   &:hover,
   &.selected {
-    color: ${p => p.theme.colors.primary.main};
-    background-color: ${p => p.theme.colors.grey[100]};
+    color: ${(p) => p.theme.colors.primary.main};
+    background-color: ${(p) => p.theme.colors.grey[100]};
 
     svg path {
-      fill: ${p => p.theme.colors.primary.main};
+      fill: ${(p) => p.theme.colors.primary.main};
     }
 
-    @media (min-width: ${p => p.theme.screen.md}) {
-      background-color: ${p => p.theme.colors.white};
+    @media (min-width: ${(p) => p.theme.screen.md}) {
+      background-color: ${(p) => p.theme.colors.white};
     }
   }
 `;
@@ -38,7 +32,7 @@ const List = styled.ul`
   list-style-type: none;
   padding: 0;
   line-height: 40px;
-  font-size: ${p => p.theme.font.size.xs};
+  font-size: ${(p) => p.theme.font.size.xs};
 `;
 
 const ListItem = styled.li`
@@ -48,7 +42,7 @@ const ListItem = styled.li`
 `;
 
 const Name = styled.div`
-  margin-left: ${p => p.theme.spacing.sm};
+  margin-left: ${(p) => p.theme.spacing.sm};
 `;
 
 /**
@@ -85,11 +79,7 @@ const Navigation = () => {
         </ListItem>
       </Link>
 
-      <Link
-        exact
-        activeClassName="selected"
-        to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}
-      >
+      <Link exact activeClassName="selected" to={generatePath(Routes.MESSAGES, { userId: Routes.NEW_ID_VALUE })}>
         <ListItem>
           <EnvelopeIcon width={18} />
           <Name>Messages</Name>

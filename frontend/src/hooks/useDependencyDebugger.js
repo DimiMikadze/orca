@@ -8,7 +8,7 @@ import { useRef, useMemo } from 'react';
  * @param {array} newInputs
  */
 const compareInputs = (inputKeys, oldInputs, newInputs) => {
-  inputKeys.forEach(key => {
+  inputKeys.forEach((key) => {
     const oldInput = oldInputs[key];
     const newInput = newInputs[key];
 
@@ -21,7 +21,7 @@ const compareInputs = (inputKeys, oldInputs, newInputs) => {
 /**
  * Hook for detecting dependency array changes, meant to be used for debugging
  */
-export const useDependencyDebugger = inputs => {
+export const useDependencyDebugger = (inputs) => {
   const oldInputsRef = useRef(inputs);
   const inputValuesArray = Object.values(inputs);
   const inputKeysArray = Object.keys(inputs);

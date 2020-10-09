@@ -79,11 +79,7 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username }) => {
 
     if (file.size >= MAX_USER_PROFILE_IMAGE_SIZE) {
       setLoading(false);
-      message.error(
-        `File size should be less then ${
-          MAX_USER_PROFILE_IMAGE_SIZE / 1000000
-        }MB`
-      );
+      message.error(`File size should be less then ${MAX_USER_PROFILE_IMAGE_SIZE / 1000000}MB`);
       return;
     }
 
@@ -109,11 +105,7 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username }) => {
       return <Loading top="xl" />;
     }
 
-    return image ? (
-      <Image src={image} alt="profile" accept="image/x-png,image/jpeg" />
-    ) : (
-      <UserIcon width="172" />
-    );
+    return image ? <Image src={image} alt="profile" accept="image/x-png,image/jpeg" /> : <UserIcon width="172" />;
   };
 
   const authUser = auth.user.id === userId;
@@ -121,13 +113,7 @@ const ProfileImageUpload = ({ userId, image, imagePublicId, username }) => {
   return (
     <>
       {authUser && (
-        <Input
-          name="image"
-          type="file"
-          id="image"
-          accept="image/x-png,image/jpeg"
-          onChange={handleImageChange}
-        />
+        <Input name="image" type="file" id="image" accept="image/x-png,image/jpeg" onChange={handleImageChange} />
       )}
 
       <Label authUser={authUser} htmlFor="image">

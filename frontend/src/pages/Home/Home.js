@@ -46,13 +46,10 @@ const Home = () => {
     skip: 0,
     limit: HOME_PAGE_POSTS_LIMIT,
   };
-  const { data, loading, fetchMore, networkStatus } = useQuery(
-    GET_FOLLOWED_POSTS,
-    {
-      variables,
-      notifyOnNetworkStatusChange: true,
-    }
-  );
+  const { data, loading, fetchMore, networkStatus } = useQuery(GET_FOLLOWED_POSTS, {
+    variables,
+    notifyOnNetworkStatusChange: true,
+  });
 
   const closeModal = () => {
     window.history.pushState('', '', '/');
@@ -66,22 +63,15 @@ const Home = () => {
 
   const renderContent = () => {
     if (loading && networkStatus === 1) {
-      return (
-        <Skeleton
-          height={500}
-          bottom="lg"
-          top="lg"
-          count={HOME_PAGE_POSTS_LIMIT}
-        />
-      );
+      return <Skeleton height={500} bottom="lg" top="lg" count={HOME_PAGE_POSTS_LIMIT} />;
     }
 
     const { posts, count } = data.getFollowedPosts;
     if (!posts.length) {
       return (
         <Empty>
-          <StyledA to={generatePath(Routes.EXPLORE)}>Explore new posts</StyledA>{' '}
-          or <StyledA to={generatePath(Routes.PEOPLE)}>Find new people</StyledA>
+          <StyledA to={generatePath(Routes.EXPLORE)}>Explore new posts</StyledA> or{' '}
+          <StyledA to={generatePath(Routes.PEOPLE)}>Find new people</StyledA>
         </Empty>
       );
     }
@@ -95,8 +85,7 @@ const Home = () => {
         fetchMore={fetchMore}
       >
         {(data) => {
-          const showNextLoading =
-            loading && networkStatus === 3 && count !== data.length;
+          const showNextLoading = loading && networkStatus === 3 && count !== data.length;
 
           return (
             <Fragment>

@@ -5,12 +5,9 @@ import { withRouter } from 'react-router-dom';
  * Scrolls to top on route change
  */
 const ScrollToTop = ({ children, location: { pathname } }) => {
-  useEffect(
-    () => {
-      window.scrollTo(0, 0);
-    },
-    [pathname]
-  );
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return children || null;
 };

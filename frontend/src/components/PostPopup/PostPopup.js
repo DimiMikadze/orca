@@ -111,9 +111,7 @@ const PostPopup = ({ id, closeModal, usedInModal }) => {
 
   return (
     <Root usedInModal={usedInModal}>
-      <Head
-        title={post.title ? post.title : `${post.author.username}'s post`}
-      />
+      <Head title={post.title ? post.title : `${post.author.username}'s post`} />
 
       {closeModal && (
         <CloseModal onClick={closeModal}>
@@ -141,11 +139,7 @@ const PostPopup = ({ id, closeModal, usedInModal }) => {
           </Spacing>
 
           <Spacing>
-            <PostPopupOptions
-              postId={post.id}
-              postAuthor={post.author}
-              postLikes={post.likes}
-            />
+            <PostPopupOptions postId={post.id} postAuthor={post.author} postLikes={post.likes} />
 
             <CreateComment post={post} />
           </Spacing>

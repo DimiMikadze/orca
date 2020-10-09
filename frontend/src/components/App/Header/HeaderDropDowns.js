@@ -8,14 +8,7 @@ import HeaderMessageDropdown from './HeaderMessageDropdown';
 /**
  * Component that renders DropDown's of Header
  */
-const HeaderDropDowns = ({
-  messageRef,
-  notificationRef,
-  userRef,
-  dropdownOpen,
-  dropdownData,
-  closeDropDown,
-}) => {
+const HeaderDropDowns = ({ messageRef, notificationRef, userRef, dropdownOpen, dropdownData, closeDropDown }) => {
   const DropDowns = {
     USER: <HeaderUserDropDown userRef={userRef} />,
     NOTIFICATION: (
@@ -25,12 +18,7 @@ const HeaderDropDowns = ({
         closeDropDown={closeDropDown}
       />
     ),
-    MESSAGE: (
-      <HeaderMessageDropdown
-        messageRef={messageRef}
-        dropdownData={dropdownData}
-      />
-    ),
+    MESSAGE: <HeaderMessageDropdown messageRef={messageRef} dropdownData={dropdownData} />,
   };
 
   return dropdownOpen ? DropDowns[dropdownOpen] : null;

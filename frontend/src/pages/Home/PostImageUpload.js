@@ -16,13 +16,13 @@ const Label = styled.label`
   padding: 9px 14px;
   cursor: pointer;
   transition: background-color 0.1s;
-  font-weight: ${p => p.theme.font.weight.bold};
-  border-radius: ${p => p.theme.radius.lg};
-  background-color: ${p => p.theme.colors.grey[100]};
-  font-size: ${p => p.theme.font.size.xxs};
+  font-weight: ${(p) => p.theme.font.weight.bold};
+  border-radius: ${(p) => p.theme.radius.lg};
+  background-color: ${(p) => p.theme.colors.grey[100]};
+  font-size: ${(p) => p.theme.font.size.xxs};
 
   &:hover {
-    background-color: ${p => p.theme.colors.grey[300]};
+    background-color: ${(p) => p.theme.colors.grey[300]};
   }
 `;
 
@@ -31,13 +31,7 @@ const Label = styled.label`
  */
 const PostImageUpload = ({ handleChange, label }) => (
   <>
-    <Input
-      name="image"
-      onChange={handleChange}
-      type="file"
-      id="post-image"
-      accept="image/x-png,image/jpeg"
-    />
+    <Input name="image" onChange={handleChange} type="file" id="post-image" accept="image/x-png,image/jpeg" />
 
     <Label htmlFor="post-image">
       <UploadImageIcon />

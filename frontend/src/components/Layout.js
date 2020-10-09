@@ -26,15 +26,15 @@ export const Content = styled.div`
   position: relative;
   margin: 0 auto;
   width: 100%;
-  z-index: ${p => p.zIndex && p.theme.zIndex[p.zIndex]};
+  z-index: ${(p) => p.zIndex && p.theme.zIndex[p.zIndex]};
   min-height: 500px;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
-    width: ${p => p.theme.screen.xs};
+  @media (min-width: ${(p) => p.theme.screen.md}) {
+    width: ${(p) => p.theme.screen.xs};
   }
 
-  @media (min-width: ${p => p.theme.screen.lg}) {
-    width: ${p => p.theme.screen.sm};
+  @media (min-width: ${(p) => p.theme.screen.lg}) {
+    width: ${(p) => p.theme.screen.sm};
   }
 `;
 
@@ -48,14 +48,14 @@ export const Content = styled.div`
  * @param {boolean} inline, converts block element to inline block
  */
 export const Spacing = styled.div`
-  ${p => p.top && `margin-top: ${p.theme.spacing[p.top]}`};
-  ${p => p.right && `margin-right: ${p.theme.spacing[p.right]}`};
-  ${p => p.bottom && `margin-bottom: ${p.theme.spacing[p.bottom]}`};
-  ${p => p.left && `margin-left: ${p.theme.spacing[p.left]}`};
-  ${p => p.inline && `display: inline-block;`}
+  ${(p) => p.top && `margin-top: ${p.theme.spacing[p.top]}`};
+  ${(p) => p.right && `margin-right: ${p.theme.spacing[p.right]}`};
+  ${(p) => p.bottom && `margin-bottom: ${p.theme.spacing[p.bottom]}`};
+  ${(p) => p.left && `margin-left: ${p.theme.spacing[p.left]}`};
+  ${(p) => p.inline && `display: inline-block;`}
 
-  @media (max-width: ${p => p.theme.screen.sm}) {
-    ${p =>
+  @media (max-width: ${(p) => p.theme.screen.sm}) {
+    ${(p) =>
       p.hideOnSm &&
       `
       display: none;
@@ -72,11 +72,6 @@ export const Overlay = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: ${p => p.theme.zIndex.md};
-  background-color: rgba(
-    0,
-    0,
-    0,
-    ${p => (p.transparency ? p.transparency : '0.8')}
-  );
+  z-index: ${(p) => p.theme.zIndex.md};
+  background-color: rgba(0, 0, 0, ${(p) => (p.transparency ? p.transparency : '0.8')});
 `;

@@ -36,23 +36,14 @@ const Notifications = () => {
     skip: 0,
     limit: NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT,
   };
-  const { data, loading, fetchMore, networkStatus } = useQuery(
-    GET_USER_NOTIFICATION,
-    {
-      variables,
-      notifyOnNetworkStatusChange: true,
-    }
-  );
+  const { data, loading, fetchMore, networkStatus } = useQuery(GET_USER_NOTIFICATION, {
+    variables,
+    notifyOnNetworkStatusChange: true,
+  });
 
   const renderContent = () => {
     if (loading && networkStatus === 1) {
-      return (
-        <Skeleton
-          height={56}
-          bottom="xxs"
-          count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT}
-        />
-      );
+      return <Skeleton height={56} bottom="xxs" count={NOTIFICATIONS_PAGE_NOTIFICATION_LIMIT} />;
     }
 
     const { notifications, count } = data.getUserNotifications;
@@ -69,18 +60,13 @@ const Notifications = () => {
         fetchMore={fetchMore}
       >
         {(data) => {
-          const showNextLoading =
-            loading && networkStatus === 3 && count !== data.length;
+          const showNextLoading = loading && networkStatus === 3 && count !== data.length;
 
           return (
             <>
               <List>
                 {data.map((notification) => (
-                  <Notification
-                    key={notification.id}
-                    notification={notification}
-                    close={() => false}
-                  />
+                  <Notification key={notification.id} notification={notification} close={() => false} />
                 ))}
               </List>
 

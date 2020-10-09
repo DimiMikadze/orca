@@ -16,21 +16,16 @@ cloudinary.config({
  */
 export const uploadToCloudinary = async (stream, folder, imagePublicId) => {
   // if imagePublicId param is presented we should overwrite the image
-  const options = imagePublicId
-    ? { public_id: imagePublicId, overwrite: true }
-    : { public_id: `${folder}/${uuid()}` };
+  const options = imagePublicId ? { public_id: imagePublicId, overwrite: true } : { public_id: `${folder}/${uuid()}` };
 
   return new Promise((resolve, reject) => {
-    const streamLoad = cloudinary.v2.uploader.upload_stream(
-      options,
-      (error, result) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(error);
-        }
+    const streamLoad = cloudinary.v2.uploader.upload_stream(options, (error, result) => {
+      if (result) {
+        resolve(result);
+      } else {
+        reject(error);
       }
-    );
+    });
 
     stream.pipe(streamLoad);
   });
@@ -41,7 +36,7 @@ export const uploadToCloudinary = async (stream, folder, imagePublicId) => {
  *
  *  @param {string} publicId id for deleting the image
  */
-export const deleteFromCloudinary = async publicId => {
+export const deleteFromCloudinary = async (publicId) => {
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader.destroy(publicId, (error, result) => {
       if (result) {

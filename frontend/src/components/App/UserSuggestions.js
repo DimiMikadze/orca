@@ -53,8 +53,7 @@ const ListItem = styled.li`
 
 const FullName = styled.div`
   font-weight: ${(p) => p.theme.font.weight.bold};
-  color: ${(p) =>
-    p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary};
+  color: ${(p) => (p.active ? p.theme.colors.primary.main : p.theme.colors.text.primary)};
 `;
 
 const UserName = styled.div`

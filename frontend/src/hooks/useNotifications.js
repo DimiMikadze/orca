@@ -40,23 +40,14 @@ export const useNotifications = () => {
   /**
    * Removes a notification
    */
-  const remove = ({ notificationId }) =>
-    mutate(DELETE_NOTIFICATION, { id: notificationId });
+  const remove = ({ notificationId }) => mutate(DELETE_NOTIFICATION, { id: notificationId });
 
   /**
    * Checks if user has already a notification and based on that Creates or Deletes a notification
    */
-  const toggle = ({
-    user,
-    postId,
-    notificationType,
-    notificationTypeId,
-    hasDone,
-  }) => {
+  const toggle = ({ user, postId, notificationType, notificationTypeId, hasDone }) => {
     const type = notificationType.toLowerCase();
-    const isNotified = user.notifications.find(
-      (n) => n[type] && hasDone && n[type].id === hasDone.id
-    );
+    const isNotified = user.notifications.find((n) => n[type] && hasDone && n[type].id === hasDone.id);
     const notificationId = isNotified ? isNotified.id : null;
     const operation = notificationId ? 'delete' : 'create';
     const options = {

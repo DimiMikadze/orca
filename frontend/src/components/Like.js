@@ -29,9 +29,7 @@ const Like = ({ postId, user, likes, withText, fullWidth }) => {
   const [{ auth }] = useStore();
   const notification = useNotifications();
   // Detect which mutation to use
-  const hasLiked = likes.find(
-    (l) => l.user === auth.user.id && l.post === postId
-  );
+  const hasLiked = likes.find((l) => l.user === auth.user.id && l.post === postId);
   const operation = hasLiked ? 'delete' : 'create';
   const options = {
     create: {

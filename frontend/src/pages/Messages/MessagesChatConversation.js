@@ -80,8 +80,7 @@ const Message = styled.div`
   padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
   border-radius: ${(p) => p.theme.radius.lg};
   color: ${(p) => p.userMessage && p.theme.colors.white};
-  background-color: ${(p) =>
-    p.userMessage ? p.theme.colors.primary.light : p.theme.colors.grey[200]};
+  background-color: ${(p) => (p.userMessage ? p.theme.colors.primary.light : p.theme.colors.grey[200])};
 `;
 
 const Form = styled.form`
@@ -107,13 +106,7 @@ const SendButton = styled(Button)`
 /**
  * Component that renders messages conversations UI
  */
-const MessagesChatConversation = ({
-  messages,
-  authUser,
-  chatUser,
-  data,
-  match,
-}) => {
+const MessagesChatConversation = ({ messages, authUser, chatUser, data, match }) => {
   const bottomRef = useRef(null);
 
   const [messageText, setMessageText] = useState('');
@@ -173,13 +166,9 @@ const MessagesChatConversation = ({
                 </Spacing>
               )}
 
-              <Message userMessage={isAuthUserReceiver}>
-                {message.message}
-              </Message>
+              <Message userMessage={isAuthUserReceiver}>{message.message}</Message>
 
-              <MessageDate userMessage={isAuthUserReceiver}>
-                {currentDate(message.createdAt)}
-              </MessageDate>
+              <MessageDate userMessage={isAuthUserReceiver}>{currentDate(message.createdAt)}</MessageDate>
             </MessageWrapper>
           );
         })}

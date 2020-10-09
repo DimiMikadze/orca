@@ -34,12 +34,12 @@ const Root = styled.div`
   width: 100%;
   position: relative;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
-    width: ${p => p.theme.screen.md};
+  @media (min-width: ${(p) => p.theme.screen.md}) {
+    width: ${(p) => p.theme.screen.md};
   }
 
-  @media (min-width: ${p => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
-    width: ${p => p.theme.screen.lg};
+  @media (min-width: ${(p) => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
+    width: ${(p) => p.theme.screen.lg};
   }
 `;
 

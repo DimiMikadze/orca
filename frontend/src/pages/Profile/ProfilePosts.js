@@ -37,23 +37,12 @@ const ProfilePosts = ({ username }) => {
   };
 
   const closeModal = () => {
-    window.history.pushState(
-      '',
-      '',
-      generatePath(Routes.USER_PROFILE, { username })
-    );
+    window.history.pushState('', '', generatePath(Routes.USER_PROFILE, { username }));
     setIsPostPopupOpen(false);
   };
 
   if (loading && networkStatus === 1) {
-    return (
-      <Skeleton
-        height={500}
-        bottom="lg"
-        top="lg"
-        count={PROFILE_PAGE_POSTS_LIMIT}
-      />
-    );
+    return <Skeleton height={500} bottom="lg" top="lg" count={PROFILE_PAGE_POSTS_LIMIT} />;
   }
 
   const { posts, count } = data.getUserPosts;
@@ -75,8 +64,7 @@ const ProfilePosts = ({ username }) => {
     >
       {(data) => {
         return data.map((post, i) => {
-          const showNextLoading =
-            loading && networkStatus === 3 && data.length - 1 === i;
+          const showNextLoading = loading && networkStatus === 3 && data.length - 1 === i;
 
           return (
             <Fragment key={post.id}>

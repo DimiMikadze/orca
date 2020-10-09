@@ -23,13 +23,13 @@ import * as Routes from 'routes';
 const Root = styled(Container)`
   position: sticky;
   top: 0;
-  background-color: ${p => p.theme.colors.white};
-  z-index: ${p => p.theme.zIndex.md};
+  background-color: ${(p) => p.theme.colors.white};
+  z-index: ${(p) => p.theme.zIndex.md};
   height: ${HEADER_HEIGHT}px;
-  border-bottom: 1px solid ${p => p.theme.colors.border.main};
+  border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
 
-  @media (min-width: ${p => p.theme.screen.md}) {
-    z-index: ${p => p.theme.zIndex.md};
+  @media (min-width: ${(p) => p.theme.screen.md}) {
+    z-index: ${(p) => p.theme.zIndex.md};
   }
 `;
 
@@ -43,8 +43,8 @@ const Wrapper = styled.div`
   margin: 0 auto;
   width: 100%;
 
-  @media (min-width: ${p => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
-    width: ${p => p.theme.screen.lg};
+  @media (min-width: ${(p) => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
+    width: ${(p) => p.theme.screen.lg};
   }
 `;
 
@@ -57,22 +57,22 @@ const LeftSide = styled.div`
 const Hamburger = styled.div`
   cursor: pointer;
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     display: none;
   }
 `;
 
 const Logo = styled(A)`
   display: none;
-  color: ${p => p.theme.colors.primary.main};
-  font-weight: ${p => p.theme.font.weight.bold};
-  font-size: ${p => p.theme.font.size.sm};
+  color: ${(p) => p.theme.colors.primary.main};
+  font-weight: ${(p) => p.theme.font.weight.bold};
+  font-size: ${(p) => p.theme.font.size.sm};
 
   &:hover {
-    color: ${p => p.theme.colors.primary.main};
+    color: ${(p) => p.theme.colors.primary.main};
   }
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     display: block;
   }
 `;
@@ -92,9 +92,9 @@ const countCSS = css`
   padding: 2px;
   letter-spacing: -1px;
   border-radius: 50%;
-  color: ${p => p.theme.colors.white};
-  background-color: ${p => p.theme.colors.error.main};
-  font-size: ${p => p.theme.font.size.xxs};
+  color: ${(p) => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.error.main};
+  font-size: ${(p) => p.theme.font.size.xxs};
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -143,7 +143,7 @@ const Header = ({ location, toggleSideBar }) => {
     return () => closeDropDown();
   }, [location.pathname]);
 
-  const handleIconClick = dropdownType => {
+  const handleIconClick = (dropdownType) => {
     if (dropdownOpen) {
       closeDropDown();
     } else {
@@ -186,9 +186,7 @@ const Header = ({ location, toggleSideBar }) => {
           <Spacing right="md">
             <Button ghost onClick={() => handleIconClick('NOTIFICATION')}>
               {auth.user.newNotifications.length > 0 && (
-                <NotificationCount>
-                  {auth.user.newNotifications.length}
-                </NotificationCount>
+                <NotificationCount>{auth.user.newNotifications.length}</NotificationCount>
               )}
               <NotificationIcon />
             </Button>

@@ -19,17 +19,13 @@ export const useGlobalMessage = () => {
     });
   };
 
-  const success = (text, autoClose) =>
-    dispatchAction(text, MessageType.SUCCESS, autoClose);
+  const success = (text, autoClose) => dispatchAction(text, MessageType.SUCCESS, autoClose);
 
-  const info = (text, autoClose) =>
-    dispatchAction(text, MessageType.INFO, autoClose);
+  const info = (text, autoClose) => dispatchAction(text, MessageType.INFO, autoClose);
 
-  const warning = (text, autoClose) =>
-    dispatchAction(text, MessageType.WARNING, autoClose);
+  const warning = (text, autoClose) => dispatchAction(text, MessageType.WARNING, autoClose);
 
-  const error = (text, autoClose) =>
-    dispatchAction(text, MessageType.ERROR, autoClose);
+  const error = (text, autoClose) => dispatchAction(text, MessageType.ERROR, autoClose);
 
   return { success, info, warning, error };
 };

@@ -9,19 +9,19 @@ const Root = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  padding-bottom: ${p => p.theme.spacing.sm};
+  padding-bottom: ${(p) => p.theme.spacing.sm};
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     max-height: 400px;
   }
 `;
 
 const Comments = styled.div`
-  max-height: ${p => (p.usedInModal ? '100%' : '350px')};
+  max-height: ${(p) => (p.usedInModal ? '100%' : '350px')};
   width: 100%;
   overflow-y: scroll;
   box-sizing: content-box;
-  padding: 0 ${p => p.theme.spacing.xs};
+  padding: 0 ${(p) => p.theme.spacing.xs};
 `;
 
 /**
@@ -32,13 +32,8 @@ const PostPopupComments = ({ comments, postId, postAuthor, usedInModal }) => (
     <Spacing top="xs" />
 
     <Comments usedInModal={usedInModal}>
-      {comments.map(comment => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          postId={postId}
-          postAuthor={postAuthor}
-        />
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} postId={postId} postAuthor={postAuthor} />
       ))}
     </Comments>
   </Root>

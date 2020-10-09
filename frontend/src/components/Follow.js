@@ -24,10 +24,8 @@ const Button = styled.button`
   border-radius: ${(p) => p.theme.radius.sm};
   color: ${(p) => !p.isFollowing && p.theme.colors.white};
   padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
-  border: ${(p) =>
-    p.isFollowing ? `1px solid ${p.theme.colors.border.main}` : '0'};
-  background-color: ${(p) =>
-    p.isFollowing ? 'transparent' : p.theme.colors.primary.main};
+  border: ${(p) => (p.isFollowing ? `1px solid ${p.theme.colors.border.main}` : '0')};
+  background-color: ${(p) => (p.isFollowing ? 'transparent' : p.theme.colors.primary.main)};
 
   &:hover {
     border-color: ${(p) => p.theme.colors.border.dark};
@@ -88,11 +86,7 @@ const Follow = ({ user }) => {
   };
 
   return (
-    <Button
-      onClick={handleClickFollow}
-      disabled={loading}
-      isFollowing={isFollowing}
-    >
+    <Button onClick={handleClickFollow} disabled={loading} isFollowing={isFollowing}>
       {isFollowing ? 'Following' : 'Follow'}
     </Button>
   );

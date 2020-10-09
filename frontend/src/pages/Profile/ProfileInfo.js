@@ -102,11 +102,7 @@ const ProfileInfo = ({ user }) => {
 
   return (
     <Root>
-      <ProfileCoverUpload
-        userId={user.id}
-        coverImage={user.coverImage}
-        coverImagePublicId={user.coverImagePublicId}
-      />
+      <ProfileCoverUpload userId={user.id} coverImage={user.coverImage} coverImagePublicId={user.coverImagePublicId} />
 
       <ProfileImage>
         <ProfileImageUpload
@@ -126,9 +122,7 @@ const ProfileInfo = ({ user }) => {
               <Follow user={user} />
 
               <Spacing left="sm" />
-              <Message to={generatePath(Routes.MESSAGES, { userId: user.id })}>
-                Message
-              </Message>
+              <Message to={generatePath(Routes.MESSAGES, { userId: user.id })}>Message</Message>
             </FollowAndMessage>
           )}
         </FullName>

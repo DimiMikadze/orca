@@ -186,12 +186,7 @@ const MessagesUsers = ({ location, authUser }) => {
       </HeadingContainer>
 
       <SearchContainer>
-        <Search
-          location={location}
-          backgroundColor="white"
-          forMessage
-          placeholder="Search message"
-        />
+        <Search location={location} backgroundColor="white" forMessage placeholder="Search message" />
       </SearchContainer>
 
       {loading && <LoadingDots top="xl" />}
@@ -202,12 +197,7 @@ const MessagesUsers = ({ location, authUser }) => {
             const unseen = !user.lastMessageSender && !user.seen;
 
             return (
-              <User
-                key={user.id}
-                activeClassName="selected"
-                to={`/messages/${user.id}`}
-                seen={unseen ? 0 : 1}
-              >
+              <User key={user.id} activeClassName="selected" to={`/messages/${user.id}`} seen={unseen ? 0 : 1}>
                 <span>
                   <Avatar image={user.image} size={50} />
                 </span>

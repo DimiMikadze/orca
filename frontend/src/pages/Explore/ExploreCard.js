@@ -18,14 +18,14 @@ const Overlay = styled.div`
   align-items: center;
   transition: opacity 0.3s, visibility 0.3s;
   background-color: rgba(0, 0, 0, 0.3);
-  color: ${p => p.theme.colors.white};
+  color: ${(p) => p.theme.colors.white};
 `;
 
 const Root = styled.div`
   width: 100%;
   position: relative;
   cursor: pointer;
-  border-radius: ${p => p.theme.radius.sm};
+  border-radius: ${(p) => p.theme.radius.sm};
   overflow: hidden;
 
   &:hover ${Overlay} {
@@ -39,7 +39,7 @@ const Photo = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-color: ${p => p.theme.colors.grey[300]};
+  background-color: ${(p) => p.theme.colors.grey[300]};
 `;
 
 /**

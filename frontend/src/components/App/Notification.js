@@ -128,9 +128,7 @@ const Notification = ({ notification, close }) => {
       {notification.comment && (
         <Action>
           commented on your photo
-          <A
-            to={generatePath(Routes.POST, { id: notification.comment.post.id })}
-          >
+          <A to={generatePath(Routes.POST, { id: notification.comment.post.id })}>
             <PostImage>
               <Image src={notification.comment.post.image} />
             </PostImage>

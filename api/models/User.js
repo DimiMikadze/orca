@@ -91,7 +91,7 @@ const userSchema = new Schema(
 /**
  * Hashes the users password when saving it to DB
  */
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
   if (!this.isModified('password')) {
     return next();
   }
