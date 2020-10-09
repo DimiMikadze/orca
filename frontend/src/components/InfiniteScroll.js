@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { set, get, uniqBy } from 'lodash';
+import { get, uniqBy, setWith, clone } from 'lodash';
 
 /**
  * Component that adds Infinite scroll functionality to UI
@@ -21,10 +21,11 @@ const InfiniteScroll = ({
           updateQuery: (prev, { fetchMoreResult }) => {
             const previousData = get(prev, dataKey);
             const fetchMoreData = get(fetchMoreResult, dataKey);
-            return set(
-              prev,
+            return setWith(
+              clone(prev),
               dataKey,
-              uniqBy([...previousData, ...fetchMoreData], 'id')
+              uniqBy([...previousData, ...fetchMoreData], 'id'),
+              clone
             );
           },
         });
