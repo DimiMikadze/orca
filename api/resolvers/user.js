@@ -73,7 +73,7 @@ const Query = {
 
     // Transform data
     const newConversations = [];
-    lastUnseenMessages.map(u => {
+    lastUnseenMessages.map((u) => {
       const user = {
         id: u.sender[0]._id,
         username: u.sender[0].username,
@@ -209,7 +209,7 @@ const Query = {
     const follow = await Follow.find({ follower: userId }, { _id: 0 }).select(
       'user'
     );
-    follow.map(f => userFollowing.push(f.user));
+    follow.map((f) => userFollowing.push(f.user));
 
     // Find users that user is not following
     const query = {
@@ -271,7 +271,7 @@ const Query = {
       { follower: userId },
       { _id: 0 }
     ).select('user');
-    following.map(f => userFollowing.push(f.user));
+    following.map((f) => userFollowing.push(f.user));
     userFollowing.push(userId);
 
     // Find random users
@@ -287,9 +287,7 @@ const Query = {
       }
     }
 
-    const randomUsers = await User.find(query)
-      .skip(random)
-      .limit(LIMIT);
+    const randomUsers = await User.find(query).skip(random).limit(LIMIT);
 
     return randomUsers;
   },
@@ -491,7 +489,7 @@ const Mutation = {
       },
     });
     if (!user) {
-      throw new Error('This token is either invalid or expired!.');
+      throw new Error('This token is either invalid or expired!');
     }
 
     // Update password, reset token and it's expiry

@@ -51,14 +51,11 @@ const InfiniteScroll = ({
     [count, data.length, dataKey, fetchMore, variables]
   );
 
-  useEffect(
-    () => {
-      window.addEventListener('scroll', handleScroll);
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
 
-      return () => window.removeEventListener('scroll', handleScroll);
-    },
-    [handleScroll]
-  );
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   return children(data);
 };

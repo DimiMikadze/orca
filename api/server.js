@@ -12,11 +12,13 @@ import { createApolloServer } from './utils/apollo-server';
 // Connect to database
 mongoose
   .connect(process.env.MONGO_URL, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,
+    useUnifiedTopology: true,
   })
   .then(() => console.log('DB connected'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // Initializes application
 const app = express();

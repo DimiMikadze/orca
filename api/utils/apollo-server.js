@@ -12,7 +12,7 @@ export const pubSub = new PubSub();
  *
  * @param {obj} req
  */
-const checkAuthorization = token => {
+const checkAuthorization = (token) => {
   return new Promise(async (resolve, reject) => {
     const authUser = await jwt.verify(token, process.env.SECRET);
 

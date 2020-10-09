@@ -1,4 +1,4 @@
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import { CREATE_NOTIFICATION, DELETE_NOTIFICATION } from 'graphql/notification';
 import { useStore } from 'store';
 
@@ -55,7 +55,7 @@ export const useNotifications = () => {
   }) => {
     const type = notificationType.toLowerCase();
     const isNotified = user.notifications.find(
-      n => n[type] && hasDone && n[type].id === hasDone.id
+      (n) => n[type] && hasDone && n[type].id === hasDone.id
     );
     const notificationId = isNotified ? isNotified.id : null;
     const operation = notificationId ? 'delete' : 'create';

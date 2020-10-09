@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { generatePath } from 'react-router-dom';
 import styled from 'styled-components';
-import { withApollo } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import { A } from 'components/Text';
 import { Spacing } from 'components/Layout';
@@ -22,10 +22,10 @@ const NotificationItem = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: ${p => p.theme.spacing.xs};
-  border-bottom: 1px solid ${p => p.theme.colors.border.main};
-  font-size: ${p => p.theme.font.size.xxs};
-  background-color: ${p => p.theme.colors.white};
+  padding: ${(p) => p.theme.spacing.xs};
+  border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
+  font-size: ${(p) => p.theme.font.size.xxs};
+  background-color: ${(p) => p.theme.colors.white};
 
   &:last-child {
     border-bottom: 0;
@@ -39,7 +39,7 @@ const LeftSide = styled.div`
 `;
 
 const Name = styled.div`
-  font-weight: ${p => p.theme.font.weight.bold};
+  font-weight: ${(p) => p.theme.font.weight.bold};
 `;
 
 const Action = styled.div`
@@ -48,7 +48,7 @@ const Action = styled.div`
   align-items: center;
   justify-content: space-between;
   flex: 1;
-  margin-left: ${p => p.theme.spacing.xs};
+  margin-left: ${(p) => p.theme.spacing.xs};
 `;
 
 const PostImage = styled.div`
@@ -67,9 +67,9 @@ const Image = styled.img`
 /**
  * Renders user notifications
  */
-const Notification = ({ notification, close, client }) => {
+const Notification = ({ notification, close }) => {
   const [{ auth }] = useStore();
-
+  const client = useApolloClient();
   const ref = React.useRef(null);
 
   useClickOutside(ref, close);
@@ -142,8 +142,7 @@ const Notification = ({ notification, close, client }) => {
 };
 
 Notification.propTypes = {
-  client: PropTypes.object.isRequired,
   close: PropTypes.func,
 };
 
-export default withApollo(Notification);
+export default Notification;

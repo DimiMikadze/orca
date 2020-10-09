@@ -5,8 +5,6 @@ import theme from 'theme';
  * Global styles for the application
  */
 export const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
-
   html {
     box-sizing: border-box;
   }

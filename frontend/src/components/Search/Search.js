@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -68,7 +68,7 @@ const Search = ({
     return () => setLoading(false);
   }, [debounceSearchQuery, client]);
 
-  const handleInputChange = async e => {
+  const handleInputChange = async (e) => {
     // Trim white space only from beginning
     const value = e.target.value.replace(/^\s+/g, '');
     setSearchQuery(value);

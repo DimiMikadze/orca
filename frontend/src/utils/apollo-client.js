@@ -1,16 +1,20 @@
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
-import { ApolloLink, Observable, split } from 'apollo-link';
+import {
+  ApolloClient,
+  ApolloLink,
+  Observable,
+  split,
+  InMemoryCache,
+} from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { onError } from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { createUploadLink } from 'apollo-upload-client';
-import { getMainDefinition } from 'apollo-utilities';
-import { WebSocketLink } from 'apollo-link-ws';
 
 /**
  * Creates a Apollo Link, that adds authentication token to request
  */
 const createAuthLink = () => {
-  const request = operation => {
+  const request = (operation) => {
     const token = localStorage.getItem('token');
     operation.setContext({
       headers: {
@@ -21,10 +25,10 @@ const createAuthLink = () => {
 
   return new ApolloLink(
     (operation, forward) =>
-      new Observable(observer => {
+      new Observable((observer) => {
         let handle;
         Promise.resolve(operation)
-          .then(oper => request(oper))
+          .then((oper) => request(oper))
           .then(() => {
             handle = forward(operation).subscribe({
               next: observer.next.bind(observer),
@@ -47,10 +51,15 @@ const createAuthLink = () => {
 const handleErrors = () => {
   return onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      console.log('graphQLErrors', graphQLErrors);
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
     }
+
     if (networkError) {
-      console.log('networkError', networkError);
+      console.log(`[Network error]: ${networkError}`);
     }
   });
 };

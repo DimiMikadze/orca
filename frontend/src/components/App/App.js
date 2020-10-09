@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { GlobalStyle } from './GlobalStyles';
@@ -49,7 +49,9 @@ const App = () => {
         } else {
           // Remove from notifications
           const notifications = oldNotifications;
-          const index = notifications.findIndex(n => n.id === notification.id);
+          const index = notifications.findIndex(
+            (n) => n.id === notification.id
+          );
           if (index > -1) {
             notifications.splice(index, 1);
           }
@@ -87,7 +89,7 @@ const App = () => {
         // If authUser already has unseen message from that user,
         // remove old message, so we can show the new one
         const index = oldConversations.findIndex(
-          u => u.id === newConversation.id
+          (u) => u.id === newConversation.id
         );
         if (index > -1) {
           oldConversations.splice(index, 1);

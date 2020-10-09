@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/client';
 
 import { Spacing } from 'components/Layout';
 import { H1, A, Error } from 'components/Text';
@@ -13,29 +13,29 @@ import { REQUEST_PASSWORD_RESET } from 'graphql/user';
 import * as Routes from 'routes';
 
 const Root = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 `;
 
 const Container = styled.div`
   width: 450px;
   margin: 0 auto;
-  background-color: ${p => p.theme.colors.white};
-  padding: ${p => p.theme.spacing.md};
-  border-radius: ${p => p.theme.radius.sm};
+  background-color: ${(p) => p.theme.colors.white};
+  padding: ${(p) => p.theme.spacing.md};
+  border-radius: ${(p) => p.theme.radius.sm};
   width: 100%;
   margin-top: 80px;
 
-  @media (min-width: ${p => p.theme.screen.sm}) {
+  @media (min-width: ${(p) => p.theme.screen.sm}) {
     width: 450px;
   }
 
-  @media (min-width: ${p => p.theme.screen.md}) {
+  @media (min-width: ${(p) => p.theme.screen.md}) {
     margin-top: auto;
   }
 `;
 
 const Text = styled.p`
-  font-size: ${p => p.theme.font.size.xs};
+  font-size: ${(p) => p.theme.font.size.xs};
   line-height: 22px;
 `;
 
@@ -46,12 +46,15 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [requestResetPassword, { loading }] = useMutation(
+    REQUEST_PASSWORD_RESET
+  );
 
-  const handleEmailChange = e => {
+  const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e, requestResetPassword) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -62,9 +65,14 @@ const ForgotPassword = () => {
 
     setError('');
     setEmail('');
-    requestResetPassword().then(async ({ data }) => {
-      setMessage(data.requestPasswordReset.message);
-    });
+    try {
+      const response = await requestResetPassword({
+        variables: { input: { email } },
+      });
+      setMessage(response.data.requestPasswordReset.message);
+    } catch (error) {
+      setError(error.graphQLErrors[0].message);
+    }
   };
 
   if (message) {
@@ -80,60 +88,43 @@ const ForgotPassword = () => {
   }
 
   return (
-    <Mutation
-      mutation={REQUEST_PASSWORD_RESET}
-      variables={{ input: { email } }}
-    >
-      {(requestResetPassword, { data, loading, error: apiError }) => (
-        <Root>
-          <Head title="Forgot Password" />
+    <Root>
+      <Head title="Forgot Password" />
 
-          <Container>
-            <Spacing bottom="sm">
-              <H1>Reset Password</H1>
-              <Text>
-                Enter the email address associated with your account, and we’ll
-                email you a link to reset your password.
-              </Text>
+      <Container>
+        <Spacing bottom="sm">
+          <H1>Reset Password</H1>
+          <Text>
+            Enter the email address associated with your account, and we’ll
+            email you a link to reset your password.
+          </Text>
+        </Spacing>
+
+        <form onSubmit={(e) => handleSubmit(e, requestResetPassword)}>
+          <InputText
+            type="text"
+            name="email"
+            values={email}
+            onChange={handleEmailChange}
+            placeholder="Email"
+          />
+
+          {error && (
+            <Spacing bottom="sm" top="sm">
+              <Error>{error}</Error>
             </Spacing>
+          )}
 
-            <form onSubmit={e => handleSubmit(e, requestResetPassword)}>
-              <InputText
-                type="text"
-                name="email"
-                values={email}
-                onChange={handleEmailChange}
-                placeholder="Email"
-              />
+          <Spacing top="xs" />
 
-              {error && (
-                <Spacing bottom="sm" top="sm">
-                  <Error>{error}</Error>
-                </Spacing>
-              )}
+          <Button disabled={loading}>Send reset link</Button>
 
-              {apiError && (
-                <Spacing bottom="sm" top="sm">
-                  <Error>
-                    {apiError.graphQLErrors.map(e => (
-                      <div key={e.message}>{e.message}</div>
-                    ))}
-                  </Error>
-                </Spacing>
-              )}
-
-              <Spacing top="xs" />
-
-              <Button disabled={loading}>Send reset link</Button>
-
-              <Spacing top="sm">
-                <A to={Routes.HOME}>&larr; Back to Sign Up</A>
-              </Spacing>
-            </form>
-          </Container>
-        </Root>
-      )}
-    </Mutation>
+          <Spacing top="sm">
+            <A to={Routes.HOME}>&larr; Back to Sign Up</A>
+          </Spacing>
+        </form>
+      </Container>
+    </Root>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { withApollo } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import { UploadImageIcon } from 'components/icons';
 import { Loading } from 'components/Loading';
@@ -21,12 +21,12 @@ const Root = styled.div`
   width: 100%;
   height: 350px;
   position: relative;
-  background-image: url(${p => (p.image ? p.image : defaultBackgroundImage)});
+  background-image: url(${(p) => (p.image ? p.image : defaultBackgroundImage)});
   background-size: cover;
   background-position: center;
-  border-bottom-left-radius: ${p => p.theme.radius.md};
-  border-bottom-right-radius: ${p => p.theme.radius.md};
-  box-shadow: ${p => p.theme.shadows.sm};
+  border-bottom-left-radius: ${(p) => p.theme.radius.md};
+  border-bottom-right-radius: ${(p) => p.theme.radius.md};
+  box-shadow: ${(p) => p.theme.shadows.sm};
 `;
 
 const Input = styled.input`
@@ -40,10 +40,10 @@ const Label = styled.label`
   display: flex;
   flex-direction: row;
   align-items: center;
-  left: ${p => p.theme.spacing.sm};
-  top: ${p => p.theme.spacing.sm};
-  padding: ${p => p.theme.spacing.xxs} ${p => p.theme.spacing.xs};
-  border-radius: ${p => p.theme.radius.sm};
+  left: ${(p) => p.theme.spacing.sm};
+  top: ${(p) => p.theme.spacing.sm};
+  padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
+  border-radius: ${(p) => p.theme.radius.sm};
   transition: background-color 0.4s;
   background-color: rgba(0, 0, 0, 0.6);
 
@@ -55,19 +55,14 @@ const Label = styled.label`
 /**
  * Displays and Updates user Cover image
  */
-const ProfileCoverUpload = ({
-  client,
-  coverImagePublicId,
-  coverImage,
-  userId,
-}) => {
+const ProfileCoverUpload = ({ coverImagePublicId, coverImage, userId }) => {
   const [{ auth }] = useStore();
-
+  const client = useApolloClient();
   const [loading, setLoading] = useState(false);
 
   const message = useGlobalMessage();
 
-  const handleImageChange = async e => {
+  const handleImageChange = async (e) => {
     setLoading(true);
 
     const file = e.target.files[0];
@@ -129,10 +124,9 @@ const ProfileCoverUpload = ({
 };
 
 ProfileCoverUpload.propTypes = {
-  client: PropTypes.object.isRequired,
   userId: PropTypes.string.isRequired,
   coverImagePublicId: PropTypes.string,
   coverImage: PropTypes.string,
 };
 
-export default withApollo(ProfileCoverUpload);
+export default ProfileCoverUpload;

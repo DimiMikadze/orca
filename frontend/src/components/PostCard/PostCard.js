@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { generatePath } from 'react-router-dom';
 import styled from 'styled-components';
-import { withApollo } from 'react-apollo';
+import { useApolloClient } from '@apollo/client';
 
 import Comment from 'components/Comment';
 import CreateComment from 'components/CreateComment';
@@ -32,10 +32,10 @@ import { timeAgo } from 'utils/date';
 
 const Root = styled.div`
   width: 100%;
-  border-radius: ${p => p.theme.radius.sm};
-  padding-bottom: ${p => p.theme.spacing.xs};
-  background-color: ${p => p.theme.colors.white};
-  border: 1px solid ${p => p.theme.colors.border.main};
+  border-radius: ${(p) => p.theme.radius.sm};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
+  background-color: ${(p) => p.theme.colors.white};
+  border: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 const TopRow = styled.div`
@@ -43,13 +43,13 @@ const TopRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: ${p => p.theme.spacing.xs} ${p => p.theme.spacing.sm};
+  padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.sm};
 `;
 
 const CreatedAt = styled.div`
-  font-size: ${p => p.theme.font.size.xxs};
-  color: ${p => p.theme.colors.text.hint};
-  border-bottom: 1px solid ${p => p.theme.colors.text.secondary};
+  font-size: ${(p) => p.theme.font.size.xxs};
+  color: ${(p) => p.theme.colors.text.hint};
+  border-bottom: 1px solid ${(p) => p.theme.colors.text.secondary};
   border: 0;
   margin-top: 2px;
 `;
@@ -61,9 +61,9 @@ const Author = styled(A)`
 `;
 
 const Name = styled.span`
-  font-size: ${p => p.theme.font.size.xs};
-  font-weight: ${p => p.theme.font.weight.bold};
-  color: ${p => p.theme.colors.primary.main};
+  font-size: ${(p) => p.theme.font.size.xs};
+  font-weight: ${(p) => p.theme.font.weight.bold};
+  color: ${(p) => p.theme.colors.primary.main};
 `;
 
 const Poster = styled.img`
@@ -72,7 +72,7 @@ const Poster = styled.img`
   max-height: 700px;
   object-fit: cover;
   cursor: pointer;
-  margin-bottom: ${p => p.theme.spacing.sm};
+  margin-bottom: ${(p) => p.theme.spacing.sm};
 `;
 
 const BottomRow = styled.div`
@@ -80,7 +80,7 @@ const BottomRow = styled.div`
 `;
 
 const CountAndIcons = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 `;
 
 const Count = styled.div`
@@ -88,9 +88,9 @@ const Count = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: ${p => p.theme.spacing.xs};
-  font-size: ${p => p.theme.font.size.xs};
-  color: ${p => p.theme.colors.text.secondary};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
+  font-size: ${(p) => p.theme.font.size.xs};
+  color: ${(p) => p.theme.colors.text.secondary};
 `;
 
 const Icons = styled.div`
@@ -98,22 +98,22 @@ const Icons = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid ${p => p.theme.colors.border.main};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 const Comments = styled.div`
-  padding: 0 ${p => p.theme.spacing.sm};
+  padding: 0 ${(p) => p.theme.spacing.sm};
 `;
 
 const StyledButton = styled(Button)`
   padding: 0;
   padding-left: 4px;
-  font-size: ${p => p.theme.font.size.xxs};
+  font-size: ${(p) => p.theme.font.size.xxs};
 `;
 
 const CommentLine = styled.div`
   margin-bottom: 5px;
-  border-top: 1px solid ${p => p.theme.colors.border.main};
+  border-top: 1px solid ${(p) => p.theme.colors.border.main};
 `;
 
 /**
@@ -129,9 +129,9 @@ const PostCard = ({
   likes,
   postId,
   openModal,
-  client,
 }) => {
   const [{ auth }] = useStore();
+  const client = useApolloClient();
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
 
@@ -252,7 +252,7 @@ const PostCard = ({
               {comments.length > 0 && <CommentLine />}
 
               <Comments>
-                {comments.map(comment => (
+                {comments.map((comment) => (
                   <Comment
                     key={comment.id}
                     comment={comment}
@@ -279,7 +279,6 @@ PostCard.propTypes = {
   createdAt: PropTypes.string.isRequired,
   postId: PropTypes.string.isRequired,
   openModal: PropTypes.func.isRequired,
-  client: PropTypes.object.isRequired,
 };
 
-export default withApollo(PostCard);
+export default PostCard;
