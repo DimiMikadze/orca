@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { withFilter } from 'apollo-server';
 
-import { pubSub } from '../utils/apollo-server';
-import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
+import { pubSub } from '../../utils/apollo-server';
+import { MESSAGE_CREATED, NEW_CONVERSATION } from '../../constants/Subscriptions';
 
 const Query = {
   /**

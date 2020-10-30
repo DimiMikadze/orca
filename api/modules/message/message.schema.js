@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 /**
  * Message schema
  */
-const MessageSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
@@ -88,5 +88,3 @@ const MessageSchema = gql`
     newConversation: ConversationsPayload
   }
 `;
-
-export default MessageSchema;

@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 /**
  * Post schema
  */
-const PostSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
@@ -87,5 +87,3 @@ const PostSchema = gql`
     deletePost(input: DeletePostInput!): PostPayload
   }
 `;
-
-export default PostSchema;

@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 /**
  * Comment schema
  */
-const CommentSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
@@ -50,5 +50,3 @@ const CommentSchema = gql`
     deleteComment(input: DeleteCommentInput!): Comment
   }
 `;
-
-export default CommentSchema;

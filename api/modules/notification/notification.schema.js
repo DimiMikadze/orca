@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 /**
  * Notification schema
  */
-const NotificationSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
@@ -103,5 +103,3 @@ const NotificationSchema = gql`
     notificationCreatedOrDeleted: NotificationCreatedOrDeletedPayload
   }
 `;
-
-export default NotificationSchema;

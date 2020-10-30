@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 /**
  * User schema
  */
-const UserSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
@@ -163,5 +163,3 @@ const UserSchema = gql`
     isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
   }
 `;
-
-export default UserSchema;

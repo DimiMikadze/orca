@@ -1,40 +1,47 @@
 import { gql } from 'apollo-server-express';
 
 /**
- * Follow schema
+ * Like schema
  */
-const FollowSchema = gql`
+export default gql`
   # ---------------------------------------------------------
   # Model Objects
   # ---------------------------------------------------------
-  type Follow {
+  type Like {
     id: ID!
+    post: ID
     user: ID
-    follower: ID
   }
 
   # ---------------------------------------------------------
   # Input Objects
   # ---------------------------------------------------------
-  input CreateFollowInput {
+  input CreateLikeInput {
     userId: ID!
-    followerId: ID!
+    postId: ID!
   }
 
-  input DeleteFollowInput {
+  input DeleteLikeInput {
     id: ID!
+  }
+
+  # ---------------------------------------------------------
+  # Return Payloads
+  # ---------------------------------------------------------
+  type LikePayload {
+    id: ID!
+    post: PostPayload
+    user: UserPayload
   }
 
   # ---------------------------------------------------------
   # Mutations
   # ---------------------------------------------------------
   extend type Mutation {
-    # Creates a following/follower relationship between users
-    createFollow(input: CreateFollowInput!): Follow
+    # Creates a like for post
+    createLike(input: CreateLikeInput!): Like
 
-    # Deletes a following/follower relationship between users
-    deleteFollow(input: DeleteFollowInput!): Follow
+    # Deletes a post like
+    deleteLike(input: DeleteLikeInput!): Like
   }
 `;
-
-export default FollowSchema;

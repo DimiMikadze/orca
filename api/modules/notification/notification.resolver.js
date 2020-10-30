@@ -1,7 +1,7 @@
 import { withFilter } from 'apollo-server';
 
-import { pubSub } from '../utils/apollo-server';
-import { NOTIFICATION_CREATED_OR_DELETED } from '../constants/Subscriptions';
+import { pubSub } from '../../utils/apollo-server';
+import { NOTIFICATION_CREATED_OR_DELETED } from '../../constants/Subscriptions';
 
 const Query = {
   /**

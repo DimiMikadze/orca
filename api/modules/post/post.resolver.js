@@ -1,4 +1,4 @@
-import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinary';
+import { uploadToCloudinary, deleteFromCloudinary } from '../../utils/cloudinary';
 
 const Query = {
   /**
