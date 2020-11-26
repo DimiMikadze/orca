@@ -1,12 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-/**
- * Message schema
- */
 export default gql`
-  # ---------------------------------------------------------
-  # Model Objects
-  # ---------------------------------------------------------
   type Message {
     id: ID!
     sender: User!
@@ -16,9 +10,6 @@ export default gql`
     updateAt: String
   }
 
-  # ---------------------------------------------------------
-  # Input Objects
-  # ---------------------------------------------------------
   input CreateMessageInput {
     sender: ID!
     receiver: ID!
@@ -30,9 +21,6 @@ export default gql`
     receiver: ID!
   }
 
-  # ---------------------------------------------------------
-  # Return Payloads
-  # ---------------------------------------------------------
   type MessagePayload {
     id: ID!
     receiver: UserPayload
@@ -55,36 +43,18 @@ export default gql`
     lastMessageCreatedAt: String
   }
 
-  # ---------------------------------------------------------
-  # Queries
-  # ---------------------------------------------------------
   extend type Query {
-    # Gets user's messages
     getMessages(authUserId: ID!, userId: ID!): [MessagePayload]
-
-    # Gets user's conversations
     getConversations(authUserId: ID!): [ConversationsPayload]
   }
 
-  # ---------------------------------------------------------
-  # Mutations
-  # ---------------------------------------------------------
   extend type Mutation {
-    # Creates a message
     createMessage(input: CreateMessageInput!): MessagePayload
-
-    # Updates message seen values for user
     updateMessageSeen(input: UpdateMessageSeenInput!): Boolean
   }
 
-  # ---------------------------------------------------------
-  # Subscriptions
-  # ---------------------------------------------------------
   extend type Subscription {
-    # Subscribes to message created event
     messageCreated(authUserId: ID!, userId: ID!): MessagePayload
-
-    # Subscribes to new conversation event
     newConversation: ConversationsPayload
   }
 `;

@@ -1,12 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-/**
- * User schema
- */
 export default gql`
-  # ---------------------------------------------------------
-  # Model Objects
-  # ---------------------------------------------------------
   type User {
     id: ID!
     fullName: String!
@@ -44,9 +38,6 @@ export default gql`
     message: String!
   }
 
-  # ---------------------------------------------------------
-  # Input Objects
-  # ---------------------------------------------------------
   input SignInInput {
     emailOrUsername: String!
     password: String
@@ -76,9 +67,6 @@ export default gql`
     isCover: Boolean
   }
 
-  # ---------------------------------------------------------
-  # Return Payloads
-  # ---------------------------------------------------------
   type UserPayload {
     id: ID!
     fullName: String
@@ -112,54 +100,24 @@ export default gql`
     isOnline: Boolean
   }
 
-  # ---------------------------------------------------------
-  # Queries
-  # ---------------------------------------------------------
   extend type Query {
-    # Verifies reset password token
     verifyResetPasswordToken(email: String, token: String!): SuccessMessage
-
-    # Gets the currently logged in user
     getAuthUser: UserPayload
-
-    # Gets user by username or by id
     getUser(username: String, id: ID): UserPayload
-
-    # Gets all users
     getUsers(userId: String!, skip: Int, limit: Int): UsersPayload
-
-    # Searches users by username or fullName
     searchUsers(searchQuery: String!): [UserPayload]
-
-    # Gets Suggested people for user
     suggestPeople(userId: String!): [UserPayload]
   }
 
-  # ---------------------------------------------------------
-  # Mutations
-  # ---------------------------------------------------------
   extend type Mutation {
-    # Signs in user
     signin(input: SignInInput!): Token
-
-    # Signs up user
     signup(input: SignUpInput!): Token
-
-    # Requests reset password
     requestPasswordReset(input: RequestPasswordResetInput!): SuccessMessage
-
-    # Resets user password
     resetPassword(input: ResetPasswordInput!): Token
-
-    # Uploads user Profile or Cover photo
     uploadUserPhoto(input: UploadUserPhotoInput!): UserPayload
   }
 
-  # ---------------------------------------------------------
-  # Subscriptions
-  # ---------------------------------------------------------
   extend type Subscription {
-    # Subscribes to is user online event
     isUserOnline(authUserId: ID!, userId: ID!): IsUserOnlinePayload
   }
 `;

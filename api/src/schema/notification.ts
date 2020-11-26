@@ -1,12 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-/**
- * Notification schema
- */
 export default gql`
-  # ---------------------------------------------------------
-  # Model Objects
-  # ---------------------------------------------------------
   enum NotificationType {
     LIKE
     FOLLOW
@@ -26,9 +20,6 @@ export default gql`
     createdAt: String
   }
 
-  # ---------------------------------------------------------
-  # Input Objects
-  # ---------------------------------------------------------
   input CreateNotificationInput {
     userId: ID!
     authorId: ID!
@@ -45,9 +36,6 @@ export default gql`
     userId: ID!
   }
 
-  # ---------------------------------------------------------
-  # Return Payloads
-  # ---------------------------------------------------------
   type NotificationPayload {
     id: ID
     user: UserPayload
@@ -73,33 +61,17 @@ export default gql`
     notification: NotificationPayload
   }
 
-  # ---------------------------------------------------------
-  # Queries
-  # ---------------------------------------------------------
   extend type Query {
-    # Gets notifications for specific user
     getUserNotifications(userId: ID!, skip: Int, limit: Int): NotificationsPayload
   }
 
-  # ---------------------------------------------------------
-  # Mutations
-  # ---------------------------------------------------------
   extend type Mutation {
-    # Creates a new notification for user
     createNotification(input: CreateNotificationInput!): Notification
-
-    # Deletes a notification
     deleteNotification(input: DeleteNotificationInput!): Notification
-
-    # Updates notification seen values for user
     updateNotificationSeen(input: UpdateNotificationSeenInput!): Boolean
   }
 
-  # ---------------------------------------------------------
-  # Subscriptions
-  # ---------------------------------------------------------
   extend type Subscription {
-    # Subscribes to notification created or deleted event
     notificationCreatedOrDeleted: NotificationCreatedOrDeletedPayload
   }
 `;

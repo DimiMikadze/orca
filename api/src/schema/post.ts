@@ -1,12 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-/**
- * Post schema
- */
 export default gql`
-  # ---------------------------------------------------------
-  # Model Objects
-  # ---------------------------------------------------------
   type Post {
     id: ID!
     title: String
@@ -19,9 +13,6 @@ export default gql`
     updatedAt: String
   }
 
-  # ---------------------------------------------------------
-  # Input Objects
-  # ---------------------------------------------------------
   input CreatePostInput {
     title: String
     image: Upload
@@ -34,9 +25,6 @@ export default gql`
     imagePublicId: String
   }
 
-  # ---------------------------------------------------------
-  # Return Payloads
-  # ---------------------------------------------------------
   type UserPostsPayload {
     posts: [PostPayload]!
     count: String!
@@ -59,31 +47,15 @@ export default gql`
     count: String!
   }
 
-  # ---------------------------------------------------------
-  # Queries
-  # ---------------------------------------------------------
   extend type Query {
-    # Gets user posts by username
     getUserPosts(username: String!, skip: Int, limit: Int): UserPostsPayload
-
-    # Gets posts from followed users
     getFollowedPosts(userId: String!, skip: Int, limit: Int): PostsPayload
-
-    # Gets all posts
     getPosts(authUserId: ID!, skip: Int, limit: Int): PostsPayload
-
-    # Gets post by id
     getPost(id: ID!): PostPayload
   }
 
-  # ---------------------------------------------------------
-  # Mutations
-  # ---------------------------------------------------------
   extend type Mutation {
-    # Creates a new post
     createPost(input: CreatePostInput!): PostPayload
-
-    # Deletes a user post
     deletePost(input: DeletePostInput!): PostPayload
   }
 `;
