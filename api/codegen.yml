@@ -1,0 +1,11 @@
+overwrite: true
+schema:
+  - http://localhost:4000/graphql:
+      headers:
+        Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTVkZTRhYjljOWVmNThlMjgzNWVmOSIsImZ1bGxOYW1lIjoiRGltaSBNaWthZHplIiwiZW1haWwiOiJkaW1pQGdtYWlsLmNvbSIsImlhdCI6MTYwMjMxODY3NSwiZXhwIjoxNjMzODc2Mjc1fQ.hbtRI6ai1w4EVIvUcDbd-xH4nxP03iPw5d45G4FiFIQ'
+documents: null
+generates:
+  src/generated-graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-resolvers'
