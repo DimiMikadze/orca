@@ -6,8 +6,10 @@ import { createServer } from 'http';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import { models, schema, resolvers } from './modules';
-import { createApolloServer } from './utils/apollo-server';
+import models from './models';
+import schema from './schema';
+import resolvers from './resolvers';
+import { createApolloServer } from './apollo-server';
 
 // Connect to database
 mongoose

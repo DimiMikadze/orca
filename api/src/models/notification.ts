@@ -1,10 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from '../user/user.model';
-import { IPost } from '../post/post.model';
-import { ILike } from '../like/like.model';
-import { IFollow } from '../follow/follow.model';
-import { IComment } from '../comment/comment.model';
+import { IUser } from './user';
+import { IPost } from './post';
+import { ILike } from './like';
+import { IFollow } from './follow';
+import { IComment } from './comment';
 
 const Schema = mongoose.Schema;
 

@@ -1,12 +1,12 @@
 import mongoose, { Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-import { IPost } from '../post/post.model';
-import { ILike } from '../like/like.model';
-import { IFollow } from '../follow/follow.model';
-import { IComment } from '../comment/comment.model';
-import { INotification } from '../notification/notification.model';
-import { IMessage } from '../message/message.model';
+import { IPost } from './post';
+import { ILike } from './like';
+import { IFollow } from './follow';
+import { IComment } from './comment';
+import { INotification } from './notification';
+import { IMessage } from './message';
 
 const Schema = mongoose.Schema;
 

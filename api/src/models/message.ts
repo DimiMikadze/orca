@@ -1,6 +1,6 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from '../user/user.model';
+import { IUser } from './user';
 
 const Schema = mongoose.Schema;
 

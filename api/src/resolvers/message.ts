@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { withFilter } from 'apollo-server';
 
-import { Resolvers } from '../../generated-graphql';
-import { pubSub } from '../../utils/apollo-server';
-import { MESSAGE_CREATED, NEW_CONVERSATION } from '../../constants/Subscriptions';
+import { Resolvers } from '../generated-graphql';
+import { pubSub } from '../apollo-server';
+import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
 
 const MessageResolver: Resolvers = {
   Query: {

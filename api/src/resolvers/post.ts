@@ -1,5 +1,5 @@
-import { Resolvers } from '../../generated-graphql';
-import { uploadToCloudinary, deleteFromCloudinary } from '../../utils/cloudinary';
+import { Resolvers } from '../generated-graphql';
+import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinary';
 
 const PostResolver: Resolvers = {
   Query: {

@@ -2,13 +2,13 @@ import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import { withFilter } from 'apollo-server';
 
-import { uploadToCloudinary } from '../../utils/cloudinary';
-import { generateToken } from '../../utils/generate-token';
-import { sendEmail } from '../../utils/email';
-import { pubSub } from '../../utils/apollo-server';
+import { uploadToCloudinary } from '../utils/cloudinary';
+import { generateToken } from '../utils/generate-token';
+import { sendEmail } from '../utils/email';
+import { pubSub } from '../apollo-server';
 
-import { IS_USER_ONLINE } from '../../constants/Subscriptions';
-import { Resolvers } from '../../generated-graphql';
+import { IS_USER_ONLINE } from '../constants/Subscriptions';
+import { Resolvers } from '../generated-graphql';
 
 const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;

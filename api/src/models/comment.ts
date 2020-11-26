@@ -1,7 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IPost } from '../post/post.model';
-import { IUser } from '../user/user.model';
+import { IPost } from './post';
+import { IUser } from './user';
 
 const Schema = mongoose.Schema;
 

@@ -1,4 +1,4 @@
-import { Resolvers } from '../../generated-graphql';
+import { Resolvers } from '../generated-graphql';
 
 const FollowResolver: Resolvers = {
   Mutation: {

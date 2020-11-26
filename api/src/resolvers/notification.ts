@@ -1,8 +1,8 @@
 import { withFilter } from 'apollo-server';
 
-import { pubSub } from '../../utils/apollo-server';
-import { NOTIFICATION_CREATED_OR_DELETED } from '../../constants/Subscriptions';
-import { Resolvers } from '../../generated-graphql';
+import { pubSub } from '../apollo-server';
+import { NOTIFICATION_CREATED_OR_DELETED } from '../constants/Subscriptions';
+import { Resolvers } from '../generated-graphql';
 
 const NotificationResolver: Resolvers = {
   Query: {

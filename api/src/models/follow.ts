@@ -1,24 +1,23 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IPost } from '../post/post.model';
-import { IUser } from '../user/user.model';
+import { IUser } from './user';
 
 const Schema = mongoose.Schema;
 
-export interface ILike extends Document {
-  post: IPost['_id'];
+export interface IFollow extends Document {
   user: IUser['_id'];
+  follower: IUser['_id'];
   createdAt: string;
   updatedAt: string;
 }
 
-const LikeSchema = new Schema(
+const FollowSchema = new Schema(
   {
-    post: {
-      type: Schema.Types.ObjectId,
-      ref: 'Post',
-    },
     user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    follower: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -28,4 +27,4 @@ const LikeSchema = new Schema(
   }
 );
 
-export default mongoose.model<ILike>('Like', LikeSchema);
+export default mongoose.model<IFollow>('Follow', FollowSchema);

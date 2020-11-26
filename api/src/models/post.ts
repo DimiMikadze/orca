@@ -1,8 +1,8 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from '../user/user.model';
-import { ILike } from '../like/like.model';
-import { IComment } from '../comment/comment.model';
+import { IUser } from './user';
+import { ILike } from './like';
+import { IComment } from './comment';
 
 const Schema = mongoose.Schema;
 

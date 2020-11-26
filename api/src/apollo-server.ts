@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import { ApolloServer } from 'apollo-server-express';
 import { PubSub } from 'apollo-server';
 
-import { IS_USER_ONLINE } from '../constants/Subscriptions';
+import { IS_USER_ONLINE } from './constants/Subscriptions';
 import { DocumentNode } from 'graphql';
-import { AuthUser } from '../constants/types';
+import { AuthUser } from './constants/types';
 
 export const pubSub = new PubSub();
 
