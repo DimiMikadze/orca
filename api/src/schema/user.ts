@@ -6,6 +6,7 @@ export default gql`
     fullName: String!
     email: String!
     username: String!
+    facebookId: String
     password: String!
     resetToken: String
     resetTokenExpiry: String
@@ -72,6 +73,7 @@ export default gql`
     fullName: String
     email: String
     username: String
+    facebookId: String
     password: String
     image: String
     imagePublicId: String

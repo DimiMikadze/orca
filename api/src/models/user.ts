@@ -14,6 +14,7 @@ export interface IUser extends Document {
   fullName: string;
   email: string;
   username: string;
+  facebookId: string;
   passwordResetToken: string;
   passwordResetTokenExpiry: Date;
   password: string;
@@ -53,6 +54,7 @@ const UserSchema = new Schema(
       trim: true,
       unique: true,
     },
+    facebookId: String,
     passwordResetToken: String,
     passwordResetTokenExpiry: Date,
     password: {
