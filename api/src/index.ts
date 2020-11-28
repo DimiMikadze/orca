@@ -6,7 +6,8 @@ import { createServer } from 'http';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import passport from 'passport';
-import session from 'express-session';
+import expressSession from 'express-session';
+import connectMongo from 'connect-mongo';
 import { v4 as uuid } from 'uuid';
 import { initPassport } from './authentication';
 
@@ -14,6 +15,8 @@ import models from './models';
 import schema from './schema';
 import resolvers from './resolvers';
 import { createApolloServer } from './apollo-server';
+
+const MongoStore = connectMongo(expressSession);
 
 // Connect to database
 mongoose
@@ -36,13 +39,14 @@ app.use(
     credentials: true,
   })
 );
-export const mySession = session({
+export const session = expressSession({
   genid: (req) => uuid(),
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
 });
-app.use(mySession);
+app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
