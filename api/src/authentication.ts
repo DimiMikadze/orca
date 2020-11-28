@@ -28,7 +28,7 @@ export const initPassport = async () => {
       {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: 'http://localhost:4000/auth/facebook/callback',
+        callbackURL: `${process.env.API_URL}/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'email', 'first_name', 'last_name'],
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -64,7 +64,7 @@ export const initPassport = async () => {
       {
         clientID: process.env.GOOGLE_APP_ID,
         clientSecret: process.env.GOOGLE_APP_SECRET,
-        callbackURL: 'http://localhost:4000/auth/google/callback',
+        callbackURL: `${process.env.API_URL}/auth/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         const user = await User.findOne({ googleId: profile.id });
@@ -96,7 +96,7 @@ export const initPassport = async () => {
       {
         clientID: process.env.GITHUB_APP_ID,
         clientSecret: process.env.GITHUB_APP_SECRET,
-        callbackURL: 'http://localhost:4000/auth/github/callback',
+        callbackURL: `${process.env.API_URL}/auth/github/callback`,
         scope: ['user'],
       },
       async (accessToken, refreshToken, profile, done) => {
