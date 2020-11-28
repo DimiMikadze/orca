@@ -19,7 +19,6 @@ const SignOut = ({ history }) => {
 
   const handleSignOut = () => {
     dispatch({ type: CLEAR_AUTH_USER });
-    localStorage.removeItem('token');
     client.resetStore();
     history.push(Routes.HOME);
   };

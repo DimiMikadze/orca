@@ -195,61 +195,6 @@ export const UPLOAD_PHOTO = gql`
 `;
 
 /**
- * Sign up user
- */
-export const SIGN_UP = gql`
-  mutation($input: SignUpInput!) {
-    signup(input: $input) {
-      token
-    }
-  }
-`;
-
-/**
- * Sign in user
- */
-export const SIGN_IN = gql`
-  mutation($input: SignInInput!) {
-    signin(input: $input) {
-      token
-    }
-  }
-`;
-
-/**
- * Request reset password
- */
-export const REQUEST_PASSWORD_RESET = gql`
-  mutation($input: RequestPasswordResetInput!) {
-    requestPasswordReset(input: $input) {
-      message
-    }
-  }
-`;
-
-/**
- * Verify reset password token
- */
-export const VERIFY_RESET_PASSWORD_TOKEN = gql`
-  query($email: String!, $token: String!) {
-    verifyResetPasswordToken(email: $email, token: $token) {
-      message
-    }
-  }
-`;
-
-/**
- * Reset password
- */
-export const RESET_PASSWORD = gql`
-  mutation($input: ResetPasswordInput!) {
-    resetPassword(input: $input) {
-      token
-    }
-  }
-`;
-
-/**
  * People suggestions for auth user
  */
 export const USER_SUGGESTIONS = gql`

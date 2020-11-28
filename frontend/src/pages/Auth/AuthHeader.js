@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { A } from 'components/Text';
 import { Container } from 'components/Layout';
-import SignIn from './SignIn';
 
 import * as Routes from 'routes';
 
@@ -62,10 +61,6 @@ const AuthHeader = ({ refetch }) => {
     <Root>
       <StyledContainer maxWidth="lg">
         <Logo to={Routes.HOME}>{SiteInfo.name}</Logo>
-
-        <SignInContainer>
-          <SignIn refetch={refetch} />
-        </SignInContainer>
       </StyledContainer>
     </Root>
   );

@@ -1,18 +1,12 @@
-import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import { withFilter, AuthenticationError } from 'apollo-server';
 
 import { uploadToCloudinary } from '../utils/cloudinary';
-import { generateToken } from '../utils/generate-token';
-import { sendEmail } from '../utils/email';
 import { pubSub } from '../apollo-server';
 
 import { IS_USER_ONLINE } from '../constants/Subscriptions';
 import { Resolvers } from '../generated-graphql';
 import { UserRole } from '../constants/types';
-
-const AUTH_TOKEN_EXPIRY = '1y';
-const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
 
 export const assertAuthenticated = (authUser) => {
   if (!authUser) {
@@ -247,163 +241,9 @@ const UserResolver: Resolvers = {
 
       return randomUsers;
     },
-    verifyResetPasswordToken: async (root, { email, token }, { User }) => {
-      // Check if user exists and token is valid
-      const user = await User.findOne({
-        email,
-        passwordResetToken: token,
-        passwordResetTokenExpiry: {
-          $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY,
-        },
-      });
-      if (!user) {
-        throw new Error('This token is either invalid or expired!');
-      }
-
-      return { message: 'Success' };
-    },
   },
 
   Mutation: {
-    signin: async (root, { input: { emailOrUsername, password } }, { User }) => {
-      const user = await User.findOne().or([{ email: emailOrUsername }, { username: emailOrUsername }]);
-
-      if (!user) {
-        throw new Error('User not found.');
-      }
-
-      const isValidPassword = await bcrypt.compare(password, user.password);
-      if (!isValidPassword) {
-        throw new Error('Invalid password.');
-      }
-
-      return {
-        token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY),
-      };
-    },
-    signup: async (root, { input: { fullName, email, username, password } }, { User }) => {
-      // Check if user with given email or username already exists
-      const user = await User.findOne().or([{ email }, { username }]);
-      if (user) {
-        const field = user.email === email ? 'email' : 'username';
-        throw new Error(`User with given ${field} already exists.`);
-      }
-
-      // Empty field validation
-      if (!fullName || !email || !username || !password) {
-        throw new Error('All fields are required.');
-      }
-
-      // FullName validation
-      if (fullName.length > 40) {
-        throw new Error('Full name no more than 40 characters.');
-      }
-      if (fullName.length < 4) {
-        throw new Error('Full name min 4 characters.');
-      }
-
-      // Email validation
-      const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!emailRegex.test(String(email).toLowerCase())) {
-        throw new Error('Enter a valid email address.');
-      }
-
-      // Username validation
-      const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
-      if (!usernameRegex.test(username)) {
-        throw new Error('Usernames can only use letters, numbers, underscores and periods.');
-      }
-      if (username.length > 20) {
-        throw new Error('Username no more than 50 characters.');
-      }
-      if (username.length < 3) {
-        throw new Error('Username min 3 characters.');
-      }
-      const frontEndPages = ['forgot-password', 'reset-password', 'explore', 'people', 'notifications', 'post'];
-      if (frontEndPages.includes(username)) {
-        throw new Error("This username isn't available. Please try another.");
-      }
-
-      // Password validation
-      if (password.length < 6) {
-        throw new Error('Password min 6 characters.');
-      }
-
-      const newUser = await new User({
-        fullName,
-        email,
-        username,
-        password,
-      }).save();
-
-      return {
-        token: generateToken(newUser, process.env.SECRET, AUTH_TOKEN_EXPIRY),
-      };
-    },
-    requestPasswordReset: async (root, { input: { email } }, { User }) => {
-      // Check if user exists
-      const user = await User.findOne({ email });
-      if (!user) {
-        throw new Error(`No such user found for email ${email}.`);
-      }
-
-      // Set password reset token and it's expiry
-      const token = generateToken(user, process.env.SECRET, RESET_PASSWORD_TOKEN_EXPIRY);
-      const tokenExpiry = Date.now() + RESET_PASSWORD_TOKEN_EXPIRY;
-      await User.findOneAndUpdate(
-        { _id: user.id },
-        { passwordResetToken: token, passwordResetTokenExpiry: tokenExpiry },
-        { new: true }
-      );
-
-      // Email user reset link
-      const resetLink = `${process.env.FRONTEND_URL}/reset-password?email=${email}&token=${token}`;
-      const mailOptions = {
-        to: email,
-        subject: 'Password Reset',
-        html: resetLink,
-      };
-
-      await sendEmail(mailOptions);
-
-      // Return success message
-      return {
-        message: `A link to reset your password has been sent to ${email}`,
-      };
-    },
-    resetPassword: async (root, { input: { email, token, password } }, { User }) => {
-      if (!password) {
-        throw new Error('Enter password and Confirm password.');
-      }
-
-      if (password.length < 6) {
-        throw new Error('Password min 6 characters.');
-      }
-
-      // Check if user exists and token is valid
-      const user = await User.findOne({
-        email,
-        passwordResetToken: token,
-        passwordResetTokenExpiry: {
-          $gte: Date.now() - RESET_PASSWORD_TOKEN_EXPIRY,
-        },
-      });
-      if (!user) {
-        throw new Error('This token is either invalid or expired!');
-      }
-
-      // Update password, reset token and it's expiry
-      user.passwordResetToken = '';
-      user.passwordResetTokenExpiry = '';
-      user.password = password;
-      await user.save();
-
-      // Return success message
-      return {
-        token: generateToken(user, process.env.SECRET, AUTH_TOKEN_EXPIRY),
-      };
-    },
-
     uploadUserPhoto: async (root, { input: { id, image, imagePublicId, isCover } }, { User }) => {
       const { createReadStream } = await image;
       const stream = createReadStream();

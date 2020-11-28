@@ -15,9 +15,6 @@ export default gql`
     email: String!
     username: String!
     facebookId: String
-    password: String!
-    resetToken: String
-    resetTokenExpiry: String
     image: File
     imagePublicId: String
     coverImage: File
@@ -39,34 +36,8 @@ export default gql`
     encoding: String!
   }
 
-  type Token {
-    token: String!
-  }
-
   type SuccessMessage {
     message: String!
-  }
-
-  input SignInInput {
-    emailOrUsername: String!
-    password: String
-  }
-
-  input SignUpInput {
-    email: String!
-    username: String!
-    fullName: String!
-    password: String!
-  }
-
-  input RequestPasswordResetInput {
-    email: String!
-  }
-
-  input ResetPasswordInput {
-    email: String!
-    token: String!
-    password: String!
   }
 
   input UploadUserPhotoInput {
@@ -83,7 +54,6 @@ export default gql`
     email: String
     username: String
     facebookId: String
-    password: String
     image: String
     imagePublicId: String
     coverImage: String
@@ -112,7 +82,6 @@ export default gql`
   }
 
   extend type Query {
-    verifyResetPasswordToken(email: String, token: String!): SuccessMessage
     getAuthUser: UserPayload
     getUser(username: String, id: ID): UserPayload
     getUsers(userId: String!, skip: Int, limit: Int): UsersPayload
@@ -121,10 +90,6 @@ export default gql`
   }
 
   extend type Mutation {
-    signin(input: SignInInput!): Token
-    signup(input: SignUpInput!): Token
-    requestPasswordReset(input: RequestPasswordResetInput!): SuccessMessage
-    resetPassword(input: ResetPasswordInput!): Token
     uploadUserPhoto(input: UploadUserPhotoInput!): UserPayload
   }
 

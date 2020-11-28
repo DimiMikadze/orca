@@ -1,5 +1,4 @@
 import mongoose, { Document } from 'mongoose';
-import bcrypt from 'bcryptjs';
 
 import { IPost } from './post';
 import { ILike } from './like';
@@ -17,9 +16,6 @@ export interface IUser extends Document {
   email: string;
   username: string;
   facebookId: string;
-  passwordResetToken: string;
-  passwordResetTokenExpiry: Date;
-  password: string;
   image: string;
   imagePublicId: string;
   coverImage: string;
@@ -62,12 +58,6 @@ const UserSchema = new Schema(
       unique: true,
     },
     facebookId: String,
-    passwordResetToken: String,
-    passwordResetTokenExpiry: Date,
-    password: {
-      type: String,
-      required: true,
-    },
     image: String,
     imagePublicId: String,
     coverImage: String,
@@ -123,22 +113,5 @@ const UserSchema = new Schema(
     timestamps: true,
   }
 );
-
-UserSchema.pre<IUser>('save', function (next) {
-  if (!this.isModified('password')) {
-    return next();
-  }
-
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) return next(err);
-
-    bcrypt.hash(this.password, salt, (err, hash) => {
-      if (err) return next(err);
-
-      this.password = hash;
-      next();
-    });
-  });
-});
 
 export default mongoose.model<IUser>('User', UserSchema);

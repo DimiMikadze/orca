@@ -18,7 +18,6 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   _empty?: Maybe<Scalars['String']>;
-  verifyResetPasswordToken?: Maybe<SuccessMessage>;
   getAuthUser?: Maybe<UserPayload>;
   getUser?: Maybe<UserPayload>;
   getUsers?: Maybe<UsersPayload>;
@@ -31,12 +30,6 @@ export type Query = {
   getMessages?: Maybe<Array<Maybe<MessagePayload>>>;
   getConversations?: Maybe<Array<Maybe<ConversationsPayload>>>;
   getUserNotifications?: Maybe<NotificationsPayload>;
-};
-
-
-export type QueryVerifyResetPasswordTokenArgs = {
-  email?: Maybe<Scalars['String']>;
-  token: Scalars['String'];
 };
 
 
@@ -109,10 +102,6 @@ export type QueryGetUserNotificationsArgs = {
 export type Mutation = {
   __typename?: 'Mutation';
   _empty?: Maybe<Scalars['String']>;
-  signin?: Maybe<Token>;
-  signup?: Maybe<Token>;
-  requestPasswordReset?: Maybe<SuccessMessage>;
-  resetPassword?: Maybe<Token>;
   uploadUserPhoto?: Maybe<UserPayload>;
   createPost?: Maybe<PostPayload>;
   deletePost?: Maybe<PostPayload>;
@@ -127,26 +116,6 @@ export type Mutation = {
   createNotification?: Maybe<Notification>;
   deleteNotification?: Maybe<Notification>;
   updateNotificationSeen?: Maybe<Scalars['Boolean']>;
-};
-
-
-export type MutationSigninArgs = {
-  input: SignInInput;
-};
-
-
-export type MutationSignupArgs = {
-  input: SignUpInput;
-};
-
-
-export type MutationRequestPasswordResetArgs = {
-  input: RequestPasswordResetInput;
-};
-
-
-export type MutationResetPasswordArgs = {
-  input: ResetPasswordInput;
 };
 
 
@@ -240,16 +209,21 @@ export type SubscriptionMessageCreatedArgs = {
   userId: Scalars['ID'];
 };
 
+export enum Role {
+  User = 'User',
+  Moderator = 'Moderator',
+  Admin = 'Admin',
+  SuperAdmin = 'SuperAdmin'
+}
+
 export type User = {
   __typename?: 'User';
+  role: Role;
   id: Scalars['ID'];
   fullName: Scalars['String'];
   email: Scalars['String'];
   username: Scalars['String'];
   facebookId?: Maybe<Scalars['String']>;
-  password: Scalars['String'];
-  resetToken?: Maybe<Scalars['String']>;
-  resetTokenExpiry?: Maybe<Scalars['String']>;
   image?: Maybe<File>;
   imagePublicId?: Maybe<Scalars['String']>;
   coverImage?: Maybe<File>;
@@ -272,36 +246,9 @@ export type File = {
   encoding: Scalars['String'];
 };
 
-export type Token = {
-  __typename?: 'Token';
-  token: Scalars['String'];
-};
-
 export type SuccessMessage = {
   __typename?: 'SuccessMessage';
   message: Scalars['String'];
-};
-
-export type SignInInput = {
-  emailOrUsername: Scalars['String'];
-  password?: Maybe<Scalars['String']>;
-};
-
-export type SignUpInput = {
-  email: Scalars['String'];
-  username: Scalars['String'];
-  fullName: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type RequestPasswordResetInput = {
-  email: Scalars['String'];
-};
-
-export type ResetPasswordInput = {
-  email: Scalars['String'];
-  token: Scalars['String'];
-  password: Scalars['String'];
 };
 
 export type UploadUserPhotoInput = {
@@ -313,12 +260,12 @@ export type UploadUserPhotoInput = {
 
 export type UserPayload = {
   __typename?: 'UserPayload';
+  role?: Maybe<Role>;
   id: Scalars['ID'];
   fullName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   facebookId?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   imagePublicId?: Maybe<Scalars['String']>;
   coverImage?: Maybe<Scalars['String']>;
@@ -665,14 +612,10 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Subscription: ResolverTypeWrapper<{}>;
+  Role: Role;
   User: ResolverTypeWrapper<User>;
   File: ResolverTypeWrapper<File>;
-  Token: ResolverTypeWrapper<Token>;
   SuccessMessage: ResolverTypeWrapper<SuccessMessage>;
-  SignInInput: SignInInput;
-  SignUpInput: SignUpInput;
-  RequestPasswordResetInput: RequestPasswordResetInput;
-  ResetPasswordInput: ResetPasswordInput;
   UploadUserPhotoInput: UploadUserPhotoInput;
   UserPayload: ResolverTypeWrapper<UserPayload>;
   UsersPayload: ResolverTypeWrapper<UsersPayload>;
@@ -723,12 +666,7 @@ export type ResolversParentTypes = {
   Subscription: {};
   User: User;
   File: File;
-  Token: Token;
   SuccessMessage: SuccessMessage;
-  SignInInput: SignInInput;
-  SignUpInput: SignUpInput;
-  RequestPasswordResetInput: RequestPasswordResetInput;
-  ResetPasswordInput: ResetPasswordInput;
   UploadUserPhotoInput: UploadUserPhotoInput;
   UserPayload: UserPayload;
   UsersPayload: UsersPayload;
@@ -767,7 +705,6 @@ export type ResolversParentTypes = {
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  verifyResetPasswordToken?: Resolver<Maybe<ResolversTypes['SuccessMessage']>, ParentType, ContextType, RequireFields<QueryVerifyResetPasswordTokenArgs, 'token'>>;
   getAuthUser?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, never>>;
   getUsers?: Resolver<Maybe<ResolversTypes['UsersPayload']>, ParentType, ContextType, RequireFields<QueryGetUsersArgs, 'userId'>>;
@@ -784,10 +721,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   _empty?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  signin?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationSigninArgs, 'input'>>;
-  signup?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'input'>>;
-  requestPasswordReset?: Resolver<Maybe<ResolversTypes['SuccessMessage']>, ParentType, ContextType, RequireFields<MutationRequestPasswordResetArgs, 'input'>>;
-  resetPassword?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'input'>>;
   uploadUserPhoto?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType, RequireFields<MutationUploadUserPhotoArgs, 'input'>>;
   createPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'input'>>;
   deletePost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'input'>>;
@@ -813,14 +746,12 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   fullName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   facebookId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  resetToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  resetTokenExpiry?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['File']>, ParentType, ContextType>;
   imagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverImage?: Resolver<Maybe<ResolversTypes['File']>, ParentType, ContextType>;
@@ -844,23 +775,18 @@ export type FileResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
-  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type SuccessMessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['SuccessMessage'] = ResolversParentTypes['SuccessMessage']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPayload'] = ResolversParentTypes['UserPayload']> = {
+  role?: Resolver<Maybe<ResolversTypes['Role']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   facebookId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   imagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1049,7 +975,6 @@ export type Resolvers<ContextType = any> = {
   Subscription?: SubscriptionResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   File?: FileResolvers<ContextType>;
-  Token?: TokenResolvers<ContextType>;
   SuccessMessage?: SuccessMessageResolvers<ContextType>;
   UserPayload?: UserPayloadResolvers<ContextType>;
   UsersPayload?: UsersPayloadResolvers<ContextType>;

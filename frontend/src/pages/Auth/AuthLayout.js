@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Overlay } from 'components/Layout';
-import { AuthHeader, SignUp, ForgotPassword, ResetPassword } from 'pages/Auth';
-
-import * as Routes from 'routes';
 
 import backgroundImage from './background.jpeg';
 
@@ -30,14 +26,6 @@ const Container = styled.div`
   }
 `;
 
-const Pages = styled.div`
-  margin-top: 80px;
-
-  @media (min-width: ${(p) => p.theme.screen.md}) {
-    margin-top: -120px;
-  }
-`;
-
 /**
  * Main Layout for the app, when user isn't authenticated
  */
@@ -47,16 +35,8 @@ const AuthLayout = ({ refetch }) => {
       <Overlay transparency="0.5" />
 
       <Container>
-        <AuthHeader refetch={refetch} />
-
-        <Pages>
-          <Switch>
-            <Route exact path={Routes.HOME} render={() => <SignUp refetch={refetch} />} />
-            <Route exact path={Routes.FORGOT_PASSWORD} component={ForgotPassword} />
-            <Route exact path={Routes.RESET_PASSWORD} render={() => <ResetPassword refetch={refetch} />} />
-            <Redirect to={Routes.HOME} />
-          </Switch>
-        </Pages>
+        <h1>Authentication</h1>
+        <a href="http://localhost:4000/auth/facebook">Login with Facebook</a>
       </Container>
     </Root>
   );

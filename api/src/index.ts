@@ -56,8 +56,6 @@ app.get(
   })
 );
 app.get('/auth/logout', function (req, res) {
-  console.log('LOGING OUT req.user: ', req.user);
-
   req.session.destroy((err) => {
     if (err) {
       console.log('Session destroy error: ', err);
