@@ -8,6 +8,7 @@ import cors from 'cors';
 import passport from 'passport';
 import expressSession from 'express-session';
 import connectMongo from 'connect-mongo';
+import compression from 'compression';
 import { v4 as uuid } from 'uuid';
 import { initPassport } from './authentication';
 import routes from './routes';
@@ -36,6 +37,7 @@ initPassport();
 
 const app = express();
 
+app.use(compression());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,

@@ -11,6 +11,7 @@
     "apollo-server": "^2.18.2",
     "apollo-server-express": "^2.18.2",
     "cloudinary": "^1.23.0",
+    "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

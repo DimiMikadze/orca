@@ -30,7 +30,7 @@ router.get(
   }
 );
 
-router.get('/auth/logout', function (req, res) {
+router.get('/auth/logout', (req, res) => {
   req.logout();
   res.redirect(process.env.FRONTEND_URL);
 });
