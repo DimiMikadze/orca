@@ -16,6 +16,9 @@ export interface IUser extends Document {
   email: string;
   username: string;
   facebookId: string;
+  googleId: string;
+  githubId: string;
+  twitterId: string;
   image: string;
   imagePublicId: string;
   coverImage: string;
@@ -48,16 +51,17 @@ const UserSchema = new Schema(
       required: true,
       lowercase: true,
       trim: true,
-      unique: true,
     },
     username: {
       type: String,
       required: true,
       lowercase: true,
       trim: true,
-      unique: true,
     },
     facebookId: String,
+    googleId: String,
+    githubId: String,
+    twitterId: String,
     image: String,
     imagePublicId: String,
     coverImage: String,

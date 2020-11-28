@@ -15,6 +15,9 @@ export default gql`
     email: String!
     username: String!
     facebookId: String
+    googleId: String
+    githubId: String
+    twitterId: String
     image: File
     imagePublicId: String
     coverImage: File
@@ -54,6 +57,9 @@ export default gql`
     email: String
     username: String
     facebookId: String
+    googleId: String
+    githubId: String
+    twitterId: String
     image: String
     imagePublicId: String
     coverImage: String

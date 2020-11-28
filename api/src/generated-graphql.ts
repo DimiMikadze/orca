@@ -224,6 +224,9 @@ export type User = {
   email: Scalars['String'];
   username: Scalars['String'];
   facebookId?: Maybe<Scalars['String']>;
+  googleId?: Maybe<Scalars['String']>;
+  githubId?: Maybe<Scalars['String']>;
+  twitterId?: Maybe<Scalars['String']>;
   image?: Maybe<File>;
   imagePublicId?: Maybe<Scalars['String']>;
   coverImage?: Maybe<File>;
@@ -266,6 +269,9 @@ export type UserPayload = {
   email?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   facebookId?: Maybe<Scalars['String']>;
+  googleId?: Maybe<Scalars['String']>;
+  githubId?: Maybe<Scalars['String']>;
+  twitterId?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   imagePublicId?: Maybe<Scalars['String']>;
   coverImage?: Maybe<Scalars['String']>;
@@ -752,6 +758,9 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   facebookId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  googleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  githubId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  twitterId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['File']>, ParentType, ContextType>;
   imagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverImage?: Resolver<Maybe<ResolversTypes['File']>, ParentType, ContextType>;
@@ -787,6 +796,9 @@ export type UserPayloadResolvers<ContextType = any, ParentType extends Resolvers
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   facebookId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  googleId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  githubId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  twitterId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   imagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   coverImage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

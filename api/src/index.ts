@@ -58,16 +58,17 @@ app.get(
     failureRedirect: process.env.FRONTEND_URL,
   })
 );
+app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: process.env.FRONTEND_URL }),
+  (req, res) => {
+    res.redirect(process.env.FRONTEND_URL);
+  }
+);
 app.get('/auth/logout', function (req, res) {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log('Session destroy error: ', err);
-    } else {
-      console.log('Session destroyed');
-    }
-  });
   req.logout();
-  res.redirect('/');
+  res.redirect(process.env.FRONTEND_URL);
 });
 
 // Create a Apollo Server
