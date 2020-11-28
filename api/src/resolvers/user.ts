@@ -278,9 +278,6 @@ const UserResolver: Resolvers = {
   },
 
   Subscription: {
-    /**
-     * Subscribes to user's isOnline change event
-     */
     isUserOnline: {
       subscribe: withFilter(
         () => pubSub.asyncIterator(IS_USER_ONLINE),

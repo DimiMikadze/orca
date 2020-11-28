@@ -7,12 +7,7 @@ import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
 
 const MessageResolver: Resolvers = {
   Query: {
-    /**
-     * Gets user's specific conversation
-     *
-     * @param {string} authUserId
-     * @param {string} userId
-     */
+    // Gets user's specific conversation
     getMessages: async (root, { authUserId, userId }, { Message }) => {
       const specificMessage = await Message.find()
         .and([
@@ -25,11 +20,7 @@ const MessageResolver: Resolvers = {
 
       return specificMessage;
     },
-    /**
-     * Get users with whom authUser had a conversation
-     *
-     * @param {string} authUserId
-     */
+    // Get users with whom authUser had a conversation
     getConversations: async (root, { authUserId }, { User, Message }) => {
       // Get users with whom authUser had a chat
       const users = await User.findById(authUserId).populate('messages', 'id username fullName image isOnline');

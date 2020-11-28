@@ -6,13 +6,7 @@ import { Resolvers } from '../generated-graphql';
 
 const NotificationResolver: Resolvers = {
   Query: {
-    /**
-     * Gets notifications for specific user
-     *
-     * @param {string} userId
-     * @param {int} skip how many notifications to skip
-     * @param {int} limit how many notifications to limit
-     */
+    // Gets notifications for specific user
     getUserNotifications: async (root, { userId, skip, limit }, { Notification }) => {
       const query = { user: userId };
       const count = await Notification.where(query).countDocuments();
@@ -30,15 +24,7 @@ const NotificationResolver: Resolvers = {
     },
   },
   Mutation: {
-    /**
-     * Creates a new notification for user
-     *
-     * @param {string} userId
-     * @param {string} authorId
-     * @param {string} postId
-     * @param {string} notificationType
-     * @param {string} notificationTypeId
-     */
+    // Creates a new notification for user
     createNotification: async (
       root,
       { input: { userId, authorId, postId, notificationType, notificationTypeId } },
@@ -70,11 +56,7 @@ const NotificationResolver: Resolvers = {
 
       return newNotification;
     },
-    /**
-     * Deletes a notification
-     *
-     * @param {string} id
-     */
+    // Deletes a notification
     deleteNotification: async (root, { input: { id } }, { Notification, User }) => {
       let notification = await Notification.findByIdAndRemove(id);
 
@@ -97,11 +79,7 @@ const NotificationResolver: Resolvers = {
 
       return notification;
     },
-    /**
-     * Updates notification seen values for user
-     *
-     * @param {string} userId
-     */
+    // Updates notification seen values for user
     updateNotificationSeen: async (root, { input: { userId } }, { Notification }) => {
       try {
         await Notification.update({ user: userId, seen: false }, { seen: true }, { multi: true });
@@ -114,9 +92,6 @@ const NotificationResolver: Resolvers = {
   },
 
   Subscription: {
-    /**
-     * Subscribes to notification created or deleted event
-     */
     notificationCreatedOrDeleted: {
       subscribe: withFilter(
         () => pubSub.asyncIterator(NOTIFICATION_CREATED_OR_DELETED),
