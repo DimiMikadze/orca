@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'ts-node src/index.ts'",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
