@@ -7,10 +7,12 @@ import { IFollow } from './follow';
 import { IComment } from './comment';
 import { INotification } from './notification';
 import { IMessage } from './message';
+import { UserRole } from '../constants/types';
 
 const Schema = mongoose.Schema;
 
 export interface IUser extends Document {
+  role: UserRole;
   fullName: string;
   email: string;
   username: string;
@@ -36,6 +38,11 @@ export interface IUser extends Document {
 
 const UserSchema = new Schema(
   {
+    role: {
+      type: UserRole,
+      required: true,
+      default: UserRole.User,
+    },
     fullName: {
       type: String,
       required: true,

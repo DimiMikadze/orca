@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
-import { withFilter } from 'apollo-server';
+import { withFilter, AuthenticationError } from 'apollo-server';
 
 import { uploadToCloudinary } from '../utils/cloudinary';
 import { generateToken } from '../utils/generate-token';
@@ -9,9 +9,24 @@ import { pubSub } from '../apollo-server';
 
 import { IS_USER_ONLINE } from '../constants/Subscriptions';
 import { Resolvers } from '../generated-graphql';
+import { UserRole } from '../constants/types';
 
 const AUTH_TOKEN_EXPIRY = '1y';
 const RESET_PASSWORD_TOKEN_EXPIRY = 3600000;
+
+export const assertAuthenticated = (authUser) => {
+  if (!authUser) {
+    throw new AuthenticationError('You need to be logged in');
+  }
+};
+
+export const assertAdmin = (authUser) => {
+  assertAuthenticated(authUser);
+
+  if (UserRole.Admin > authUser.role) {
+    throw new AuthenticationError('You need to be a admin');
+  }
+};
 
 const UserResolver: Resolvers = {
   Query: {
@@ -92,7 +107,7 @@ const UserResolver: Resolvers = {
 
       return user;
     },
-    getUser: async (root, { username, id }, { User }) => {
+    getUser: async (root, { username, id }, { User, authUser }) => {
       if (!username && !id) {
         throw new Error('username or id is required params.');
       }
@@ -100,6 +115,8 @@ const UserResolver: Resolvers = {
       if (username && id) {
         throw new Error('please pass only username or only id as a param');
       }
+
+      assertAuthenticated(authUser);
 
       const query = username ? { username: username } : { _id: id };
       const user = await User.findOne(query)

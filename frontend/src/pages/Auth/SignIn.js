@@ -111,6 +111,7 @@ const SignIn = ({ history, location, refetch }) => {
           <A to={Routes.FORGOT_PASSWORD}>
             <ForgotPassword>Forgot password?</ForgotPassword>
           </A>
+          <a href="http://localhost:4000/auth/facebook">Login with Facebook</a>
         </InputContainer>
 
         <Button disabled={loading}>Log in</Button>

@@ -116,6 +116,7 @@ const App = () => {
     const prodErrorMessage = "Sorry, something went wrong. We're working on getting this fixed as soon as we can.";
     return <NotFound message={isDevelopment ? devErrorMessage : prodErrorMessage} showHomePageLink={false} />;
   }
+  console.log('data', data);
 
   return (
     <Router>

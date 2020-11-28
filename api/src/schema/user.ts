@@ -1,7 +1,15 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
+  enum Role {
+    User
+    Moderator
+    Admin
+    SuperAdmin
+  }
+
   type User {
+    role: Role!
     id: ID!
     fullName: String!
     email: String!
@@ -69,6 +77,7 @@ export default gql`
   }
 
   type UserPayload {
+    role: Role
     id: ID!
     fullName: String
     email: String

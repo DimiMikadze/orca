@@ -31,6 +31,12 @@ initPassport();
 const app = express();
 
 app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
+app.use(
   session({
     genid: (req) => uuid(),
     secret: process.env.SECRET,
@@ -38,7 +44,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -46,11 +51,13 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }
 app.get(
   '/auth/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: 'http://localhost:4000/graphql',
-    failureRedirect: 'http://localhost:4000/graphql',
+    successRedirect: process.env.FRONTEND_URL,
+    failureRedirect: process.env.FRONTEND_URL,
   })
 );
 app.get('/auth/logout', function (req, res) {
+  console.log('LOGING OUT req.user: ', req.user);
+
   req.session.destroy((err) => {
     if (err) {
       console.log('Session destroy error: ', err);
@@ -62,16 +69,9 @@ app.get('/auth/logout', function (req, res) {
   res.redirect('/');
 });
 
-// Enable cors
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
 // Create a Apollo Server
 const server = createApolloServer(schema, resolvers, models);
-server.applyMiddleware({ app, path: '/graphql' });
+server.applyMiddleware({ app, path: '/graphql', cors: false });
 
 // Create http server and add subscriptions to it
 const httpServer = createServer(app);

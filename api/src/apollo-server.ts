@@ -32,13 +32,7 @@ export const createApolloServer = (schema: DocumentNode, resolvers: any, models:
         return connection.context;
       }
 
-      let authUser;
-      if (req.headers.authorization !== 'null') {
-        const user = await checkAuthorization(req.headers['authorization']);
-        if (user) {
-          authUser = user;
-        }
-      }
+      const authUser = req.user;
 
       return Object.assign({ authUser }, models);
     },

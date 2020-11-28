@@ -67,7 +67,7 @@ export const createApolloClient = (apiUrl, websocketApiUrl) => {
 
   const errorLink = handleErrors();
   const authLink = createAuthLink();
-  const uploadLink = createUploadLink({ uri: apiUrl }); // Upload link also creates an HTTP link
+  const uploadLink = createUploadLink({ uri: apiUrl, credentials: 'include' }); // Upload link also creates an HTTP link
 
   // Create WebSocket link
   const authToken = localStorage.getItem('token');
