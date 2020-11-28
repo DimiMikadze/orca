@@ -1,16 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IPost } from './post';
-import { IUser } from './user';
+import { Like } from '../generated-graphql';
+
+type LikeModel = Like & Document;
 
 const Schema = mongoose.Schema;
-
-export interface ILike extends Document {
-  post: IPost['_id'];
-  user: IUser['_id'];
-  createdAt: string;
-  updatedAt: string;
-}
 
 const LikeSchema = new Schema(
   {
@@ -28,4 +22,4 @@ const LikeSchema = new Schema(
   }
 );
 
-export default mongoose.model<ILike>('Like', LikeSchema);
+export default mongoose.model<LikeModel>('Like', LikeSchema);

@@ -1,15 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from './user';
+import { Follow } from '../generated-graphql';
+
+type FollowModel = Follow & Document;
 
 const Schema = mongoose.Schema;
-
-export interface IFollow extends Document {
-  user: IUser['_id'];
-  follower: IUser['_id'];
-  createdAt: string;
-  updatedAt: string;
-}
 
 const FollowSchema = new Schema(
   {
@@ -27,4 +22,4 @@ const FollowSchema = new Schema(
   }
 );
 
-export default mongoose.model<IFollow>('Follow', FollowSchema);
+export default mongoose.model<FollowModel>('Follow', FollowSchema);

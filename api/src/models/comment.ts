@@ -1,17 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IPost } from './post';
-import { IUser } from './user';
+import { Comment } from '../generated-graphql';
+
+type CommentModel = Comment & Document;
 
 const Schema = mongoose.Schema;
-
-export interface IComment extends Document {
-  comment: string;
-  post: IPost['_id'];
-  author: IUser['_id'];
-  createdAt: string;
-  updatedAt: string;
-}
 
 const CommentSchema = new Schema(
   {
@@ -33,4 +26,4 @@ const CommentSchema = new Schema(
   }
 );
 
-export default mongoose.model<IComment>('Comment', CommentSchema);
+export default mongoose.model<CommentModel>('Comment', CommentSchema);

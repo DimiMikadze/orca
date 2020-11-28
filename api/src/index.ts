@@ -52,7 +52,6 @@ export const session = expressSession({
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(routes);
 
 const server = createApolloServer(schema, resolvers, models);

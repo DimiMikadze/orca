@@ -1,17 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from './user';
+import { Message } from '../generated-graphql';
+
+type MessageModel = Message & Document;
 
 const Schema = mongoose.Schema;
-
-export interface IMessage extends Document {
-  sender: IUser['_id'];
-  receiver: IUser['_id'];
-  message: string;
-  seen: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const MessageSchema = new Schema(
   {
@@ -32,4 +25,4 @@ const MessageSchema = new Schema(
   { timestamps: true }
 );
 
-export default mongoose.model<IMessage>('Message', MessageSchema);
+export default mongoose.model<MessageModel>('Message', MessageSchema);

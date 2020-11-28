@@ -1,39 +1,11 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IPost } from './post';
-import { ILike } from './like';
-import { IFollow } from './follow';
-import { IComment } from './comment';
-import { INotification } from './notification';
-import { IMessage } from './message';
+import { User } from '../generated-graphql';
 import { UserRole } from '../constants/types';
 
-const Schema = mongoose.Schema;
+type UserModel = User & Document;
 
-export interface IUser extends Document {
-  role: UserRole;
-  fullName: string;
-  email: string;
-  username: string;
-  facebookId: string;
-  googleId: string;
-  githubId: string;
-  twitterId: string;
-  image: string;
-  imagePublicId: string;
-  coverImage: string;
-  coverImagePublicId: string;
-  isOnline: boolean;
-  posts: IPost['_id'][];
-  likes: ILike['_id'][];
-  comments: IComment['_id'][];
-  followers: IFollow['_id'][];
-  following: IFollow['_id'][];
-  notifications: INotification['_id'][];
-  messages: IMessage['_id'][];
-  createdAt: string;
-  updatedAt: string;
-}
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
@@ -118,4 +90,4 @@ const UserSchema = new Schema(
   }
 );
 
-export default mongoose.model<IUser>('User', UserSchema);
+export default mongoose.model<UserModel>('User', UserSchema);

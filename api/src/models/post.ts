@@ -1,21 +1,10 @@
 import mongoose, { Document } from 'mongoose';
 
-import { IUser } from './user';
-import { ILike } from './like';
-import { IComment } from './comment';
+import { Post } from '../generated-graphql';
+
+type PostModel = Post & Document;
 
 const Schema = mongoose.Schema;
-
-export interface IPost extends Document {
-  title: string;
-  image: string;
-  imagePublicId: string;
-  author: IUser['_id'];
-  likes: ILike['_id'][];
-  comments: IComment['_id'][];
-  createdAt: string;
-  updatedAt: string;
-}
 
 const PostSchema = new Schema(
   {
@@ -44,4 +33,4 @@ const PostSchema = new Schema(
   }
 );
 
-export default mongoose.model<IPost>('Post', PostSchema);
+export default mongoose.model<PostModel>('Post', PostSchema);
