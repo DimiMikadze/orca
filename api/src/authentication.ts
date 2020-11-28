@@ -1,6 +1,7 @@
 import passport from 'passport';
 import FacebookStrategy from 'passport-facebook';
 import GoogleStrategy from 'passport-google-oauth20';
+import GitHubStrategy from 'passport-github2';
 import User from './models/user';
 import { AuthUser } from './constants/types';
 
@@ -79,6 +80,43 @@ export const initPassport = async () => {
             googleId: profile.id,
             username: profile.displayName,
             fullName: firstName ? `${firstName} ${lastName}` : profile.displayName,
+            email: (profile.emails && profile.emails.length > 0 && profile.emails[0].value) || null,
+          });
+          await newUser.save();
+          done(null, newUser);
+        } catch (error) {
+          done(error);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: process.env.GITHUB_APP_ID,
+        clientSecret: process.env.GITHUB_APP_SECRET,
+        callbackURL: 'http://localhost:4000/auth/github/callback',
+        scope: ['user'],
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        const user = await User.findOne({ githubId: profile.id });
+        if (user) {
+          done(null, user);
+          return;
+        }
+
+        const name = profile.displayName || profile.username || profile._json.name || '';
+
+        const splitProfileUrl = profile.profileUrl.split('/');
+        const fallbackUsername = splitProfileUrl[splitProfileUrl.length - 1];
+        const githubUsername = profile.username || profile._json.login || fallbackUsername;
+
+        try {
+          const newUser = new User({
+            googleId: profile.id,
+            username: githubUsername,
+            fullName: name,
             email: (profile.emails && profile.emails.length > 0 && profile.emails[0].value) || null,
           });
           await newUser.save();

@@ -38,6 +38,7 @@ const AuthLayout = ({ refetch }) => {
         <h1>Authentication</h1>
         <a href="http://localhost:4000/auth/facebook">Login with Facebook</a>
         <a href="http://localhost:4000/auth/google">Login with Google</a>
+        <a href="http://localhost:4000/auth/github">Login with Github</a>
       </Container>
     </Root>
   );

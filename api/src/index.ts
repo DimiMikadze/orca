@@ -66,6 +66,15 @@ app.get(
     res.redirect(process.env.FRONTEND_URL);
   }
 );
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+app.get(
+  '/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: process.env.FRONTEND_URL }),
+  (req, res) => {
+    res.redirect(process.env.FRONTEND_URL);
+  }
+);
 app.get('/auth/logout', function (req, res) {
   req.logout();
   res.redirect(process.env.FRONTEND_URL);
