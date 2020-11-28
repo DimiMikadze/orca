@@ -36,14 +36,13 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  session({
-    genid: (req) => uuid(),
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+export const mySession = session({
+  genid: (req) => uuid(),
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+});
+app.use(mySession);
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -1,15 +1,31 @@
 import { ApolloServer } from 'apollo-server-express';
 import { PubSub } from 'apollo-server';
+import { mySession } from './index';
 
 import { IS_USER_ONLINE } from './constants/Subscriptions';
 import { DocumentNode } from 'graphql';
-import { AuthUser } from './constants/types';
+import { Response } from 'express';
 
 export const pubSub = new PubSub();
 
-interface ConnectionParams {
-  authorization: string;
-}
+const getUserIdFromReq = (req: any): Promise<string | null> => {
+  return new Promise((resolve, reject) => {
+    mySession(req, {} as Response, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      if (!req.session || !req.session.passport || !req.session.passport.user) {
+        return resolve(null);
+      }
+
+      try {
+        return resolve(req.session.passport.user._id);
+      } catch (err) {
+        return resolve(null);
+      }
+    });
+  });
+};
 
 export const createApolloServer = (schema: DocumentNode, resolvers: any, models: any) => {
   return new ApolloServer({
@@ -26,36 +42,33 @@ export const createApolloServer = (schema: DocumentNode, resolvers: any, models:
     },
     subscriptions: {
       onConnect: async (connectionParams, webSocket: any) => {
-        // // Publish user isOnline true
-        // pubSub.publish(IS_USER_ONLINE, {
-        //   isUserOnline: {
-        //     userId: 'userid',
-        //     isOnline: true,
-        //   },
-        // });
-        // // Add authUser to socket's context, so we have access to it, in onDisconnect method
-        // return {
-        //   authUser: null,
-        // };
+        try {
+          const userId = await getUserIdFromReq(webSocket.upgradeReq);
+          if (userId) {
+            pubSub.publish(IS_USER_ONLINE, {
+              isUserOnline: {
+                userId,
+                isOnline: true,
+              },
+            });
+          }
+          return { authUserId: userId };
+        } catch (error) {
+          console.error(error);
+          return { authUserId: null };
+        }
       },
       onDisconnect: async (webSocket, context) => {
-        // const c = await context.initPromise;
-        // if (c && c.authUser) {
-        //   // Publish user isOnline false
-        //   pubSub.publish(IS_USER_ONLINE, {
-        //     isUserOnline: {
-        //       userId: c.authUser.id,
-        //       isOnline: false,
-        //     },
-        //   });
-        //   // Update user isOnline to false in DB
-        //   await models.User.findOneAndUpdate(
-        //     { email: c.authUser.email },
-        //     {
-        //       isOnline: false,
-        //     }
-        //   );
-        // }
+        const ctx = await context.initPromise;
+        if (ctx && ctx.authUserId) {
+          pubSub.publish(IS_USER_ONLINE, {
+            isUserOnline: {
+              userId: ctx.authUserId,
+              isOnline: false,
+            },
+          });
+          await models.User.findOneAndUpdate({ _id: ctx.authUserId }, { isOnline: false });
+        }
       },
     },
   });
