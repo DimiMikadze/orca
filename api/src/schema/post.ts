@@ -25,11 +25,6 @@ export default gql`
     imagePublicId: String
   }
 
-  type UserPostsPayload {
-    posts: [PostPayload]
-    count: String
-  }
-
   type PostPayload {
     id: ID
     title: String
@@ -48,7 +43,6 @@ export default gql`
   }
 
   extend type Query {
-    getUserPosts(username: String!, skip: Int, limit: Int): UserPostsPayload
     getFollowedPosts(userId: String!, skip: Int, limit: Int): PostsPayload
     getPosts(authUserId: ID!, skip: Int, limit: Int): PostsPayload
     getPost(id: ID!): PostPayload

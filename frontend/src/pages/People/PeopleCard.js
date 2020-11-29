@@ -64,7 +64,7 @@ const UserName = styled.span`
 const PeopleCard = ({ user }) => {
   const [color, setColor] = useState('');
 
-  const { fullName, username, image } = user;
+  const { fullName, username, image, id } = user;
 
   useEffect(() => {
     const { primary, secondary, success, error } = theme.colors;
@@ -88,14 +88,14 @@ const PeopleCard = ({ user }) => {
 
   return (
     <Root>
-      <A to={generatePath(Routes.USER_PROFILE, { username })}>
+      <A to={generatePath(Routes.USER_PROFILE, { id })}>
         <ImageContainer>
           {image ? <Image src={image} /> : <InitialLetters color={color}>{splitFullName()}</InitialLetters>}
         </ImageContainer>
       </A>
 
       <Spacing top="sm" bottom="xs">
-        <A to={generatePath(Routes.USER_PROFILE, { username })}>
+        <A to={generatePath(Routes.USER_PROFILE, { id })}>
           <FullName>{fullName}</FullName>
         </A>
       </Spacing>

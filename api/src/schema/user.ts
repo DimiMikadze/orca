@@ -20,6 +20,8 @@ export default gql`
     twitterId: String
     image: File
     imagePublicId: String
+    about: String
+    website: String
     coverImage: File
     coverImagePublicId: String
     isOnline: Boolean
@@ -62,6 +64,8 @@ export default gql`
     twitterId: String
     image: String
     imagePublicId: String
+    about: String
+    website: String
     coverImage: String
     coverImagePublicId: String
     isOnline: Boolean
@@ -82,6 +86,11 @@ export default gql`
     count: String
   }
 
+  type UserPostsPayload {
+    posts: [PostPayload]
+    count: String
+  }
+
   type IsUserOnlinePayload {
     userId: ID!
     isOnline: Boolean
@@ -89,8 +98,9 @@ export default gql`
 
   extend type Query {
     getAuthUser: UserPayload
-    getUser(username: String, id: ID): UserPayload
+    getUser(userId: ID): UserPayload
     getUsers(userId: String!, skip: Int, limit: Int): UsersPayload
+    getUserPosts(userId: ID, skip: Int, limit: Int): UserPostsPayload
     searchUsers(searchQuery: String!): [UserPayload]
     suggestPeople(userId: String!): [UserPayload]
   }

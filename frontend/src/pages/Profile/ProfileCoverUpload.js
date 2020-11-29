@@ -90,7 +90,7 @@ const ProfileCoverUpload = ({ coverImagePublicId, coverImage, userId }) => {
         refetchQueries: () => [
           { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
           { query: GET_AUTH_USER },
-          { query: GET_USER, variables: { username: auth.user.username } },
+          { query: GET_USER, variables: { userId: auth.user.id } },
         ],
       });
     } catch (err) {

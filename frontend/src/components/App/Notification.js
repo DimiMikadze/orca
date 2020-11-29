@@ -100,7 +100,7 @@ const Notification = ({ notification, close }) => {
     <NotificationItem ref={ref}>
       <A
         to={generatePath(Routes.USER_PROFILE, {
-          username: notification.author.username,
+          id: notification.author.id,
         })}
       >
         <LeftSide>

@@ -28,7 +28,7 @@ const UserResolver: Resolvers = {
       if (!authUser) return null;
 
       // If user is authenticated, update it's isOnline field to true
-      const user = await User.findOneAndUpdate({ email: authUser.email }, { isOnline: true })
+      const user = await User.findOneAndUpdate({ id: authUser.id }, { isOnline: true })
         .populate({ path: 'posts', options: { sort: { createdAt: 'desc' } } })
         .populate('likes')
         .populate('followers')
@@ -101,19 +101,14 @@ const UserResolver: Resolvers = {
 
       return user;
     },
-    getUser: async (root, { username, id }, { User, authUser }) => {
-      if (!username && !id) {
-        throw new Error('username or id is required params.');
-      }
-
-      if (username && id) {
-        throw new Error('please pass only username or only id as a param');
+    getUser: async (root, { userId }, { User, authUser }) => {
+      if (!userId) {
+        throw new Error('User id is a required param');
       }
 
       assertAuthenticated(authUser);
 
-      const query = username ? { username: username } : { _id: id };
-      const user = await User.findOne(query)
+      const user = await User.findById(userId)
         .populate({
           path: 'posts',
           populate: [
@@ -147,8 +142,8 @@ const UserResolver: Resolvers = {
 
       return user;
     },
-    getUserPosts: async (root, { username, skip, limit }, { User, Post }) => {
-      const user = await User.findOne({ username }).select('_id');
+    getUserPosts: async (root, { userId, skip, limit }, { User, Post }) => {
+      const user = await User.findById(userId).select('_id');
 
       const query = { author: user._id };
       const count = await Post.find(query).countDocuments();

@@ -96,7 +96,7 @@ const UserSuggestions = ({ pathname }) => {
           <ListItem key={user.id}>
             <A
               to={generatePath(Routes.USER_PROFILE, {
-                username: user.username,
+                id: user.id,
               })}
             >
               <Avatar image={user.image} />
@@ -105,7 +105,7 @@ const UserSuggestions = ({ pathname }) => {
             <Spacing left="xs">
               <A
                 to={generatePath(Routes.USER_PROFILE, {
-                  username: user.username,
+                  id: user.id,
                 })}
               >
                 <FullName>{user.fullName}</FullName>

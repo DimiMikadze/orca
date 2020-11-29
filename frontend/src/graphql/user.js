@@ -20,8 +20,8 @@ const userPayload = `
  * Gets specific user by username
  */
 export const GET_USER = gql`
-  query($username: String, $id: ID) {
-    getUser(username: $username, id: $id) {
+  query($userId: ID) {
+    getUser(userId: $userId) {
       ${userPayload}
       isOnline
       posts {
@@ -57,8 +57,8 @@ export const GET_USER = gql`
  * Gets user posts
  */
 export const GET_USER_POSTS = gql`
-  query($username: String!, $skip: Int, $limit: Int) {
-    getUserPosts(username: $username, skip: $skip, limit: $limit) {
+  query($userId: ID!, $skip: Int, $limit: Int) {
+    getUserPosts(userId: $userId, skip: $skip, limit: $limit) {
       count
       posts {
         id

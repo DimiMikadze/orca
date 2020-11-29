@@ -20,15 +20,14 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
       lowercase: true,
       trim: true,
     },
     username: {
       type: String,
-      required: true,
       lowercase: true,
       trim: true,
+      unique: true,
     },
     facebookId: String,
     googleId: String,
@@ -36,6 +35,8 @@ const UserSchema = new Schema(
     twitterId: String,
     image: String,
     imagePublicId: String,
+    about: String,
+    website: String,
     coverImage: String,
     coverImagePublicId: String,
     isOnline: {

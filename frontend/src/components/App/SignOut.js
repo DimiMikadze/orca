@@ -16,7 +16,7 @@ const SignOut = () => {
   const handleSignOut = () => {
     dispatch({ type: CLEAR_AUTH_USER });
     client.resetStore();
-    window.location.href = `${process.env.REACT_APP_API_URL}/auth/logout`;
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/signout`;
   };
 
   return (

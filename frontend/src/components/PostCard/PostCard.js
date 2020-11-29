@@ -152,7 +152,7 @@ const PostCard = ({ author, imagePublicId, comments, title, createdAt, image, li
           {
             query: GET_USER_POSTS,
             variables: {
-              username: auth.user.username,
+              userId: auth.user.id,
               skip: 0,
               limit: PROFILE_PAGE_POSTS_LIMIT,
             },
@@ -174,7 +174,7 @@ const PostCard = ({ author, imagePublicId, comments, title, createdAt, image, li
         <TopRow>
           <Author
             to={generatePath(Routes.USER_PROFILE, {
-              username: author.username,
+              id: author.id,
             })}
           >
             <Avatar image={author.image} />

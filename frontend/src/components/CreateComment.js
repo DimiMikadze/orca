@@ -34,7 +34,7 @@ const CreateComment = ({ post, focus }) => {
   const [createComment, { loading }] = useMutation(CREATE_COMMENT, {
     refetchQueries: [
       { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
-      { query: GET_USER, variables: { username: auth.user.username } },
+      { query: GET_USER, variables: { userId: auth.user.id } },
       { query: GET_AUTH_USER },
       { query: GET_POSTS, variables: { authUserId: auth.user.id } },
       { query: GET_POST, variables: { id: post.id } },

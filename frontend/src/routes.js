@@ -4,7 +4,7 @@
 
 export const HOME = '/';
 
-export const USER_PROFILE = '/:username';
+export const USER_PROFILE = '/:id';
 
 export const EXPLORE = '/explore';
 

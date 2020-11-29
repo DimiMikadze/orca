@@ -66,7 +66,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
   const [deleteComment] = useMutation(DELETE_COMMENT, {
     refetchQueries: [
       { query: GET_FOLLOWED_POSTS, variables: { userId: auth.user.id } },
-      { query: GET_USER, variables: { username: comment.author.username } },
+      { query: GET_USER, variables: { userId: comment.author.id } },
       { query: GET_AUTH_USER },
       { query: GET_POSTS, variables: { authUserId: auth.user.id } },
       { query: GET_POST, variables: { id: postId } },
@@ -89,7 +89,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
     <Root>
       <A
         to={generatePath(Routes.USER_PROFILE, {
-          username: comment.author.username,
+          id: comment.author.id,
         })}
       >
         <Avatar image={comment.author.image} />
@@ -107,7 +107,7 @@ const Comment = ({ comment, postId, postAuthor }) => {
         <Spacing inline right="xxs">
           <A
             to={generatePath(Routes.USER_PROFILE, {
-              username: comment.author.username,
+              id: comment.author.id,
             })}
           >
             <UserName>{comment.author.fullName}</UserName>

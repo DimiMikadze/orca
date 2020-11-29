@@ -21,10 +21,10 @@ import * as Routes from 'routes';
 /**
  * Renders posts in profile page
  */
-const ProfilePosts = ({ username }) => {
+const ProfilePosts = ({ userId }) => {
   const [isPostPopupOpen, setIsPostPopupOpen] = useState(false);
   const [modalPostId, setModalPostId] = useState('');
-  const variables = { username, skip: 0, limit: PROFILE_PAGE_POSTS_LIMIT };
+  const variables = { userId, skip: 0, limit: PROFILE_PAGE_POSTS_LIMIT };
   const { data, loading, fetchMore, networkStatus } = useQuery(GET_USER_POSTS, {
     variables,
     notifyOnNetworkStatusChange: true,
@@ -37,7 +37,7 @@ const ProfilePosts = ({ username }) => {
   };
 
   const closeModal = () => {
-    window.history.pushState('', '', generatePath(Routes.USER_PROFILE, { username }));
+    window.history.pushState('', '', generatePath(Routes.USER_PROFILE, { id: userId }));
     setIsPostPopupOpen(false);
   };
 
@@ -98,7 +98,7 @@ const ProfilePosts = ({ username }) => {
 };
 
 ProfilePosts.propTypes = {
-  username: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default ProfilePosts;

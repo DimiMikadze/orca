@@ -71,7 +71,7 @@ const SearchResult = ({ users, forMessage }) => {
           to={
             forMessage
               ? generatePath(Routes.MESSAGES, { userId: user.id })
-              : generatePath(Routes.USER_PROFILE, { username: user.username })
+              : generatePath(Routes.USER_PROFILE, { id: user.id })
           }
         >
           <Item>

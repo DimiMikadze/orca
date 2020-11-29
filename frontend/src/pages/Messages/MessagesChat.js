@@ -26,7 +26,7 @@ const MessagesChat = ({ match, authUser }) => {
   const client = useApolloClient();
 
   const { data, loading } = useQuery(GET_USER, {
-    variables: { id: userId },
+    variables: { userId },
     skip: userId === Routes.NEW_ID_VALUE,
   });
 

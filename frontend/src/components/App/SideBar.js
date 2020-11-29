@@ -76,7 +76,7 @@ const SideBar = ({ location, isOpen, sideBarRef }) => {
 
   return (
     <Root isOpen={isOpen} ref={sideBarRef}>
-      <User exact to={generatePath(Routes.USER_PROFILE, { username: auth.user.username })} activeClassName="selected">
+      <User exact to={generatePath(Routes.USER_PROFILE, { id: auth.user.id })} activeClassName="selected">
         <Avatar image={auth.user.image} size={20} />
 
         <Spacing left="xxs">

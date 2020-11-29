@@ -64,7 +64,7 @@ const Follow = ({ user }) => {
           limit: HOME_PAGE_POSTS_LIMIT,
         },
       },
-      { query: GET_USER, variables: { username: user.username } },
+      { query: GET_USER, variables: { userId: user.id } },
     ],
   });
 

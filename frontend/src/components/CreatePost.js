@@ -99,7 +99,7 @@ const CreatePost = () => {
       {
         query: GET_USER_POSTS,
         variables: {
-          username: auth.user.username,
+          userId: auth.user.id,
           skip: 0,
           limit: PROFILE_PAGE_POSTS_LIMIT,
         },

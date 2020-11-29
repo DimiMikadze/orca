@@ -30,9 +30,10 @@ const Root = styled.div`
  */
 const Profile = ({ match }) => {
   const [{ auth }] = useStore();
-  const { username } = match.params;
+  const { id } = match.params;
+
   const { data, loading, error } = useQuery(GET_USER, {
-    variables: { username },
+    variables: { userId: id },
   });
 
   const renderContent = () => {
@@ -57,10 +58,10 @@ const Profile = ({ match }) => {
 
         <Container maxWidth="sm">
           <Spacing top="lg" bottom="lg">
-            {username === auth.user.username && <CreatePost />}
+            {id === auth.user.id && <CreatePost />}
           </Spacing>
 
-          <ProfilePosts username={username} />
+          <ProfilePosts userId={id} />
         </Container>
       </Container>
     );
@@ -68,7 +69,7 @@ const Profile = ({ match }) => {
 
   return (
     <Root>
-      <Head title={username} />
+      <Head title="Profile" />
 
       {renderContent()}
     </Root>

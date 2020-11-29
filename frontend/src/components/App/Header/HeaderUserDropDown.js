@@ -50,7 +50,7 @@ const HeaderUserDropDown = ({ userRef }) => {
     <Root ref={userRef}>
       <Link
         to={generatePath(Routes.USER_PROFILE, {
-          username: auth.user.username,
+          id: auth.user.id,
         })}
       >
         My Profile
