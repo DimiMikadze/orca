@@ -43,7 +43,7 @@ export const initPassport = async () => {
           const lastName = profile.name && profile.name.familyName ? profile.name.familyName : '';
           const newUser = new User({
             facebookId: profile.id,
-            username: profile.displayName,
+            username: firstName + 'Facebook',
             fullName: firstName ? `${firstName} ${lastName}` : profile.displayName,
             email:
               profile.emails && profile.emails.length > 0 && profile.emails[0].value !== undefined
@@ -78,7 +78,7 @@ export const initPassport = async () => {
           const lastName = profile.name && profile.name.familyName ? profile.name.familyName : '';
           const newUser = new User({
             googleId: profile.id,
-            username: profile.displayName,
+            username: firstName + 'Google',
             fullName: firstName ? `${firstName} ${lastName}` : profile.displayName,
             email: (profile.emails && profile.emails.length > 0 && profile.emails[0].value) || null,
           });
@@ -115,7 +115,7 @@ export const initPassport = async () => {
         try {
           const newUser = new User({
             googleId: profile.id,
-            username: githubUsername,
+            username: githubUsername + 'Github',
             fullName: name,
             email: (profile.emails && profile.emails.length > 0 && profile.emails[0].value) || null,
           });
