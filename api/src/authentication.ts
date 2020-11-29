@@ -1,7 +1,7 @@
 import passport from 'passport';
-import FacebookStrategy from 'passport-facebook';
-import GoogleStrategy from 'passport-google-oauth20';
-import GitHubStrategy from 'passport-github2';
+import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GitHubStrategy } from 'passport-github2';
 import User from './models/user';
 import { AuthUser } from './constants/types';
 

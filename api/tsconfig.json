@@ -6,7 +6,6 @@
     "allowJs": true,
     "outDir": "build",
     "rootDir": "src",
-    "strict": false,
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
