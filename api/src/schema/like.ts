@@ -17,7 +17,7 @@ export default gql`
   }
 
   type LikePayload {
-    id: ID!
+    id: ID
     post: PostPayload
     user: UserPayload
   }

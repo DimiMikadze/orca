@@ -22,7 +22,7 @@ export default gql`
   }
 
   type MessagePayload {
-    id: ID!
+    id: ID
     receiver: UserPayload
     sender: UserPayload
     message: String
@@ -32,7 +32,7 @@ export default gql`
   }
 
   type ConversationsPayload {
-    id: ID!
+    id: ID
     username: String
     fullName: String
     image: String

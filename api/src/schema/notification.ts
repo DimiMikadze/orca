@@ -48,7 +48,7 @@ export default gql`
 
   type NotificationsPayload {
     count: String!
-    notifications: [NotificationPayload]!
+    notifications: [NotificationPayload]
   }
 
   enum NotificationOperationType {
@@ -57,7 +57,7 @@ export default gql`
   }
 
   type NotificationCreatedOrDeletedPayload {
-    operation: NotificationOperationType!
+    operation: NotificationOperationType
     notification: NotificationPayload
   }
 

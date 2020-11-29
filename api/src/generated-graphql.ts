@@ -264,7 +264,7 @@ export type UploadUserPhotoInput = {
 export type UserPayload = {
   __typename?: 'UserPayload';
   role?: Maybe<Role>;
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   fullName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
@@ -291,8 +291,8 @@ export type UserPayload = {
 
 export type UsersPayload = {
   __typename?: 'UsersPayload';
-  users: Array<Maybe<UserPayload>>;
-  count: Scalars['String'];
+  users?: Maybe<Array<Maybe<UserPayload>>>;
+  count?: Maybe<Scalars['String']>;
 };
 
 export type IsUserOnlinePayload = {
@@ -328,17 +328,17 @@ export type DeletePostInput = {
 
 export type UserPostsPayload = {
   __typename?: 'UserPostsPayload';
-  posts: Array<Maybe<PostPayload>>;
-  count: Scalars['String'];
+  posts?: Maybe<Array<Maybe<PostPayload>>>;
+  count?: Maybe<Scalars['String']>;
 };
 
 export type PostPayload = {
   __typename?: 'PostPayload';
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   title?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   imagePublicId?: Maybe<Scalars['String']>;
-  author: UserPayload;
+  author?: Maybe<UserPayload>;
   likes?: Maybe<Array<Maybe<Like>>>;
   comments?: Maybe<Array<Maybe<CommentPayload>>>;
   createdAt?: Maybe<Scalars['String']>;
@@ -347,8 +347,8 @@ export type PostPayload = {
 
 export type PostsPayload = {
   __typename?: 'PostsPayload';
-  posts: Array<Maybe<PostPayload>>;
-  count: Scalars['String'];
+  posts?: Maybe<Array<Maybe<PostPayload>>>;
+  count?: Maybe<Scalars['String']>;
 };
 
 export type Message = {
@@ -374,7 +374,7 @@ export type UpdateMessageSeenInput = {
 
 export type MessagePayload = {
   __typename?: 'MessagePayload';
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   receiver?: Maybe<UserPayload>;
   sender?: Maybe<UserPayload>;
   message?: Maybe<Scalars['String']>;
@@ -385,7 +385,7 @@ export type MessagePayload = {
 
 export type ConversationsPayload = {
   __typename?: 'ConversationsPayload';
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   username?: Maybe<Scalars['String']>;
   fullName?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -430,7 +430,7 @@ export type DeleteLikeInput = {
 
 export type LikePayload = {
   __typename?: 'LikePayload';
-  id: Scalars['ID'];
+  id?: Maybe<Scalars['ID']>;
   post?: Maybe<PostPayload>;
   user?: Maybe<UserPayload>;
 };
@@ -513,7 +513,7 @@ export type NotificationPayload = {
 export type NotificationsPayload = {
   __typename?: 'NotificationsPayload';
   count: Scalars['String'];
-  notifications: Array<Maybe<NotificationPayload>>;
+  notifications?: Maybe<Array<Maybe<NotificationPayload>>>;
 };
 
 export enum NotificationOperationType {
@@ -523,7 +523,7 @@ export enum NotificationOperationType {
 
 export type NotificationCreatedOrDeletedPayload = {
   __typename?: 'NotificationCreatedOrDeletedPayload';
-  operation: NotificationOperationType;
+  operation?: Maybe<NotificationOperationType>;
   notification?: Maybe<NotificationPayload>;
 };
 
@@ -791,7 +791,7 @@ export type SuccessMessageResolvers<ContextType = any, ParentType extends Resolv
 
 export type UserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPayload'] = ResolversParentTypes['UserPayload']> = {
   role?: Resolver<Maybe<ResolversTypes['Role']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -818,8 +818,8 @@ export type UserPayloadResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type UsersPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UsersPayload'] = ResolversParentTypes['UsersPayload']> = {
-  users?: Resolver<Array<Maybe<ResolversTypes['UserPayload']>>, ParentType, ContextType>;
-  count?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserPayload']>>>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -843,17 +843,17 @@ export type PostResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type UserPostsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserPostsPayload'] = ResolversParentTypes['UserPostsPayload']> = {
-  posts?: Resolver<Array<Maybe<ResolversTypes['PostPayload']>>, ParentType, ContextType>;
-  count?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['PostPayload']>>>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type PostPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostPayload'] = ResolversParentTypes['PostPayload']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   imagePublicId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  author?: Resolver<ResolversTypes['UserPayload'], ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType>;
   likes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Like']>>>, ParentType, ContextType>;
   comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['CommentPayload']>>>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -862,8 +862,8 @@ export type PostPayloadResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type PostsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostsPayload'] = ResolversParentTypes['PostsPayload']> = {
-  posts?: Resolver<Array<Maybe<ResolversTypes['PostPayload']>>, ParentType, ContextType>;
-  count?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['PostPayload']>>>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -878,7 +878,7 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type MessagePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['MessagePayload'] = ResolversParentTypes['MessagePayload']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   receiver?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType>;
   sender?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -889,7 +889,7 @@ export type MessagePayloadResolvers<ContextType = any, ParentType extends Resolv
 };
 
 export type ConversationsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['ConversationsPayload'] = ResolversParentTypes['ConversationsPayload']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fullName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -916,7 +916,7 @@ export type LikeResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type LikePayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['LikePayload'] = ResolversParentTypes['LikePayload']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   post?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['UserPayload']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -967,12 +967,12 @@ export type NotificationPayloadResolvers<ContextType = any, ParentType extends R
 
 export type NotificationsPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NotificationsPayload'] = ResolversParentTypes['NotificationsPayload']> = {
   count?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  notifications?: Resolver<Array<Maybe<ResolversTypes['NotificationPayload']>>, ParentType, ContextType>;
+  notifications?: Resolver<Maybe<Array<Maybe<ResolversTypes['NotificationPayload']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type NotificationCreatedOrDeletedPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['NotificationCreatedOrDeletedPayload'] = ResolversParentTypes['NotificationCreatedOrDeletedPayload']> = {
-  operation?: Resolver<ResolversTypes['NotificationOperationType'], ParentType, ContextType>;
+  operation?: Resolver<Maybe<ResolversTypes['NotificationOperationType']>, ParentType, ContextType>;
   notification?: Resolver<Maybe<ResolversTypes['NotificationPayload']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

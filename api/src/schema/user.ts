@@ -52,7 +52,7 @@ export default gql`
 
   type UserPayload {
     role: Role
-    id: ID!
+    id: ID
     fullName: String
     email: String
     username: String
@@ -78,8 +78,8 @@ export default gql`
   }
 
   type UsersPayload {
-    users: [UserPayload]!
-    count: String!
+    users: [UserPayload]
+    count: String
   }
 
   type IsUserOnlinePayload {

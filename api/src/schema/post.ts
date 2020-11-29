@@ -26,16 +26,16 @@ export default gql`
   }
 
   type UserPostsPayload {
-    posts: [PostPayload]!
-    count: String!
+    posts: [PostPayload]
+    count: String
   }
 
   type PostPayload {
-    id: ID!
+    id: ID
     title: String
     image: String
     imagePublicId: String
-    author: UserPayload!
+    author: UserPayload
     likes: [Like]
     comments: [CommentPayload]
     createdAt: String
@@ -43,8 +43,8 @@ export default gql`
   }
 
   type PostsPayload {
-    posts: [PostPayload]!
-    count: String!
+    posts: [PostPayload]
+    count: String
   }
 
   extend type Query {
