@@ -4,7 +4,7 @@ import { withFilter, AuthenticationError } from 'apollo-server';
 import { uploadToCloudinary } from '../utils/cloudinary';
 import { pubSub } from '../apollo-server';
 
-import { IS_USER_ONLINE } from '../constants/Subscriptions';
+import { Subscriptions } from '../constants/Subscriptions';
 import { Resolvers } from '../generated-graphql';
 import { UserRole } from '../constants/types';
 
@@ -280,7 +280,7 @@ const UserResolver: Resolvers = {
   Subscription: {
     isUserOnline: {
       subscribe: withFilter(
-        () => pubSub.asyncIterator(IS_USER_ONLINE),
+        () => pubSub.asyncIterator(Subscriptions.Is_User_Online),
         (payload, variables, { authUserId }) => variables.authUserId === authUserId
       ),
     },

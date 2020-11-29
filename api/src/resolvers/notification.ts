@@ -1,7 +1,7 @@
 import { withFilter } from 'apollo-server';
 
 import { pubSub } from '../apollo-server';
-import { NOTIFICATION_CREATED_OR_DELETED } from '../constants/Subscriptions';
+import { Subscriptions } from '../constants/Subscriptions';
 import { Resolvers } from '../generated-graphql';
 
 const NotificationResolver: Resolvers = {
@@ -47,7 +47,7 @@ const NotificationResolver: Resolvers = {
         .populate({ path: 'comment', populate: { path: 'post' } })
         .populate({ path: 'like', populate: { path: 'post' } })
         .execPopulate();
-      pubSub.publish(NOTIFICATION_CREATED_OR_DELETED, {
+      pubSub.publish(Subscriptions.Notification_Created_Or_Deleted, {
         notificationCreatedOrDeleted: {
           operation: 'CREATE',
           notification: newNotification,
@@ -70,7 +70,7 @@ const NotificationResolver: Resolvers = {
         .populate({ path: 'comment', populate: { path: 'post' } })
         .populate({ path: 'like', populate: { path: 'post' } })
         .execPopulate();
-      pubSub.publish(NOTIFICATION_CREATED_OR_DELETED, {
+      pubSub.publish(Subscriptions.Notification_Created_Or_Deleted, {
         notificationCreatedOrDeleted: {
           operation: 'DELETE',
           notification,
@@ -94,7 +94,7 @@ const NotificationResolver: Resolvers = {
   Subscription: {
     notificationCreatedOrDeleted: {
       subscribe: withFilter(
-        () => pubSub.asyncIterator(NOTIFICATION_CREATED_OR_DELETED),
+        () => pubSub.asyncIterator(Subscriptions.Notification_Created_Or_Deleted),
         (payload, variables, { authUserId }) => {
           const userId = payload.notificationCreatedOrDeleted.notification.user.toString();
 

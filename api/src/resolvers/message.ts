@@ -3,7 +3,7 @@ import { withFilter } from 'apollo-server';
 
 import { Resolvers } from '../generated-graphql';
 import { pubSub } from '../apollo-server';
-import { MESSAGE_CREATED, NEW_CONVERSATION } from '../constants/Subscriptions';
+import { Subscriptions } from '../constants/Subscriptions';
 
 const MessageResolver: Resolvers = {
   Query: {
@@ -109,7 +109,7 @@ const MessageResolver: Resolvers = {
       newMessage = await newMessage.populate('sender').populate('receiver').execPopulate();
 
       // Publish message created event
-      pubSub.publish(MESSAGE_CREATED, { messageCreated: newMessage });
+      pubSub.publish(Subscriptions.Message_Created, { messageCreated: newMessage });
 
       // Check if user already had a conversation
       // if not push their ids to users collection
@@ -122,7 +122,7 @@ const MessageResolver: Resolvers = {
       }
 
       // Publish message created event
-      pubSub.publish(NEW_CONVERSATION, {
+      pubSub.publish(Subscriptions.New_Conversation, {
         newConversation: {
           receiverId: receiver,
           id: senderUser.id,
@@ -153,7 +153,7 @@ const MessageResolver: Resolvers = {
   Subscription: {
     messageCreated: {
       subscribe: withFilter(
-        () => pubSub.asyncIterator(MESSAGE_CREATED),
+        () => pubSub.asyncIterator(Subscriptions.Message_Created),
         (payload, variables) => {
           const { sender, receiver } = payload.messageCreated;
           const { authUserId, userId } = variables;
@@ -167,7 +167,7 @@ const MessageResolver: Resolvers = {
     },
     newConversation: {
       subscribe: withFilter(
-        () => pubSub.asyncIterator(NEW_CONVERSATION),
+        () => pubSub.asyncIterator(Subscriptions.New_Conversation),
         (payload, variables, { authUserId }) => authUserId && authUserId === payload.newConversation.receiverId
       ),
     },

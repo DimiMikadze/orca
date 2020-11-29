@@ -2,7 +2,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { PubSub } from 'apollo-server';
 import { session } from './index';
 
-import { IS_USER_ONLINE } from './constants/Subscriptions';
+import { Subscriptions } from './constants/Subscriptions';
 import { DocumentNode } from 'graphql';
 import { Response } from 'express';
 
@@ -45,7 +45,7 @@ export const createApolloServer = (schema: DocumentNode, resolvers: any, models:
         try {
           const userId = await getUserIdFromReq(webSocket.upgradeReq);
           if (userId) {
-            pubSub.publish(IS_USER_ONLINE, {
+            pubSub.publish(Subscriptions.Is_User_Online, {
               isUserOnline: {
                 userId,
                 isOnline: true,
@@ -61,7 +61,7 @@ export const createApolloServer = (schema: DocumentNode, resolvers: any, models:
       onDisconnect: async (webSocket, context) => {
         const ctx = await context.initPromise;
         if (ctx && ctx.authUserId) {
-          pubSub.publish(IS_USER_ONLINE, {
+          pubSub.publish(Subscriptions.Is_User_Online, {
             isUserOnline: {
               userId: ctx.authUserId,
               isOnline: false,
