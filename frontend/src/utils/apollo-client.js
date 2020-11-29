@@ -10,13 +10,15 @@ import { createUploadLink } from 'apollo-upload-client';
 const handleErrors = () => {
   return onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-      );
+      graphQLErrors.map(({ message, locations, path }) => /* eslint-disable-line array-callback-return */ {
+        console.log('[GraphQL error]: Message', message);
+        console.log('[GraphQL error]: Location', locations);
+        console.log('[GraphQL error]: Path', path);
+      });
     }
 
     if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
+      console.log('[Network error]:', networkError);
     }
   });
 };

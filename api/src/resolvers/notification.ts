@@ -95,10 +95,10 @@ const NotificationResolver: Resolvers = {
     notificationCreatedOrDeleted: {
       subscribe: withFilter(
         () => pubSub.asyncIterator(NOTIFICATION_CREATED_OR_DELETED),
-        (payload, variables, { authUser }) => {
+        (payload, variables, { authUserId }) => {
           const userId = payload.notificationCreatedOrDeleted.notification.user.toString();
 
-          return authUser && authUser.id === userId;
+          return authUserId && authUserId === userId;
         }
       ),
     },

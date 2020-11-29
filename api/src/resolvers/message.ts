@@ -168,7 +168,7 @@ const MessageResolver: Resolvers = {
     newConversation: {
       subscribe: withFilter(
         () => pubSub.asyncIterator(NEW_CONVERSATION),
-        (payload, variables, { authUser }) => authUser && authUser.id === payload.newConversation.receiverId
+        (payload, variables, { authUserId }) => authUserId && authUserId === payload.newConversation.receiverId
       ),
     },
   },

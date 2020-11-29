@@ -281,7 +281,7 @@ const UserResolver: Resolvers = {
     isUserOnline: {
       subscribe: withFilter(
         () => pubSub.asyncIterator(IS_USER_ONLINE),
-        (payload, variables, { authUser }) => variables.authUserId === authUser.id
+        (payload, variables, { authUserId }) => variables.authUserId === authUserId
       ),
     },
   },
