@@ -2,11 +2,26 @@ import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
+import { AuthenticationError } from 'apollo-server';
 
 import { getUserInfoFromFacebook, getUserInfoFromGoogle, getUserInfoFromGithub } from './utils/social-profile';
 
 import User from './models/user';
 import { AuthUser } from './constants/types';
+
+const createUser = async (getUserInfoFunc: any, profile: any) => {
+  const userProfile = await getUserInfoFunc(profile);
+  if (userProfile.email) {
+    const user = await User.findOne({ email: userProfile.email });
+    if (user) {
+      throw new AuthenticationError('Your email address is already linked to another profile.');
+    }
+  }
+
+  const user = new User(userProfile);
+  await user.save();
+  return user;
+};
 
 export const initPassport = async () => {
   passport.serializeUser((user, done) => {
@@ -51,10 +66,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const userProfile = getUserInfoFromFacebook(profile);
-          const newUser = new User(userProfile);
-          await newUser.save();
-          done(null, newUser);
+          const user = await createUser(getUserInfoFromFacebook, profile);
+          done(null, user);
         } catch (error) {
           done(error);
         }
@@ -77,10 +90,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const userProfile = getUserInfoFromGoogle(profile);
-          const newUser = new User(userProfile);
-          await newUser.save();
-          done(null, newUser);
+          const user = await createUser(getUserInfoFromGoogle, profile);
+          done(null, user);
         } catch (error) {
           done(error);
         }
@@ -104,10 +115,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const userProfile = getUserInfoFromGithub(profile);
-          const newUser = new User(userProfile);
-          await newUser.save();
-          done(null, newUser);
+          const user = await createUser(getUserInfoFromGithub, profile);
+          done(null, user);
         } catch (error) {
           done(error);
         }
