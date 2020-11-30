@@ -1,6 +1,20 @@
 import User from '../models/user';
 
-export const getUserInfoFromFacebook = async (profile: any) => {
+export interface SocialProfile {
+  id?: string;
+  facebookId?: string;
+  googleId?: string;
+  githubId?: string;
+  fullName?: string;
+  username?: string;
+  email?: string;
+  about?: string;
+  website?: string;
+  image?: string;
+  coverImage?: string;
+}
+
+export const getUserInfoFromFacebook = async (profile: any): Promise<SocialProfile> => {
   const user = {
     facebookId: profile.id,
     googleId: '',
@@ -47,7 +61,7 @@ export const getUserInfoFromFacebook = async (profile: any) => {
   return user;
 };
 
-export const getUserInfoFromGoogle = (profile: any) => {
+export const getUserInfoFromGoogle = (profile: any): SocialProfile => {
   const user = {
     googleId: profile.id,
     facebookId: '',
@@ -88,7 +102,7 @@ export const getUserInfoFromGoogle = (profile: any) => {
   return user;
 };
 
-export const getUserInfoFromGithub = (profile: any) => {
+export const getUserInfoFromGithub = (profile: any): SocialProfile => {
   const user = {
     githubId: profile.id,
     facebookId: '',

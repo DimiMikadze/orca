@@ -2,23 +2,34 @@ import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
-import { AuthenticationError } from 'apollo-server';
 
-import { getUserInfoFromFacebook, getUserInfoFromGoogle, getUserInfoFromGithub } from './utils/social-profile';
+import {
+  getUserInfoFromFacebook,
+  getUserInfoFromGoogle,
+  getUserInfoFromGithub,
+  SocialProfile,
+} from './utils/social-profile';
 
 import User from './models/user';
 import { AuthUser } from './constants/types';
 
-const createUser = async (getUserInfoFunc: any, profile: any) => {
-  const userProfile = await getUserInfoFunc(profile);
-  if (userProfile.email) {
-    const user = await User.findOne({ email: userProfile.email });
+enum SocialProvider {
+  Facebook = 'facebook',
+  Google = 'google',
+  Github = 'github',
+}
+
+const createOrUpdateUser = async (profile: SocialProfile, provider: SocialProvider) => {
+  if (profile.email || profile.username) {
+    const user = await User.findOne({ $or: [{ email: profile.email }, { username: profile.username }] });
     if (user) {
-      throw new AuthenticationError('Your email address is already linked to another profile.');
+      user[`${provider}Id`] = profile.id;
+      await user.save();
+      return user;
     }
   }
 
-  const user = new User(userProfile);
+  const user = new User(profile);
   await user.save();
   return user;
 };
@@ -66,7 +77,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const user = await createUser(getUserInfoFromFacebook, profile);
+          const userProfile = await getUserInfoFromFacebook(profile);
+          const user = await createOrUpdateUser(userProfile, SocialProvider.Facebook);
           done(null, user);
         } catch (error) {
           done(error);
@@ -90,7 +102,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const user = await createUser(getUserInfoFromGoogle, profile);
+          const userProfile = getUserInfoFromGoogle(profile);
+          const user = await createOrUpdateUser(userProfile, SocialProvider.Google);
           done(null, user);
         } catch (error) {
           done(error);
@@ -115,7 +128,8 @@ export const initPassport = async () => {
         }
 
         try {
-          const user = await createUser(getUserInfoFromGithub, profile);
+          const userProfile = getUserInfoFromGithub(profile);
+          const user = await createOrUpdateUser(userProfile, SocialProvider.Github);
           done(null, user);
         } catch (error) {
           done(error);

@@ -22,6 +22,7 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
       trim: true,
+      unique: true,
     },
     username: {
       type: String,
