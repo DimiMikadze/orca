@@ -72,6 +72,11 @@ const Poster = styled.img`
   margin-bottom: ${(p) => p.theme.spacing.sm};
 `;
 
+const Title = styled.div`
+  word-break: break-word;
+  white-space: pre-line;
+`;
+
 const BottomRow = styled.div`
   overflow: hidden;
 `;
@@ -190,8 +195,10 @@ const PostCard = ({ author, imagePublicId, comments, title, createdAt, image, li
           </Button>
         </TopRow>
 
-        <Spacing left="sm" bottom="sm" top="xs">
-          <H3>{title}</H3>
+        <Spacing left="sm" bottom="sm" top="xs" right="sm">
+          <Title>
+            <H3>{title}</H3>
+          </Title>
         </Spacing>
 
         {image && <Poster src={image} onClick={openModal} />}
