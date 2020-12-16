@@ -33,6 +33,7 @@ const Root = styled.div`
   margin: 0 auto;
   width: 100%;
   position: relative;
+  min-height: 700px;
 
   @media (min-width: ${(p) => p.theme.screen.md}) {
     width: ${(p) => p.theme.screen.md};
