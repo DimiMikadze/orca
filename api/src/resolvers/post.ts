@@ -33,7 +33,7 @@ const PostResolver: Resolvers = {
       return { posts: allPosts, count: postsCount };
     },
     getFollowedPosts: async (root, { userId, skip, limit }, { Post, Follow }) => {
-      // Find user ids, that current user follows
+      // Find user ids, that the current user follows.
       const userFollowing = [];
       const follow = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
       follow.map((f) => userFollowing.push(f.user));
@@ -131,7 +131,6 @@ const PostResolver: Resolvers = {
         }
       }
 
-      // Find post and remove it
       const post = await Post.findByIdAndRemove(id);
 
       // Delete post from authors (users) posts collection
@@ -153,7 +152,7 @@ const PostResolver: Resolvers = {
         });
       });
 
-      // Find user notification in users collection and remove them
+      // Find user notifications in users collection and remove them
       const userNotifications = await Notification.find({ post: post.id });
 
       userNotifications.map(async (notification) => {

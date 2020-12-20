@@ -76,7 +76,6 @@ const UserResolver: Resolvers = {
         },
       ]);
 
-      // Transform data
       const newConversations = [];
       lastUnseenMessages.map((u) => {
         const user = {
@@ -213,7 +212,7 @@ const UserResolver: Resolvers = {
     suggestPeople: async (root, { userId }, { User, Follow }) => {
       const LIMIT = 6;
 
-      // Find who user follows
+      // Find user's which auth user follows.
       const userFollowing = [];
       const following = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
       following.map((f) => userFollowing.push(f.user));

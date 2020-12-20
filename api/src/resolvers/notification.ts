@@ -6,7 +6,6 @@ import { Resolvers } from '../generated-graphql';
 
 const NotificationResolver: Resolvers = {
   Query: {
-    // Gets notifications for specific user
     getUserNotifications: async (root, { userId, skip, limit }, { Notification }) => {
       const query = { user: userId };
       const count = await Notification.where(query).countDocuments();
@@ -24,7 +23,6 @@ const NotificationResolver: Resolvers = {
     },
   },
   Mutation: {
-    // Creates a new notification for user
     createNotification: async (
       root,
       { input: { userId, authorId, postId, notificationType, notificationTypeId } },
@@ -40,7 +38,6 @@ const NotificationResolver: Resolvers = {
       // Push notification to user collection
       await User.findOneAndUpdate({ _id: userId }, { $push: { notifications: newNotification.id } });
 
-      // Publish notification created event
       newNotification = await newNotification
         .populate('author')
         .populate('follow')
@@ -56,14 +53,12 @@ const NotificationResolver: Resolvers = {
 
       return newNotification;
     },
-    // Deletes a notification
     deleteNotification: async (root, { input: { id } }, { Notification, User }) => {
       let notification = await Notification.findByIdAndRemove(id);
 
       // Delete notification from users collection
       await User.findOneAndUpdate({ _id: notification.user }, { $pull: { notifications: notification.id } });
 
-      // Publish notification deleted event
       notification = await notification
         .populate('author')
         .populate('follow')
@@ -79,7 +74,6 @@ const NotificationResolver: Resolvers = {
 
       return notification;
     },
-    // Updates notification seen values for user
     updateNotificationSeen: async (root, { input: { userId } }, { Notification }) => {
       try {
         await Notification.update({ user: userId, seen: false }, { seen: true }, { multi: true });

@@ -25,7 +25,7 @@ const MessageResolver: Resolvers = {
       // Get users with whom authUser had a chat
       const users = await User.findById(authUserId).populate('messages', 'id username fullName image isOnline');
 
-      // Get last messages with wom authUser had a chat
+      // Get last messages with whom authUser had a chat
       const lastMessages = await Message.aggregate([
         {
           $match: {
@@ -108,11 +108,9 @@ const MessageResolver: Resolvers = {
 
       newMessage = await newMessage.populate('sender').populate('receiver').execPopulate();
 
-      // Publish message created event
       pubSub.publish(Subscriptions.Message_Created, { messageCreated: newMessage });
 
-      // Check if user already had a conversation
-      // if not push their ids to users collection
+      // Check if users already had a conversation, if not push their ids to users collection.
       const senderUser = await User.findById(sender);
       if (!senderUser.messages.includes(receiver)) {
         await User.findOneAndUpdate({ _id: sender }, { $push: { messages: receiver } });
@@ -121,7 +119,6 @@ const MessageResolver: Resolvers = {
         newMessage.isFirstMessage = true;
       }
 
-      // Publish message created event
       pubSub.publish(Subscriptions.New_Conversation, {
         newConversation: {
           receiverId: receiver,
