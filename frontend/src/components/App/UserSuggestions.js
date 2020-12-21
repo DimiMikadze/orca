@@ -92,28 +92,32 @@ const UserSuggestions = ({ pathname }) => {
       <H3>Suggestions For You</H3>
 
       <List>
-        {data.suggestPeople.map((user) => (
-          <ListItem key={user.id}>
-            <A
-              to={generatePath(Routes.USER_PROFILE, {
-                username: user.username,
-              })}
-            >
-              <Avatar image={user.image} />
-            </A>
+        {data.suggestPeople.map((user) => {
+          if (!user.username) return null;
 
-            <Spacing left="xs">
+          return (
+            <ListItem key={user.id}>
               <A
                 to={generatePath(Routes.USER_PROFILE, {
                   username: user.username,
                 })}
               >
-                <FullName>{user.fullName}</FullName>
-                <UserName>@{user.username}</UserName>
+                <Avatar image={user.image} />
               </A>
-            </Spacing>
-          </ListItem>
-        ))}
+
+              <Spacing left="xs">
+                <A
+                  to={generatePath(Routes.USER_PROFILE, {
+                    username: user.username,
+                  })}
+                >
+                  <FullName>{user.fullName}</FullName>
+                  <UserName>@{user.username}</UserName>
+                </A>
+              </Spacing>
+            </ListItem>
+          );
+        })}
       </List>
     </Root>
   );
