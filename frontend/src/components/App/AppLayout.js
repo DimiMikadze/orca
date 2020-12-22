@@ -17,6 +17,8 @@ import Notifications from 'pages/Notifications';
 import Post from 'pages/Post';
 import Messages from 'pages/Messages';
 
+import { HEADER_HEIGHT } from 'constants/Layout';
+
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useClickOutside } from 'hooks/useClickOutside';
 
@@ -33,7 +35,7 @@ const Root = styled.div`
   margin: 0 auto;
   width: 100%;
   position: relative;
-  min-height: 700px;
+  min-height: calc(100vh - ${HEADER_HEIGHT}px);
 
   @media (min-width: ${(p) => p.theme.screen.md}) {
     width: ${(p) => p.theme.screen.md};
