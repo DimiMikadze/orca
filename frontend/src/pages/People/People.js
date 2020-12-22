@@ -75,9 +75,11 @@ const People = () => {
           return (
             <Fragment>
               <PeopleContainer>
-                {data.map((user) => (
-                  <PeopleCard key={user.id} user={user} />
-                ))}
+                {data.map((user) => {
+                  if (!user.username) return null;
+
+                  return <PeopleCard key={user.id} user={user} />;
+                })}
               </PeopleContainer>
 
               {showNextLoading && <Loading top="lg" />}
