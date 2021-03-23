@@ -28,7 +28,7 @@ const UserResolver: Resolvers = {
       if (!authUser) return null;
 
       // If user is authenticated, update it's isOnline field to true
-      const user = await User.findOneAndUpdate({ id: authUser.id }, { isOnline: true })
+      const user = await User.findOneAndUpdate({ _id: authUser._id }, { isOnline: true })
         .populate({ path: 'posts', options: { sort: { createdAt: 'desc' } } })
         .populate('likes')
         .populate('followers')
