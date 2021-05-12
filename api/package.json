@@ -19,7 +19,7 @@
     "graphql-tools": "^6.2.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.8",
-    "nodemailer": "^6.4.13",
+    "nodemailer": "^6.4.16",
     "subscriptions-transport-ws": "^0.9.18",
     "uuid": "^8.3.1"
   },
