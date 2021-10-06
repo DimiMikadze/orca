@@ -69,11 +69,15 @@ export const getUsers = async (
   offset: number,
   limit: number,
   authUserId?: string,
-  emailVerified?: boolean
+  emailVerified?: boolean,
+  hideBannedUsers?: boolean
 ): Promise<any> => {
   const query = { _id: { $ne: authUserId } };
   if (emailVerified) {
     query.emailVerified = emailVerified;
+  }
+  if (hideBannedUsers) {
+    query.banned = { $ne: true };
   }
   const users = User.find(query).select('-password').skip(offset).limit(limit).sort({ createdAt: 'desc' });
   return users;
