@@ -12,7 +12,7 @@ const UserController = {
   getUsers: async (req: Request, res: Response): Promise<any> => {
     const authUser = req.user as AuthUser;
     const { offset, limit, emailVerified } = req.query;
-    const users = await getUsers(+offset, +limit, authUser?._id, emailVerified === 'true');
+    const users = await getUsers(+offset, +limit, authUser?._id, emailVerified === 'true', true);
     return res.send(users);
   },
   onlineUsers: async (req: Request, res: Response): Promise<any> => {
