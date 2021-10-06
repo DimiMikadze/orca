@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "orca-api",
+      "cwd": "./packages/orca-api",
+      "script": "yarn",
+      "args": "start"
+    },
+    {
+      "name": "orca-frontend",
+      "cwd": "./packages/orca-frontend",
+      "script": "yarn",
+      "args": "start"
+    }
+  ]
+}
