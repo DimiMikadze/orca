@@ -6,7 +6,7 @@ export const searchUsers = async (searchQuery: string, authUserId?: string): Pro
   }
 
   const query = {
-    $and: [{ emailVerified: true }],
+    $and: [{ emailVerified: true, banned: { $ne: true } }],
     $or: [{ username: new RegExp(searchQuery, 'i') }, { fullName: new RegExp(searchQuery, 'i') }],
   };
 
