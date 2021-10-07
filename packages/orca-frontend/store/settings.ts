@@ -1,3 +1,5 @@
+import { DefaultCommunity } from '../constants';
+
 export const SET_COMMUNITY_NAME = 'SET_COMMUNITY_NAME';
 export const SET_COMMUNITY_LOGO = 'SET_COMMUNITY_LOGO';
 export const SET_COMMUNITY_LOGO_PUBLIC_ID = 'SET_COMMUNITY_LOGO_PUBLIC_ID';
@@ -67,10 +69,10 @@ export const setPrimaryColor = (color: string): SettingsActionTypes => {
 
 // Reducer
 const initialState: Settings = {
-  communityName: 'Orca',
-  communityLogo: 'https://bit.ly/3cjuNnr',
-  communityLogoPublicId: '',
-  primaryColor: '#0084FF',
+  communityName: DefaultCommunity.communityName,
+  communityLogo: DefaultCommunity.communityLogo,
+  communityLogoPublicId: DefaultCommunity.communityLogoPublicId,
+  primaryColor: DefaultCommunity.primaryColor,
 };
 
 export function settingsReducer(state = initialState, action: SettingsActionTypes): Settings {
