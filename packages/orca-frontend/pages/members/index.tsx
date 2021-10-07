@@ -7,17 +7,21 @@ import { useInfiniteScroll } from '../../utils';
 import { DataLimit } from '../../constants';
 import { LoadingDots, Container, Empty, Skeleton } from '../../components/ui';
 import Seo from '../../components/Seo';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
-const fetchUsers = async ({ pageParam = 0 }) => {
+const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
+  const [, isEmailVerificationRequired] = queryKey;
   const { data } = await axios.get(
-    `/users/get-users?offset=${pageParam}&limit=${DataLimit.Members}&emailVerified=true`
+    `/users/get-users?offset=${pageParam}&limit=${DataLimit.Members}&emailVerified=${isEmailVerificationRequired}`
   );
   return data;
 };
 
 const MembersPage: FC = () => {
+  const { isEmailVerificationRequired } = useSelector((state: RootState) => state.settings);
   const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
-    key: 'members',
+    key: ['members', isEmailVerificationRequired],
     apiCall: fetchUsers,
     dataLimit: DataLimit.Members,
   });

@@ -15,6 +15,7 @@ import {
   createCommunity,
   countUsers,
 } from '../db';
+import { checkEmailVerification } from '../utils';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
 const SettingsController = {
@@ -83,7 +84,7 @@ const SettingsController = {
 
     return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
   },
-  create: async (req: Request, res: Response): Promise<any> => {
+  createUser: async (req: Request, res: Response): Promise<any> => {
     const { fullName, email, password, role } = req.body;
 
     if (!fullName || !email || !password || !role) {
@@ -94,13 +95,19 @@ const SettingsController = {
     }
 
     const existingUser = await getUserByEmail(email);
-    if (existingUser && existingUser.emailVerified) {
+    const isEmailVerificationRequired = await checkEmailVerification();
+
+    if (existingUser && !isEmailVerificationRequired) {
+      return res.status(ErrorCodes.Bad_Request).send('The email address is already being used.');
+    }
+
+    if (existingUser && isEmailVerificationRequired && existingUser.emailVerified) {
       return res.status(ErrorCodes.Bad_Request).send('The email address is already being used.');
     }
 
     // We should not duplicate emails in Schema as they are unique.
-    // Hence If the email is not verified, we'll remove the old one.
-    if (existingUser && !existingUser.emailVerified) {
+    // Hence If the email is not verified, and the "isEmailVerificationRequired" is true, we'll remove the old one.
+    if (existingUser && isEmailVerificationRequired && !existingUser.emailVerified) {
       await deleteUser(existingUser._id);
     }
 

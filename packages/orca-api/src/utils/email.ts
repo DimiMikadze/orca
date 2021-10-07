@@ -13,6 +13,11 @@ const nodemailerMailgun = nodemailer.createTransport(
 
 export const sendEmail = ({ to, subject, html }) => {
   return new Promise((resolve, reject) => {
+    if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
+      console.log('You need to provide MAILGUN_API_KEY and MAILGUN_DOMAIN environment variables for sending emails.');
+      return resolve('An error occurred while sending an email: (Credentials missing).');
+    }
+
     nodemailerMailgun.sendMail(
       {
         from: 'Orca <no-reply@getorca.org>',

@@ -12,8 +12,7 @@ import {
   updateUser,
 } from '../db';
 import { ErrorCodes, ErrorMessages } from '../constants';
-import { sendEmail, getEmailTemplate } from '../utils';
-
+import { sendEmail, getEmailTemplate, checkEmailVerification } from '../utils';
 const AuthController = {
   authUser: async (req: Request, res: Response): Promise<any> => {
     passport.authenticate('jwt', { session: false }, async (err, user) => {
@@ -29,45 +28,69 @@ const AuthController = {
       }
     })(req, res);
   },
-  signUp: async (req: Request, res: Response): Promise<any> => {
+  signUp: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const { fullName, username, email, password } = req.body;
 
     if (!fullName || !email || !password) {
       return res.status(ErrorCodes.Bad_Request).send('Please fill in all of the fields.');
     }
 
+    const isEmailVerificationRequired = await checkEmailVerification();
+
     const existingUser = await getUserByEmail(email);
-    if (existingUser && existingUser.emailVerified) {
+
+    // If the "isEmailVerificationRequired" setting is false,
+    // we don't allow the usage of duplicate emails even if their email is not verified.
+    if ((existingUser && !isEmailVerificationRequired) || (existingUser && existingUser.emailVerified)) {
       return res.status(ErrorCodes.Bad_Request).send('The email address is already being used.');
     }
 
     // We should not duplicate emails in Schema as they are unique.
-    // Hence If the email is not verified, we'll remove the old one.
-    if (existingUser && !existingUser.emailVerified) {
+    // Hence If the email is not verified, and the "isEmailVerificationRequired" is set to true we'll remove the old one.
+    if (existingUser && isEmailVerificationRequired && !existingUser.emailVerified) {
       await deleteUser(existingUser._id);
     }
 
     const user = await createUser(fullName, username, email, password);
     const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' });
 
-    const template = await getEmailTemplate({
-      greeting: `Hey ${fullName}`,
-      description: `Thank you for signing up. To complete your registration, please confirm your email.`,
-      ctaLink: `${req.headers.origin}/email-verify?email=${email}&token=${token}`,
-      ctaText: 'Confirm email',
-    });
+    if (isEmailVerificationRequired) {
+      try {
+        const template = await getEmailTemplate({
+          greeting: `Hey ${fullName}`,
+          description: `Thank you for signing up. To complete your registration, please confirm your email.`,
+          ctaLink: `${req.headers.origin}/email-verify?email=${email}&token=${token}`,
+          ctaText: 'Confirm email',
+        });
+        await sendEmail({
+          to: email,
+          subject: 'Email verification',
+          html: template,
+        });
+        return res.send(
+          `Email verification instructions have been sent to the ${email} email address. Please note that the link will expire in 1 hour.`
+        );
+      } catch (error) {
+        return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
+      }
+    }
 
     try {
-      await sendEmail({
-        to: email,
-        subject: 'Email verification',
-        html: template,
-      });
-      return res.send(
-        `Email verification instructions have been sent to the ${email} email address. Please note that the link will expire in 1 hour.`
-      );
+      passport.authenticate('signup', { session: false }, async (err) => {
+        if (err) {
+          return res.status(ErrorCodes.Bad_Request).send(ErrorMessages.Generic);
+        }
+
+        const handler = await passport.authenticate('signup', { session: false });
+        req.login({ email, password: user.password }, { session: false }, async () => {
+          const body = { _id: user._id, email: user.email };
+          const token = jwt.sign({ user: body }, process.env.SECRET);
+          res.cookie('token', token).send({ user, token });
+          handler(req, res, next);
+        });
+      })(req, res, next);
     } catch (error) {
-      return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
+      res.send(ErrorCodes.Un_Authorized).send(ErrorMessages.Generic);
     }
   },
   emailVerify: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
@@ -115,16 +138,17 @@ const AuthController = {
   login: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     passport.authenticate('login', async (err, user) => {
       try {
-        if (user && user.banned) {
-          return res
-            .status(ErrorCodes.Bad_Request)
-            .send('The account is banned. Please get in touch with support for help.');
-        }
-
-        if (err || !user || (user && !user.emailVerified)) {
+        const isEmailVerificationRequired = await checkEmailVerification();
+        if (err || !user || (user && isEmailVerificationRequired && !user.emailVerified)) {
           return res
             .status(ErrorCodes.Bad_Request)
             .send('Your email and password combination does not match an account.');
+        }
+
+        if (user.banned) {
+          return res
+            .status(ErrorCodes.Bad_Request)
+            .send('The account is banned. Please get in touch with support for help.');
         }
 
         req.login(user, { session: false }, async (error) => {
@@ -151,7 +175,8 @@ const AuthController = {
     const { email } = req.body;
 
     const user = await getUserByEmail(email);
-    if (!user || (user && !user.emailVerified)) {
+    const isEmailVerificationRequired = await checkEmailVerification();
+    if (!user || (user && isEmailVerificationRequired && !user.emailVerified)) {
       return res.status(ErrorCodes.Bad_Request).send("A user with a given email address doesn't exist.");
     }
 

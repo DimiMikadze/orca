@@ -1,12 +1,13 @@
 import React, { FC, useState, FormEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { PopupType, openAuthPopup } from '../../store/auth';
+import { PopupType, openAuthPopup, setAuthUser, setToken, closeAuthPopup } from '../../store/auth';
 import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
 import { SuccessContainer } from './style';
 import { RootState } from '../../store';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import { SuccessIcon } from '../ui/icons';
+import { setCookie } from '../../utils';
 
 interface User {
   fullName: string;
@@ -27,6 +28,7 @@ const INITIAL_STATE = {
 
 const SignUp: FC = () => {
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
+  const { isEmailVerificationRequired } = useSelector((state: RootState) => state.settings);
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState('');
   const { mutateAsync: signUpMutation } = useMutation(signUp);
@@ -44,7 +46,22 @@ const SignUp: FC = () => {
 
     try {
       const { data } = await signUpMutation(values);
-      setSuccessResponse(data);
+      if (isEmailVerificationRequired) {
+        setSuccessResponse(data);
+        return;
+      }
+
+      const { user, token } = data;
+      dispatch(
+        setAuthUser({
+          ...user,
+          isOnline: true,
+        })
+      );
+      dispatch(setToken(token));
+      setCookie('token', token);
+      axios.defaults.headers.common = { Authorization: `bearer ${token}` };
+      dispatch(closeAuthPopup());
     } catch (error) {
       setErrorMessage(error.response.data);
     }

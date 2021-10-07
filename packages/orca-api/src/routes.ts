@@ -53,7 +53,7 @@ router.put('/settings/update-user', checkIfUser, SettingsController.updateProfil
 router.get('/settings/users', checkIfSuperAdmin, SettingsController.users);
 router.get('/settings/users-total', checkIfSuperAdmin, SettingsController.usersTotal);
 router.put('/settings/update-password', checkIfUser, SettingsController.updatePassword);
-router.post('/settings/create-user', checkIfSuperAdmin, SettingsController.create);
+router.post('/settings/create-user', checkIfSuperAdmin, SettingsController.createUser);
 
 /**
  * Channels
