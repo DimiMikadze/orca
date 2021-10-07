@@ -2,7 +2,13 @@ import axios from 'axios';
 import theme, { Theme } from '../theme';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCommunityName, setCommunityLogo, setPrimaryColor, setCommunityLogoPublicId } from '../store/settings';
+import {
+  setCommunityName,
+  setCommunityLogo,
+  setPrimaryColor,
+  setCommunityLogoPublicId,
+  setIsEmailVerificationRequired,
+} from '../store/settings';
 import { RootState } from '../store';
 
 interface useFetchSettingsPayload {
@@ -18,6 +24,7 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
     communityName: null,
     primaryColor: null,
     communityLogoPublicId: null,
+    isEmailVerificationRequired: null,
   });
 
   const updateTheme = useCallback(
@@ -38,12 +45,13 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
     const fetch = async () => {
       try {
         const { data } = await axios.get('/settings');
-        const { communityLogo, communityName, primaryColor, communityLogoPublicId } = data;
+        const { communityLogo, communityName, primaryColor, communityLogoPublicId, isEmailVerificationRequired } = data;
         setValues({
           communityLogo,
           communityName,
           primaryColor,
           communityLogoPublicId,
+          isEmailVerificationRequired,
         });
 
         if (!communityLogo && !communityName && !primaryColor) {
@@ -64,6 +72,10 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
 
         if (communityLogoPublicId) {
           dispatch(setCommunityLogoPublicId(communityLogoPublicId));
+        }
+
+        if (typeof isEmailVerificationRequired == 'boolean') {
+          dispatch(setIsEmailVerificationRequired(isEmailVerificationRequired));
         }
       } catch (error) {
         console.log('Fetching settings failed: ', error);

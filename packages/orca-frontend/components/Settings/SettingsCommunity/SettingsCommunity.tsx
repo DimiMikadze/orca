@@ -1,7 +1,7 @@
 import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Divider, H2, H3, InputText, Spacing } from '../../ui';
-import { PrimaryColor, PrimaryColorPreview, CommunityLogoContainer, CommunityLogo } from './style';
+import { Button, Divider, H2, H3, InputText, Spacing, Toggle, P } from '../../ui';
+import { PrimaryColor, PrimaryColorPreview, CommunityLogoContainer, CommunityLogo, LabelAndToggle } from './style';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import UploadLogo from './UploadLogo';
@@ -12,6 +12,7 @@ import { AlertTypes, openAlert } from '../../../store/alert';
 interface CommunitySettings {
   communityName: string;
   primaryColor: string;
+  isEmailVerificationRequired: boolean;
 }
 
 const updateCommunitySettings = async (settings: CommunitySettings) => {
@@ -25,6 +26,7 @@ const SettingsCommunity: FC = () => {
   const [values, setValues] = useState({
     communityName: settings.communityName,
     primaryColor: settings.primaryColor,
+    isEmailVerificationRequired: settings.isEmailVerificationRequired,
   });
   const [errors, setErrors] = useState({
     communityName: null,
@@ -36,7 +38,11 @@ const SettingsCommunity: FC = () => {
     e.preventDefault();
 
     try {
-      await mutateAsync({ communityName: values.communityName, primaryColor: values.primaryColor });
+      await mutateAsync({
+        communityName: values.communityName,
+        primaryColor: values.primaryColor,
+        isEmailVerificationRequired: values.isEmailVerificationRequired,
+      });
       dispatch(setPrimaryColor(values.primaryColor));
       dispatch(
         openAlert({
@@ -72,8 +78,12 @@ const SettingsCommunity: FC = () => {
   }, [validateCommunityName, validatePrimaryColor]);
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
-    const { name, value } = e.target as HTMLInputElement;
-    setValues({ ...values, [name]: value });
+    const { name, value, checked } = e.target as HTMLInputElement;
+    if (name === 'isEmailVerificationRequired') {
+      setValues({ ...values, [name]: checked });
+    } else {
+      setValues({ ...values, [name]: value });
+    }
   };
 
   return (
@@ -91,6 +101,15 @@ const SettingsCommunity: FC = () => {
           value={values.communityName}
           onChange={onChange}
         />
+
+        <Spacing top="md" />
+        <LabelAndToggle>
+          <div>
+            <P weight="bold">Community Members Access</P>
+            <P color="textSecondary">Is email verification required to become a community member?</P>
+          </div>
+          <Toggle name="isEmailVerificationRequired" checked={values.isEmailVerificationRequired} onChange={onChange} />
+        </LabelAndToggle>
 
         <Spacing top="md" />
         <H3>Branding</H3>

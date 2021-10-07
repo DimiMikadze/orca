@@ -4,12 +4,14 @@ export const SET_COMMUNITY_NAME = 'SET_COMMUNITY_NAME';
 export const SET_COMMUNITY_LOGO = 'SET_COMMUNITY_LOGO';
 export const SET_COMMUNITY_LOGO_PUBLIC_ID = 'SET_COMMUNITY_LOGO_PUBLIC_ID';
 export const SET_PRIMARY_COLOR = 'SET_PRIMARY_COLOR';
+export const SET_IS_EMAIL_VERIFICATION_REQUIRED = 'SET_IS_EMAIL_VERIFICATION_REQUIRED';
 
 export interface Settings {
   communityName: string;
   communityLogo: string;
   communityLogoPublicId?: string;
   primaryColor: string;
+  isEmailVerificationRequired: boolean;
 }
 
 export interface setCommunityNameActionType {
@@ -32,11 +34,17 @@ export interface setPrimaryColorActionType {
   payload: string;
 }
 
+export interface setIsEmailVerificationRequiredActionType {
+  type: typeof SET_IS_EMAIL_VERIFICATION_REQUIRED;
+  payload: boolean;
+}
+
 export type SettingsActionTypes =
   | setCommunityNameActionType
   | setCommunityLogoActionType
   | setPrimaryColorActionType
-  | setCommunityLogoPublicIdActionType;
+  | setCommunityLogoPublicIdActionType
+  | setIsEmailVerificationRequiredActionType;
 
 // Actions
 export const setCommunityName = (name: string): SettingsActionTypes => {
@@ -67,12 +75,20 @@ export const setPrimaryColor = (color: string): SettingsActionTypes => {
   };
 };
 
+export const setIsEmailVerificationRequired = (isRequired: boolean): SettingsActionTypes => {
+  return {
+    type: SET_IS_EMAIL_VERIFICATION_REQUIRED,
+    payload: isRequired,
+  };
+};
+
 // Reducer
 const initialState: Settings = {
   communityName: DefaultCommunity.communityName,
   communityLogo: DefaultCommunity.communityLogo,
   communityLogoPublicId: DefaultCommunity.communityLogoPublicId,
   primaryColor: DefaultCommunity.primaryColor,
+  isEmailVerificationRequired: DefaultCommunity.isEmailVerificationRequired,
 };
 
 export function settingsReducer(state = initialState, action: SettingsActionTypes): Settings {
@@ -96,6 +112,11 @@ export function settingsReducer(state = initialState, action: SettingsActionType
       return {
         ...state,
         primaryColor: action.payload,
+      };
+    case SET_IS_EMAIL_VERIFICATION_REQUIRED:
+      return {
+        ...state,
+        isEmailVerificationRequired: action.payload,
       };
     default:
       return state;

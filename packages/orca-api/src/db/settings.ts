@@ -7,19 +7,28 @@ export const getSettings = async (): Promise<any> => {
   return settings;
 };
 
-export const createCommunity = async (communityName: string, primaryColor: boolean): Promise<any> => {
+export const createCommunity = async (
+  communityName: string,
+  primaryColor: boolean,
+  isEmailVerificationRequired: boolean
+): Promise<any> => {
   const newSettings = await Settings.create({
     communityName,
     primaryColor,
+    isEmailVerificationRequired,
   });
   return newSettings;
 };
 
-export const updateCommunity = async (communityName: string, primaryColor: boolean): Promise<any> => {
+export const updateCommunity = async (
+  communityName: string,
+  primaryColor: boolean,
+  isEmailVerificationRequired: boolean
+): Promise<any> => {
   const settings = await getSettings();
   const updatedSettings = await Settings.findOneAndUpdate(
     { _id: settings._id },
-    { communityName, primaryColor },
+    { communityName, primaryColor, isEmailVerificationRequired },
     { new: true, upsert: true }
   );
   return updatedSettings;

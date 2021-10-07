@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const LabelAndToggle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const PrimaryColor = styled.div`
   position: relative;
 `;

@@ -23,6 +23,11 @@ const SettingsSchema = new Schema(
       required: true,
       default: DefaultCommunity.primaryColor,
     },
+    isEmailVerificationRequired: {
+      type: Boolean,
+      required: true,
+      default: DefaultCommunity.isEmailVerificationRequired,
+    },
   },
   {
     timestamps: true,

@@ -33,15 +33,15 @@ const SettingsController = {
     return res.send({ total, verified });
   },
   updateCommunity: async (req: Request, res: Response): Promise<any> => {
-    const { communityName, primaryColor } = req.body;
+    const { communityName, primaryColor, isEmailVerificationRequired } = req.body;
     const settings = await getSettings();
 
     if (!settings) {
-      const community = await createCommunity(communityName, primaryColor);
+      const community = await createCommunity(communityName, primaryColor, isEmailVerificationRequired);
       return res.send(community);
     }
 
-    const community = await updateCommunity(communityName, primaryColor);
+    const community = await updateCommunity(communityName, primaryColor, isEmailVerificationRequired);
     return res.send(community);
   },
   updateProfile: async (req: Request, res: Response): Promise<any> => {
