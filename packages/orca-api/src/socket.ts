@@ -85,9 +85,9 @@ export default (httpServer) => {
     socket.on(Events.CREATE_MESSAGE, (data) => {
       const receiverId = data.receiver._id;
       const senderId = data.sender._id;
-      if (users[receiverId]) {
-        io.to(users[receiverId].socketId).emit(Events.SEND_MESSAGE, data);
-        io.to(users[senderId].socketId).emit(Events.SEND_MESSAGE, data);
+      if (users[receiverId] && users[senderId]) {
+        io.to(users[receiverId]?.socketId).emit(Events.SEND_MESSAGE, data);
+        io.to(users[senderId]?.socketId).emit(Events.SEND_MESSAGE, data);
       }
     });
 
