@@ -6,21 +6,7 @@ export const Root = styled.div`
 `;
 
 export const Top = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
   margin: ${(p) => p.theme.spacing.lg} 0;
-
-  @media (min-width: ${(p) => p.theme.screen.sm}) {
-    padding: 0 ${(p) => p.theme.spacing.xs};
-    flex-direction: row;
-  }
-`;
-
-export const Left = styled.div`
-  width: 100%;
-  flex: 1;
 `;
 
 export const Input = styled.input`
@@ -54,20 +40,16 @@ export const Count = styled.div`
   font-size: ${(p) => p.theme.font.size.xl};
 `;
 
-export const Right = styled.div`
+export const SearchContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
-  flex: 2;
-
-  @media (max-width: ${(p) => p.theme.screen.sm}) {
-    margin-top: ${(p) => p.theme.spacing.sm};
-  }
+  margin-top: ${(p) => p.theme.spacing.md};
 `;
 
 export const Form = styled.form`
-  margin-right: 35px;
+  margin-right: ${(p) => p.theme.spacing.xs};
   width: 100%;
 `;
 

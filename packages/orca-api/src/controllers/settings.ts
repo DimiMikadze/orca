@@ -26,7 +26,7 @@ const SettingsController = {
   users: async (req: Request, res: Response): Promise<any> => {
     const authUser = req.user as AuthUser;
     const { offset, limit } = req.query;
-    const users = await getUsers(+offset, +limit, authUser._id, false);
+    const users = await getUsers(+offset, +limit, null, false);
     return res.send(users);
   },
   usersTotal: async (req: Request, res: Response): Promise<any> => {

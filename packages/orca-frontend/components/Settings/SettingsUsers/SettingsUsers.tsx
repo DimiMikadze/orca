@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataLimit, UserRole } from '../../../constants';
 import { useInfiniteScroll, timeAgo } from '../../../utils';
-import { Root, Table, Tr, Th, Td, Top, Count, Title, Left, Input, Right, Form } from './style';
+import { Root, Table, Tr, Th, Td, Top, Count, Title, Input, SearchContainer, Form } from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
 import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
@@ -74,9 +74,9 @@ const SettingsUsers: FC = () => {
 
       {usersTotal && (
         <Top>
-          <Left>
+          <div>
             <Spacing inline right="lg">
-              <Title>Total</Title> <Count>{usersTotal.total}</Count>
+              <Title>Total users</Title> <Count>{usersTotal.total}</Count>
             </Spacing>
             <Spacing inline right="lg">
               <Title>Verified</Title> <Count>{usersTotal.verified}</Count>
@@ -84,13 +84,13 @@ const SettingsUsers: FC = () => {
             <Spacing inline>
               <Title>Not Verified</Title> <Count>{usersTotal.total - usersTotal.verified}</Count>
             </Spacing>
-          </Left>
-          <Right>
+          </div>
+          <SearchContainer>
             <Form>
-              <Input type="text" placeholder="search users" />
+              <Input type="text" placeholder="Search by email, name or username" />
             </Form>
             <SettingsCreateUser />
-          </Right>
+          </SearchContainer>
         </Top>
       )}
 
