@@ -1,16 +1,32 @@
-import { FC } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataLimit, UserRole } from '../../../constants';
 import { useInfiniteScroll, timeAgo } from '../../../utils';
-import { Root, Table, Tr, Th, Td, Top, Count, Title, Input, SearchContainer, Form } from './style';
+import {
+  Root,
+  Table,
+  Tr,
+  Th,
+  Td,
+  Top,
+  Count,
+  Title,
+  SearchInput,
+  SearchContainer,
+  SearchClearButton,
+  Form,
+} from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
 import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
 import SettingsCreateUser from '../SettingsCreateUser/SettingsCreateUser';
 
-const fetchUsers = async ({ pageParam = 0 }) => {
-  const { data } = await axios.get(`/settings/users?offset=${pageParam}&limit=${DataLimit.AdminUsers}`);
+const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
+  const [, searchQuery] = queryKey;
+  const { data } = await axios.get(
+    `/settings/users?offset=${pageParam}&limit=${DataLimit.AdminUsers}&searchQuery=${searchQuery}`
+  );
   return data;
 };
 
@@ -20,18 +36,33 @@ const fetchUsersTotal = async () => {
 };
 
 const SettingsUsers: FC = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const { data: usersTotal } = useQuery('usersTotal', fetchUsersTotal);
   const {
     data: users,
     isFetching,
     isFetchingNextPage,
   } = useInfiniteScroll({
-    key: 'adminUsers',
+    key: ['adminUsers', searchQuery],
     apiCall: fetchUsers,
     dataLimit: DataLimit.AdminUsers,
   });
 
-  const isEmpty = !users?.pages[0] || users.pages[0].length === 0;
+  const onSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchQuery(searchValue);
+  };
+
+  const renderUserStatus = (emailVerified: boolean, banned: boolean) => {
+    if (banned) {
+      return banned && <BanIcon width="13" color="error" />;
+    }
+
+    return emailVerified ? <SuccessIcon width="13" /> : <CloseIcon width="13" color="error" />;
+  };
+
+  const isEmpty = !usersTotal || usersTotal?.total < 1;
 
   if (isFetching && !isFetchingNextPage) {
     return (
@@ -59,14 +90,6 @@ const SettingsUsers: FC = () => {
     );
   }
 
-  const renderUserStatus = (emailVerified: boolean, banned: boolean) => {
-    if (banned) {
-      return banned && <BanIcon width="13" color="error" />;
-    }
-
-    return emailVerified ? <SuccessIcon width="13" /> : <CloseIcon width="13" color="error" />;
-  };
-
   return (
     <Root>
       <H2>Community Users</H2>
@@ -86,8 +109,18 @@ const SettingsUsers: FC = () => {
             </Spacing>
           </div>
           <SearchContainer>
-            <Form>
-              <Input type="text" placeholder="Search by email, name or username" />
+            <Form onSubmit={onSearchFormSubmit}>
+              <SearchInput
+                onChange={(e) => setSearchValue(e.target.value)}
+                type="text"
+                value={searchValue}
+                placeholder="Search by email, name or username"
+              />
+              {searchQuery && (
+                <SearchClearButton ghost onClick={() => setSearchQuery('')}>
+                  <CloseIcon width="14" />
+                </SearchClearButton>
+              )}
             </Form>
             <SettingsCreateUser />
           </SearchContainer>

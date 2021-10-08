@@ -9,26 +9,6 @@ export const Top = styled.div`
   margin: ${(p) => p.theme.spacing.lg} 0;
 `;
 
-export const Input = styled.input`
-  outline: 0;
-  height: 38px;
-  width: 100%;
-  border: 1px solid ${(p) => p.theme.colors.border.main};
-  border-radius: ${(p) => p.theme.radius.sm};
-  padding: 0 ${(p) => p.theme.spacing.xs};
-  color: ${(p) => p.theme.colors.general.text};
-  font-size: ${(p) => p.theme.font.size.xs};
-  transition: border-color 0.1s;
-
-  &:focus {
-    border-color: ${(p) => p.theme.colors.border.dark};
-  }
-
-  &:placeholder {
-    color: ${(p) => p.theme.colors.grey[20]};
-  }
-`;
-
 export const Title = styled.div`
   color: ${(p) => p.theme.colors.general.textSecondary};
 `;
@@ -49,8 +29,35 @@ export const SearchContainer = styled.div`
 `;
 
 export const Form = styled.form`
+  position: relative;
   margin-right: ${(p) => p.theme.spacing.xs};
   width: 100%;
+`;
+
+export const SearchClearButton = styled(Button)`
+  position: absolute;
+  top: 12px;
+  right: ${(p) => p.theme.spacing.sm};
+`;
+
+export const SearchInput = styled.input`
+  outline: 0;
+  height: 38px;
+  width: 100%;
+  border: 1px solid ${(p) => p.theme.colors.border.main};
+  border-radius: ${(p) => p.theme.radius.sm};
+  padding: 0 ${(p) => p.theme.spacing.xs};
+  color: ${(p) => p.theme.colors.general.text};
+  font-size: ${(p) => p.theme.font.size.xs};
+  transition: border-color 0.1s;
+
+  &:focus {
+    border-color: ${(p) => p.theme.colors.border.dark};
+  }
+
+  &:placeholder {
+    color: ${(p) => p.theme.colors.grey[20]};
+  }
 `;
 
 export const Table = styled.table`
