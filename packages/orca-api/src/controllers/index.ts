@@ -1,0 +1,11 @@
+export { default as ChannelController } from './channel';
+export { default as CommentController } from './comment';
+export { default as FollowController } from './follow';
+export { default as LikeController } from './like';
+export { default as MessageController } from './message';
+export { default as NotificationController } from './notification';
+export { default as PostController } from './post';
+export { default as UserController } from './user';
+export { default as SearchController } from './search';
+export { default as AuthController } from './auth';
+export { default as SettingsController } from './settings';
