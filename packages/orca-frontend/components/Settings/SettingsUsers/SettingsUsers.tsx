@@ -38,7 +38,7 @@ const fetchUsersTotal = async () => {
 const SettingsUsers: FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const { data: usersTotal } = useQuery('usersTotal', fetchUsersTotal);
+  const { data: usersTotal, isFetching: isFetchingTotal } = useQuery('usersTotal', fetchUsersTotal);
   const {
     data: users,
     isFetching,
@@ -65,7 +65,7 @@ const SettingsUsers: FC = () => {
   const isEmpty = !usersTotal || usersTotal?.total < 1;
   const isSearchResultEmpty = !users?.pages[0] || users.pages[0].length === 0;
 
-  if (isFetching && !isFetchingNextPage) {
+  if (isFetchingTotal) {
     return (
       <div>
         <H2>Community Users</H2>
