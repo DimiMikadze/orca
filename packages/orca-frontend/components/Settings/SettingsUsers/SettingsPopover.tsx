@@ -10,14 +10,15 @@ import { BanIcon, UnbanIcon } from '../../ui/icons';
 interface SettingsPopoverProps {
   userId: string;
   banned: boolean;
+  searchQuery: string;
 }
 
-const banUser = async ({ id: id, banned }) => {
+const banUser = async ({ id, banned }) => {
   const newUser = await axios.delete('/users/ban-user', { data: { id, banned } });
   return newUser.data;
 };
 
-const SettingsPopover: FC<SettingsPopoverProps> = ({ userId, banned }) => {
+const SettingsPopover: FC<SettingsPopoverProps> = ({ userId, banned, searchQuery }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -28,7 +29,7 @@ const SettingsPopover: FC<SettingsPopoverProps> = ({ userId, banned }) => {
     try {
       const bannedUser = await mutateAsync({ id: userId, banned: !banned });
 
-      queryClient.setQueryData('adminUsers', (existingUsers: any) => {
+      queryClient.setQueryData(['adminUsers', searchQuery], (existingUsers: any) => {
         return {
           pages: [
             existingUsers.pages[0].map((user: any) => {

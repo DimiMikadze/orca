@@ -25,7 +25,11 @@ const INITIAL_STATE = {
   role: UserRole.Regular,
 };
 
-const SettingsCreateUser: FC = () => {
+interface SettingsCreateUserProps {
+  searchQuery: string;
+}
+
+const SettingsCreateUser: FC<SettingsCreateUserProps> = ({ searchQuery }) => {
   const [values, setValues] = useState(INITIAL_STATE);
   const [errorMessage, setErrorMessage] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -43,7 +47,7 @@ const SettingsCreateUser: FC = () => {
     try {
       const createdUser = await createUser(values);
 
-      queryClient.setQueryData('adminUsers', (existingUsers: any) => {
+      queryClient.setQueryData(['adminUsers', searchQuery], (existingUsers: any) => {
         return {
           pages: [[createdUser.data, ...existingUsers.pages[0]]],
         };
