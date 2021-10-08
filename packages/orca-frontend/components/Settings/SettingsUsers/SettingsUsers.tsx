@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataLimit, UserRole } from '../../../constants';
 import { useInfiniteScroll, timeAgo } from '../../../utils';
-import { Root, Table, Tr, Th, Td, Top, Title, Count } from './style';
+import { Root, Table, Tr, Th, Td, Top, Count, Title, Left, Input, Right, Form } from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
 import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
@@ -74,7 +74,7 @@ const SettingsUsers: FC = () => {
 
       {usersTotal && (
         <Top>
-          <div>
+          <Left>
             <Spacing inline right="lg">
               <Title>Total</Title> <Count>{usersTotal.total}</Count>
             </Spacing>
@@ -84,10 +84,13 @@ const SettingsUsers: FC = () => {
             <Spacing inline>
               <Title>Not Verified</Title> <Count>{usersTotal.total - usersTotal.verified}</Count>
             </Spacing>
-          </div>
-          <div>
+          </Left>
+          <Right>
+            <Form>
+              <Input type="text" placeholder="search users" />
+            </Form>
             <SettingsCreateUser />
-          </div>
+          </Right>
         </Top>
       )}
 
