@@ -3,20 +3,7 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataLimit, UserRole } from '../../../constants';
 import { useInfiniteScroll, timeAgo } from '../../../utils';
-import {
-  Root,
-  Table,
-  Tr,
-  Th,
-  Td,
-  Top,
-  Count,
-  Title,
-  SearchInput,
-  SearchContainer,
-  SearchClearButton,
-  Form,
-} from './style';
+import { Table, Tr, Th, Td, Top, Count, Title, SearchInput, SearchContainer, SearchClearButton, Form } from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
 import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
@@ -66,18 +53,18 @@ const SettingsUsers: FC = () => {
 
   if (isFetching && !isFetchingNextPage) {
     return (
-      <Root>
+      <div>
         <H2>Community Users</H2>
         <Divider spacing="sm" />
 
         <LoadingDots />
-      </Root>
+      </div>
     );
   }
 
   if (isEmpty) {
     return (
-      <Root>
+      <div>
         <H2>Community Users</H2>
         <Divider spacing="sm" />
 
@@ -86,12 +73,12 @@ const SettingsUsers: FC = () => {
             <div>Oops! There are no users yet.</div>
           </Empty>
         </Container>
-      </Root>
+      </div>
     );
   }
 
   return (
-    <Root>
+    <div>
       <H2>Community Users</H2>
       <Divider spacing="sm" />
 
@@ -158,7 +145,7 @@ const SettingsUsers: FC = () => {
         })}
       </Table>
       {isFetchingNextPage && <LoadingDots />}
-    </Root>
+    </div>
   );
 };
 

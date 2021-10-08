@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { Button } from '../../ui';
 
-export const Root = styled.div`
-  overflow-y: hidden;
-`;
-
 export const Top = styled.div`
   margin: ${(p) => p.theme.spacing.lg} 0;
 `;
@@ -61,6 +57,9 @@ export const SearchInput = styled.input`
 `;
 
 export const Table = styled.table`
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
   border-collapse: collapse;
   width: 100%;
   border: 1px solid ${(p) => p.theme.colors.border.main};
