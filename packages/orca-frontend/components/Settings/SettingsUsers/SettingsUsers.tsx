@@ -3,7 +3,20 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { DataLimit, UserRole } from '../../../constants';
 import { useInfiniteScroll, timeAgo } from '../../../utils';
-import { Table, Tr, Th, Td, Top, Count, Title, SearchInput, SearchContainer, SearchClearButton, Form } from './style';
+import {
+  TableContainer,
+  Table,
+  Tr,
+  Th,
+  Td,
+  Top,
+  Count,
+  Title,
+  SearchInput,
+  SearchContainer,
+  SearchClearButton,
+  Form,
+} from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
 import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
@@ -110,7 +123,7 @@ const SettingsUsers: FC = () => {
                 </SearchClearButton>
               )}
             </Form>
-            <SettingsCreateUser />
+            <SettingsCreateUser searchQuery={searchQuery} />
           </SearchContainer>
         </Top>
       )}
@@ -121,38 +134,40 @@ const SettingsUsers: FC = () => {
         <>
           {isSearchResultEmpty && searchQuery && `We couldn't find an account for "${searchQuery}"`}
           {!isSearchResultEmpty && (
-            <Table>
-              <thead>
-                <Tr>
-                  <Th>Name</Th>
-                  <Th>Email</Th>
-                  <Th>Status</Th>
-                  <Th>Created</Th>
-                </Tr>
-              </thead>
+            <TableContainer>
+              <Table>
+                <thead>
+                  <Tr>
+                    <Th>Name</Th>
+                    <Th>Email</Th>
+                    <Th>Status</Th>
+                    <Th>Created</Th>
+                  </Tr>
+                </thead>
 
-              {users?.pages?.map((users: any, i: any) => {
-                return (
-                  <tbody key={i}>
-                    {users?.map((user: any) => (
-                      <Tr key={user._id}>
-                        <Td>{user.fullName}</Td>
-                        <Td>{user.email}</Td>
-                        <Td>
-                          <Spacing left="sm">{renderUserStatus(user.emailVerified, user.banned)}</Spacing>
-                        </Td>
-                        <Td>{timeAgo(user.createdAt)}</Td>
-                        <Td>
-                          {user.role !== UserRole.SuperAdmin && (
-                            <SettingsPopover userId={user._id} banned={user.banned} />
-                          )}
-                        </Td>
-                      </Tr>
-                    ))}
-                  </tbody>
-                );
-              })}
-            </Table>
+                {users?.pages?.map((users: any, i: any) => {
+                  return (
+                    <tbody key={i}>
+                      {users?.map((user: any) => (
+                        <Tr key={user._id}>
+                          <Td>{user.fullName}</Td>
+                          <Td>{user.email}</Td>
+                          <Td>
+                            <Spacing left="sm">{renderUserStatus(user.emailVerified, user.banned)}</Spacing>
+                          </Td>
+                          <Td>{timeAgo(user.createdAt)}</Td>
+                          <Td>
+                            {user.role !== UserRole.SuperAdmin && (
+                              <SettingsPopover searchQuery={searchQuery} userId={user._id} banned={user.banned} />
+                            )}
+                          </Td>
+                        </Tr>
+                      ))}
+                    </tbody>
+                  );
+                })}
+              </Table>
+            </TableContainer>
           )}
         </>
       )}

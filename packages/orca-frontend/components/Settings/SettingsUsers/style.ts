@@ -56,9 +56,11 @@ export const SearchInput = styled.input`
   }
 `;
 
-export const Table = styled.table`
-  display: block;
+export const TableContainer = styled.div`
   overflow-x: auto;
+`;
+
+export const Table = styled.table`
   white-space: nowrap;
   border-collapse: collapse;
   width: 100%;
