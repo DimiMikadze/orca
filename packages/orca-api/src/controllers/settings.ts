@@ -24,9 +24,8 @@ const SettingsController = {
     return res.send(settings);
   },
   users: async (req: Request, res: Response): Promise<any> => {
-    const authUser = req.user as AuthUser;
-    const { offset, limit } = req.query;
-    const users = await getUsers(+offset, +limit, authUser._id, false);
+    const { offset, limit, searchQuery } = req.query;
+    const users = await getUsers(+offset, +limit, null, false, false, searchQuery as string);
     return res.send(users);
   },
   usersTotal: async (req: Request, res: Response): Promise<any> => {

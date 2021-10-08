@@ -70,7 +70,8 @@ export const getUsers = async (
   limit: number,
   authUserId?: string,
   emailVerified?: boolean,
-  hideBannedUsers?: boolean
+  hideBannedUsers?: boolean,
+  searchQuery?: string
 ): Promise<any> => {
   const query = { _id: { $ne: authUserId } };
   if (emailVerified) {
@@ -79,6 +80,14 @@ export const getUsers = async (
   if (hideBannedUsers) {
     query.banned = { $ne: true };
   }
+  if (searchQuery) {
+    query['$or'] = [
+      { username: new RegExp(searchQuery, 'i') },
+      { fullName: new RegExp(searchQuery, 'i') },
+      { email: new RegExp(searchQuery, 'i') },
+    ];
+  }
+
   const users = User.find(query).select('-password').skip(offset).limit(limit).sort({ createdAt: 'desc' });
   return users;
 };
