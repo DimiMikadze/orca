@@ -25,7 +25,7 @@ const fetchUsersTotal = async () => {
 const SettingsUsers: FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const { data: usersTotal } = useQuery('usersTotal', fetchUsersTotal);
+  const { data: usersTotal, isFetching: isFetchingTotal } = useQuery('usersTotal', fetchUsersTotal);
   const {
     data: users,
     isFetching,
@@ -50,8 +50,9 @@ const SettingsUsers: FC = () => {
   };
 
   const isEmpty = !usersTotal || usersTotal?.total < 1;
+  const isSearchResultEmpty = !users?.pages[0] || users.pages[0].length === 0;
 
-  if (isFetching && !isFetchingNextPage) {
+  if (isFetchingTotal) {
     return (
       <div>
         <H2>Community Users</H2>
@@ -114,36 +115,47 @@ const SettingsUsers: FC = () => {
         </Top>
       )}
 
-      <Table>
-        <thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Email</Th>
-            <Th>Status</Th>
-            <Th>Created</Th>
-          </Tr>
-        </thead>
-
-        {users?.pages?.map((users: any, i: any) => {
-          return (
-            <tbody key={i}>
-              {users?.map((user: any) => (
-                <Tr key={user._id}>
-                  <Td>{user.fullName}</Td>
-                  <Td>{user.email}</Td>
-                  <Td>
-                    <Spacing left="sm">{renderUserStatus(user.emailVerified, user.banned)}</Spacing>
-                  </Td>
-                  <Td>{timeAgo(user.createdAt)}</Td>
-                  <Td>
-                    {user.role !== UserRole.SuperAdmin && <SettingsPopover userId={user._id} banned={user.banned} />}
-                  </Td>
+      {isFetching && !isFetchingNextPage ? (
+        <LoadingDots />
+      ) : (
+        <>
+          {isSearchResultEmpty && searchQuery && `We couldn't find an account for "${searchQuery}"`}
+          {!isSearchResultEmpty && (
+            <Table>
+              <thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Email</Th>
+                  <Th>Status</Th>
+                  <Th>Created</Th>
                 </Tr>
-              ))}
-            </tbody>
-          );
-        })}
-      </Table>
+              </thead>
+
+              {users?.pages?.map((users: any, i: any) => {
+                return (
+                  <tbody key={i}>
+                    {users?.map((user: any) => (
+                      <Tr key={user._id}>
+                        <Td>{user.fullName}</Td>
+                        <Td>{user.email}</Td>
+                        <Td>
+                          <Spacing left="sm">{renderUserStatus(user.emailVerified, user.banned)}</Spacing>
+                        </Td>
+                        <Td>{timeAgo(user.createdAt)}</Td>
+                        <Td>
+                          {user.role !== UserRole.SuperAdmin && (
+                            <SettingsPopover userId={user._id} banned={user.banned} />
+                          )}
+                        </Td>
+                      </Tr>
+                    ))}
+                  </tbody>
+                );
+              })}
+            </Table>
+          )}
+        </>
+      )}
       {isFetchingNextPage && <LoadingDots />}
     </div>
   );
