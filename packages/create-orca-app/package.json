@@ -1,17 +1,17 @@
 {
   "name": "create-orca-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI for Orca.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dimimikadze/orca",
+    "url": "https://github.com/elevensymbols/orca",
     "directory": "packages/create-orca-app"
   },
   "engines": {
     "node": ">=12.20.0"
   },
   "bugs": {
-    "url": "https://github.com/dimimikadze/orca"
+    "url": "https://github.com/elevensymbols/orca"
   },
   "keywords": [
     "create-orca-app",
