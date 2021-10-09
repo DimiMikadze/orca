@@ -46,7 +46,7 @@ Orca is a free and open-source community platform equipped with:
 
 ## Prerequisites
 
-You'll need to have [Node](https://nodejs.org) >=12.20.0, [Yarn](https://yarnpkg.com), and [MongoDB](https://www.mongodb.com) installed and running on your machine
+You'll need to have [Node](https://nodejs.org) >=12.20.0, [Yarn](https://yarnpkg.com), and [MongoDB](https://www.mongodb.com) installed and running on your machine.
 
 ## Quick start
 

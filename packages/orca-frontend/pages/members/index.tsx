@@ -60,11 +60,10 @@ const MembersPage: FC = () => {
               {users?.map((user: any) => (
                 <MembersCard key={user._id} queryKey={['members']} user={user} />
               ))}
-
-              {isFetchingNextPage && <LoadingDots />}
             </Fragment>
           );
         })}
+        {isFetchingNextPage && <LoadingDots />}
       </Wrapper>
     </Layout>
   );
