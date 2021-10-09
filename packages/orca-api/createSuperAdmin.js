@@ -52,7 +52,7 @@ async function init() {
     await db.collection('users').insertOne({
       role: 'SuperAdmin',
       emailVerified: true,
-      isOnline: true,
+      isOnline: false,
       posts: [],
       likes: [],
       comments: [],
