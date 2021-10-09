@@ -4,7 +4,7 @@ import { addUserNotification, removeUserNotification } from '../../store/auth';
 import { RootState } from '../../store';
 import { Events } from '../../constants';
 
-import { Alert, GlobalStyle, LoadingDots } from '../ui';
+import { Alert, GlobalStyle, Loading } from '../ui';
 import { useAuth, useFetchSettings, useSocket } from '../../utils';
 import { Theme } from '../../theme';
 
@@ -53,7 +53,7 @@ const App: FC<AppProps> = ({ children, setTheme }) => {
     };
   }, [authUser, dispatch, socket]);
 
-  if (isAuthFetching || isSettingsFetching) return <LoadingDots />;
+  if (isAuthFetching || isSettingsFetching) return <Loading top="md" />;
   if (authError) {
     const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
     if (isDevelopment) {

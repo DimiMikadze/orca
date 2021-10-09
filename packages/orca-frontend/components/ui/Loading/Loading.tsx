@@ -67,11 +67,6 @@ export const LoadingDots = styled.div`
     font-size: ${(p) => p.theme.font.size.xl};
   }
 
-  &::before,
-  &::after {
-    clip: rect(0, 0, 0, 0);
-  }
-
   @keyframes ellipsis {
     0% {
       content: '.';
