@@ -10,16 +10,26 @@ export const getChannelByName = async (name: string): Promise<any> => {
   return channel;
 };
 
-export const createChannel = async (name: string, authRequired: boolean): Promise<any> => {
+export const createChannel = async (name: string, authRequired: boolean, description?: string): Promise<any> => {
   const newChannel = await Channel.create({
     name,
     authRequired,
+    description,
   });
   return newChannel;
 };
 
-export const updateChannel = async (id: string, name: string, authRequired: boolean): Promise<any> => {
-  const updatedChannel = await Channel.findOneAndUpdate({ _id: id }, { name, authRequired }, { new: true });
+export const updateChannel = async (
+  id: string,
+  name: string,
+  authRequired: boolean,
+  description?: string
+): Promise<any> => {
+  const updatedChannel = await Channel.findOneAndUpdate(
+    { _id: id },
+    { name, authRequired, description },
+    { new: true }
+  );
   return updatedChannel;
 };
 

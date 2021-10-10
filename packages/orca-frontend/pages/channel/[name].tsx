@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { PostCard, PostCreateButton } from '../../components/Post';
 import Layout from '../../components/Layout';
-import { LoadingDots, Skeleton } from '../../components/ui';
+import { LoadingDots, Skeleton, Spacing } from '../../components/ui';
 import { RootState } from '../../store';
 import { Channel as ChannelType, DataLimit, Post } from '../../constants';
 import { useInfiniteScroll } from '../../utils';
 import Seo from '../../components/Seo';
 import { GetServerSideProps } from 'next';
+import { ChannelInfo } from '../../components/Channel';
 
 const fetchChannelByName = async (channelName: string) => {
   const { data } = await axios.get(`/channels/${channelName}`);
@@ -47,6 +48,11 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
   return (
     <Layout>
       <Seo title={channel.name} />
+
+      <Spacing bottom="sm">
+        <ChannelInfo name={channel.name} description={channel.description} />
+      </Spacing>
+
       {authUser && <PostCreateButton queryKey={['postsByChannelName', channel._id]} channel={channel} />}
 
       <div>
