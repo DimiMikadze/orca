@@ -1,5 +1,5 @@
 import { FC, FormEvent, useEffect, useState } from 'react';
-import { InputText, Spacing, P, Toggle, Button, Text } from '../ui';
+import { InputText, Spacing, P, Toggle, Button, Text, TextAreaAutoSize } from '../ui';
 import { LabelAndToggle, ButtonContainer } from './style';
 import { Channel } from '../../constants';
 
@@ -26,6 +26,7 @@ const ChannelForm: FC<ChannelFormProps> = ({ channel, loading, closeModal, onSub
   const initialState = {
     name: channel?.name || '',
     authRequired: channel?.authRequired || false,
+    description: channel?.description || '',
   };
   const [formValues, setFormValues] = useState(initialState);
   const [errorMessage, setErrorMessage] = useState('');
@@ -72,6 +73,17 @@ const ChannelForm: FC<ChannelFormProps> = ({ channel, loading, closeModal, onSub
           name="name"
           autoComplete="off"
           placeholder="Choose a name for your channel"
+        />
+      </Spacing>
+
+      <Spacing top="sm" bottom="md">
+        <TextAreaAutoSize
+          label="Description"
+          value={formValues.description}
+          onChange={handleChange}
+          name="description"
+          borderColor="main"
+          placeholder="Description of the channel (optional)"
         />
       </Spacing>
 

@@ -9,6 +9,7 @@ const ChannelSchema = new Schema(
       required: true,
       unique: true,
     },
+    description: String,
     authRequired: {
       type: Boolean,
       default: false,

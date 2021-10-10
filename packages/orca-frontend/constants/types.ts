@@ -19,6 +19,7 @@ export interface Channel {
   _id?: string;
   name: string;
   authRequired: boolean;
+  description?: string;
 }
 
 export interface Post {

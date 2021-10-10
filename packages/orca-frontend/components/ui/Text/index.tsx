@@ -12,11 +12,12 @@ export const Error = styled.div<ErrorProps>`
 
 interface GetHeadingStylesProps {
   color?: GeneralColors;
+  size?: FontSize;
 }
 
-const getHeadingStyles = (size: FontSize) => css<GetHeadingStylesProps>`
+const getHeadingStyles = (defaultSize: FontSize) => css<GetHeadingStylesProps>`
   margin: 0;
-  font-size: ${(p) => p.theme.font.size[size]};
+  font-size: ${(p) => (p.size ? p.theme.font.size[p.size] : p.theme.font.size[defaultSize])};
   font-weight: ${(p) => p.theme.font.weight.bold};
   color: ${(p) => (p.color ? p.theme.colors.general[p.color] : p.theme.colors.general.text)};
 `;

@@ -17,7 +17,7 @@ const ChannelController = {
     return res.send(channel);
   },
   create: async (req: Request, res: Response): Promise<any> => {
-    const { name, authRequired } = req.body;
+    const { name, authRequired, description } = req.body;
     const trimmedName = name.trim();
 
     if (channelNameReg.test(name) || !name || name.length > 32) {
@@ -31,11 +31,11 @@ const ChannelController = {
       return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
     }
 
-    const newChannel = await createChannel(trimmedName, authRequired);
+    const newChannel = await createChannel(trimmedName, authRequired, description);
     return res.send(newChannel);
   },
   update: async (req: Request, res: Response): Promise<any> => {
-    const { _id, name, authRequired } = req.body;
+    const { _id, name, authRequired, description } = req.body;
     const trimmedName = name.trim();
 
     if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 32) {
@@ -48,7 +48,7 @@ const ChannelController = {
     if (channelExists && channelExists?._id.toString() !== _id) {
       return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
     }
-    const updatedChannel = await updateChannel(_id, trimmedName, authRequired);
+    const updatedChannel = await updateChannel(_id, trimmedName, authRequired, description);
     return res.send(updatedChannel);
   },
   delete: async (req: Request, res: Response): Promise<any> => {
