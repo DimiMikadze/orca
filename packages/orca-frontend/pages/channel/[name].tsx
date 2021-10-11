@@ -53,11 +53,9 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
         {data?.pages?.map((posts, i) => {
           return (
             <Fragment key={i}>
-              {posts?.map((post: Post) => {
-                if (post.author !== null) {
-                  return <PostCard queryKey={['postsByChannelName', channel._id]} key={post._id} post={post} />;
-                }
-              })}
+              {posts?.map((post: Post) => (
+                <PostCard queryKey={['postsByChannelName', channel._id]} key={post._id} post={post} />
+              ))}
             </Fragment>
           );
         })}

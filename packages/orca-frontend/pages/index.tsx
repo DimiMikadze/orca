@@ -66,11 +66,9 @@ const Home: FC = () => {
         {data?.pages?.map((posts, i) => {
           return (
             <Fragment key={i}>
-              {posts?.map((post: Post) => {
-                if (post.author !== null) {
-                  return <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />;
-                }
-              })}
+              {posts?.map((post: Post) => (
+                <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />
+              ))}
 
               {isFetchingNextPage && <LoadingDots />}
             </Fragment>
