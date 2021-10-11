@@ -59,6 +59,7 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
     .populate({
       path: 'author',
       select: '-password',
+      match: { banned: { $ne: true } },
       populate: [
         {
           path: 'notifications',
