@@ -22,6 +22,7 @@ export const getFollowedPosts = async (userId: string, offset: number, limit: nu
     .populate({
       path: 'author',
       select: '-password',
+      match: { banned: { $ne: true } },
       populate: [
         { path: 'following' },
         { path: 'followers' },
