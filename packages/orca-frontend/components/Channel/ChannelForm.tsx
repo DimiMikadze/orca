@@ -91,7 +91,9 @@ const ChannelForm: FC<ChannelFormProps> = ({ channel, loading, closeModal, onSub
         <LabelAndToggle>
           <div>
             <P weight="bold">Privacy</P>
-            <P color="textSecondary">Only authenticated users can see the channel.</P>
+            <Spacing top="xs">
+              <P color="textSecondary">Only authenticated users can see the channel.</P>
+            </Spacing>
           </div>
           <Toggle name="authRequired" checked={formValues.authRequired} onChange={handleChange} />
         </LabelAndToggle>
