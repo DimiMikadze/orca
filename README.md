@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<h3 align="center">The open-source software for building modern community apps.</h3>
+<h3 align="center">Launch faster with a Free and modern Open-source community platform.</h3>
 <p align="center">Within minutes, Orca gives you all the core features for building a community app, <br /> which is beautifully designed, easy to use, and ready to scale.</p>
 
 <p align="center">
