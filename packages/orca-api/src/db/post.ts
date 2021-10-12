@@ -46,7 +46,8 @@ export const getFollowedPosts = async (userId: string, offset: number, limit: nu
     .skip(offset)
     .limit(limit)
     .sort({ createdAt: 'desc' });
-  return posts;
+
+  return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
 export const getChannelPosts = async (channelId: any): Promise<any> => {
@@ -77,7 +78,7 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
     .limit(limit)
     .sort({ createdAt: 'desc' });
 
-  return posts;
+  return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
 export const getPostsByAuthorId = async (authorId: any, offset: number, limit: number): Promise<any> => {
