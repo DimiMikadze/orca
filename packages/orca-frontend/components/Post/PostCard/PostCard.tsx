@@ -21,7 +21,7 @@ import { Spacing, Avatar, Button, Link } from '../../ui';
 import { Comment, CommentCreate } from '../../Comment';
 import { CommentIcon, ShareIcon } from '../../ui/icons';
 import { RootState } from '../../../store';
-import { Post } from '../../../constants';
+import { Post, UserRole } from '../../../constants';
 import { timeAgo } from '../../../utils';
 import useClickOutside from '../../../utils/useClickOutside';
 import PostCardShare from './PostCardShare';
@@ -109,7 +109,7 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
           </Spacing>
         </Author>
 
-        {post.author._id === authUser?._id && (
+        {(post.author._id === authUser?._id || authUser?.role === UserRole.SuperAdmin) && (
           <PostCardPopover
             queryKey={queryKey}
             postId={post._id}
