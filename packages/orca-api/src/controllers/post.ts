@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthUser, ErrorCodes, ErrorMessages } from '../constants';
+import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
 import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinary';
 import {
   getPostsByChannelId,
@@ -66,15 +66,17 @@ const PostController = {
     const { postId, title, imageToDeletePublicId, channelId } = req.body;
     const image = req.file;
 
-    // Check if the post author is updating the post.
-    const post: any = await postById(postId);
-    if (post.author.toString() !== authUser._id.toString()) {
-      return res.status(ErrorCodes.Bad_Request).send('Unauthorized');
+    // Super Admins can update another user's post.
+    if (authUser.role !== UserRole.SuperAdmin) {
+      // Check if the post author is updating the post.
+      const post: any = await postById(postId);
+      if (post.author.toString() !== authUser._id.toString()) {
+        return res.status(ErrorCodes.Bad_Request).send('Unauthorized');
+      }
     }
 
     // If the imageToDeletePublicId is defined, we need to remove an existing image.
     if (imageToDeletePublicId) {
-      console.log('Deleting old image');
       const deleteImage = await deleteFromCloudinary(imageToDeletePublicId);
       if (deleteImage.result !== 'ok') {
         return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
@@ -100,10 +102,13 @@ const PostController = {
     const { id, imagePublicId } = req.body;
     const authUser = req.user as AuthUser;
 
-    // Check if the post author is removing the post.
-    const post: any = await postById(id);
-    if (post.author.toString() !== authUser._id.toString()) {
-      return res.status(ErrorCodes.Bad_Request).send(ErrorMessages.Generic);
+    // Super Admins can delete another user's post.
+    if (authUser.role !== UserRole.SuperAdmin) {
+      // Check if the post author is removing the post.
+      const post: any = await postById(id);
+      if (post.author.toString() !== authUser._id.toString()) {
+        return res.status(ErrorCodes.Bad_Request).send(ErrorMessages.Generic);
+      }
     }
 
     if (imagePublicId) {
