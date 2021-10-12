@@ -3,6 +3,7 @@ import NextHead from 'next/head';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Config } from '../../utils';
+import { DefaultCommunity } from '../../constants';
 
 interface SeoProps {
   title?: string;
@@ -14,7 +15,7 @@ const Seo: FC<SeoProps> = ({ title, image, url }) => {
   const settings = useSelector((state: RootState) => state.settings);
 
   const metaTitle = title ? `${title} | ${settings.communityName}` : settings.communityName;
-  const metaImage = image || settings.communityLogo;
+  const metaImage = image || DefaultCommunity.communitySocialImage;
   const metaUrl = url || window.location.href;
 
   return (
