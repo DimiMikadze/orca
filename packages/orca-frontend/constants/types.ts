@@ -33,4 +33,5 @@ export interface Post {
   updatedAt: string;
   likes: [];
   comments: [];
+  pinned?: boolean;
 }

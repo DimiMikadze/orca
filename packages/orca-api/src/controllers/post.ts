@@ -10,6 +10,7 @@ import {
   getFollowedPosts,
   postById,
   updatePost,
+  pinPost,
 } from '../db';
 
 const PostController = {
@@ -120,6 +121,11 @@ const PostController = {
 
     const deletedPost = await deletePost(id);
     return res.send(deletedPost);
+  },
+  pin: async (req: Request, res: Response): Promise<any> => {
+    const { id, pinned } = req.body;
+    const updatedPost = await pinPost(id, pinned);
+    return res.send(updatedPost);
   },
 };
 

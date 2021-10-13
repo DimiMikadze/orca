@@ -34,6 +34,7 @@ const ProfilePage: FC<ProfilePageProps> = ({ user }) => {
     data: posts,
     isFetching: isPostsFetching,
     isFetchingNextPage: isFetchingNextPosts,
+    refetch,
   } = useInfiniteScroll({
     key: ['postsByAuthorId', user._id],
     apiCall: fetchPostsByAuthorId,
@@ -76,6 +77,7 @@ const ProfilePage: FC<ProfilePageProps> = ({ user }) => {
               <Fragment key={i}>
                 {posts?.map((post: Post) => (
                   <PostCard
+                    refetch={refetch}
                     displayChannelName
                     queryKey={['postsByAuthorId', userData._id]}
                     key={post._id}

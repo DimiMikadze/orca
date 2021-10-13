@@ -7,6 +7,7 @@ const PostSchema = new Schema(
     title: String,
     image: String,
     imagePublicId: String,
+    pinned: Boolean,
     channel: {
       type: Schema.Types.ObjectId,
       ref: 'Channel',

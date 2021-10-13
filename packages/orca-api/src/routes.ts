@@ -74,6 +74,7 @@ router.get('/posts/:id', PostController.postById);
 router.post('/posts/create', checkIfUser, multerUpload.single('image'), PostController.create);
 router.put('/posts/update', checkIfUser, multerUpload.single('image'), PostController.update);
 router.delete('/posts/delete', checkIfUser, PostController.delete);
+router.post('/posts/pin', checkIfSuperAdmin, PostController.pin);
 
 /**
  * Likes

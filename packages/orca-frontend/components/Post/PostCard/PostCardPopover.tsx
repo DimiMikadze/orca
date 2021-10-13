@@ -1,20 +1,24 @@
 import React, { FC, useState, useRef } from 'react';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Confirm } from '../../ui';
 import { ThreeDotsIcon } from '../../ui/icons';
 import { useClickOutside } from '../../../utils';
 import { Popover, PopoverContent } from './style';
 import { openAlert, AlertTypes } from '../../../store/alert';
 import { useRouter } from 'next/router';
+import { RootState } from '../../../store';
+import { UserRole } from '../../../constants';
 
 interface PostCardPopoverProps {
   postId: string;
+  pinned?: boolean;
   channelId: string;
   queryKey: any;
   imagePublicId: string;
   openPostCreate: () => void;
+  refetch?: any;
 }
 
 const deletePost = async ({ id: id, imagePublicId: imagePublicId }) => {
@@ -22,7 +26,20 @@ const deletePost = async ({ id: id, imagePublicId: imagePublicId }) => {
   return newPost.data;
 };
 
-const PostCardPopover: FC<PostCardPopoverProps> = ({ postId, queryKey, imagePublicId, openPostCreate }) => {
+const pinPost = async ({ id, pinned }) => {
+  const updatedPost = await axios.post('/posts/pin', { id, pinned });
+  return updatedPost;
+};
+
+const PostCardPopover: FC<PostCardPopoverProps> = ({
+  postId,
+  pinned,
+  queryKey,
+  imagePublicId,
+  refetch,
+  openPostCreate,
+}) => {
+  const authUser = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -33,11 +50,32 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({ postId, queryKey, imagePubl
     setIsPopoverOpen(false);
   });
 
-  const { mutateAsync } = useMutation(deletePost);
+  const { mutateAsync: deletePostMutation } = useMutation(deletePost);
+  const { mutateAsync: pinPostMutation } = useMutation(pinPost);
+
+  const pin = async () => {
+    try {
+      const isPinned = pinned == true;
+      await pinPostMutation({ id: postId, pinned: !isPinned });
+      if (refetch) {
+        refetch();
+      }
+    } catch (error) {
+      console.log('An error occurred while pinning the post, error: ', error);
+    }
+
+    setIsPopoverOpen(false);
+    dispatch(
+      openAlert({
+        message: `The post has been ${pinned ? 'Unpinned' : 'Pinned'} successfully.`,
+        type: AlertTypes.Success,
+      })
+    );
+  };
 
   const removePost = async () => {
     try {
-      const deletedPost = await mutateAsync({ id: postId, imagePublicId });
+      const deletedPost = await deletePostMutation({ id: postId, imagePublicId });
       // If a user deletes a post on which page they are on, we'll redirect them to the home page.
       // Hence, we don't need to update the cache.
       if (router.route !== '/post/[id]') {
@@ -90,11 +128,16 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({ postId, queryKey, imagePubl
 
       {isPopoverOpen && (
         <PopoverContent>
+          {authUser.role === UserRole.SuperAdmin && (
+            <Button text fullWidth radius="none" size="xs" onClick={pin}>
+              {pinned ? 'Unpin Post' : 'Pin Post'}
+            </Button>
+          )}
           <Button text fullWidth radius="none" size="xs" onClick={openPostCreate}>
-            Edit
+            Edit Post
           </Button>
           <Button text fullWidth radius="none" size="xs" onClick={onOpenConfirm}>
-            Delete
+            Delete Post
           </Button>
         </PopoverContent>
       )}
