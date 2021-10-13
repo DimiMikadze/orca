@@ -12,6 +12,7 @@ interface useInfiniteScrollReturnType {
   data: any;
   isFetching: boolean;
   isFetchingNextPage: boolean;
+  refetch?: any;
 }
 
 const useInfiniteScroll = ({
@@ -20,7 +21,7 @@ const useInfiniteScroll = ({
   apiCall,
   enabled = true,
 }: useInfiniteScrollProps): useInfiniteScrollReturnType => {
-  const { data, fetchNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery(key, apiCall, {
+  const { data, fetchNextPage, isFetching, isFetchingNextPage, refetch } = useInfiniteQuery(key, apiCall, {
     getNextPageParam: (lastPage: unknown[], pages) => {
       return lastPage.length > 0 ? pages.length * dataLimit : undefined;
     },
@@ -49,7 +50,7 @@ const useInfiniteScroll = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [data, fetchNextPage]);
 
-  return { data, isFetching, isFetchingNextPage };
+  return { data, isFetching, isFetchingNextPage, refetch };
 };
 
 export default useInfiniteScroll;

@@ -31,7 +31,7 @@ interface ChannelProps {
 const Channel: FC<ChannelProps> = ({ channel }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
 
-  const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
+  const { data, isFetching, isFetchingNextPage, refetch } = useInfiniteScroll({
     key: ['postsByChannelName', channel._id],
     apiCall: fetchPostsByChannelId,
     dataLimit: DataLimit.PostsByChannelName,
@@ -60,7 +60,7 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
           return (
             <Fragment key={i}>
               {posts?.map((post: Post) => (
-                <PostCard queryKey={['postsByChannelName', channel._id]} key={post._id} post={post} />
+                <PostCard refetch={refetch} queryKey={['postsByChannelName', channel._id]} key={post._id} post={post} />
               ))}
             </Fragment>
           );

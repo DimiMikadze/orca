@@ -76,7 +76,10 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
     .populate('channel')
     .skip(offset)
     .limit(limit)
-    .sort({ createdAt: 'desc' });
+    .sort([
+      ['pinned', -1],
+      ['createdAt', -1],
+    ]);
 
   return posts.filter((p: any) => p?.author?.banned !== true);
 };
@@ -102,7 +105,10 @@ export const getPostsByAuthorId = async (authorId: any, offset: number, limit: n
     .populate('channel')
     .skip(offset)
     .limit(limit)
-    .sort({ createdAt: 'desc' });
+    .sort([
+      ['pinned', -1],
+      ['createdAt', -1],
+    ]);
 
   return posts;
 };
@@ -238,4 +244,34 @@ export const deletePost = async (id: string): Promise<any> => {
   await Notification.find({ post: post._id }).deleteMany();
 
   return post;
+};
+
+export const pinPost = async (id: string, pinned: boolean): Promise<any> => {
+  const updatedPost = await Post.findOneAndUpdate({ _id: id }, { pinned }, { new: true })
+    .populate({
+      path: 'author',
+      select: '-password',
+      populate: [
+        { path: 'following' },
+        { path: 'followers' },
+        {
+          path: 'notifications',
+          populate: [
+            { path: 'author', select: '-password' },
+            { path: 'follow' },
+            { path: 'like' },
+            { path: 'comment' },
+          ],
+        },
+      ],
+    })
+    .populate('likes')
+    .populate('channel')
+    .populate({
+      path: 'comments',
+      options: { sort: { createdAt: 'asc' } },
+      populate: { path: 'author', select: '-password' },
+    });
+
+  return updatedPost;
 };

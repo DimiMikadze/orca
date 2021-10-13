@@ -18,14 +18,14 @@ interface ProfilePageProps {
 }
 
 const PostPage: FC<ProfilePageProps> = ({ post }) => {
-  const { data } = useQuery(['post', post._id], fetchPost, { initialData: post });
+  const { data, refetch } = useQuery(['post', post._id], fetchPost, { initialData: post });
 
   return (
     <Layout hideRightSidebar marginTop="none">
       <Seo title={post.title} image={post.image} />
 
       <Container maxWidth="md" marginTop="sm">
-        <PostCard isCommentsOpen displayChannelName queryKey={['post', data._id]} post={data} />
+        <PostCard refetch={refetch} isCommentsOpen displayChannelName queryKey={['post', data._id]} post={data} />
       </Container>
     </Layout>
   );
