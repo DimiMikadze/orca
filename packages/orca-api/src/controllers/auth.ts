@@ -11,7 +11,7 @@ import {
   deleteUser,
   updateUser,
 } from '../db';
-import { ErrorCodes, ErrorMessages } from '../constants';
+import { EmailRegex, ErrorCodes, ErrorMessages } from '../constants';
 import { sendEmail, getEmailTemplate, checkEmailVerification } from '../utils';
 const AuthController = {
   authUser: async (req: Request, res: Response): Promise<any> => {
@@ -33,6 +33,10 @@ const AuthController = {
 
     if (!fullName || !email || !password) {
       return res.status(ErrorCodes.Bad_Request).send('Please fill in all of the fields.');
+    }
+
+    if (!email.match(EmailRegex)) {
+      return res.status(ErrorCodes.Bad_Request).send('The email address is not valid.');
     }
 
     const isEmailVerificationRequired = await checkEmailVerification();
