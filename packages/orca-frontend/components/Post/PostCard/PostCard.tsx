@@ -17,9 +17,9 @@ import {
   Share,
   Comments,
 } from './style';
-import { Spacing, Avatar, Button, Link } from '../../ui';
+import { Spacing, Avatar, Button, Link, Text } from '../../ui';
 import { Comment, CommentCreate } from '../../Comment';
-import { CommentIcon, ShareIcon } from '../../ui/icons';
+import { CommentIcon, PinnedIcon, ShareIcon } from '../../ui/icons';
 import { RootState } from '../../../store';
 import { Post, UserRole } from '../../../constants';
 import { timeAgo } from '../../../utils';
@@ -33,9 +33,10 @@ interface PostCardProps {
   queryKey: any;
   displayChannelName?: boolean;
   isCommentsOpen?: boolean;
+  refetch?: any;
 }
 
-const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCommentsOpen }) => {
+const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCommentsOpen, refetch }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [isTitleExpanded, setIsTitleExpanded] = useState(false);
   const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
@@ -93,12 +94,20 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
 
           <Spacing left="xs">
             <Link href={`/profile/${post.author._id}`} color="text">
-              <Name>{post.author.fullName}</Name>
+              <Name>{post.author.fullName} </Name>
             </Link>
             <CreatedAt>
+              {post.pinned && (
+                <>
+                  <Text size="tiny" color="textSecondary">
+                    <PinnedIcon /> Pinned &middot;
+                  </Text>{' '}
+                </>
+              )}
               {timeAgo(post.createdAt)}
               {displayChannelName && (
                 <>
+                  {' '}
                   &middot;{' '}
                   <Link color="textSecondary" size="tiny" href={`/channel/${post.channel?.name}`}>
                     {post.channel?.name}
@@ -116,6 +125,8 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
             channelId={post.channel?._id}
             openPostCreate={() => setIsPostCreateOpen(true)}
             imagePublicId={post.imagePublicId}
+            pinned={post.pinned}
+            refetch={refetch}
           />
         )}
       </Top>
