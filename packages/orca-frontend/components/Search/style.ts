@@ -73,6 +73,8 @@ export const Input = styled.input<InputProps>`
 
 export const Result = styled.div`
   width: 100%;
+  height: 500px;
+  overflow-y: scroll;
   position: absolute;
   top: 40px;
   background-color: ${(p) => p.theme.colors.general.white};
