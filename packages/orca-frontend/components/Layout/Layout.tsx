@@ -5,7 +5,7 @@ import Header from '../Header';
 import SideBar from '../Sidebar';
 import { useClickOutside } from '../../utils';
 import { Spacing, Screen } from '../../theme';
-import Rightbar from '../Rightbar';
+import RightSideBar from '../RightSideBar';
 import Seo from '../Seo';
 
 interface LayoutProps {
@@ -50,7 +50,7 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
         >
           {children}
         </StyledContainer>
-        {!hideRightSidebar && <Rightbar />}
+        {!hideRightSidebar && <RightSideBar />}
       </Root>
     </>
   );

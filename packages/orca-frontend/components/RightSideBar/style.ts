@@ -10,6 +10,8 @@ export const Root = styled.div`
   padding-top: ${(p) => p.theme.spacing.md};
   margin-left: ${(p) => p.theme.spacing.md};
   padding-right: ${(p) => p.theme.spacing.sm};
+  overflow: hidden;
+  overflow-y: auto;
 
   @media (min-width: ${(p) => p.theme.screen.lg}) {
     flex: 0 0 ${Layout.SIDEBAR_MOBILE_WIDTH}px;
