@@ -25,7 +25,7 @@ export const Root = styled.div`
 
 export const Heading = styled.div`
   border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
-  padding-bottom: ${(p) => p.theme.spacing.sm};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
 `;
 
 export const PersonContainer = styled.div`

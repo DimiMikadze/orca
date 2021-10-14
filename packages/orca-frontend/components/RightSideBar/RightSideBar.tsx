@@ -59,7 +59,7 @@ const RightSideBar: FC = () => {
 
       {isFetchingNewMembers ? <Skeleton count={3} height={36} top="xs" /> : newMembers && renderList(newMembers, false)}
 
-      <Spacing top="sm">
+      <Spacing top="md">
         <Heading>
           <H3>Online Members</H3>
         </Heading>

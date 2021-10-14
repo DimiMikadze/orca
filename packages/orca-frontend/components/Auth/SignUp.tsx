@@ -47,7 +47,9 @@ const SignUp: FC = () => {
     try {
       const { data } = await signUpMutation(values);
       if (isEmailVerificationRequired) {
-        setSuccessResponse(data);
+        setSuccessResponse(
+          `Email verification instructions have been sent to the ${values.email} email address. Please note that the link will expire in 1 hour.`
+        );
         return;
       }
 
