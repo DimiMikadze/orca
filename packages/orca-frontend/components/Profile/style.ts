@@ -72,3 +72,15 @@ export const Actions = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Count = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: ${(p) => p.theme.spacing.sm};
+`;
+
+export const Bold = styled.div`
+  font-weight: ${(p) => p.theme.font.weight.bold};
+  display: inline-block;
+  margin-right: ${(p) => p.theme.spacing.xxs};
+`;
