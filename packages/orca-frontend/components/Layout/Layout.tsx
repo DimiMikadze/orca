@@ -1,4 +1,5 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+import Router from 'next/router';
 import { Root, StyledContainer } from './style';
 import Header from '../Header';
 import SideBar from '../Sidebar';
@@ -24,6 +25,14 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
   });
 
   const toggleSidebar = () => setIsSidebarOpen(!isSideBarOpen);
+
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => {
+      if (isSideBarOpen) {
+        setIsSidebarOpen(false);
+      }
+    });
+  }, [isSideBarOpen]);
 
   return (
     <>
