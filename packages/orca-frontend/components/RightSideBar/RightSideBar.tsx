@@ -49,7 +49,7 @@ const RightSideBar: FC = () => {
         <H3>New Members</H3>
       </Heading>
 
-      {!isFetchingNewMembers && !noNewMembers && (
+      {!isFetchingNewMembers && noNewMembers && (
         <Spacing top="sm">
           <Text color="textSecondary">No new members.</Text>
         </Spacing>
