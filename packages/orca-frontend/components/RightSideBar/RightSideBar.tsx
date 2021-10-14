@@ -17,7 +17,11 @@ const fetchNewMembers = async () => {
 const REFETCH_INTERVAL = 10000;
 
 const RightSideBar: FC = () => {
-  const { data: onlineMembers, isFetching: isFetchingOnlineMembers } = useQuery('onlineUsers', fetchOnlineUsers, {
+  const {
+    data: onlineMembers,
+    isFetching: isFetchingOnlineMembers,
+    isRefetching: isReFetchingOnlineMembers,
+  } = useQuery('onlineUsers', fetchOnlineUsers, {
     refetchInterval: REFETCH_INTERVAL,
   });
   const { data: newMembers, isFetching: isFetchingNewMembers } = useQuery('newMembers', fetchNewMembers);
@@ -73,7 +77,7 @@ const RightSideBar: FC = () => {
 
       {onlineMembers && <Spacing top="xs" />}
 
-      {isFetchingOnlineMembers ? (
+      {isFetchingOnlineMembers && !isReFetchingOnlineMembers ? (
         <Skeleton count={3} height={36} top="xs" />
       ) : (
         onlineMembers && renderList(onlineMembers, true)
