@@ -30,7 +30,6 @@ export enum ProfileLoading {
 const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [isLoading, setIsLoading] = useState<ProfileLoading>(null);
-  console.log('user: ', user);
   return (
     <>
       <CoverPhoto isLoading={isLoading} image={authUser?._id === user._id ? authUser.coverImage : user.coverImage}>
