@@ -39,6 +39,7 @@ router.post('/email-verify', AuthController.emailVerify);
  */
 router.get('/users/get-users', withUser, UserController.getUsers);
 router.get('/users/online-users', withUser, UserController.onlineUsers);
+router.get('/users/new-members', withUser, UserController.newMembers);
 router.post('/users/upload-photo', [checkIfUser, multerUpload.single('image')], UserController.uploadPhoto);
 router.get('/users/:id', UserController.user);
 router.delete('/users/ban-user', checkIfSuperAdmin, UserController.banUser);

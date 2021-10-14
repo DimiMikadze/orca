@@ -71,9 +71,7 @@ const AuthController = {
           subject: 'Email verification',
           html: template,
         });
-        return res.send(
-          `Email verification instructions have been sent to the ${email} email address. Please note that the link will expire in 1 hour.`
-        );
+        return res.send('success');
       } catch (error) {
         return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
       }

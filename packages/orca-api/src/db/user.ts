@@ -103,6 +103,14 @@ export const onlineUsers = async (userId?: string): Promise<any> => {
   return users;
 };
 
+export const getNewMembers = async (userId?: string): Promise<any> => {
+  const users = User.find({ _id: { $ne: userId } })
+    .select('-password')
+    .limit(3)
+    .sort({ createdAt: -1 });
+  return users;
+};
+
 export const updateUser = async (id: string, fieldsToUpdate: any): Promise<any> => {
   const user = await User.findOneAndUpdate({ _id: id }, { ...fieldsToUpdate }, { new: true })
     .populate('posts')

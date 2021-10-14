@@ -1,10 +1,11 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+import Router from 'next/router';
 import { Root, StyledContainer } from './style';
 import Header from '../Header';
 import SideBar from '../Sidebar';
 import { useClickOutside } from '../../utils';
 import { Spacing, Screen } from '../../theme';
-import Rightbar from '../Rightbar';
+import RightSideBar from '../RightSideBar';
 import Seo from '../Seo';
 
 interface LayoutProps {
@@ -25,6 +26,14 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
 
   const toggleSidebar = () => setIsSidebarOpen(!isSideBarOpen);
 
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', () => {
+      if (isSideBarOpen) {
+        setIsSidebarOpen(false);
+      }
+    });
+  }, [isSideBarOpen]);
+
   return (
     <>
       <Seo />
@@ -41,7 +50,7 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
         >
           {children}
         </StyledContainer>
-        {!hideRightSidebar && <Rightbar />}
+        {!hideRightSidebar && <RightSideBar />}
       </Root>
     </>
   );
