@@ -74,11 +74,11 @@ export const Input = styled.input<InputProps>`
 export const Result = styled.div`
   width: 100%;
   height: 500px;
-  overflow-y: scroll;
   position: absolute;
   top: 40px;
   background-color: ${(p) => p.theme.colors.general.white};
   overflow: hidden;
+  overflow-y: auto;
   z-index: ${(p) => p.theme.zIndex.xl};
   border: 1px solid ${(p) => p.theme.colors.border.main};
   border-top: 0;
