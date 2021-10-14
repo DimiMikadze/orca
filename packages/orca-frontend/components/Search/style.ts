@@ -73,7 +73,7 @@ export const Input = styled.input<InputProps>`
 
 export const Result = styled.div`
   width: 100%;
-  height: 500px;
+  max-height: 500px;
   position: absolute;
   top: 40px;
   background-color: ${(p) => p.theme.colors.general.white};
