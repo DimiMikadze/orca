@@ -47,17 +47,16 @@ body:
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Write your steps here
       placeholder: >
-                  1.
-                  2.
-                  3. 
-below.
-  validations:
-    required: true
-- type: markdown
-  attributes:
-    value: Before posting the issue, please go through the steps you've written down to make sure the steps provided are detailed and clear.
-- type: markdown
-  attributes:
-    value: These steps are needed for contributors so they can reproduce your bug and help you. Thanks!
+        1.
+        2.
+        3.
+      description: Write your steps here
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Before posting the issue, please go through the steps you've written down to make sure the steps provided are detailed and clear.
+  - type: markdown
+    attributes:
+      value: These steps are needed for contributors so they can reproduce your bug and help you. Thanks!
