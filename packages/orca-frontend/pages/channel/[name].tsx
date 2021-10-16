@@ -63,19 +63,21 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
       {authUser && <PostCreateButton queryKey={['postsByChannelName', channel._id]} channel={channel} />}
 
       {!authUser && (
-        <Container centered padding="lg" bgColor="white" shadow="sm">
-          <CommunityIcon width="40" />
-
-          <Spacing top="sm">
-            <Button inline onClick={openAuthModal} color="primary">
-              Sign up
-            </Button>
+        <Spacing bottom="sm">
+          <Container centered padding="lg" bgColor="white" shadow="sm">
+            <CommunityIcon width="40" />
 
             <Spacing top="sm">
-              <Text>To post in {channel.name} channel</Text>
+              <Button inline onClick={openAuthModal} color="primary">
+                Sign up
+              </Button>
+
+              <Spacing top="sm">
+                <Text>To post in {channel.name} channel</Text>
+              </Spacing>
             </Spacing>
-          </Spacing>
-        </Container>
+          </Container>
+        </Spacing>
       )}
 
       <div>
