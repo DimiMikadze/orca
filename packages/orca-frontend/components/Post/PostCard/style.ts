@@ -86,6 +86,7 @@ export const PopoverContent = styled.div`
   width: 160px;
   box-shadow: ${(p) => p.theme.shadows.md};
   z-index: 1;
+  overflow: hidden;
 `;
 
 interface LikeAndCommentsCountProps {
