@@ -48,9 +48,9 @@ body:
     attributes:
       label: Steps to reproduce
       placeholder: |
-        * 1.
-        * 2.
-        * 3.
+        1.
+        2.
+        3.
       description: Write your steps here
     validations:
       required: true
