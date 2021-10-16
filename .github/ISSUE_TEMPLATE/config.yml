@@ -1,0 +1,7 @@
+contact_links:
+  - name: Feature Request
+    url: https://community.getorca.org/channel/Feature%20Request
+    about: Create a feature request for Orca.
+  - name: Ask a question
+    url: https://community.getorca.org/channel/Question%20and%20Answer
+    about: Ask questions and discuss with other community members
