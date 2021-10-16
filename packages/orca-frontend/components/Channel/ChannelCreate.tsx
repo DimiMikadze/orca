@@ -9,6 +9,7 @@ import { Channel } from '../../constants';
 
 interface ChannelCreateProps {
   closeModal: () => void;
+  channels: Channel[];
 }
 
 const createChannel = async (channel: Channel) => {
@@ -20,7 +21,7 @@ const createChannel = async (channel: Channel) => {
   }
 };
 
-const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal }) => {
+const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal, channels }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -29,7 +30,10 @@ const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal }) => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>, formValues: Channel) => {
     e.preventDefault();
     try {
-      const { data: channel } = await mutateAsync(formValues);
+      const { data: channel } = await mutateAsync({
+        ...formValues,
+        order: channels.length > 0 ? channels.length : 0,
+      });
       queryClient.setQueryData('channels', (existingChannels: Channel[]) => [...existingChannels, channel]);
       closeModal();
       router.push(`/channel/${channel?.name}`);

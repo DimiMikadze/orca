@@ -14,6 +14,10 @@ const ChannelSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    order: {
+      type: Number,
+      required: true,
+    },
     posts: [
       {
         type: Schema.Types.ObjectId,

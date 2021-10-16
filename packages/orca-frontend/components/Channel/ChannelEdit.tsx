@@ -12,7 +12,7 @@ interface ChannelEditProps {
   closeModal: () => void;
 }
 
-const updateChannel = async (channel: Channel) => {
+const updateChannel = async (channel: any) => {
   try {
     const newChannel = await axios.put('/channels/update', channel);
     return newChannel.data;

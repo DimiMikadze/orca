@@ -20,6 +20,7 @@ export interface Channel {
   name: string;
   authRequired: boolean;
   description?: string;
+  order: number;
 }
 
 export interface Post {

@@ -36,3 +36,4 @@ export { default as ShieldColorfulIcon } from './ShieldColorfulIcon';
 export { default as BanIcon } from './BanIcon';
 export { default as UnbanIcon } from './UnbanIcon';
 export { default as PinnedIcon } from './PinnedIcon';
+export { default as DragIcon } from './DragIcon';

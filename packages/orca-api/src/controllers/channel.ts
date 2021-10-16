@@ -1,6 +1,14 @@
 import { Request, Response } from 'express';
 import { deleteFromCloudinary } from '../utils/cloudinary';
-import { getChannels, getChannelByName, createChannel, updateChannel, deleteChannel, deletePost } from '../db';
+import {
+  getChannels,
+  getChannelByName,
+  createChannel,
+  updateChannel,
+  deleteChannel,
+  deletePost,
+  reorderChannels,
+} from '../db';
 import { getChannelPosts } from '../db';
 import { ErrorCodes, ErrorMessages } from '../constants';
 
@@ -17,13 +25,13 @@ const ChannelController = {
     return res.send(channel);
   },
   create: async (req: Request, res: Response): Promise<any> => {
-    const { name, authRequired, description } = req.body;
+    const { name, authRequired, description, order } = req.body;
     const trimmedName = name.trim();
 
-    if (channelNameReg.test(name) || !name || name.length > 32) {
+    if (channelNameReg.test(name) || !name || name.length > 20) {
       return res
         .status(ErrorCodes.Bad_Request)
-        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 32.`);
+        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 20.`);
     }
 
     const channelExists = await getChannelByName(trimmedName);
@@ -31,17 +39,17 @@ const ChannelController = {
       return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
     }
 
-    const newChannel = await createChannel(trimmedName, authRequired, description);
+    const newChannel = await createChannel(trimmedName, authRequired, order, description);
     return res.send(newChannel);
   },
   update: async (req: Request, res: Response): Promise<any> => {
     const { _id, name, authRequired, description } = req.body;
     const trimmedName = name.trim();
 
-    if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 32) {
+    if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
       return res
         .status(ErrorCodes.Bad_Request)
-        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 32.`);
+        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 20.`);
     }
 
     const channelExists = await getChannelByName(trimmedName);
@@ -50,6 +58,11 @@ const ChannelController = {
     }
     const updatedChannel = await updateChannel(_id, trimmedName, authRequired, description);
     return res.send(updatedChannel);
+  },
+  reorder: async (req: Request, res: Response): Promise<any> => {
+    const { sortedChannels } = req.body;
+    await reorderChannels(sortedChannels);
+    return res.send('success');
   },
   delete: async (req: Request, res: Response): Promise<any> => {
     const { id } = req.body;

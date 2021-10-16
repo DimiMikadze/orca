@@ -1,6 +1,7 @@
-import { forwardRef, ForwardRefRenderFunction, useState } from 'react';
+import { forwardRef, ForwardRefRenderFunction, useEffect, useState } from 'react';
+import { List, arrayMove } from 'react-movable';
 import { useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { UserRole } from '../../constants';
 import { Button, ButtonLink, Divider, Modal, Spacing, Avatar } from '../ui';
 import {
@@ -9,13 +10,13 @@ import {
   PeopleColorfulIcon,
   NotificationColorfulIcon,
   MessageColorfulIcon,
+  DragIcon,
 } from '../ui/icons';
-import { Root, UL, LI, ChannelName } from './style';
+import { Root, UL, LI, ChannelName, DragButton } from './style';
 import ChannelPopover from './ChannelPopover';
 import { useRouter } from 'next/router';
 import { RootState } from '../../store';
 import axios from 'axios';
-import { Channel } from '../../constants';
 import ChannelCreate from '../Channel/ChannelCreate';
 
 interface SidebarProps {
@@ -27,6 +28,11 @@ const fetchChannels = async () => {
   return data;
 };
 
+const reorderChannels = async ({ sortedChannels }) => {
+  const response = await axios.post('/channels/reorder', { sortedChannels });
+  return response;
+};
+
 const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpen }, ref) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [modal, setModal] = useState(false);
@@ -34,13 +40,27 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
   const router = useRouter();
 
   const { data: channels } = useQuery('channels', fetchChannels);
+  const [channelItems, setChannelItems] = useState([]);
+  const { mutateAsync: reorderChannelsMutation } = useMutation(reorderChannels);
+
+  useEffect(() => {
+    if (channels) {
+      setChannelItems(channels);
+    }
+  }, [channels]);
+
+  useEffect(() => {
+    if (channelItems.length > 0) {
+      reorderChannelsMutation({ sortedChannels: channelItems });
+    }
+  }, [channelItems, reorderChannelsMutation]);
 
   const isAdmin = (authUser && authUser.role === UserRole.Admin) || (authUser && authUser.role === UserRole.SuperAdmin);
 
   return (
     <Root ref={ref} isOpen={isOpen}>
       <Modal title="Create Channel" isOpen={modal} close={closeModal}>
-        <ChannelCreate closeModal={closeModal} />
+        <ChannelCreate closeModal={closeModal} channels={channelItems} />
       </Modal>
 
       <UL>
@@ -115,30 +135,44 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           <Spacing top="sm" left="xs" />
           <Divider />
         </LI>
-
-        {channels?.map((channel: Channel) => {
-          if (channel.authRequired && !authUser) {
-            return;
-          }
-
-          return (
-            <LI key={channel._id}>
-              <ButtonLink
-                fullWidth
-                radius="none"
-                href={`/channel/${channel.name}`}
-                color="text"
-                active={channel.name === router.query.name}
-                size="sm"
-              >
-                <ChannelName>{channel.name}</ChannelName>
-              </ButtonLink>
-
-              {isAdmin && <ChannelPopover channel={channel} />}
-            </LI>
-          );
-        })}
       </UL>
+
+      {channelItems?.length > 0 && (
+        <List
+          lockVertically
+          values={channelItems}
+          onChange={({ oldIndex, newIndex }) => {
+            setChannelItems(arrayMove(channelItems, oldIndex, newIndex));
+          }}
+          renderList={({ children, props }) => <UL {...props}>{children}</UL>}
+          renderItem={({ value, props }) => {
+            return (
+              <LI {...props}>
+                <ButtonLink
+                  fullWidth
+                  radius="none"
+                  href={`/channel/${value.name}`}
+                  color="text"
+                  active={value.name === router.query.name}
+                  size="sm"
+                >
+                  <ChannelName>{value.name}</ChannelName>
+                </ButtonLink>
+
+                {isAdmin && (
+                  <Spacing right="xxs">
+                    <DragButton ghost data-movable-handle tabIndex={-1}>
+                      <DragIcon />
+                    </DragButton>
+                  </Spacing>
+                )}
+
+                {isAdmin && <ChannelPopover channel={value} />}
+              </LI>
+            );
+          }}
+        />
+      )}
 
       {isAdmin && (
         <Button size="xs" onClick={() => setModal(true)} textColor="text">
