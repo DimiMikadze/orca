@@ -42,6 +42,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
   const { data: channels } = useQuery('channels', fetchChannels);
   const [channelItems, setChannelItems] = useState([]);
   const { mutateAsync: reorderChannelsMutation } = useMutation(reorderChannels);
+  const isAdmin = (authUser && authUser.role === UserRole.Admin) || (authUser && authUser.role === UserRole.SuperAdmin);
 
   useEffect(() => {
     if (channels) {
@@ -50,12 +51,10 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
   }, [channels]);
 
   useEffect(() => {
-    if (channelItems.length > 0) {
+    if (channelItems.length > 0 && isAdmin) {
       reorderChannelsMutation({ sortedChannels: channelItems });
     }
-  }, [channelItems, reorderChannelsMutation]);
-
-  const isAdmin = (authUser && authUser.role === UserRole.Admin) || (authUser && authUser.role === UserRole.SuperAdmin);
+  }, [channelItems, reorderChannelsMutation, isAdmin]);
 
   return (
     <Root ref={ref} isOpen={isOpen}>

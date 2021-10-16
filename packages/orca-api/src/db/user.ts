@@ -99,12 +99,12 @@ export const countUsers = async (): Promise<any> => {
 };
 
 export const onlineUsers = async (userId?: string): Promise<any> => {
-  const users = User.find({ isOnline: true, _id: { $ne: userId } }).select('-password');
+  const users = User.find({ isOnline: true, _id: { $ne: userId }, banned: { $ne: true } }).select('-password');
   return users;
 };
 
 export const getNewMembers = async (userId?: string): Promise<any> => {
-  const users = User.find({ _id: { $ne: userId } })
+  const users = User.find({ _id: { $ne: userId }, banned: { $ne: true } })
     .select('-password')
     .limit(3)
     .sort({ createdAt: -1 });
