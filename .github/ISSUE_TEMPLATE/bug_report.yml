@@ -1,0 +1,63 @@
+name: Bug Report
+description: Create a bug report for the Orca'
+labels: 'template: bug'
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug report! Please fill out this form as completely as possible.
+  - type: markdown
+    attributes:
+      value: Please first verify that the related issue does not exist in the repository. (if you found a related closed issue, please link to it from your post).
+  - type: input
+    attributes:
+      label: What version of Node.js are you using?
+      description: 'For example: 12.0.0'
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What version of Yarn are you using?
+      description: 'For example: 1.22.10'
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What browser are you using?
+      description: 'For example: Chrome, Safari'
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: What operating system are you using?
+      description: 'For example: macOS, Windows'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Describe the Bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Write your steps here
+      placeholder: >
+                  1.
+                  2.
+                  3. 
+below.
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: Before posting the issue, please go through the steps you've written down to make sure the steps provided are detailed and clear.
+- type: markdown
+  attributes:
+    value: These steps are needed for contributors so they can reproduce your bug and help you. Thanks!
