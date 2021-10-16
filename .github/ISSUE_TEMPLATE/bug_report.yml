@@ -1,13 +1,13 @@
 name: Bug Report
-description: Create a bug report for the Orca'
+description: Create a bug report for the Orca.
 labels: 'template: bug'
 body:
   - type: markdown
     attributes:
-      value: Thanks for taking the time to file a bug report! Please fill out this form as completely as possible.
+      value: Thanks for taking the time to file a bug report!
   - type: markdown
     attributes:
-      value: Please first verify that the related issue does not exist in the repository. (if you found a related closed issue, please link to it from your post).
+      value: Please fill out this form as completely as possible, and verify that the related issue doesn't exist. (if you found a related closed issue, please link to it from your post).
   - type: input
     attributes:
       label: What version of Node.js are you using?
@@ -47,16 +47,13 @@ body:
   - type: textarea
     attributes:
       label: Steps to reproduce
-      placeholder: >
-        1.
-        2.
-        3.
+      placeholder: |
+        * 1.
+        * 2.
+        * 3.
       description: Write your steps here
     validations:
       required: true
   - type: markdown
     attributes:
-      value: Before posting the issue, please go through the steps you've written down to make sure the steps provided are detailed and clear.
-  - type: markdown
-    attributes:
-      value: These steps are needed for contributors so they can reproduce your bug and help you. Thanks!
+      value: Before posting the issue, please go through the steps you've written down to make sure the steps provided are detailed and clear. These steps are needed for contributors so they can reproduce your bug and help you. Thanks!
