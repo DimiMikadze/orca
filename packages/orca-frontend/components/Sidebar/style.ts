@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Layout } from '../../constants';
+import { Button } from '../ui';
 
 interface RootProps {
   isOpen: boolean;
@@ -57,6 +58,11 @@ export const ThreeDots = styled.div<ThreeDotsProps>`
   ${(p) => !p.isOpen && 'opacity: 0;'};
 `;
 
+export const DragButton = styled(Button)`
+  opacity: 0;
+  cursor: grab;
+`;
+
 export const PopoverContent = styled.div`
   border-radius: ${(p) => p.theme.radius.sm};
   overflow: hidden;
@@ -91,6 +97,10 @@ export const LI = styled.li<LIProps>`
   }
 
   &:hover ${ThreeDots} {
+    opacity: 1;
+  }
+
+  &:hover ${DragButton} {
     opacity: 1;
   }
 `;
