@@ -5,7 +5,7 @@ export const Root = styled.div`
   position: relative;
   width: 100%;
   background-color: ${(p) => p.theme.colors.general.white};
-  margin-bottom: ${(p) => p.theme.spacing.lg};
+  margin-bottom: ${(p) => p.theme.spacing.sm};
   border-radius: ${(p) => p.theme.radius.md};
   box-shadow: ${(p) => p.theme.shadows.sm};
 `;
