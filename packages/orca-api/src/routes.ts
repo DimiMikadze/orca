@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import passport from 'passport';
 import multer from 'multer';
 import {
   ChannelController,
@@ -33,6 +34,12 @@ router.post('/logout', AuthController.logout);
 router.post('/forgot-password', AuthController.forgotPassword);
 router.post('/reset-password', AuthController.resetPassword);
 router.post('/email-verify', AuthController.emailVerify);
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/github/callback', AuthController.githubCallback);
+router.get('/google', passport.authenticate('google', { scope: 'profile email' }));
+router.get('/google/callback', AuthController.googleCallback);
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/facebook/callback', AuthController.facebookCallback);
 
 /**
  * Users

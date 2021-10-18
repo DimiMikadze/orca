@@ -13,6 +13,11 @@ export interface AuthUser {
   notifications: [];
   followers: [];
   following: [];
+  facebookId?: string;
+  googleId?: string;
+  githubId?: string;
+  about?: string;
+  website?: string;
 }
 
 export interface Channel {
