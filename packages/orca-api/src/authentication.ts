@@ -22,6 +22,7 @@ const createOrUpdateUser = async (profile: SocialProfile, provider: SocialProvid
         [`${provider}Id`]: profile[`${provider}Id`],
         isOnline: true,
         fullName: profile.fullName,
+        emailVerified: true,
       };
 
       if (profile.website) {
@@ -42,7 +43,7 @@ const createOrUpdateUser = async (profile: SocialProfile, provider: SocialProvid
     }
   }
 
-  const user = new User({ ...profile, isOnline: true });
+  const user = new User({ ...profile, emailVerified: true, isOnline: true });
   await user.save();
   return user;
 };
