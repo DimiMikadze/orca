@@ -58,7 +58,7 @@ const AuthController = {
       await deleteUser(existingUser._id);
     }
 
-    const user = await createUser(fullName, username, email, password);
+    const user = await createUser(fullName, username, email, password, true);
     const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' });
 
     if (isEmailVerificationRequired) {

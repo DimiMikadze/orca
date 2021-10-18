@@ -55,12 +55,19 @@ export const updateUserResetPasswordToken = async (userId: string, token: string
   return user;
 };
 
-export const createUser = async (fullName: string, username: string, email: string, password: string): Promise<any> => {
+export const createUser = async (
+  fullName: string,
+  username: string,
+  email: string,
+  password: string,
+  isOnline?: boolean
+): Promise<any> => {
   const user = await User.create({
     fullName,
     username,
     email,
     password,
+    isOnline,
   });
   return user;
 };
