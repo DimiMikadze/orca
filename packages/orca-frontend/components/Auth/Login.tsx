@@ -5,7 +5,7 @@ import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
 import { RootState } from '../../store';
 import axios from 'axios';
 import { useMutation } from 'react-query';
-import { Config, setCookie } from '../../utils';
+import { Config, Cookies, setCookie } from '../../utils';
 import { SocialButton, Or, Bottom } from './style';
 import { GithubIcon, GoogleIcon, FacebookIcon } from '../ui/icons';
 
@@ -52,7 +52,7 @@ const Login: FC = () => {
           isOnline: true,
         })
       );
-      setCookie('token', token);
+      setCookie(Cookies.Token, token);
       dispatch(setToken(token));
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       dispatch(closeAuthPopup());

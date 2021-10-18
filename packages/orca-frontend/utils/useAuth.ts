@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCookie } from '.';
+import { Cookies, setCookie } from '.';
 import { AlertTypes, openAlert } from '../store/alert';
 import { setAuthUser, setToken } from '../store/auth';
 import { getCookie } from './cookie';
@@ -107,7 +107,7 @@ const useAuth = (): useAuthPayload => {
         return;
       }
 
-      setCookie('token', token);
+      setCookie(Cookies.Token, token);
       dispatch(setToken(token));
       dispatchAuthUser(data);
       router.replace('/', undefined, { shallow: true });
@@ -119,7 +119,7 @@ const useAuth = (): useAuthPayload => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const token = getCookie('token');
+        const token = getCookie(Cookies.Token);
         if (!token) {
           setIsAuthFetching(false);
           return;

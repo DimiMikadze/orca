@@ -7,7 +7,7 @@ import { RootState } from '../../store';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import { GoogleIcon, FacebookIcon, GithubIcon, SuccessIcon } from '../ui/icons';
-import { Config, setCookie } from '../../utils';
+import { Config, Cookies, setCookie } from '../../utils';
 
 interface User {
   fullName: string;
@@ -63,7 +63,7 @@ const SignUp: FC = () => {
         })
       );
       dispatch(setToken(token));
-      setCookie('token', token);
+      setCookie(Cookies.Token, token);
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       dispatch(closeAuthPopup());
     } catch (error) {
