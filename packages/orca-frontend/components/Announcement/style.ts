@@ -14,6 +14,7 @@ export const Root = styled.div`
   padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.lg};
   line-height: 26px;
   font-weight: ${(p) => p.theme.font.weight.regular};
+  z-index: ${(p) => p.theme.zIndex.xl};
 
   @media (min-width: ${(p) => p.theme.screen.sm}) {
     padding: ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.sm};
