@@ -44,89 +44,95 @@ const createOrUpdateUser = async (profile: SocialProfile, provider: SocialProvid
 };
 
 export const initPassport = (): void => {
-  passport.use(
-    new GitHubStrategy(
-      {
-        clientID: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: `${process.env.API_URL}/github/callback`,
-        scope: ['user'],
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        const user = await User.findOne({ githubId: profile.id });
-        if (user) {
-          return done(null, user);
-        }
+  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+    passport.use(
+      new GitHubStrategy(
+        {
+          clientID: process.env.GITHUB_CLIENT_ID,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET,
+          callbackURL: `${process.env.API_URL}/github/callback`,
+          scope: ['user'],
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          const user = await User.findOne({ githubId: profile.id });
+          if (user) {
+            return done(null, user);
+          }
 
-        try {
-          const userProfile = getUserInfoFromGithub(profile);
-          const user = await createOrUpdateUser(userProfile, SocialProvider.Github);
-          return done(null, user);
-        } catch (error) {
-          return done(error);
+          try {
+            const userProfile = getUserInfoFromGithub(profile);
+            const user = await createOrUpdateUser(userProfile, SocialProvider.Github);
+            return done(null, user);
+          } catch (error) {
+            return done(error);
+          }
         }
-      }
-    )
-  );
+      )
+    );
+  }
 
-  passport.use(
-    new FacebookStrategy(
-      {
-        clientID: process.env.FACEBOOK_APP_ID,
-        clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: `${process.env.API_URL}/facebook/callback`,
-        profileFields: [
-          'id',
-          'displayName',
-          'email',
-          'picture.type(large)',
-          'about',
-          'cover',
-          'first_name',
-          'last_name',
-          'website',
-        ],
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        const user = await User.findOne({ facebookId: profile.id });
-        if (user) {
-          return done(null, user);
-        }
+  if (process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+    passport.use(
+      new FacebookStrategy(
+        {
+          clientID: process.env.FACEBOOK_APP_ID,
+          clientSecret: process.env.FACEBOOK_APP_SECRET,
+          callbackURL: `${process.env.API_URL}/facebook/callback`,
+          profileFields: [
+            'id',
+            'displayName',
+            'email',
+            'picture.type(large)',
+            'about',
+            'cover',
+            'first_name',
+            'last_name',
+            'website',
+          ],
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          const user = await User.findOne({ facebookId: profile.id });
+          if (user) {
+            return done(null, user);
+          }
 
-        try {
-          const userProfile = getUserInfoFromFacebook(profile);
-          const user = await createOrUpdateUser(userProfile, SocialProvider.Facebook);
-          done(null, user);
-        } catch (error) {
-          done(error);
+          try {
+            const userProfile = getUserInfoFromFacebook(profile);
+            const user = await createOrUpdateUser(userProfile, SocialProvider.Facebook);
+            done(null, user);
+          } catch (error) {
+            done(error);
+          }
         }
-      }
-    )
-  );
+      )
+    );
+  }
 
-  passport.use(
-    new GoogleStrategy(
-      {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.API_URL}/google/callback`,
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        const user = await User.findOne({ googleId: profile.id });
-        if (user) {
-          return done(null, user);
-        }
+  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(
+      new GoogleStrategy(
+        {
+          clientID: process.env.GOOGLE_CLIENT_ID,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+          callbackURL: `${process.env.API_URL}/google/callback`,
+        },
+        async (accessToken, refreshToken, profile, done) => {
+          const user = await User.findOne({ googleId: profile.id });
+          if (user) {
+            return done(null, user);
+          }
 
-        try {
-          const userProfile = getUserInfoFromGoogle(profile);
-          const user = await createOrUpdateUser(userProfile, SocialProvider.Google);
-          done(null, user);
-        } catch (error) {
-          done(error);
+          try {
+            const userProfile = getUserInfoFromGoogle(profile);
+            const user = await createOrUpdateUser(userProfile, SocialProvider.Google);
+            done(null, user);
+          } catch (error) {
+            done(error);
+          }
         }
-      }
-    )
-  );
+      )
+    );
+  }
 
   passport.use(
     'signup',
