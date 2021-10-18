@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import theme from '../../../theme';
 
 interface HouseColorfulIconProps {
   width?: string;

@@ -1,6 +1,4 @@
 import React, { FC } from 'react';
-import { lighten } from 'polished';
-import theme from '../../../theme';
 
 interface NotificationColorfulIconProps {
   width?: string;

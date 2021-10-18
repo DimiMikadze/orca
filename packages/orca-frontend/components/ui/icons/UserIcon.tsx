@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-import theme from '../../../theme';
 
-interface AccountColorfulIconProps {
+interface UserIconProps {
   width?: string;
   color?: string;
 }
 
-const AccountColorfulIcon: FC<AccountColorfulIconProps> = ({ width }) => {
+const UserIcon: FC<UserIconProps> = ({ width }) => {
   const DEFAULT_WIDTH = '22';
 
   return (
@@ -49,4 +48,4 @@ const AccountColorfulIcon: FC<AccountColorfulIconProps> = ({ width }) => {
   );
 };
 
-export default AccountColorfulIcon;
+export default UserIcon;
