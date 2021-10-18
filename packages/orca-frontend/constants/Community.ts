@@ -6,4 +6,7 @@ export const DefaultCommunity = {
   communitySocialImage: 'https://res.cloudinary.com/dkkf9iqnd/image/upload/v1634034591/community/social.jpg',
   primaryColor: '#0084FF',
   isEmailVerificationRequired: false,
+  facebookLoginEnabled: false,
+  googleLoginEnabled: false,
+  githubLoginEnabled: false,
 };

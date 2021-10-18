@@ -26,6 +26,9 @@ const INITIAL_STATE = {
 
 const Login: FC = () => {
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
+  const { facebookLoginEnabled, githubLoginEnabled, googleLoginEnabled } = useSelector(
+    (state: RootState) => state.settings
+  );
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState('');
   const { mutateAsync: logInMutation } = useMutation(logIn);
@@ -72,17 +75,29 @@ const Login: FC = () => {
   return (
     <Container paddingHorizontal="none">
       <form onSubmit={onSubmit}>
-        <SocialButton href={`${Config.API_URL}/google`}>
-          <GoogleIcon /> Continue with Google <div></div>
-        </SocialButton>
-        <SocialButton href={`${Config.API_URL}/facebook`}>
-          <FacebookIcon color="facebook" /> Continue with Facebook <div></div>
-        </SocialButton>
-        <SocialButton href={`${Config.API_URL}/github`}>
-          <GithubIcon /> Continue with Github <div></div>
-        </SocialButton>
+        {(facebookLoginEnabled || githubLoginEnabled || googleLoginEnabled) && (
+          <>
+            {facebookLoginEnabled && (
+              <SocialButton href={`${Config.API_URL}/facebook`}>
+                <FacebookIcon color="facebook" /> Continue with Facebook <div></div>
+              </SocialButton>
+            )}
 
-        <Or>OR</Or>
+            {googleLoginEnabled && (
+              <SocialButton href={`${Config.API_URL}/google`}>
+                <GoogleIcon /> Continue with Google <div></div>
+              </SocialButton>
+            )}
+
+            {githubLoginEnabled && (
+              <SocialButton href={`${Config.API_URL}/github`}>
+                <GithubIcon /> Continue with Github <div></div>
+              </SocialButton>
+            )}
+
+            <Or>OR</Or>
+          </>
+        )}
 
         <InputText name="email" placeholder="Email" value={values.email} onChange={onChange} />
         <Spacing bottom="xs" />

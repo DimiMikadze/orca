@@ -6,13 +6,21 @@ import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import UploadLogo from './UploadLogo';
 import { RootState } from '../../../store';
-import { setPrimaryColor } from '../../../store/settings';
+import {
+  setFacebookLoginEnabled,
+  setGithubLoginEnabled,
+  setGoogleLoginEnabled,
+  setPrimaryColor,
+} from '../../../store/settings';
 import { AlertTypes, openAlert } from '../../../store/alert';
 
 interface CommunitySettings {
   communityName: string;
   primaryColor: string;
   isEmailVerificationRequired: boolean;
+  facebookLoginEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
 }
 
 const updateCommunitySettings = async (settings: CommunitySettings) => {
@@ -27,6 +35,9 @@ const SettingsCommunity: FC = () => {
     communityName: settings.communityName,
     primaryColor: settings.primaryColor,
     isEmailVerificationRequired: settings.isEmailVerificationRequired,
+    facebookLoginEnabled: settings.facebookLoginEnabled,
+    googleLoginEnabled: settings.googleLoginEnabled,
+    githubLoginEnabled: settings.githubLoginEnabled,
   });
   const [errors, setErrors] = useState({
     communityName: null,
@@ -42,8 +53,20 @@ const SettingsCommunity: FC = () => {
         communityName: values.communityName,
         primaryColor: values.primaryColor,
         isEmailVerificationRequired: values.isEmailVerificationRequired,
+        facebookLoginEnabled: values.facebookLoginEnabled,
+        googleLoginEnabled: values.googleLoginEnabled,
+        githubLoginEnabled: values.githubLoginEnabled,
       });
       dispatch(setPrimaryColor(values.primaryColor));
+      if (settings.facebookLoginEnabled !== values.facebookLoginEnabled) {
+        dispatch(setFacebookLoginEnabled(values.facebookLoginEnabled));
+      }
+      if (settings.googleLoginEnabled !== values.googleLoginEnabled) {
+        dispatch(setGoogleLoginEnabled(values.googleLoginEnabled));
+      }
+      if (settings.githubLoginEnabled !== values.githubLoginEnabled) {
+        dispatch(setGithubLoginEnabled(values.githubLoginEnabled));
+      }
       dispatch(
         openAlert({
           type: AlertTypes.Success,
@@ -79,7 +102,12 @@ const SettingsCommunity: FC = () => {
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target as HTMLInputElement;
-    if (name === 'isEmailVerificationRequired') {
+    if (
+      name === 'isEmailVerificationRequired' ||
+      name === 'facebookLoginEnabled' ||
+      name === 'googleLoginEnabled' ||
+      name === 'githubLoginEnabled'
+    ) {
       setValues({ ...values, [name]: checked });
     } else {
       setValues({ ...values, [name]: value });
@@ -111,6 +139,39 @@ const SettingsCommunity: FC = () => {
             </Spacing>
           </div>
           <Toggle name="isEmailVerificationRequired" checked={values.isEmailVerificationRequired} onChange={onChange} />
+        </LabelAndToggle>
+
+        <Spacing top="md" />
+        <LabelAndToggle>
+          <div>
+            <P weight="bold">Facebook Login</P>
+            <Spacing top="xs">
+              <P color="textSecondary">Is log-in with Facebook enabled?</P>
+            </Spacing>
+          </div>
+          <Toggle name="facebookLoginEnabled" checked={values.facebookLoginEnabled} onChange={onChange} />
+        </LabelAndToggle>
+
+        <Spacing top="md" />
+        <LabelAndToggle>
+          <div>
+            <P weight="bold">Google Login</P>
+            <Spacing top="xs">
+              <P color="textSecondary">Is log-in with Google enabled?</P>
+            </Spacing>
+          </div>
+          <Toggle name="googleLoginEnabled" checked={values.googleLoginEnabled} onChange={onChange} />
+        </LabelAndToggle>
+
+        <Spacing top="md" />
+        <LabelAndToggle>
+          <div>
+            <P weight="bold">Github Login</P>
+            <Spacing top="xs">
+              <P color="textSecondary">Is log-in with Github enabled?</P>
+            </Spacing>
+          </div>
+          <Toggle name="githubLoginEnabled" checked={values.githubLoginEnabled} onChange={onChange} />
         </LabelAndToggle>
 
         <Spacing top="md" />

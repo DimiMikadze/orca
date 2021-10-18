@@ -10,12 +10,18 @@ export const getSettings = async (): Promise<any> => {
 export const createCommunity = async (
   communityName: string,
   primaryColor: boolean,
-  isEmailVerificationRequired: boolean
+  isEmailVerificationRequired: boolean,
+  facebookLoginEnabled: boolean,
+  googleLoginEnabled: boolean,
+  githubLoginEnabled: boolean
 ): Promise<any> => {
   const newSettings = await Settings.create({
     communityName,
     primaryColor,
     isEmailVerificationRequired,
+    facebookLoginEnabled,
+    googleLoginEnabled,
+    githubLoginEnabled,
   });
   return newSettings;
 };
@@ -23,12 +29,22 @@ export const createCommunity = async (
 export const updateCommunity = async (
   communityName: string,
   primaryColor: boolean,
-  isEmailVerificationRequired: boolean
+  isEmailVerificationRequired: boolean,
+  facebookLoginEnabled: boolean,
+  googleLoginEnabled: boolean,
+  githubLoginEnabled: boolean
 ): Promise<any> => {
   const settings = await getSettings();
   const updatedSettings = await Settings.findOneAndUpdate(
     { _id: settings._id },
-    { communityName, primaryColor, isEmailVerificationRequired },
+    {
+      communityName,
+      primaryColor,
+      isEmailVerificationRequired,
+      facebookLoginEnabled,
+      googleLoginEnabled,
+      githubLoginEnabled,
+    },
     { new: true, upsert: true }
   );
   return updatedSettings;

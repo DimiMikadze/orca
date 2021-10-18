@@ -5,6 +5,9 @@ export const SET_COMMUNITY_LOGO = 'SET_COMMUNITY_LOGO';
 export const SET_COMMUNITY_LOGO_PUBLIC_ID = 'SET_COMMUNITY_LOGO_PUBLIC_ID';
 export const SET_PRIMARY_COLOR = 'SET_PRIMARY_COLOR';
 export const SET_IS_EMAIL_VERIFICATION_REQUIRED = 'SET_IS_EMAIL_VERIFICATION_REQUIRED';
+export const SET_FACEBOOK_LOGIN_ENABLED = 'SET_FACEBOOK_LOGIN_ENABLED';
+export const SET_GOOGLE_LOGIN_ENABLED = 'SET_GOOGLE_LOGIN_ENABLED';
+export const SET_GITHUB_LOGIN_ENABLED = 'SET_GITHUB_LOGIN_ENABLED';
 
 export interface Settings {
   communityName: string;
@@ -12,6 +15,9 @@ export interface Settings {
   communityLogoPublicId?: string;
   primaryColor: string;
   isEmailVerificationRequired: boolean;
+  facebookLoginEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
 }
 
 export interface setCommunityNameActionType {
@@ -39,12 +45,30 @@ export interface setIsEmailVerificationRequiredActionType {
   payload: boolean;
 }
 
+export interface setFacebookLoginEnabledActionType {
+  type: typeof SET_FACEBOOK_LOGIN_ENABLED;
+  payload: boolean;
+}
+
+export interface setGoogleLoginEnabledActionType {
+  type: typeof SET_GOOGLE_LOGIN_ENABLED;
+  payload: boolean;
+}
+
+export interface setGithubLoginEnabledActionType {
+  type: typeof SET_GITHUB_LOGIN_ENABLED;
+  payload: boolean;
+}
+
 export type SettingsActionTypes =
   | setCommunityNameActionType
   | setCommunityLogoActionType
   | setPrimaryColorActionType
   | setCommunityLogoPublicIdActionType
-  | setIsEmailVerificationRequiredActionType;
+  | setIsEmailVerificationRequiredActionType
+  | setFacebookLoginEnabledActionType
+  | setGoogleLoginEnabledActionType
+  | setGithubLoginEnabledActionType;
 
 // Actions
 export const setCommunityName = (name: string): SettingsActionTypes => {
@@ -82,6 +106,27 @@ export const setIsEmailVerificationRequired = (isRequired: boolean): SettingsAct
   };
 };
 
+export const setFacebookLoginEnabled = (isEnabled: boolean): SettingsActionTypes => {
+  return {
+    type: SET_FACEBOOK_LOGIN_ENABLED,
+    payload: isEnabled,
+  };
+};
+
+export const setGoogleLoginEnabled = (isEnabled: boolean): SettingsActionTypes => {
+  return {
+    type: SET_GOOGLE_LOGIN_ENABLED,
+    payload: isEnabled,
+  };
+};
+
+export const setGithubLoginEnabled = (isEnabled: boolean): SettingsActionTypes => {
+  return {
+    type: SET_GITHUB_LOGIN_ENABLED,
+    payload: isEnabled,
+  };
+};
+
 // Reducer
 const initialState: Settings = {
   communityName: DefaultCommunity.communityName,
@@ -89,6 +134,9 @@ const initialState: Settings = {
   communityLogoPublicId: DefaultCommunity.communityLogoPublicId,
   primaryColor: DefaultCommunity.primaryColor,
   isEmailVerificationRequired: DefaultCommunity.isEmailVerificationRequired,
+  facebookLoginEnabled: DefaultCommunity.facebookLoginEnabled,
+  googleLoginEnabled: DefaultCommunity.googleLoginEnabled,
+  githubLoginEnabled: DefaultCommunity.githubLoginEnabled,
 };
 
 export function settingsReducer(state = initialState, action: SettingsActionTypes): Settings {
@@ -117,6 +165,22 @@ export function settingsReducer(state = initialState, action: SettingsActionType
       return {
         ...state,
         isEmailVerificationRequired: action.payload,
+      };
+    case SET_FACEBOOK_LOGIN_ENABLED:
+      return {
+        ...state,
+        facebookLoginEnabled: action.payload,
+      };
+    case SET_GOOGLE_LOGIN_ENABLED:
+      return {
+        ...state,
+        googleLoginEnabled: action.payload,
+      };
+
+    case SET_GITHUB_LOGIN_ENABLED:
+      return {
+        ...state,
+        githubLoginEnabled: action.payload,
       };
     default:
       return state;
