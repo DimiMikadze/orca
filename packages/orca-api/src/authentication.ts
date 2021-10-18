@@ -6,6 +6,7 @@ import { Strategy as GitHubStrategy } from 'passport-github2';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from './models';
 import { getUserInfoFromFacebook, getUserInfoFromGithub, getUserInfoFromGoogle, SocialProfile } from './utils';
+import { updateUser } from './db';
 
 export enum SocialProvider {
   Facebook = 'facebook',
@@ -17,24 +18,27 @@ const createOrUpdateUser = async (profile: SocialProfile, provider: SocialProvid
   if (profile.email) {
     const user = await User.findOne({ email: profile.email });
     if (user) {
-      user[`${provider}Id`] = profile[`${provider}Id`];
-      user.isOnline = true;
-      user.fullName = profile.fullName;
+      const fields = {
+        [`${provider}Id`]: profile[`${provider}Id`],
+        isOnline: true,
+        fullName: profile.fullName,
+      };
+
       if (profile.website) {
-        user.website = profile.website;
+        fields.website = profile.website;
       }
       if (profile.about) {
-        user.about = profile.about;
+        fields.about = profile.about;
       }
       if (profile.image) {
-        user.image = profile.image;
+        fields.image = profile.image;
       }
       if (profile.coverImage) {
-        user.coverImage = profile.coverImage;
+        fields.coverImage = profile.coverImage;
       }
 
-      await user.save();
-      return user;
+      const updatedUser = await updateUser(user._id, fields);
+      return updatedUser;
     }
   }
 
