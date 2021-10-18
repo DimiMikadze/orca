@@ -2,12 +2,12 @@ import React, { FC, useState, FormEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { PopupType, openAuthPopup, setAuthUser, setToken, closeAuthPopup } from '../../store/auth';
 import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
-import { SuccessContainer } from './style';
+import { SuccessContainer, SocialButton, Or, Bottom } from './style';
 import { RootState } from '../../store';
 import axios from 'axios';
 import { useMutation } from 'react-query';
-import { SuccessIcon } from '../ui/icons';
-import { setCookie } from '../../utils';
+import { GoogleIcon, FacebookIcon, GithubIcon, SuccessIcon } from '../ui/icons';
+import { Config, setCookie } from '../../utils';
 
 interface User {
   fullName: string;
@@ -90,9 +90,20 @@ const SignUp: FC = () => {
         </SuccessContainer>
       ) : (
         <form onSubmit={onSubmit}>
+          <SocialButton href={`${Config.API_URL}/google`}>
+            <GoogleIcon /> Continue with Google <div></div>
+          </SocialButton>
+          <SocialButton href={`${Config.API_URL}/facebook`}>
+            <FacebookIcon color="facebook" /> Continue with Facebook <div></div>
+          </SocialButton>
+          <SocialButton href={`${Config.API_URL}/github`}>
+            <GithubIcon /> Continue with Github <div></div>
+          </SocialButton>
+
+          <Or>OR</Or>
+
           <InputText name="fullName" placeholder="Full Name" value={values.fullName} onChange={onChange} />
           <Spacing bottom="xs" />
-
           <InputText name="email" placeholder="Email" value={values.email} onChange={onChange} />
           <Spacing bottom="xs" />
           <InputText
@@ -108,22 +119,28 @@ const SignUp: FC = () => {
             </Spacing>
           )}
           <Spacing bottom="sm" />
-          <Button color="primary">Sign up</Button>
-          <Spacing top="sm">
-            <Text size="sm" color="textSecondary">
-              Already have an account?
-            </Text>
-            <Spacing left="xxs" inline>
-              <LinkButton
-                type="button"
-                onClick={() => {
-                  dispatch(openAuthPopup(PopupType.Log_In));
-                }}
-              >
-                Log in
-              </LinkButton>
+
+          <Bottom>
+            <Button color="primary" fullWidth>
+              Sign up
+            </Button>
+            <Spacing top="sm">
+              <Text size="xs" color="textSecondary">
+                Already have an account?
+              </Text>
+              <Spacing left="xxs" inline>
+                <LinkButton
+                  size="xs"
+                  type="button"
+                  onClick={() => {
+                    dispatch(openAuthPopup(PopupType.Log_In));
+                  }}
+                >
+                  Log in
+                </LinkButton>
+              </Spacing>
             </Spacing>
-          </Spacing>
+          </Bottom>
         </form>
       )}
     </Container>

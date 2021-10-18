@@ -33,7 +33,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     username: {
       type: String,
@@ -43,10 +42,18 @@ const UserSchema = new Schema(
       sparse: true,
     },
     resetPasswordToken: String,
-    facebookId: String,
-    googleId: String,
-    githubId: String,
-    twitterId: String,
+    facebookId: {
+      type: String,
+      default: '',
+    },
+    googleId: {
+      type: String,
+      default: '',
+    },
+    githubId: {
+      type: String,
+      default: '',
+    },
     image: String,
     imagePublicId: String,
     about: String,
@@ -117,7 +124,6 @@ export interface IUser extends Document {
   facebookId: string;
   googleId: string;
   githubId: string;
-  twitterId: string;
   image: string;
   imagePublicId: string;
   about: string;
@@ -136,9 +142,11 @@ export interface IUser extends Document {
 }
 
 UserSchema.pre<IUser>('save', async function (next) {
-  const hash = await bcrypt.hash(this.password, 10);
+  if (this.password) {
+    const hash = await bcrypt.hash(this.password, 10);
 
-  this.password = hash;
+    this.password = hash;
+  }
   next();
 });
 

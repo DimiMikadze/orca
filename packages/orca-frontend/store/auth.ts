@@ -11,6 +11,11 @@ export interface AuthUser {
   coverImagePublicId?: string;
   coverImage?: string;
   fullName?: string;
+  facebookId?: string;
+  googleId?: string;
+  githubId?: string;
+  about?: string;
+  website?: string;
   notifications: any[];
   followers: any[];
   following: any[];
