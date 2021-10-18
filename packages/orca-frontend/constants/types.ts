@@ -13,6 +13,11 @@ export interface AuthUser {
   notifications: [];
   followers: [];
   following: [];
+  facebookId?: string;
+  googleId?: string;
+  githubId?: string;
+  about?: string;
+  website?: string;
 }
 
 export interface Channel {
@@ -20,6 +25,7 @@ export interface Channel {
   name: string;
   authRequired: boolean;
   description?: string;
+  order: number;
 }
 
 export interface Post {

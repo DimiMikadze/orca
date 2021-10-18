@@ -14,7 +14,7 @@ export interface IChannelForm {
 }
 
 interface ChannelFormProps {
-  onSubmit: (e: FormEvent<HTMLFormElement>, formValues: Channel) => Promise<void>;
+  onSubmit: (e: FormEvent<HTMLFormElement>, formValues: any) => Promise<void>;
   loading: boolean;
   channel?: Channel;
   mode: ChannelFormMode;
@@ -50,8 +50,8 @@ const ChannelForm: FC<ChannelFormProps> = ({ channel, loading, closeModal, onSub
       const { name } = formValues;
 
       const channelNameReg = /[-!$%^&*()_+|~=`\\#{}\[\]:";'<>?,.\/]/;
-      if (channelNameReg.test(name) || !name || name.length > 32) {
-        setErrorMessage('Channel names can only use letters, numbers, underscores, and periods by max character 32.');
+      if (channelNameReg.test(name) || !name || name.length > 20) {
+        setErrorMessage('Channel names can only use letters, numbers, underscores, and periods by max character 20.');
         return;
       }
 

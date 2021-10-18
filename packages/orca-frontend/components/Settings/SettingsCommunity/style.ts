@@ -33,7 +33,7 @@ export const CommunityLogoContainer = styled.div`
 
 export const CommunityLogo = styled.img`
   border: 1px solid ${(p) => p.theme.colors.grey[30]};
-  width: 200px;
+  width: 100px;
   display: block;
 `;
 

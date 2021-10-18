@@ -1,22 +1,34 @@
 import React, { FC } from 'react';
 import theme from '../../../theme';
+import get from 'lodash/get';
 
 interface GoogleIconProps {
   width?: string;
 }
 
 const GoogleIcon: FC<GoogleIconProps> = ({ width }) => {
-  const DEFAULT_WIDTH = '30';
-  const DEFAULT_COLOR = theme.colors.general.textSecondary;
+  const DEFAULT_WIDTH = '20';
 
   return (
     <svg
       width={width || DEFAULT_WIDTH}
-      fill={theme.colors.general.white || DEFAULT_COLOR}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 48 48"
     >
-      <path d="M16 28c11 0 12-1 12-12S27 4 16 4 4 5 4 16s1 12 12 12zm.142-10.558v-2.675l6.731.01c.588 2.728-.735 8.223-6.731 8.223C12.198 23 9 19.866 9 16s3.198-7 7.142-7a7.2 7.2 0 014.81 1.825l-2.01 1.97a4.339 4.339 0 00-2.8-1.017c-2.379 0-4.308 1.89-4.308 4.222 0 2.332 1.929 4.222 4.308 4.222 1.998 0 3.38-1.159 3.888-2.78h-3.888z" />
+      <defs>
+        <path
+          id="a"
+          d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"
+        />
+      </defs>
+      <clipPath id="b">
+        <use xlinkHref="#a" overflow="visible" />
+      </clipPath>
+      <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+      <path clipPath="url(#b)" fill="#EA4335" d="m0 11 17 13 7-6.1L48 14V0H0z" />
+      <path clipPath="url(#b)" fill="#34A853" d="m0 37 30-23 7.9 1L48 0v48H0z" />
+      <path clipPath="url(#b)" fill="#4285F4" d="M48 48 17 24l-4-3 35-10z" />
     </svg>
   );
 };

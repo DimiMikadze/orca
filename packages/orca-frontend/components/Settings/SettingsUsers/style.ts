@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { lighten } from 'polished';
 import { Button } from '../../ui';
 
 export const Top = styled.div`
@@ -80,10 +81,15 @@ export const StyledButton = styled(Button)`
   right: ${(p) => p.theme.spacing.sm};
 `;
 
-export const Tr = styled.tr`
+interface TrProps {
+  bgColor?: string;
+}
+
+export const Tr = styled.tr<TrProps>`
   position: relative;
   border-top: 1px solid ${(p) => p.theme.colors.border.main};
   border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
+  background-color: ${(p) => (p.bgColor ? lighten(0.3, p.theme.colors.general[p.bgColor]) : 'transparent')};
 
   &:last-child {
     border: 0;

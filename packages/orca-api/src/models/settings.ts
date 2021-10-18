@@ -18,6 +18,18 @@ const SettingsSchema = new Schema(
       type: String,
       default: DefaultCommunity.communityLogoPublicId,
     },
+    facebookLoginEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    googleLoginEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    githubLoginEnabled: {
+      type: Boolean,
+      default: false,
+    },
     primaryColor: {
       type: String,
       required: true,

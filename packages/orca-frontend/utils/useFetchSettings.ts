@@ -8,6 +8,9 @@ import {
   setPrimaryColor,
   setCommunityLogoPublicId,
   setIsEmailVerificationRequired,
+  setFacebookLoginEnabled,
+  setGoogleLoginEnabled,
+  setGithubLoginEnabled,
 } from '../store/settings';
 import { RootState } from '../store';
 
@@ -45,7 +48,16 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
     const fetch = async () => {
       try {
         const { data } = await axios.get('/settings');
-        const { communityLogo, communityName, primaryColor, communityLogoPublicId, isEmailVerificationRequired } = data;
+        const {
+          communityLogo,
+          communityName,
+          primaryColor,
+          communityLogoPublicId,
+          isEmailVerificationRequired,
+          facebookLoginEnabled,
+          googleLoginEnabled,
+          githubLoginEnabled,
+        } = data;
         setValues({
           communityLogo,
           communityName,
@@ -76,6 +88,18 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
 
         if (typeof isEmailVerificationRequired == 'boolean') {
           dispatch(setIsEmailVerificationRequired(isEmailVerificationRequired));
+        }
+
+        if (typeof facebookLoginEnabled === 'boolean') {
+          dispatch(setFacebookLoginEnabled(facebookLoginEnabled));
+        }
+
+        if (typeof googleLoginEnabled === 'boolean') {
+          dispatch(setGoogleLoginEnabled(googleLoginEnabled));
+        }
+
+        if (typeof githubLoginEnabled === 'boolean') {
+          dispatch(setGithubLoginEnabled(githubLoginEnabled));
         }
       } catch (error) {
         console.log('Fetching settings failed: ', error);

@@ -1,6 +1,16 @@
 import React, { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { CoverPhoto, CoverLoading, ProfilePhoto, CoverImageWrapper, ProfileImageWrapper, Info, Actions } from './style';
+import {
+  CoverPhoto,
+  CoverLoading,
+  ProfilePhoto,
+  CoverImageWrapper,
+  ProfileImageWrapper,
+  Info,
+  Actions,
+  Count,
+  Bold,
+} from './style';
 import UploadImage from '../UploadImage';
 import Follow from '../Follow';
 import { RootState } from '../../store';
@@ -20,7 +30,6 @@ export enum ProfileLoading {
 const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [isLoading, setIsLoading] = useState<ProfileLoading>(null);
-
   return (
     <>
       <CoverPhoto isLoading={isLoading} image={authUser?._id === user._id ? authUser.coverImage : user.coverImage}>
@@ -65,6 +74,12 @@ const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
           </ButtonLink>
         </Actions>
       )}
+      <Count>
+        <Spacing right="md">
+          <Bold>{user.followers.length}</Bold>followers
+        </Spacing>
+        <Bold>{user.following.length}</Bold>following
+      </Count>
     </>
   );
 };

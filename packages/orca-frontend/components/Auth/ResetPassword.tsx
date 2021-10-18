@@ -122,7 +122,9 @@ const ResetPassword: FC = () => {
           </Spacing>
         )}
         <Spacing bottom="sm" />
-        <Button color="primary">Reset Password</Button>
+        <Button color="primary" fullWidth>
+          Reset Password
+        </Button>
       </form>
     </Container>
   );

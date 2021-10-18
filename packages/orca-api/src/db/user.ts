@@ -55,12 +55,19 @@ export const updateUserResetPasswordToken = async (userId: string, token: string
   return user;
 };
 
-export const createUser = async (fullName: string, username: string, email: string, password: string): Promise<any> => {
+export const createUser = async (
+  fullName: string,
+  username: string,
+  email: string,
+  password: string,
+  isOnline?: boolean
+): Promise<any> => {
   const user = await User.create({
     fullName,
     username,
     email,
     password,
+    isOnline,
   });
   return user;
 };
@@ -99,7 +106,15 @@ export const countUsers = async (): Promise<any> => {
 };
 
 export const onlineUsers = async (userId?: string): Promise<any> => {
-  const users = User.find({ isOnline: true, _id: { $ne: userId } }).select('-password');
+  const users = User.find({ isOnline: true, _id: { $ne: userId }, banned: { $ne: true } }).select('-password');
+  return users;
+};
+
+export const getNewMembers = async (userId?: string): Promise<any> => {
+  const users = User.find({ _id: { $ne: userId }, banned: { $ne: true } })
+    .select('-password')
+    .limit(3)
+    .sort({ createdAt: -1 });
   return users;
 };
 

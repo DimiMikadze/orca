@@ -13,6 +13,9 @@ import {
 } from '../db';
 import { EmailRegex, ErrorCodes, ErrorMessages } from '../constants';
 import { sendEmail, getEmailTemplate, checkEmailVerification } from '../utils';
+import { URLSearchParams } from 'url';
+import { SocialProvider } from '../authentication';
+
 const AuthController = {
   authUser: async (req: Request, res: Response): Promise<any> => {
     passport.authenticate('jwt', { session: false }, async (err, user) => {
@@ -55,7 +58,7 @@ const AuthController = {
       await deleteUser(existingUser._id);
     }
 
-    const user = await createUser(fullName, username, email, password);
+    const user = await createUser(fullName, username, email, password, true);
     const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' });
 
     if (isEmailVerificationRequired) {
@@ -71,9 +74,7 @@ const AuthController = {
           subject: 'Email verification',
           html: template,
         });
-        return res.send(
-          `Email verification instructions have been sent to the ${email} email address. Please note that the link will expire in 1 hour.`
-        );
+        return res.send('success');
       } catch (error) {
         return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
       }
@@ -228,6 +229,75 @@ const AuthController = {
       const token = jwt.sign({ user: body }, process.env.SECRET);
       return res.cookie('token', token).send({ user, token });
     });
+  },
+  githubCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    passport.authenticate(
+      'github',
+      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      async (err, user) => {
+        req.login(user, { session: false }, async (error) => {
+          if (error) return next(error);
+
+          const body = { _id: user._id, email: user.email };
+          const token = jwt.sign({ user: body }, process.env.SECRET);
+
+          const payload = {
+            auth: 'social',
+            responseType: 'success',
+            provider: SocialProvider.Github,
+            token,
+          };
+          const queryString = new URLSearchParams(payload).toString();
+          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+        });
+      }
+    )(req, res, next);
+  },
+  googleCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    passport.authenticate(
+      'google',
+      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      async (err, user) => {
+        req.login(user, { session: false }, async (error) => {
+          if (error) return next(error);
+
+          const body = { _id: user._id, email: user.email };
+          const token = jwt.sign({ user: body }, process.env.SECRET);
+
+          const payload = {
+            auth: 'social',
+            responseType: 'success',
+            provider: SocialProvider.Google,
+            token,
+          };
+          const queryString = new URLSearchParams(payload).toString();
+          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+        });
+      }
+    )(req, res, next);
+  },
+  facebookCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    passport.authenticate(
+      'facebook',
+      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      async (err, user) => {
+        req.login(user, { session: false }, async (error) => {
+          if (error) return next(error);
+
+          const body = { _id: user._id, email: user.email };
+          const token = jwt.sign({ user: body }, process.env.SECRET);
+
+          const payload = {
+            auth: 'social',
+            responseType: 'success',
+            provider: SocialProvider.Facebook,
+            token,
+          };
+          const queryString = new URLSearchParams(payload).toString();
+          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+        });
+      }
+    )(req, res, next);
   },
 };
 

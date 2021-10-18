@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUserById, getUsers, onlineUsers, updateUser, updateUserBanned } from '../db';
+import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned } from '../db';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
@@ -18,6 +18,11 @@ const UserController = {
   onlineUsers: async (req: Request, res: Response): Promise<any> => {
     const authUser = req.user as AuthUser;
     const users = await onlineUsers(authUser?._id);
+    return res.send(users);
+  },
+  newMembers: async (req: Request, res: Response): Promise<any> => {
+    const authUser = req.user as AuthUser;
+    const users = await getNewMembers(authUser?._id);
     return res.send(users);
   },
   uploadPhoto: async (req: Request, res: Response): Promise<any> => {

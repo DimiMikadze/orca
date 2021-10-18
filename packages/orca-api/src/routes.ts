@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import passport from 'passport';
 import multer from 'multer';
 import {
   ChannelController,
@@ -33,12 +34,19 @@ router.post('/logout', AuthController.logout);
 router.post('/forgot-password', AuthController.forgotPassword);
 router.post('/reset-password', AuthController.resetPassword);
 router.post('/email-verify', AuthController.emailVerify);
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/github/callback', AuthController.githubCallback);
+router.get('/google', passport.authenticate('google', { scope: 'profile email' }));
+router.get('/google/callback', AuthController.googleCallback);
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get('/facebook/callback', AuthController.facebookCallback);
 
 /**
  * Users
  */
 router.get('/users/get-users', withUser, UserController.getUsers);
 router.get('/users/online-users', withUser, UserController.onlineUsers);
+router.get('/users/new-members', withUser, UserController.newMembers);
 router.post('/users/upload-photo', [checkIfUser, multerUpload.single('image')], UserController.uploadPhoto);
 router.get('/users/:id', UserController.user);
 router.delete('/users/ban-user', checkIfSuperAdmin, UserController.banUser);
@@ -63,6 +71,7 @@ router.get('/channels/:name', ChannelController.channelByName);
 router.post('/channels/create', checkIfAdmin, ChannelController.create);
 router.put('/channels/update', checkIfAdmin, ChannelController.update);
 router.delete('/channels/delete', checkIfAdmin, ChannelController.delete);
+router.post('/channels/reorder', checkIfAdmin, ChannelController.reorder);
 
 /**
  * Posts

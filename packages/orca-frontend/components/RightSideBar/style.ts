@@ -10,6 +10,8 @@ export const Root = styled.div`
   padding-top: ${(p) => p.theme.spacing.md};
   margin-left: ${(p) => p.theme.spacing.md};
   padding-right: ${(p) => p.theme.spacing.sm};
+  overflow: hidden;
+  overflow-y: auto;
 
   @media (min-width: ${(p) => p.theme.screen.lg}) {
     flex: 0 0 ${Layout.SIDEBAR_MOBILE_WIDTH}px;
@@ -23,7 +25,7 @@ export const Root = styled.div`
 
 export const Heading = styled.div`
   border-bottom: 1px solid ${(p) => p.theme.colors.border.main};
-  padding-bottom: ${(p) => p.theme.spacing.sm};
+  padding-bottom: ${(p) => p.theme.spacing.xs};
 `;
 
 export const PersonContainer = styled.div`

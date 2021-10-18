@@ -7,7 +7,7 @@ export type Spacing = 'none' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type ZIndex = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type BorderColors = 'light' | 'main' | 'dark';
 export type GreyColors = 5 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90;
-export type SocialColors = 'facebook' | 'twitter' | 'linkedIn';
+export type SocialColors = 'facebook' | 'twitter' | 'linkedIn' | 'github';
 export type GeneralColors =
   | 'primary'
   | 'secondary'
@@ -97,6 +97,7 @@ const theme: Theme = {
       facebook: '#385898',
       twitter: '#1DA1F2',
       linkedIn: '#2867B2',
+      github: '#171515',
     },
 
     grey: {

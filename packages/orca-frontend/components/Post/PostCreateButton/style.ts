@@ -7,7 +7,7 @@ export const Root = styled.div`
   border-radius: ${(p) => p.theme.radius.md};
   padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.sm};
   background-color: ${(p) => p.theme.colors.general.white};
-  margin-bottom: ${(p) => p.theme.spacing.md};
+  margin-bottom: ${(p) => p.theme.spacing.sm};
   box-shadow: ${(p) => p.theme.shadows.sm};
 `;
 

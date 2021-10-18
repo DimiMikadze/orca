@@ -18,7 +18,7 @@ import {
   Form,
 } from './style';
 import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../components/ui';
-import { CloseIcon, SuccessIcon, BanIcon } from '../../ui/icons';
+import { CloseIcon, SuccessIcon, GoogleIcon, GithubIcon, FacebookIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
 import SettingsCreateUser from '../SettingsCreateUser/SettingsCreateUser';
 
@@ -52,14 +52,6 @@ const SettingsUsers: FC = () => {
   const onSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchQuery(searchValue);
-  };
-
-  const renderUserStatus = (emailVerified: boolean, banned: boolean) => {
-    if (banned) {
-      return banned && <BanIcon width="13" color="error" />;
-    }
-
-    return emailVerified ? <SuccessIcon width="13" /> : <CloseIcon width="13" color="error" />;
   };
 
   const isEmpty = !usersTotal || usersTotal?.total < 1;
@@ -140,7 +132,9 @@ const SettingsUsers: FC = () => {
                   <Tr>
                     <Th>Name</Th>
                     <Th>Email</Th>
-                    <Th>Status</Th>
+                    <Th>Role</Th>
+                    <Th>Email Verified</Th>
+                    <Th>Provider</Th>
                     <Th>Created</Th>
                   </Tr>
                 </thead>
@@ -149,11 +143,18 @@ const SettingsUsers: FC = () => {
                   return (
                     <tbody key={i}>
                       {users?.map((user: any) => (
-                        <Tr key={user._id}>
+                        <Tr bgColor={user.banned ? 'error' : ''} key={user._id} title="Banned">
                           <Td>{user.fullName}</Td>
                           <Td>{user.email}</Td>
+                          <Td>{user.role}</Td>
                           <Td>
-                            <Spacing left="sm">{renderUserStatus(user.emailVerified, user.banned)}</Spacing>
+                            <Spacing left="sm">
+                              {user.emailVerified ? <SuccessIcon width="14" /> : <CloseIcon width="12" />}
+                            </Spacing>
+                          </Td>
+                          <Td>
+                            {user.facebookId && <FacebookIcon color="facebook" width="14" />}{' '}
+                            {user.googleId && <GoogleIcon width="14" />} {user.githubId && <GithubIcon width="15" />}
                           </Td>
                           <Td>{timeAgo(user.createdAt)}</Td>
                           <Td>

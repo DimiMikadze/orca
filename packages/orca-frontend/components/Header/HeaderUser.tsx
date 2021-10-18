@@ -37,7 +37,7 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
       </ButtonLink>
 
       <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/settings/account">
-        Settings & Account
+        Account
       </ButtonLink>
 
       {authUser.role === UserRole.Admin ||

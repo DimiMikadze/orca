@@ -58,9 +58,12 @@ const ForgotPassword: FC = () => {
           </Spacing>
         )}
         <Spacing bottom="sm" />
-        <Button color="primary">Request Reset</Button>
+        <Button color="primary" fullWidth>
+          Request Reset
+        </Button>
         <Spacing top="sm">
           <LinkButton
+            size="xs"
             type="button"
             onClick={() => {
               dispatch(openAuthPopup(PopupType.Log_In));
