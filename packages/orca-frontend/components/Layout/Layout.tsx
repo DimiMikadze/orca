@@ -3,10 +3,11 @@ import Router from 'next/router';
 import { Root, StyledContainer } from './style';
 import Header from '../Header';
 import SideBar from '../Sidebar';
-import { useClickOutside } from '../../utils';
+import { Cookies, getCookie, useClickOutside } from '../../utils';
 import { Spacing, Screen } from '../../theme';
 import RightSideBar from '../RightSideBar';
 import Seo from '../Seo';
+import Announcement from '../Announcement';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,8 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, containerMaxWidth, marginTop }) => {
+  const isAnnouncementDisabled = getCookie(Cookies.Announcement_Disabled);
+  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(isAnnouncementDisabled !== 'true');
   const sideBarRef = useRef(null);
   const hamburgerRef = useRef(null);
   const [isSideBarOpen, setIsSidebarOpen] = useState(false);
@@ -37,7 +40,7 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
   return (
     <>
       <Seo />
-
+      {isAnnouncementOpen && <Announcement setIsAnnouncementOpen={setIsAnnouncementOpen} />}
       <Header ref={hamburgerRef} toggleSidebar={toggleSidebar} />
       <Root>
         {!hideLeftSidebar && <SideBar ref={sideBarRef} isOpen={isSideBarOpen} />}

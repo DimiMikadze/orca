@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser, setToken } from '../store/auth';
-import { setCookie } from '../utils';
+import { Cookies, setCookie } from '../utils';
 import { RootState } from '../store';
 import { AlertTypes, openAlert } from '../store/alert';
 import Seo from '../components/Seo';
@@ -33,7 +33,7 @@ const EmailVerify = ({ email, token }) => {
             isOnline: true,
           })
         );
-        setCookie('token', responseToken);
+        setCookie(Cookies.Token, responseToken);
         dispatch(setToken(responseToken));
         axios.defaults.headers.common = { Authorization: `bearer ${responseToken}` };
         router.push('/');

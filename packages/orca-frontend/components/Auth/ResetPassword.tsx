@@ -6,7 +6,7 @@ import { Container, InputText, Button, Spacing, Text, H1 } from '../ui';
 import { RootState } from '../../store';
 import { useMutation } from 'react-query';
 import { setAuthUser, setToken } from '../../store/auth';
-import { setCookie } from '../../utils';
+import { Cookies, setCookie } from '../../utils';
 
 interface resetPasswordProps {
   password: string;
@@ -64,7 +64,7 @@ const ResetPassword: FC = () => {
           isOnline: true,
         })
       );
-      setCookie('token', token);
+      setCookie(Cookies.Token, token);
       dispatch(setToken(token));
       setSuccessMessage('Password has been changed successfully.');
       setTimeout(() => {

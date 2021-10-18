@@ -1,6 +1,6 @@
 import React, { FC, RefObject } from 'react';
 import { useSelector } from 'react-redux';
-import { deleteCookie, useClickOutside } from '../../utils';
+import { Cookies, deleteCookie, useClickOutside } from '../../utils';
 import { UserDropDown, UserDropDownItem } from './style';
 import { ButtonLink } from '../ui';
 import { RootState } from '../../store';
@@ -22,7 +22,7 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
   const logout = async () => {
     try {
       await axios.post('/logout');
-      deleteCookie('token');
+      deleteCookie(Cookies.Token);
       closeDropDown();
       window.location.href = '';
     } catch (error) {
