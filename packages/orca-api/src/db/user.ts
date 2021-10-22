@@ -21,8 +21,13 @@ export const getAuthUser = async (id: string): Promise<any> => {
   return user;
 };
 
-export const getUserById = async (id: string): Promise<any> => {
-  const user = await User.findById(id)
+export const getUserById = async (id: string, hideBannedUser?: boolean): Promise<any> => {
+  const query = { _id: id };
+  if (hideBannedUser) {
+    query.banned = { $ne: true };
+  }
+
+  const user = await User.findOne(query)
     .select('-password')
     .populate('likes')
     .populate('followers')
