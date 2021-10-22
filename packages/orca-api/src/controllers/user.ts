@@ -6,7 +6,7 @@ import { uploadToCloudinary } from '../utils/cloudinary';
 const UserController = {
   user: async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
-    const user = await getUserById(id);
+    const user = await getUserById(id, true);
     return res.send(user);
   },
   getUsers: async (req: Request, res: Response): Promise<any> => {
