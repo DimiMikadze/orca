@@ -1,6 +1,4 @@
 import React, { FC } from 'react';
-import theme from '../../../theme';
-import get from 'lodash/get';
 
 interface GoogleIconProps {
   width?: string;
