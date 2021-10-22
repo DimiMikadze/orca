@@ -5,6 +5,8 @@ import { Avatar, TextAreaAutoSize } from '../../ui';
 import axios from 'axios';
 import { useNotifications } from '../../../utils';
 import { NotificationType } from '../../../constants/Notification';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const createComment = async ({ comment, postId }) => {
   const newComment = await axios.post('/comments/create', { comment, postId });
@@ -18,6 +20,7 @@ interface CommentCreateProps {
 }
 
 const CommentCreate: FC<CommentCreateProps> = ({ autoFocus, post, queryKey }) => {
+  const authUser = useSelector((state: RootState) => state.auth.user);
   const [comment, setComment] = useState('');
   const { mutateAsync } = useMutation(createComment);
   const queryClient = useQueryClient();
@@ -79,7 +82,7 @@ const CommentCreate: FC<CommentCreateProps> = ({ autoFocus, post, queryKey }) =>
 
   return (
     <Root>
-      <Avatar />
+      <Avatar image={authUser?.image} />
 
       <TextareaContainer>
         <TextAreaAutoSize

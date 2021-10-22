@@ -72,7 +72,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   return (
     <Root>
       <Link disableBorderOnHover href={`/profile/${author._id}`}>
-        <Avatar />
+        <Avatar image={author?.image} />
       </Link>
 
       <Container>
