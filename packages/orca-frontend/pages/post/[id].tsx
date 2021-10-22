@@ -25,7 +25,14 @@ const PostPage: FC<ProfilePageProps> = ({ post }) => {
       <Seo title={post.title} image={post.image} />
 
       <Container maxWidth="md" marginTop="sm">
-        <PostCard refetch={refetch} isCommentsOpen displayChannelName queryKey={['post', data._id]} post={data} />
+        <PostCard
+          refetch={refetch}
+          disableNavigation
+          isCommentsOpen
+          displayChannelName
+          queryKey={['post', data._id]}
+          post={data}
+        />
       </Container>
     </Layout>
   );

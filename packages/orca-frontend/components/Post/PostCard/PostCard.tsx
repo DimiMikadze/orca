@@ -34,9 +34,17 @@ interface PostCardProps {
   displayChannelName?: boolean;
   isCommentsOpen?: boolean;
   refetch?: any;
+  disableNavigation?: boolean;
 }
 
-const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCommentsOpen, refetch }) => {
+const PostCard: FC<PostCardProps> = ({
+  post,
+  queryKey,
+  displayChannelName,
+  isCommentsOpen,
+  disableNavigation,
+  refetch,
+}) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [isTitleExpanded, setIsTitleExpanded] = useState(false);
   const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
@@ -70,6 +78,9 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
   const toggleCommentSection = () => setIsCommentSectionOpen(!isCommentSectionOpen);
 
   const showComments = isCommentSectionOpen || isCommentsOpen;
+
+  const postCardTitle = <Title ref={titleRef}>{post.title}</Title>;
+  const postCardImage = <Image alt="post" src={post.image} />;
 
   return (
     <Root>
@@ -133,9 +144,13 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
       {post.title && (
         <>
           <TitleContainer isTitleExpanded={isTitleExpanded} initialHeight={TITLE_INITIAL_HEIGHT}>
-            <Link color="text" href={`/post/${post._id}`} disableBorderOnHover>
-              <Title ref={titleRef}>{post.title}</Title>
-            </Link>
+            {disableNavigation ? (
+              postCardTitle
+            ) : (
+              <Link color="text" href={`/post/${post._id}`} disableBorderOnHover>
+                {postCardTitle}
+              </Link>
+            )}
           </TitleContainer>
 
           <SeeMore isTitleExpanded={isTitleExpanded}>
@@ -145,11 +160,14 @@ const PostCard: FC<PostCardProps> = ({ post, queryKey, displayChannelName, isCom
           </SeeMore>
         </>
       )}
-      {post.image && (
-        <Link href={`/post/${post._id}`} disableBorderOnHover fullWidth block>
-          <Image alt="post" src={post.image} />
-        </Link>
-      )}
+      {post.image &&
+        (disableNavigation ? (
+          postCardImage
+        ) : (
+          <Link href={`/post/${post._id}`} disableBorderOnHover fullWidth block>
+            {postCardImage}
+          </Link>
+        ))}
       <LikeAndCommentsCount hadData={likes || comments}>
         {likes}
         <div />
