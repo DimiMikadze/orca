@@ -40,16 +40,11 @@ export const Image = styled.img`
   display: block;
 `;
 
-interface TitleContainerProps {
-  isTitleExpanded: boolean;
-  initialHeight: number;
-}
-
-export const TitleContainer = styled.div<TitleContainerProps>`
+export const TitleContainer = styled.div`
   overflow: hidden;
-  max-height: ${(p) => (p.isTitleExpanded ? `${p.initialHeight}px` : 'auto')};
   padding: 0 ${(p) => p.theme.spacing.sm};
   margin-top: ${(p) => p.theme.spacing.xs};
+  margin-bottom: ${(p) => p.theme.spacing.xs};
 `;
 
 export const Title = styled.span`
@@ -57,20 +52,6 @@ export const Title = styled.span`
   word-wrap: break-word;
   display: block;
   font-size: ${(p) => p.theme.font.size.sm};
-`;
-
-interface SeeMoreProps {
-  isTitleExpanded: boolean;
-}
-
-export const SeeMore = styled.span<SeeMoreProps>`
-  display: block;
-  padding: 0 ${(p) => p.theme.spacing.sm};
-  margin-top: ${(p) => p.theme.spacing.xxs};
-  margin-bottom: ${(p) => p.theme.spacing.xs};
-  font-size: ${(p) => p.theme.font.size.tiny};
-  visibility: ${(p) => !p.isTitleExpanded && `hidden`};
-  margin-bottom: ${(p) => !p.isTitleExpanded && `0`};
 `;
 
 export const Popover = styled.div`
