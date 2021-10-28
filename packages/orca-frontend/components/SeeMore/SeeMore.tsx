@@ -1,9 +1,14 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useState, FC } from 'react';
 import { StyledButton } from './style';
 
-const MAX_CHARACTERS_TO_SHOW = 250;
+const MAX_CHARACTERS_TO_SHOW = 420;
 
-const SeeMore = ({ children, maxCharactersToShow = MAX_CHARACTERS_TO_SHOW }) => {
+interface SeeMoreProps {
+  children: string;
+  maxCharactersToShow?: number;
+}
+
+const SeeMore: FC<SeeMoreProps> = ({ children, maxCharactersToShow = MAX_CHARACTERS_TO_SHOW }) => {
   const text = children;
   const [isCollapsed, setIsCollapsed] = useState(text.length > maxCharactersToShow);
 
@@ -16,7 +21,7 @@ const SeeMore = ({ children, maxCharactersToShow = MAX_CHARACTERS_TO_SHOW }) => 
     <span>
       {isCollapsed ? `${text.slice(0, maxCharactersToShow)}...` : text}
       {isCollapsed && (
-        <StyledButton ghost size="xs" onClick={expandTitle}>
+        <StyledButton ghost onClick={expandTitle}>
           See more
         </StyledButton>
       )}
