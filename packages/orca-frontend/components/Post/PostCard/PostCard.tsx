@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PostCardPopover from './PostCardPopover';
 import {
@@ -6,7 +6,6 @@ import {
   Image,
   TitleContainer,
   Title,
-  SeeMore,
   Top,
   Author,
   Name,
@@ -27,6 +26,7 @@ import useClickOutside from '../../../utils/useClickOutside';
 import PostCardShare from './PostCardShare';
 import PostCreate from '../../PostCreate';
 import Like from '../../Like';
+import SeeMore from '../../SeeMore';
 
 interface PostCardProps {
   post: Post;
@@ -46,7 +46,6 @@ const PostCard: FC<PostCardProps> = ({
   refetch,
 }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const [isTitleExpanded, setIsTitleExpanded] = useState(false);
   const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isPostCreateOpen, setIsPostCreateOpen] = useState(false);
@@ -56,22 +55,11 @@ const PostCard: FC<PostCardProps> = ({
     toggleShare();
   });
 
-  const titleRef = useRef(null);
-  const TITLE_INITIAL_HEIGHT = 222;
-
   const likesLength = post.likes.length;
   const commentsLength = post.comments.length;
   const likes = likesLength > 0 ? likesLength + ' likes' : null;
   const comments = commentsLength > 0 ? commentsLength + ' comments' : null;
   const hasLiked = post.likes.find((post: any) => post.user === authUser?._id);
-
-  useEffect(() => {
-    if (titleRef.current && titleRef.current.clientHeight > TITLE_INITIAL_HEIGHT) {
-      setIsTitleExpanded(true);
-    }
-  }, []);
-
-  const expandTitle = () => setIsTitleExpanded(false);
 
   const toggleShare = () => setIsShareOpen(!isShareOpen);
 
@@ -79,7 +67,12 @@ const PostCard: FC<PostCardProps> = ({
 
   const showComments = isCommentSectionOpen || isCommentsOpen;
 
-  const postCardTitle = <Title ref={titleRef}>{post.title}</Title>;
+  const postCardTitle = (
+    <Title>
+      <SeeMore>{post.title}</SeeMore>
+    </Title>
+  );
+
   const postCardImage = <Image alt="post" src={post.image} />;
 
   return (
@@ -143,7 +136,7 @@ const PostCard: FC<PostCardProps> = ({
       </Top>
       {post.title && (
         <>
-          <TitleContainer isTitleExpanded={isTitleExpanded} initialHeight={TITLE_INITIAL_HEIGHT}>
+          <TitleContainer>
             {disableNavigation ? (
               postCardTitle
             ) : (
@@ -152,12 +145,6 @@ const PostCard: FC<PostCardProps> = ({
               </Link>
             )}
           </TitleContainer>
-
-          <SeeMore isTitleExpanded={isTitleExpanded}>
-            <Button ghost size="xs" onClick={expandTitle}>
-              See more
-            </Button>
-          </SeeMore>
         </>
       )}
       {post.image &&
