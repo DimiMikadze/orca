@@ -25,6 +25,7 @@ import { Events } from '../../../constants';
 import { addToMessagesList } from '../cache';
 import { NotificationType } from '../../../constants/Notification';
 import { removeUserNotification } from '../../../store/auth';
+import Linkify from '../../Linkify';
 import { useRouter } from 'next/router';
 
 interface MessagesChatProps {
@@ -187,7 +188,10 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
                         <Avatar image={m.sender.image} />
                       </Spacing>
                     )}
-                    <Message isSender={isSender}>{m.message}</Message>
+
+                    <Message isSender={isSender}>
+                      <Linkify>{m.message}</Linkify>
+                    </Message>
 
                     <MessageDate isSender={isSender}>{date(m.createdAt)}</MessageDate>
                   </MessageWrapper>
