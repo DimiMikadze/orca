@@ -60,7 +60,7 @@ const Linkify: FC<LinkifyProps> = ({ children }) => {
     return children;
   };
 
-  return <>{parse(children)}</>;
+  return <span>{parse(children)}</span>;
 };
 
 export default Linkify;
