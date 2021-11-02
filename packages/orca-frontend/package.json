@@ -18,6 +18,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "deepmerge": "^4.2.2",
+    "linkify-it": "^3.0.3",
     "next": "^11.0.1",
     "nprogress": "^0.2.0",
     "polished": "^4.0.5",
@@ -33,6 +34,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/linkify-it": "^3.0.2",
     "@types/lodash": "^4.14.166",
     "@types/node": "^14.14.36",
     "@types/react": "^17.0.0",
