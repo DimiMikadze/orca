@@ -27,6 +27,7 @@ import PostCardShare from './PostCardShare';
 import PostCreate from '../../PostCreate';
 import Like from '../../Like';
 import SeeMore from '../../SeeMore';
+import Linkify from '../../Linkify';
 
 interface PostCardProps {
   post: Post;
@@ -138,7 +139,7 @@ const PostCard: FC<PostCardProps> = ({
         <>
           <TitleContainer>
             {disableNavigation ? (
-              postCardTitle
+              <Linkify>{postCardTitle}</Linkify>
             ) : (
               <Link color="text" href={`/post/${post._id}`} disableBorderOnHover>
                 {postCardTitle}

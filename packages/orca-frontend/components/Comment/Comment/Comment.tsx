@@ -7,6 +7,7 @@ import { Link, Avatar, Confirm } from '../../ui';
 import { CloseIcon } from '../../ui/icons';
 import { RootState } from '../../../store';
 import { useNotifications } from '../../../utils';
+import Linkify from '../../Linkify';
 
 const deleteComment = async (id: string) => {
   const like = await axios.delete('/comments/delete', { data: { id } });
@@ -81,7 +82,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
             {author.fullName}
           </Link>
         </UserName>
-        {comment.comment}
+        <Linkify>{comment.comment}</Linkify>
       </Container>
 
       <Confirm
