@@ -18,7 +18,7 @@ const Announcement: FC<AnnouncementProps> = ({ setIsAnnouncementOpen }) => {
       <div>
         ☆ If you like Orca, give it a star on{' '}
         <Link href="https://github.com/elevensymbols/orca" target="__blank" rel="noreferrer noopener">
-          Github
+          GitHub
         </Link>{' '}
         ☆
       </div>
