@@ -18,6 +18,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "deepmerge": "^4.2.2",
+    "is-hotkey": "^0.2.0",
     "linkify-it": "^3.0.3",
     "next": "^11.0.1",
     "nprogress": "^0.2.0",
@@ -29,11 +30,14 @@
     "react-redux": "^7.2.2",
     "react-share": "^4.4.0",
     "redux": "^4.0.5",
+    "slate": "^0.72.8",
+    "slate-react": "^0.72.9",
     "socket.io-client": "^3.1.1",
     "styled-components": "^5.3.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/is-hotkey": "^0.1.7",
     "@types/linkify-it": "^3.0.2",
     "@types/lodash": "^4.14.166",
     "@types/node": "^14.14.36",
