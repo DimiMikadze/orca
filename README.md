@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <a href="https://getorca.org/docs/getting-started/installation">Documentation</a> | <a href="https://community.getorca.org">Live demo</a>
+  <a href="https://getorca.org/docs/getting-started/installation">Documentation</a>
 </p>
 
 <p align="center">
@@ -75,11 +75,16 @@ Thank you for considering contributing to Orca! The contribution guide can be fo
 
 ## Documentation
 
-See our dedicated [repository](https://github.com/elevensymbols/getorca.org) for the Orca documentation, or view it [live](https://getorca.org/docs/getting-started/installation).
+See our dedicated [repository](https://github.com/dimimikadze/getorca.org) for the Orca documentation, or view it [live](https://getorca.org/docs/getting-started/installation).
 
-## Try live demo
+## Core Contributors
 
-[https://community.getorca.org](https://community.getorca.org)
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/TomKochievi"><img src="https://avatars.githubusercontent.com/u/13495707?v=4" width="100px;" alt=""/><br /><sub><b>Tom Kochievi</b></sub></a></td>
+    <td align="center"><a href="https://github.com/RajendrasinhParmar"><img src="https://avatars.githubusercontent.com/u/8512172?v=4" width="100px;" alt=""/><br /><sub><b>Rajendrasinh Parmar</b></sub></a></td>
+  </tr>
+</table>
 
 ## License
 
