@@ -75,7 +75,7 @@ Thank you for considering contributing to Orca! The contribution guide can be fo
 
 ## Documentation
 
-See our dedicated [repository](https://github.com/elevensymbols/getorca.org) for the Orca documentation, or view it [live](https://getorca.org/docs/getting-started/installation).
+See our dedicated [repository](https://github.com/dimimikadze/getorca.org) for the Orca documentation, or view it [live](https://getorca.org/docs/getting-started/installation).
 
 ## Try live demo
 
