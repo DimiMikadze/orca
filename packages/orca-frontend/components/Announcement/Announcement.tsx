@@ -9,7 +9,7 @@ interface AnnouncementProps {
 
 const Announcement: FC<AnnouncementProps> = ({ setIsAnnouncementOpen }) => {
   const onCloseClick = () => {
-    setCookie(Cookies.Announcement_Disabled, 'true', 7);
+    setCookie(Cookies.Announcement_Disabled, 'true');
     setIsAnnouncementOpen(false);
   };
 
@@ -17,7 +17,7 @@ const Announcement: FC<AnnouncementProps> = ({ setIsAnnouncementOpen }) => {
     <Root>
       <div>
         ☆ If you like Orca, give it a star on{' '}
-        <Link href="https://github.com/elevensymbols/orca" target="__blank" rel="noreferrer noopener">
+        <Link href="https://github.com/dimimikadze/orca" target="__blank" rel="noreferrer noopener">
           GitHub
         </Link>{' '}
         ☆
@@ -25,7 +25,7 @@ const Announcement: FC<AnnouncementProps> = ({ setIsAnnouncementOpen }) => {
 
       <div>
         <Iframe
-          src="https://ghbtns.com/github-btn.html?user=elevensymbols&repo=orca&type=star&count=true"
+          src="https://ghbtns.com/github-btn.html?user=dimimikadze&repo=orca&type=star&count=true"
           frameBorder="0"
           scrolling="0"
           width="104"

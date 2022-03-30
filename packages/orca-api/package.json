@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elevensymbols/orca",
+    "url": "https://github.com/dimimikadze/orca",
     "directory": "packages/orca-api"
   },
   "dependencies": {
