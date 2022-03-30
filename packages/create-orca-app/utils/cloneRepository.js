@@ -11,8 +11,8 @@ const tryGitClone = (url, projectName) => {
 };
 
 module.exports = (projectName) => {
-  const httpsUrl = 'https://github.com/elevensymbols/orca.git';
-  const sshUrl = 'git@github.com:elevensymbols/orca.git';
+  const httpsUrl = 'https://github.com/dimimikadze/orca.git';
+  const sshUrl = 'git@github.com:dimimikadze/orca.git';
   const root = path.resolve(projectName);
 
   console.log();
