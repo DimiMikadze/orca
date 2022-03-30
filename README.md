@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://getorca.org">
-    <img src="https://getorca.org/img/logo-full.png" width="220px" alt="Orca logo" />
+  <a href="https://dimimikadze.github.io/orca-docs">
+    <img src="https://dimimikadze.github.io/orca-docs/img/logo-full.png" width="220px" alt="Orca logo" />
   </a>
 </p>
 
@@ -14,17 +14,17 @@
   <a href="https://www.npmjs.com/package/create-orca-app">
     <img src="https://img.shields.io/npm/dm/create-orca-app.svg" alt="Monthly download on NPM" />
   </a>
-  <a href="https://getorca.org/docs/contributing">
+  <a href="https://dimimikadze.github.io/orca-docs/docs/contributing">
     <img src="https://img.shields.io/badge/PRs-welcome-green.svg" alt="Contributing guide to Orca" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://getorca.org/docs/getting-started/installation">Documentation</a>
+  <a href="https://dimimikadze.github.io/orca-docs/docs/getting-started/installation">Documentation</a>
 </p>
 
 <p align="center">
-  <a href="https://getorca.org">
+  <a href="https://dimimikadze.github.io/orca-docs">
     <kbd><img src="https://res.cloudinary.com/dkkf9iqnd/image/upload/v1633071697/community/Home_Page.png" alt="Home Page" /></kbd>
   </a>
 </p>
@@ -67,15 +67,15 @@ Then open [http://localhost:3000](http://localhost:3000) to see your app.
 
 ## Configuration
 
-Although these steps are enough to create an Orca app and run it locally, you'll need to create an admin user, configure CDN and Email service to use all the Orca's features. The [Configuration Docs](https://getorca.org/docs/getting-started/configuration) will walk you through all of it.
+Although these steps are enough to create an Orca app and run it locally, you'll need to create an admin user, configure CDN and Email service to use all the Orca's features. The [Configuration Docs](https://dimimikadze.github.io/orca-docs/docs/getting-started/configuration) will walk you through all of it.
 
 ## Contributing
 
-Thank you for considering contributing to Orca! The contribution guide can be found in the [Orca documentation](https://getorca.org/docs/contributing).
+Thank you for considering contributing to Orca! The contribution guide can be found in the [Orca documentation](https://dimimikadze.github.io/orca-docs/docs/contributing).
 
 ## Documentation
 
-See our dedicated [repository](https://github.com/dimimikadze/getorca.org) for the Orca documentation, or view it [live](https://getorca.org/docs/getting-started/installation).
+See our dedicated [repository](https://github.com/dimimikadze/dimimikadze.github.io/orca-docs) for the Orca documentation, or view it [live](https://dimimikadze.github.io/orca-docs/docs/getting-started/installation).
 
 ## Core Contributors
 

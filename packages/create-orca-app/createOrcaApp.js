@@ -130,7 +130,7 @@ const createApp = () => {
   console.log('');
   console.log(
     `For CDN, Email service, and Google Analytics configuration, please visit the following URL: ${chalk.cyan(
-      'https://getorca.org/docs/getting-started/configuration'
+      'https://dimimikadze.github.io/orca-docs/docs/getting-started/configuration'
     )}`
   );
   console.log('');

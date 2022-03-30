@@ -1,6 +1,6 @@
 {
   "name": "create-orca-app",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CLI for Orca.",
   "repository": {
     "type": "git",
