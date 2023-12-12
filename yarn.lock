@@ -3056,6 +3056,11 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
+dompurify@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.6.tgz#925ebd576d54a9531b5d76f0a5bef32548351dae"
+  integrity sha512-ilkD8YEnnGh1zJ240uJsW7AzE+2qpbOUYjacomn3AvJ6J4JhKGSZ2nh4wUIXPZrEPppaCLx5jFe8T89Rk8tQ7w==
+
 dot-prop@^4.2.0:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.1.tgz#45884194a71fc2cda71cbb4bceb3a4dd2f433ba4"
