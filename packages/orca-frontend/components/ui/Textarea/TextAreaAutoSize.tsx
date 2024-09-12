@@ -16,7 +16,7 @@ export interface TextAreaAutoSizeProps {
 
 const TextAreaAutoSize: FC<TextAreaAutoSizeProps> = ({
   value,
-  maxHeight,
+  maxHeight = 200,
   onChange,
   borderColor,
   backgroundColorTone,
@@ -65,10 +65,6 @@ const TextAreaAutoSize: FC<TextAreaAutoSizeProps> = ({
       ></Root>
     </div>
   );
-};
-
-TextAreaAutoSize.defaultProps = {
-  maxHeight: 200,
 };
 
 export default TextAreaAutoSize;

@@ -18,9 +18,9 @@ const Confirm: FC<ConfirmProps> = ({
   close,
   onConfirm,
   isOpen,
-  title,
-  confirmText,
-  cancelText,
+  title = 'Do you really want to delete this item?',
+  confirmText = 'Delete',
+  cancelText = 'Cancel',
   hideHeading,
 }) => {
   return (
@@ -42,12 +42,6 @@ const Confirm: FC<ConfirmProps> = ({
       </Root>
     </Modal>
   );
-};
-
-Confirm.defaultProps = {
-  confirmText: 'Delete',
-  cancelText: 'Cancel',
-  title: 'Do you really want to delete this item?',
 };
 
 export default Confirm;

@@ -7,7 +7,7 @@ interface NotFoundProps {
   message?: string;
 }
 
-const NotFound: FC<NotFoundProps> = ({ message }) => {
+const NotFound: FC<NotFoundProps> = ({ message = "We can't seem to find the page you're looking for." }) => {
   return (
     <Root>
       <H1>Oops!</H1>
@@ -22,10 +22,6 @@ const NotFound: FC<NotFoundProps> = ({ message }) => {
       <Link href="/">Go back to Home Page</Link>
     </Root>
   );
-};
-
-NotFound.defaultProps = {
-  message: "We can't seem to find the page you're looking for.",
 };
 
 export default NotFound;

@@ -25,7 +25,7 @@ const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePubl
   return newImage;
 };
 
-const UploadImage: FC<UploadImageProps> = ({ isCover, setIsLoading }) => {
+const UploadImage: FC<UploadImageProps> = ({ isCover = false, setIsLoading }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -95,10 +95,6 @@ const UploadImage: FC<UploadImageProps> = ({ isCover, setIsLoading }) => {
       </Label>
     </form>
   );
-};
-
-UploadImage.defaultProps = {
-  isCover: false,
 };
 
 export default UploadImage;
