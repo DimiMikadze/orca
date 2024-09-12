@@ -24,10 +24,10 @@
     "node": ">=12.20.0"
   },
   "devDependencies": {
-    "husky": "^7.0.4",
-    "lerna": "^3.22.1",
-    "lint-staged": "^11.2.6",
-    "prettier": "^2.8.8"
+    "husky": "^9.1.6",
+    "lerna": "^8.1.8",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,md,json,html}": [
