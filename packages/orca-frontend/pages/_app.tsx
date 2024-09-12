@@ -50,7 +50,7 @@ const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <QueryClientProvider client={queryClientRef.current}>
-        <Hydrate state={pageProps.dehydratedState}>
+        <Hydrate state={(pageProps as any).dehydratedState}>
           <ReduxProvider store={store}>
             <ThemeProvider theme={theme || currentTheme}>
               <App setTheme={setTheme}>

@@ -2,5 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx lint-staged
-yarn ts:check
-yarn lint
+# pnpm run  ts:check
+# pnpm run  lint

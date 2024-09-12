@@ -26,6 +26,7 @@ if (!email.match(emailRegex)) {
 async function connectToDb() {
   try {
     const client = await mongoose.connect(process.env.MONGO_URL, {
+      dbName: 'orca',
       useCreateIndex: true,
       useNewUrlParser: true,
       useFindAndModify: false,

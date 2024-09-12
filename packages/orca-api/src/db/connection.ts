@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 export const initDb = async (): Promise<any> => {
   try {
     const db = await mongoose.connect(process.env.MONGO_URL, {
+      dbName: 'orca',
       useCreateIndex: true,
       useNewUrlParser: true,
       useFindAndModify: false,
