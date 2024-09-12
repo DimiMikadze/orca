@@ -10,7 +10,8 @@ interface AProps {
   block: boolean;
 }
 
-export const A = styled.a<AProps>`
+export const A = styled.div<AProps>`
+  display: inline-block;
   cursor: pointer;
   text-decoration: none;
   transition: color 0.1s;
@@ -27,12 +28,13 @@ export const A = styled.a<AProps>`
   ${(p) => p.block && 'display:block'};
 
   ${(p) =>
-    !p.disableBorderOnHover &&
-    `border-bottom: 1px solid transparent;
+    !p.disableBorderOnHover
+      ? `border-bottom: 1px solid transparent;
 
     &:hover {
       border-bottom: 1px solid ${p.color ? p.theme.colors.general[p.color] : p.theme.colors.general.link};
-  }`}
+  }`
+      : undefined}
 `;
 
 interface ButtonAProps {
