@@ -1,14 +1,16 @@
-import React, { FC, Fragment } from 'react';
+'use client';
+
 import axios from 'axios';
-import Layout from '../../components/Layout';
-import { Wrapper } from '../../components/Members/style';
-import MembersCard from '../../components/Members/MembersCard';
-import { useInfiniteScroll } from '../../utils';
-import { DataLimit } from '../../constants';
-import { LoadingDots, Container, Empty, Skeleton } from '../../components/ui';
-import Seo from '../../components/Seo';
+import { FC, Fragment } from 'react';
 import { useSelector } from 'react-redux';
+import Layout from '../../components/Layout';
+import MembersCard from '../../components/Members/MembersCard';
+import { Wrapper } from '../../components/Members/style';
+import Seo from '../../components/Seo';
+import { Container, Empty, LoadingDots, Skeleton } from '../../components/ui';
+import { DataLimit } from '../../constants';
 import { RootState } from '../../store';
+import { useInfiniteScroll } from '../../utils';
 
 const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
   const [, isEmailVerificationRequired] = queryKey;

@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { forwardRef, ForwardRefRenderFunction } from 'react';
 import { useSelector } from 'react-redux';
 import { UserRole } from '../../../constants';
 import { RootState } from '../../../store';
 import { ButtonLink, Divider, Spacing, Text } from '../../ui';
 import {
+  AccountColorfulIcon,
+  CommunityColorfulIcon,
   HouseColorfulIcon,
   PeopleColorfulIcon,
-  CommunityColorfulIcon,
-  AccountColorfulIcon,
   ShieldColorfulIcon,
 } from '../../ui/icons';
 import { LI, Root, UL } from './style';
@@ -18,14 +18,15 @@ interface SettingsSidebarProps {
 }
 
 const SettingsSidebar: ForwardRefRenderFunction<HTMLDivElement, SettingsSidebarProps> = ({ isOpen }, ref) => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const authUser = useSelector((state: RootState) => state.auth.user);
 
   return (
     <Root ref={ref} isOpen={isOpen}>
       <UL>
         <LI hideOnDesktop>
-          <ButtonLink fullWidth radius="none" href="/" color="text" active={router.pathname === '/'} size="sm">
+          <ButtonLink fullWidth radius="none" href="/" color="text" active={pathname === '/'} size="sm">
             <HouseColorfulIcon width="24" />
             <Spacing right="xs" />
             Home
@@ -37,7 +38,8 @@ const SettingsSidebar: ForwardRefRenderFunction<HTMLDivElement, SettingsSidebarP
             radius="none"
             href="/settings/account"
             color="text"
-            active={router.query.name === 'account'}
+            // active={router.query.name === 'account'}
+            active={searchParams.get('name') === 'account'}
             size="sm"
           >
             <AccountColorfulIcon width="24" />
@@ -51,7 +53,8 @@ const SettingsSidebar: ForwardRefRenderFunction<HTMLDivElement, SettingsSidebarP
             radius="none"
             href="/settings/authentication"
             color="text"
-            active={router.query.name === 'authentication'}
+            active={searchParams.get('name') === 'authentication'}
+            // active={router.query.name === 'authentication'}
             size="sm"
           >
             <ShieldColorfulIcon width="24" />
@@ -76,7 +79,7 @@ const SettingsSidebar: ForwardRefRenderFunction<HTMLDivElement, SettingsSidebarP
                   radius="none"
                   href="/settings/community"
                   color="text"
-                  active={router.query.name === 'community'}
+                  active={searchParams.get('name') === 'community'}
                   size="sm"
                 >
                   <CommunityColorfulIcon width="24" />
@@ -93,7 +96,7 @@ const SettingsSidebar: ForwardRefRenderFunction<HTMLDivElement, SettingsSidebarP
               radius="none"
               href="/settings/users"
               color="text"
-              active={router.query.name === 'users'}
+              active={searchParams.get('name') === 'users'}
               size="sm"
             >
               <PeopleColorfulIcon width="24" />

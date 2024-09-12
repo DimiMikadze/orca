@@ -1,25 +1,22 @@
-import { FC, Fragment } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import Layout from '../../components/Layout';
-import Profile from '../../components/Profile';
-import { PostCard, PostCreateButton } from '../../components/Post';
-import { DataLimit, Post } from '../../constants';
-import { useInfiniteScroll } from '../../utils';
-import { Container, Empty, LoadingDots, Skeleton, Spacing, Text } from '../../components/ui';
-import Seo from '../../components/Seo';
-import { GetServerSideProps } from 'next';
+'use client';
 
-const fetchUser = async ({ queryKey }) => {
-  const [, id] = queryKey;
-  const { data } = await axios.get(`/users/${id}`);
-  return data;
-};
+import { FC, Fragment } from 'react';
+import { useSelector } from 'react-redux';
+import Layout from '../../../components/Layout';
+import { PostCard, PostCreateButton } from '../../../components/Post';
+import Profile from '../../../components/Profile';
+import Seo from '../../../components/Seo';
+import { Container, Empty, LoadingDots, Skeleton, Spacing, Text } from '../../../components/ui';
+import { DataLimit, Post } from '../../../constants';
+import { RootState } from '../../../store';
+import { useInfiniteScroll } from '../../../utils';
+import axios from 'axios';
 
 const fetchPostsByAuthorId = async ({ queryKey, pageParam = 0 }) => {
   const [, authorId] = queryKey;
-  const { data } = await axios.get(`/posts/author/${authorId}?offset=${pageParam}&limit=${DataLimit.PostsByAuthorId}`);
+  const { data } = await axios.get(
+    `http://localhost:4000/posts/author/${authorId}?offset=${pageParam}&limit=${DataLimit.PostsByAuthorId}`
+  );
   return data;
 };
 
@@ -96,15 +93,6 @@ const ProfilePage: FC<ProfilePageProps> = ({ user }) => {
       </>
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const user = await fetchUser({ queryKey: ['user', params.id] });
-  return {
-    props: {
-      user,
-    },
-  };
 };
 
 export default ProfilePage;

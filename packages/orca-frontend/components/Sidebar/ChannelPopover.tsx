@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { openAlert, AlertTypes } from '../../store/alert';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Popover, PopoverContent, ThreeDots } from './style';
 import { Button, Modal, Confirm, Spacing } from '../ui';

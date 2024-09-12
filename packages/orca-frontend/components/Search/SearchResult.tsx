@@ -3,7 +3,6 @@ import { Result, Item, NoSearchResult, SearchIcon, SearchedText, SearchType } fr
 import { Avatar } from '../ui';
 import { PostIcon } from '../ui/icons';
 import { Loading } from '../ui/Loading';
-import DOMPurify from 'dompurify';
 
 interface SearchResultProps {
   onlyUsers?: boolean;
@@ -73,7 +72,7 @@ const SearchResult: FC<SearchResultProps> = ({
                 {isUserResult ? (
                   <SearchedText>{item.fullName}</SearchedText>
                 ) : (
-                  <SearchedText dangerouslySetInnerHTML={{ __html:  DOMPurify.sanitize(updateText(item.title, searchQuery)) }} />
+                  <SearchedText dangerouslySetInnerHTML={{ __html: updateText(item.title, searchQuery) }} />
                 )}
               </>
               {!onlyUsers && <SearchType>{isUserResult ? 'User' : 'Post'}</SearchType>}

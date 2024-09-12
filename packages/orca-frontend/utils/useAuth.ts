@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Cookies, setCookie } from '.';
@@ -21,6 +21,7 @@ const useAuth = (): useAuthPayload => {
   const [isAuthFetching, setIsAuthFetching] = useState(true);
   const [authError, setAuthError] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const dispatchAuthUser = useCallback(
     (data: any) => {
@@ -70,12 +71,15 @@ const useAuth = (): useAuthPayload => {
   );
 
   useEffect(() => {
-    if (!router.query?.auth || router.query?.auth !== 'social') {
+    if (!searchParams.get('auth') || searchParams.get('auth') !== 'social') {
       return;
     }
+    // if (!router.query?.auth || router.query?.auth !== 'social') {
+    //     return
+    // }
 
-    const responseType = router.query?.responseType;
-    const provider = router.query?.provider;
+    const responseType = searchParams.get('responseType');
+    const provider = searchParams.get('provider');
 
     if (responseType !== 'success' && responseType !== 'error') {
       return;
@@ -95,7 +99,7 @@ const useAuth = (): useAuthPayload => {
       return;
     }
 
-    const token = router.query?.token as string;
+    const token = searchParams.get('token') as string;
     if (!token) {
       return;
     }
@@ -110,7 +114,7 @@ const useAuth = (): useAuthPayload => {
       setCookie(Cookies.Token, token);
       dispatch(setToken(token));
       dispatchAuthUser(data);
-      router.replace('/', undefined, { shallow: true });
+      router.replace('/', {});
     };
 
     fetch();
@@ -125,7 +129,9 @@ const useAuth = (): useAuthPayload => {
           return;
         }
 
-        axios.defaults.headers.common = { Authorization: `bearer ${token}` };
+        axios.defaults.headers.common = {
+          Authorization: `bearer ${token}`,
+        };
         const { data } = await axios.get('/auth-user');
         if (!data) {
           setIsAuthFetching(false);

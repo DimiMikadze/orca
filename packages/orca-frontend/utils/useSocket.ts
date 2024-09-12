@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { io, Socket } from 'socket.io-client';
+import { Socket, io } from 'socket.io-client';
 import { RootState } from '../store';
 import { setSocket } from '../store/auth';
 import { Config } from '../utils';
@@ -14,7 +14,7 @@ const useSocket = (): Socket => {
       return;
     }
 
-    const socketInstance = io(Config.API_URL, {
+    const socketInstance = io(Config.SOCKET_IO_URL, {
       withCredentials: true,
     });
     dispatch(setSocket(socketInstance));
@@ -24,7 +24,7 @@ const useSocket = (): Socket => {
     });
   }, [user, dispatch, socket]);
 
-  return socket;
+  return socket as Socket;
 };
 
 export default useSocket;

@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import ResetPassword from '../../components/Auth/ResetPassword';
 import Seo from '../../components/Seo';

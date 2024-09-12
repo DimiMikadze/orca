@@ -1,12 +1,12 @@
-import React, { FC, useState, FormEvent, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container, InputText, Button, Spacing, Text, H1 } from '../ui';
-import { RootState } from '../../store';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { setAuthUser, setToken } from '../../store/auth';
 import { Cookies, setCookie } from '../../utils';
+import { Button, Container, H1, InputText, Spacing, Text } from '../ui';
 
 interface resetPasswordProps {
   password: string;
@@ -26,6 +26,7 @@ const INITIAL_STATE = {
 
 const ResetPassword: FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,18 +42,22 @@ const ResetPassword: FC = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage('');
-    const { query } = router;
+    // const { query } = router;
 
-    if (!query.email || !query.token) {
+    if (!searchParams.get('email') || !searchParams.get('token')) {
       setErrorMessage('The link is broken');
       return;
     }
+    // if (!query.email || !query.token) {
+    //     setErrorMessage('The link is broken')
+    //     return
+    // }
 
     try {
       const response = await resetPasswordMutation({
         password: values.password,
-        email: query.email as string,
-        token: query.token as string,
+        email: searchParams.get('email') as string,
+        token: searchParams.get('token') as string,
       });
 
       const {

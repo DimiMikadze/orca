@@ -7,7 +7,7 @@ import { ThreeDotsIcon } from '../../ui/icons';
 import { useClickOutside } from '../../../utils';
 import { Popover, PopoverContent } from './style';
 import { openAlert, AlertTypes } from '../../../store/alert';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { RootState } from '../../../store';
 import { UserRole } from '../../../constants';
 

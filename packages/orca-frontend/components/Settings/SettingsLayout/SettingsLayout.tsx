@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import Router from 'next/router';
+// import Router from 'next/router';
 import { Root, Container } from './style';
 import Header from '../../Header';
 import SettingsSidebar from '../SettingsSidebar';
@@ -23,11 +23,11 @@ const SettingsLayout: FC<SettingsAppLayoutProps> = ({ children }) => {
   const toggleSidebar = () => setIsSidebarOpen(!isSideBarOpen);
 
   useEffect(() => {
-    Router.events.on('routeChangeComplete', () => {
-      if (isSideBarOpen) {
-        setIsSidebarOpen(false);
-      }
-    });
+    // Router.events.on('routeChangeComplete', () => {
+    //   if (isSideBarOpen) {
+    //     setIsSidebarOpen(false);
+    //   }
+    // });
   }, [isSideBarOpen]);
 
   return (

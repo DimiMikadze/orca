@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../components/Layout';

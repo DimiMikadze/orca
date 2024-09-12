@@ -1,6 +1,6 @@
 import { FC, FormEvent } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { useMutation, useQueryClient } from 'react-query';
 import { openAlert, AlertTypes } from '../../store/alert';

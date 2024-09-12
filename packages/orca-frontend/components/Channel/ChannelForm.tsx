@@ -1,7 +1,9 @@
+'use client';
+
 import { FC, FormEvent, useEffect, useState } from 'react';
-import { InputText, Spacing, P, Toggle, Button, Text, TextAreaAutoSize } from '../ui';
-import { LabelAndToggle, ButtonContainer } from './style';
 import { Channel } from '../../constants';
+import { Button, InputText, P, Spacing, Text, TextAreaAutoSize, Toggle } from '../ui';
+import { ButtonContainer, LabelAndToggle } from './style';
 
 export enum ChannelFormMode {
   Create,

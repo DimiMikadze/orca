@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import Seo from '../components/Seo';
 import { NotFound } from '../components/ui';

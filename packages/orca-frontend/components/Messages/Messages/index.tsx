@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { FC, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -97,7 +97,7 @@ const Messages: FC<MessagesProps> = ({ userId }) => {
   }, [user, conversations, userId, authUser, queryClient]);
 
   const onSearchItemClick = (user: any) => {
-    router.push(`/messages/${user._id}`, undefined, { shallow: true });
+    router.push(`/messages/${user._id}`);
   };
 
   return (

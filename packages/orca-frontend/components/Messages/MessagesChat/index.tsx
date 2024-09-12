@@ -26,7 +26,7 @@ import { addToMessagesList } from '../cache';
 import { NotificationType } from '../../../constants/Notification';
 import { removeUserNotification } from '../../../store/auth';
 import Linkify from '../../Linkify';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface MessagesChatProps {
   onSearchItemClick: (user: any) => void;

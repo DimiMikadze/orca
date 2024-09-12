@@ -1,9 +1,8 @@
 import { useState, forwardRef, ForwardRefRenderFunction, useRef, RefObject, useEffect } from 'react';
-import Router from 'next/router';
+// import Router from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
-import { useRouter } from 'next/router';
-import { updateNotificationSeen } from '../../pages/notifications';
+import { useRouter } from 'next/navigation';
 import {
   Root,
   Wrapper,
@@ -23,6 +22,7 @@ import HeaderNotifications from './HeaderNotifications';
 import Search from '../Search';
 import { RootState } from '../../store';
 import { useBreakpoints } from '../../utils';
+import { updateNotificationSeen } from '../../app/notifications';
 
 interface HeaderProps {
   toggleSidebar?: () => void;
@@ -42,15 +42,14 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
   const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    Router.events.on('routeChangeComplete', () => {
-      if (isUserDropdownOpen) {
-        setIsUserDropdownOpen(false);
-      }
-
-      if (isNotificationsDropdownOpen) {
-        setIsNotificationsDropdownOpen(false);
-      }
-    });
+    // Router.events.on('routeChangeComplete', () => {
+    //   if (isUserDropdownOpen) {
+    //     setIsUserDropdownOpen(false);
+    //   }
+    //   if (isNotificationsDropdownOpen) {
+    //     setIsNotificationsDropdownOpen(false);
+    //   }
+    // });
   }, [isUserDropdownOpen, isNotificationsDropdownOpen]);
 
   const closeDropDown = () => {

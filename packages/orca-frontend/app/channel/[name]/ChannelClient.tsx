@@ -1,42 +1,35 @@
+'use client';
+
 import { FC, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { PostCard, PostCreateButton } from '../../components/Post';
-import Layout from '../../components/Layout';
-import { LoadingDots, Skeleton, Spacing, Container, Button, Text } from '../../components/ui';
-import { RootState } from '../../store';
-import { Channel as ChannelType, DataLimit, Post } from '../../constants';
-import { useInfiniteScroll } from '../../utils';
-import Seo from '../../components/Seo';
-import { GetServerSideProps } from 'next';
-import { ChannelInfo } from '../../components/Channel';
-import { CommunityIcon } from '../../components/ui/icons';
-import { openAuthPopup, PopupType } from '../../store/auth';
-
-const fetchChannelByName = async (channelName: string) => {
-  const { data } = await axios.get(`/channels/${channelName}`);
-  return data;
-};
-
-const fetchPostsByChannelId = async ({ queryKey, pageParam = 0 }) => {
-  const [, channelId] = queryKey;
-  const { data } = await axios.get(
-    `/posts/channel/${channelId}?offset=${pageParam}&limit=${DataLimit.PostsByChannelName}`
-  );
-  return data;
-};
+import { ChannelInfo } from '../../../components/Channel';
+import Layout from '../../../components/Layout';
+import { PostCard, PostCreateButton } from '../../../components/Post';
+import Seo from '../../../components/Seo';
+import { Button, Container, LoadingDots, Skeleton, Spacing, Text } from '../../../components/ui';
+import { CommunityIcon } from '../../../components/ui/icons';
+import { Channel as ChannelType, DataLimit, Post } from '../../../constants';
+import { RootState } from '../../../store';
+import { PopupType, openAuthPopup } from '../../../store/auth';
+import { useInfiniteScroll } from '../../../utils';
 
 interface ChannelProps {
   channel: ChannelType;
 }
 
-const Channel: FC<ChannelProps> = ({ channel }) => {
+const ChannelClient: FC<ChannelProps> = ({ channel }) => {
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
 
   const { data, isFetching, isFetchingNextPage, refetch } = useInfiniteScroll({
     key: ['postsByChannelName', channel._id],
-    apiCall: fetchPostsByChannelId,
+    apiCall: async ({ queryKey, pageParam = 0 }) => {
+      const [, channelId] = queryKey;
+      const { data } = await axios.get(
+        `/posts/channel/${channelId}?offset=${pageParam}&limit=${DataLimit.PostsByChannelName}`
+      );
+      return data;
+    },
     dataLimit: DataLimit.PostsByChannelName,
   });
 
@@ -97,9 +90,4 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const channel = await fetchChannelByName(params.name as string);
-  return { props: { channel: channel } };
-};
-
-export default Channel;
+export default ChannelClient;

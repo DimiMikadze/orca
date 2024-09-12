@@ -1,23 +1,23 @@
-import { forwardRef, ForwardRefRenderFunction, useEffect, useState } from 'react';
-import { List, arrayMove } from 'react-movable';
-import { useSelector } from 'react-redux';
-import { useMutation, useQuery } from 'react-query';
-import { UserRole } from '../../constants';
-import { Button, ButtonLink, Divider, Modal, Spacing, Avatar } from '../ui';
-import {
-  PlusIcon,
-  HouseColorfulIcon,
-  PeopleColorfulIcon,
-  NotificationColorfulIcon,
-  MessageColorfulIcon,
-  DragIcon,
-} from '../ui/icons';
-import { Root, UL, LI, ChannelName, DragButton } from './style';
-import ChannelPopover from './ChannelPopover';
-import { useRouter } from 'next/router';
-import { RootState } from '../../store';
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
+import { forwardRef, ForwardRefRenderFunction, useEffect, useState } from 'react';
+import { arrayMove, List } from 'react-movable';
+import { useMutation, useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
+import { UserRole } from '../../constants';
+import { RootState } from '../../store';
 import ChannelCreate from '../Channel/ChannelCreate';
+import { Avatar, Button, ButtonLink, Divider, Modal, Spacing } from '../ui';
+import {
+  DragIcon,
+  HouseColorfulIcon,
+  MessageColorfulIcon,
+  NotificationColorfulIcon,
+  PeopleColorfulIcon,
+  PlusIcon,
+} from '../ui/icons';
+import ChannelPopover from './ChannelPopover';
+import { ChannelName, DragButton, LI, Root, UL } from './style';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -37,7 +37,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   const { data: channels } = useQuery('channels', fetchChannels);
   const [channelItems, setChannelItems] = useState([]);
@@ -70,32 +70,26 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
               radius="none"
               href={`/profile/${authUser._id}`}
               color="text"
-              active={router.query?.id === authUser._id}
+              active={true}
+              // active={router.query?.id === authUser._id}
               size="sm"
             >
-              <Avatar image={authUser.image} isActive={router.query?.id === authUser._id} />
+              <Avatar image={authUser.image} isActive={true} /* isActive={router.query?.id === authUser._id} */ />
               <Spacing right="xs" />
               {authUser.fullName}
             </ButtonLink>
           </LI>
         )}
         <LI>
-          <ButtonLink fullWidth radius="none" href="/" color="text" active={router.pathname === '/'} size="sm">
-            <HouseColorfulIcon color={router.pathname === '/' ? 'primary' : 'text'} />
+          <ButtonLink fullWidth radius="none" href="/" color="text" active={pathname === '/'} size="sm">
+            <HouseColorfulIcon color={pathname === '/' ? 'primary' : 'text'} />
             {'\u00A0'}
             {'\u00A0'} Home
           </ButtonLink>
         </LI>
         <LI>
-          <ButtonLink
-            fullWidth
-            radius="none"
-            href="/members"
-            color="text"
-            active={router.pathname === '/members'}
-            size="sm"
-          >
-            <PeopleColorfulIcon color={router.pathname === '/members' ? 'primary' : 'text'} />
+          <ButtonLink fullWidth radius="none" href="/members" color="text" active={pathname === '/members'} size="sm">
+            <PeopleColorfulIcon color={pathname === '/members' ? 'primary' : 'text'} />
             {'\u00A0'}
             {'\u00A0'} Members
           </ButtonLink>
@@ -107,24 +101,17 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             radius="none"
             href="/notifications"
             color="text"
-            active={router.pathname === '/notifications'}
+            active={pathname === '/notifications'}
             size="sm"
           >
-            <NotificationColorfulIcon width="20" color={router.pathname === '/notifications' ? 'primary' : 'text'} />
+            <NotificationColorfulIcon width="20" color={pathname === '/notifications' ? 'primary' : 'text'} />
             {'\u00A0'}
             {'\u00A0'} Notifications
           </ButtonLink>
         </LI>
         <LI>
-          <ButtonLink
-            fullWidth
-            radius="none"
-            href="/messages"
-            color="text"
-            active={router.pathname === '/messages'}
-            size="sm"
-          >
-            <MessageColorfulIcon width="20" color={router.pathname === '/messages' ? 'primary' : 'text'} />
+          <ButtonLink fullWidth radius="none" href="/messages" color="text" active={pathname === '/messages'} size="sm">
+            <MessageColorfulIcon width="20" color={pathname === '/messages' ? 'primary' : 'text'} />
             {'\u00A0'}
             {'\u00A0'} Messages
           </ButtonLink>
@@ -152,7 +139,8 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
                   radius="none"
                   href={`/channel/${value.name}`}
                   color="text"
-                  active={value.name === router.query.name}
+                  // active={value.name === router.query.name}
+                  active={true}
                   size="sm"
                 >
                   <ChannelName>{value.name}</ChannelName>

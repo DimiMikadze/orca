@@ -1,12 +1,14 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addUserNotification, removeUserNotification } from '../../store/auth';
-import { RootState } from '../../store';
-import { Events } from '../../constants';
 
-import { Alert, GlobalStyle, Loading } from '../ui';
-import { useAuth, useFetchSettings, useSocket } from '../../utils';
 import { Theme } from '../../theme';
+import GlobalStyle from '../ui/GlobalStyle/GlobalStyle';
+import Alert from '../ui/Alert/Alert';
+import { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAuth, useFetchSettings, useSocket } from '../../utils';
+import { addUserNotification, removeUserNotification } from '../../store/auth';
+import { Events } from '../../constants';
+import { Loading } from '../ui';
 
 interface AppProps {
   children: ReactNode;

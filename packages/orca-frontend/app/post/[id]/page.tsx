@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import axios from 'axios';
-import Layout from '../../components/Layout';
-import { PostCard } from '../../components/Post';
-import { Container } from '../../components/ui';
-import Seo from '../../components/Seo';
+import Layout from '../../../components/Layout';
+import { PostCard } from '../../../components/Post';
+import { Container } from '../../../components/ui';
+import Seo from '../../../components/Seo';
 import { GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 
@@ -18,7 +18,9 @@ interface ProfilePageProps {
 }
 
 const PostPage: FC<ProfilePageProps> = ({ post }) => {
-  const { data, refetch } = useQuery(['post', post._id], fetchPost, { initialData: post });
+  const { data, refetch } = useQuery(['post', post._id], fetchPost, {
+    initialData: post,
+  });
 
   return (
     <Layout hideRightSidebar marginTop="none">
