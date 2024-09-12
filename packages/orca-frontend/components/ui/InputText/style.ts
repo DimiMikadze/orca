@@ -1,14 +1,17 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { InputTextProps } from './InputText';
 
-export const Input = styled.input<InputTextProps>`
+export const Input = styled.input.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && prop !== 'error',
+})<InputTextProps>`
   outline: 0;
   height: 36px;
   width: 100%;
   transition: border 0.1s;
   border-radius: ${(p) => p.theme.radius.sm};
   padding-left: ${(p) => p.theme.spacing.xs};
-  border: 1px solid ${(p) => (p.error ? p.theme.colors.general.error : p.theme.colors.grey[40])};
+  border: 1px solid ${(p) => (p.error ? p.theme.colors.general.error : p.theme.colors.grey[40])}};
   color: ${(p) => p.theme.colors.general.text};
   font-size: ${(p) => p.theme.font.size.sm};
 

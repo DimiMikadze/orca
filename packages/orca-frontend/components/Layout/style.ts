@@ -1,3 +1,4 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { Container } from '../ui';
 
@@ -27,7 +28,9 @@ interface StyledContainerProps {
   hideRightSidebar?: boolean;
 }
 
-export const StyledContainer = styled(Container)<StyledContainerProps>`
+export const StyledContainer = styled(Container).withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && prop !== 'hideRightSidebar',
+})<StyledContainerProps>`
   @media (min-width: ${(p) => parseInt(p.theme.screen.md, 10) + 20 + 'px'}) {
     max-width: ${(p) => p.theme.screen.xs};
   }

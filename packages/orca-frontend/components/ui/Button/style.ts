@@ -1,8 +1,15 @@
-import styled from 'styled-components';
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import get from 'lodash/get';
+import styled from 'styled-components';
 import { ButtonProps } from './Button';
 
-export const Root = styled.button<ButtonProps>`
+export const Root = styled.button.withConfig({
+  shouldForwardProp: (prop) =>
+    shouldForwardProp(prop) &&
+    !['textColor', 'size', 'color', 'radius', 'weight', 'disabled', 'inline', 'text', 'ghost', 'fullWidth'].includes(
+      prop
+    ),
+})<ButtonProps>`
   letter-spacing: 0.5px;
   outline: 0;
   transition: opacity 0.1s;
@@ -69,7 +76,9 @@ export const Root = styled.button<ButtonProps>`
   `}
 `;
 
-export const Link = styled.button<ButtonProps>`
+export const Link = styled.button.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && !['size', 'weight', 'fullWidth'].includes(prop),
+})<ButtonProps>`
   padding: 0;
   display: inline-block;
   border-bottom: 1px solid ${(p) => p.theme.colors.general.text};

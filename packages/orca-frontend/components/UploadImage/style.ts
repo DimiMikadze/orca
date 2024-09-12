@@ -1,3 +1,4 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 
 export const Input = styled.input`
@@ -8,7 +9,9 @@ interface LabelProps {
   isCover?: boolean;
 }
 
-export const Label = styled.label<LabelProps>`
+export const Label = styled.label.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && prop !== 'isCover',
+})<LabelProps>`
   display: flex;
   flex-direction: row;
   align-items: center;

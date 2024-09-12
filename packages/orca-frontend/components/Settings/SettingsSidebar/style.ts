@@ -1,3 +1,4 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { Layout } from '../../../constants';
 
@@ -5,7 +6,9 @@ interface RootProps {
   isOpen: boolean;
 }
 
-export const Root = styled.div<RootProps>`
+export const Root = styled.div.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && prop !== 'isOpen',
+})<RootProps>`
   position: fixed;
   top: ${Layout.HEADER_HEIGHT}px;
   left: 0;
@@ -42,7 +45,9 @@ interface LiProps {
   noHover?: boolean;
 }
 
-export const LI = styled.li<LiProps>`
+export const LI = styled.li.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && !['hideOnDesktop', 'noHover'].includes(prop),
+})<LiProps>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

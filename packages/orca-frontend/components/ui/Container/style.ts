@@ -1,7 +1,24 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { ContainerProps } from './Container';
 
-export const Root = styled.div<ContainerProps>`
+export const Root = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    shouldForwardProp(prop) &&
+    ![
+      'marginTop',
+      'maxWidth',
+      'zIndex',
+      'padding',
+      'radius',
+      'bordered',
+      'bgColor',
+      'shadow',
+      'centered',
+      'paddingVertical',
+      'paddingHorizontal',
+    ].includes(prop),
+})<ContainerProps>`
   position: relative;
   margin: 0 auto;
   margin-top: ${(p) => (p.marginTop ? p.theme.spacing[p.marginTop] : 0)};

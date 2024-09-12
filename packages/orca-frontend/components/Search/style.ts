@@ -1,3 +1,4 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { Radius } from '../../theme';
 
@@ -21,7 +22,10 @@ interface InputProps {
   focused?: boolean;
 }
 
-export const Input = styled.input<InputProps>`
+export const Input = styled.input.withConfig({
+  shouldForwardProp: (prop) =>
+    shouldForwardProp(prop) && !['hideIcon', 'isDropdownOpen', 'backgroundColor'].includes(prop),
+})<InputProps>`
   outline: 0;
   height: 40px;
   width: 100%;
@@ -44,7 +48,6 @@ export const Input = styled.input<InputProps>`
     !p.hideBorder &&
     `
       border: 1px solid ${p.theme.colors.border.main};
-
     `}
 
   ${(p) =>
@@ -54,7 +57,6 @@ export const Input = styled.input<InputProps>`
       border-bottom-right-radius: 0;
       border-bottom: 0;
     `}
-
 
   &:placeholder {
     color: ${(p) => p.theme.colors.grey[20]};
@@ -85,7 +87,9 @@ export const Result = styled.div`
   background-color: ${(p) => p.theme.colors.general.white};
   border-bottom-left-radius: ${(p) => p.theme.radius.sm};
   border-bottom-right-radius: ${(p) => p.theme.radius.sm};
-  box-shadow: -1px 1px 6px ${(p) => p.theme.colors.grey[30]}, 1px 1px 6px ${(p) => p.theme.colors.grey[30]};
+  box-shadow:
+    -1px 1px 6px ${(p) => p.theme.colors.grey[30]},
+    1px 1px 6px ${(p) => p.theme.colors.grey[30]};
 `;
 
 export const Item = styled.button`

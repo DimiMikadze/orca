@@ -132,14 +132,14 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           }}
           renderList={({ children, props }) => <UL {...props}>{children}</UL>}
           renderItem={({ value, props }) => {
+            const { key, ...restProps } = props; // Destructure key from props
             return (
-              <LI {...props}>
+              <LI key={key} {...restProps}>
                 <ButtonLink
                   fullWidth
                   radius="none"
                   href={`/channel/${value.name}`}
                   color="text"
-                  // active={value.name === router.query.name}
                   active={true}
                   size="sm"
                 >

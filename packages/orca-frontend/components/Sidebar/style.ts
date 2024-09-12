@@ -6,7 +6,9 @@ interface RootProps {
   isOpen: boolean;
 }
 
-export const Root = styled.div<RootProps>`
+export const Root = styled.div.attrs<RootProps>((props) => ({
+  isOpen: undefined, // 过滤掉 isOpen 属性
+}))<RootProps>`
   position: fixed;
   top: ${Layout.HEADER_HEIGHT}px;
   left: 0;
@@ -54,7 +56,9 @@ interface ThreeDotsProps {
   isOpen: boolean;
 }
 
-export const ThreeDots = styled.div<ThreeDotsProps>`
+export const ThreeDots = styled.div.attrs<ThreeDotsProps>((props) => ({
+  isOpen: undefined, // 过滤掉 isOpen 属性
+}))<ThreeDotsProps>`
   ${(p) => !p.isOpen && 'opacity: 0;'};
 `;
 
@@ -84,7 +88,9 @@ interface LIProps {
   noHover?: boolean;
 }
 
-export const LI = styled.li<LIProps>`
+export const LI = styled.li.attrs<LIProps>((props) => ({
+  noHover: undefined, // 过滤掉 noHover 属性
+}))<LIProps>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -93,7 +99,7 @@ export const LI = styled.li<LIProps>`
   border-radius: ${(p) => p.theme.spacing.xs};
 
   &:hover {
-    background-color: ${(p) => (p.noHover ? 'inherit' : p.theme.colors.grey[10])};
+    background-color: ${(p) => (p.noHover ? 'inherit' : p.theme.colors.grey[10])}};
   }
 
   &:hover ${ThreeDots} {

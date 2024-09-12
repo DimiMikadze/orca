@@ -1,3 +1,4 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { ProfileLoading } from './Profile';
 
@@ -6,7 +7,9 @@ interface CoverPhotoProps {
   isLoading: ProfileLoading;
 }
 
-export const CoverPhoto = styled.div<CoverPhotoProps>`
+export const CoverPhoto = styled.div.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && prop !== 'isLoading' && prop !== 'image',
+})<CoverPhotoProps>`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

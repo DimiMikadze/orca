@@ -1,7 +1,10 @@
+import shouldForwardProp from '@styled-system/should-forward-prop';
 import styled from 'styled-components';
 import { DividerProps } from './Divider';
 
-export const Root = styled.div<DividerProps>`
+export const Root = styled.div.withConfig({
+  shouldForwardProp: (prop) => shouldForwardProp(prop) && !['backgroundColorTone', 'spacing'].includes(prop),
+})<DividerProps>`
   width: 100%;
   height: 1px;
   background-color: ${(p) =>
