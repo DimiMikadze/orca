@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { AuthUser, ErrorCodes } from '../constants';
 import { createMessage, getConversations, getMessages, IConversation, updateMessageSeen } from '../db/message';
 import { IMessage } from '../models/message';
-import { IUser } from '../models/user';
 
 const MessageController = {
   conversations: async (req: Request, res: Response<IConversation[]>) => {

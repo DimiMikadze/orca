@@ -27,6 +27,7 @@ const AuthController = {
         const authUser = await getAuthUser(user._id);
         return res.send(authUser);
       } catch (error) {
+        console.error(error);
         return res.send(ErrorCodes.Internal).send(ErrorMessages.Generic);
       }
     })(req, res);
@@ -76,6 +77,7 @@ const AuthController = {
         });
         return res.send('success');
       } catch (error) {
+        console.error(error);
         return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
       }
     }
@@ -95,6 +97,7 @@ const AuthController = {
         });
       })(req, res, next);
     } catch (error) {
+      console.error(error);
       res.send(ErrorCodes.Un_Authorized).send(ErrorMessages.Generic);
     }
   },
@@ -113,6 +116,7 @@ const AuthController = {
       try {
         decoded = await jwt.verify(token, process.env.SECRET);
       } catch (error) {
+        console.error(error);
         return res.status(ErrorCodes.Bad_Request).send('The link has expired.');
       }
 
@@ -136,6 +140,7 @@ const AuthController = {
           handler(req, res, next);
         });
       } catch (error) {
+        console.error(error);
         res.send(ErrorCodes.Un_Authorized).send(ErrorMessages.Generic);
       }
     })(req, res, next);
@@ -203,6 +208,7 @@ const AuthController = {
       });
       return res.send(`Password reset instruction has been sent to the ${email} email address.`);
     } catch (error) {
+      console.error(error);
       return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
     }
   },
@@ -213,6 +219,7 @@ const AuthController = {
     try {
       decoded = await jwt.verify(token, process.env.SECRET);
     } catch (error) {
+      console.error(error);
       return res.status(ErrorCodes.Bad_Request).send('The link has expired.');
     }
 
