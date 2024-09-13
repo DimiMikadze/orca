@@ -17,7 +17,7 @@ import { URLSearchParams } from 'url';
 import { SocialProvider } from '../authentication';
 
 const AuthController = {
-  authUser: async (req: Request, res: Response): Promise<any> => {
+  authUser: async (req: Request, res: Response) => {
     passport.authenticate('jwt', { session: false }, async (err, user) => {
       if (!user) {
         return res.send(null);
@@ -31,7 +31,7 @@ const AuthController = {
       }
     })(req, res);
   },
-  signUp: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  signUp: async (req: Request, res: Response, next: NextFunction) => {
     const { fullName, username, email, password } = req.body;
 
     if (!fullName || !email || !password) {
@@ -98,7 +98,7 @@ const AuthController = {
       res.send(ErrorCodes.Un_Authorized).send(ErrorMessages.Generic);
     }
   },
-  emailVerify: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  emailVerify: async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate('signup', { session: false }, async (err) => {
       if (err) {
         return res.status(ErrorCodes.Bad_Request).send(ErrorMessages.Generic);
@@ -140,7 +140,7 @@ const AuthController = {
       }
     })(req, res, next);
   },
-  login: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  login: async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate('login', async (err, user) => {
       try {
         const isEmailVerificationRequired = await checkEmailVerification();
@@ -169,14 +169,14 @@ const AuthController = {
       }
     })(req, res, next);
   },
-  logout: async (req: Request, res: Response): Promise<any> => {
+  logout: async (req: Request, res: Response) => {
     if (req.cookies['token']) {
       return res.clearCookie('token').send('You have been successfully logged out.');
     } else {
       return res.send('You have been successfully logged out.');
     }
   },
-  forgotPassword: async (req: Request, res: Response): Promise<any> => {
+  forgotPassword: async (req: Request, res: Response) => {
     const { email } = req.body;
 
     const user = await getUserByEmail(email);
@@ -206,7 +206,7 @@ const AuthController = {
       return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
     }
   },
-  resetPassword: async (req: Request, res: Response): Promise<any> => {
+  resetPassword: async (req: Request, res: Response) => {
     const { password, token, email } = req.body;
     let decoded = null;
 
@@ -230,7 +230,7 @@ const AuthController = {
       return res.cookie('token', token).send({ user, token });
     });
   },
-  githubCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  githubCallback: async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate(
       'github',
       { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
@@ -253,7 +253,7 @@ const AuthController = {
       }
     )(req, res, next);
   },
-  googleCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  googleCallback: async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate(
       'google',
       { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
@@ -276,7 +276,7 @@ const AuthController = {
       }
     )(req, res, next);
   },
-  facebookCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  facebookCallback: async (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate(
       'facebook',
       { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },

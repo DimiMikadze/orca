@@ -1,14 +1,13 @@
-// @ts-nocheck
-import Like from '../models/like';
+import Like, { ILike } from '../models/like';
 import Post from '../models/post';
 import User from '../models/user';
 
-export const likeById = async (id: string): Promise<any> => {
+export const likeById = async (id: string): Promise<ILike> => {
   const like = await Like.findById(id);
   return like;
 };
 
-export const createLike = async (userId: string, postId: string): Promise<any> => {
+export const createLike = async (userId: string, postId: string): Promise<ILike> => {
   const like = await new Like({ user: userId, post: postId }).save();
 
   // Push the like to the post and user collection.
@@ -18,7 +17,7 @@ export const createLike = async (userId: string, postId: string): Promise<any> =
   return like;
 };
 
-export const deleteLike = async (id: string): Promise<any> => {
+export const deleteLike = async (id: string): Promise<ILike> => {
   const like = await Like.findByIdAndRemove(id);
 
   // Delete the like from the user and post collection.

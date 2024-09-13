@@ -1,8 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface IPost extends Document {
+  title: string;
+  image: string;
+  imagePublicId: string;
+  pinned: boolean;
+  channel: mongoose.Types.ObjectId;
+  author: mongoose.Types.ObjectId;
+  likes: mongoose.Types.ObjectId[];
+  comments: mongoose.Types.ObjectId[];
+}
 
-const PostSchema = new Schema(
+const PostSchema = new Schema<IPost, Model<IPost>>(
   {
     title: String,
     image: String,
@@ -34,4 +43,4 @@ const PostSchema = new Schema(
   }
 );
 
-export default mongoose.model('Post', PostSchema);
+export default mongoose.model<IPost, Model<IPost>>('Post', PostSchema);

@@ -1,11 +1,11 @@
-import Channel from '../models/channel';
+import Channel, { IChannel } from '../models/channel';
 
-export const getChannels = async (): Promise<any> => {
+export const getChannels = async (): Promise<IChannel[]> => {
   const channels = await Channel.find({}).sort({ order: 1 });
   return channels;
 };
 
-export const getChannelByName = async (name: string): Promise<any> => {
+export const getChannelByName = async (name: string): Promise<IChannel | null> => {
   const channel = await Channel.findOne({ name });
   return channel;
 };
@@ -15,7 +15,7 @@ export const createChannel = async (
   authRequired: boolean,
   order: number,
   description?: string
-): Promise<any> => {
+): Promise<IChannel> => {
   const newChannel = await Channel.create({
     name,
     authRequired,
@@ -30,7 +30,7 @@ export const updateChannel = async (
   name: string,
   authRequired: boolean,
   description?: string
-): Promise<any> => {
+): Promise<IChannel | null> => {
   const updatedChannel = await Channel.findOneAndUpdate(
     { _id: id },
     { name, authRequired, description },
@@ -39,7 +39,7 @@ export const updateChannel = async (
   return updatedChannel;
 };
 
-export const reorderChannels = async (sortedChannels: any) => {
+export const reorderChannels = async (sortedChannels: any): Promise<string> => {
   sortedChannels.forEach(async (channel, index) => {
     await Channel.findOneAndUpdate({ _id: channel._id }, { order: index }, { new: true });
   });
@@ -47,7 +47,7 @@ export const reorderChannels = async (sortedChannels: any) => {
   return 'success';
 };
 
-export const deleteChannel = async (id: string): Promise<any> => {
+export const deleteChannel = async (id: string): Promise<IChannel | null> => {
   const deletedChannel = await Channel.findByIdAndRemove(id);
   return deletedChannel;
 };

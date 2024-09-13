@@ -1,9 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 import { DefaultCommunity } from '../constants';
 
-const Schema = mongoose.Schema;
+export interface ISettings extends Document {
+  communityName: string;
+  communityLogo: string;
+  communityLogoPublicId: string;
+  facebookLoginEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
+  primaryColor: string;
+  isEmailVerificationRequired: boolean;
+}
 
-const SettingsSchema = new Schema(
+const SettingsSchema = new Schema<ISettings, Model<ISettings>>(
   {
     communityName: {
       type: String,
@@ -46,4 +55,4 @@ const SettingsSchema = new Schema(
   }
 );
 
-export default mongoose.model('Settings', SettingsSchema);
+export default mongoose.model<ISettings, Model<ISettings>>('Settings', SettingsSchema);

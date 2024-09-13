@@ -1,8 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface IFollow extends Document {
+  user: mongoose.Types.ObjectId;
+  follower: mongoose.Types.ObjectId;
+}
 
-const FollowSchema = new Schema(
+const FollowSchema = new Schema<IFollow, Model<IFollow>>(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -18,4 +21,4 @@ const FollowSchema = new Schema(
   }
 );
 
-export default mongoose.model('Follow', FollowSchema);
+export default mongoose.model<IFollow, Model<IFollow>>('Follow', FollowSchema);

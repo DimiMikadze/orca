@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const initDb = async (): Promise<any> => {
+export const initDb = async (): Promise<typeof mongoose> => {
   try {
     const db = await mongoose.connect(process.env.MONGO_URL, {
       dbName: 'orca',

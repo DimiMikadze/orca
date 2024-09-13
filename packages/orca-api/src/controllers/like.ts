@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 import { AuthUser, ErrorCodes, ErrorMessages } from '../constants';
 import { createLike, deleteLike, likeById } from '../db';
+import { ILike } from '../models/like';
 
 const LikeController = {
-  create: async (req: Request, res: Response): Promise<any> => {
+  create: async (req: Request, res: Response<ILike>) => {
     const { postId } = req.body;
     const authUser = req.user as AuthUser;
     const like = await createLike(authUser._id, postId);
     return res.send(like);
   },
-  delete: async (req: Request, res: Response): Promise<any> => {
+  delete: async (req: Request, res: Response<ILike | string>) => {
     const { id } = req.body;
     const authUser = req.user as AuthUser;
 

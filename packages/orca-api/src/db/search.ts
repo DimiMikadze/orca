@@ -1,7 +1,7 @@
 import { Post, User } from '../models';
 import { checkEmailVerification } from '../utils';
 
-export const searchUsers = async (searchQuery: string, authUserId?: string): Promise<any> => {
+export const searchUsers = async (searchQuery: string, authUserId?: string) => {
   if (!searchQuery) {
     return [];
   }
@@ -28,7 +28,7 @@ export const searchUsers = async (searchQuery: string, authUserId?: string): Pro
   return users;
 };
 
-export const searchAll = async (searchQuery: string, authUserId?: string): Promise<any> => {
+export const searchAll = async (searchQuery: string, authUserId?: string) => {
   if (!searchQuery) {
     return [];
   }

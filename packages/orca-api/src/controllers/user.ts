@@ -1,31 +1,32 @@
 import { Request, Response } from 'express';
-import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned } from '../db';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
+import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned } from '../db';
+import { IUser } from '../models/user';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
 const UserController = {
-  user: async (req: Request, res: Response): Promise<any> => {
+  user: async (req: Request, res: Response<IUser>) => {
     const { id } = req.params;
     const user = await getUserById(id, true);
     return res.send(user);
   },
-  getUsers: async (req: Request, res: Response): Promise<any> => {
+  getUsers: async (req: Request, res: Response<IUser[]>) => {
     const authUser = req.user as AuthUser;
     const { offset, limit, emailVerified } = req.query;
     const users = await getUsers(+offset, +limit, authUser?._id, emailVerified === 'true', true);
     return res.send(users);
   },
-  onlineUsers: async (req: Request, res: Response): Promise<any> => {
+  onlineUsers: async (req: Request, res: Response<IUser[]>) => {
     const authUser = req.user as AuthUser;
     const users = await onlineUsers(authUser?._id);
     return res.send(users);
   },
-  newMembers: async (req: Request, res: Response): Promise<any> => {
+  newMembers: async (req: Request, res: Response<IUser[]>) => {
     const authUser = req.user as AuthUser;
     const users = await getNewMembers(authUser?._id);
     return res.send(users);
   },
-  uploadPhoto: async (req: Request, res: Response): Promise<any> => {
+  uploadPhoto: async (req: Request, res: Response<IUser | string>) => {
     const { imagePublicId, coverImagePublicId, isCover } = req.body;
     const authUser = req.user as AuthUser;
     const image = req.file;
@@ -57,7 +58,7 @@ const UserController = {
 
     return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
   },
-  banUser: async (req: Request, res: Response): Promise<any> => {
+  banUser: async (req: Request, res: Response<IUser | string>) => {
     const { id, banned } = req.body;
 
     const user = await getUserById(id);

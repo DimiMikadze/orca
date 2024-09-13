@@ -11,20 +11,21 @@ import {
 } from '../db';
 import { getChannelPosts } from '../db';
 import { ErrorCodes, ErrorMessages } from '../constants';
+import { IChannel } from '../models/channel';
 
 const channelNameReg = /[-!$%^&*()_+|~=`\\#{}[\]:";'<>?,./]/;
 
 const ChannelController = {
-  channels: async (req: Request, res: Response): Promise<any> => {
+  channels: async (req: Request, res: Response<IChannel[]>) => {
     const channels = await getChannels();
     return res.send(channels);
   },
-  channelByName: async (req: Request, res: Response): Promise<any> => {
+  channelByName: async (req: Request, res: Response<IChannel | string>) => {
     const { name } = req.params;
     const channel = await getChannelByName(name);
     return res.send(channel);
   },
-  create: async (req: Request, res: Response): Promise<any> => {
+  create: async (req: Request, res: Response<IChannel | string>) => {
     const { name, authRequired, description, order } = req.body;
     const trimmedName = name.trim();
 
@@ -42,7 +43,7 @@ const ChannelController = {
     const newChannel = await createChannel(trimmedName, authRequired, order, description);
     return res.send(newChannel);
   },
-  update: async (req: Request, res: Response): Promise<any> => {
+  update: async (req: Request, res: Response<IChannel | string>) => {
     const { _id, name, authRequired, description } = req.body;
     const trimmedName = name.trim();
 
@@ -59,12 +60,12 @@ const ChannelController = {
     const updatedChannel = await updateChannel(_id, trimmedName, authRequired, description);
     return res.send(updatedChannel);
   },
-  reorder: async (req: Request, res: Response): Promise<any> => {
+  reorder: async (req: Request, res: Response<string>) => {
     const { sortedChannels } = req.body;
     await reorderChannels(sortedChannels);
     return res.send('success');
   },
-  delete: async (req: Request, res: Response): Promise<any> => {
+  delete: async (req: Request, res: Response<IChannel | string>) => {
     const { id } = req.body;
     const channel = await deleteChannel(id);
     // Delete all channel posts, and their images from CDN.

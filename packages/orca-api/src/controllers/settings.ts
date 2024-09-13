@@ -2,37 +2,39 @@ import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
 import {
-  getSettings,
-  updateCommunity,
-  updateProfile,
-  getUserByUsername,
-  getUserByEmail,
-  deleteUser,
-  settingsCreateUser,
-  getUsers,
-  updatePassword,
-  updateLogo,
-  createCommunity,
   countUsers,
+  createCommunity,
+  deleteUser,
+  getSettings,
+  getUserByEmail,
+  getUserByUsername,
+  getUsers,
+  settingsCreateUser,
+  updateCommunity,
+  updateLogo,
+  updatePassword,
+  updateProfile,
 } from '../db';
+import { ISettings } from '../models/settings';
+import { IUser } from '../models/user';
 import { checkEmailVerification } from '../utils';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
 const SettingsController = {
-  settings: async (req: Request, res: Response): Promise<any> => {
+  settings: async (req: Request, res: Response<ISettings>) => {
     const settings = await getSettings();
     return res.send(settings);
   },
-  users: async (req: Request, res: Response): Promise<any> => {
+  users: async (req: Request, res: Response<IUser[]>) => {
     const { offset, limit, searchQuery } = req.query;
     const users = await getUsers(+offset, +limit, null, false, false, searchQuery as string);
     return res.send(users);
   },
-  usersTotal: async (req: Request, res: Response): Promise<any> => {
+  usersTotal: async (req: Request, res: Response<{ total: number; verified: number }>) => {
     const { total, verified } = await countUsers();
     return res.send({ total, verified });
   },
-  updateCommunity: async (req: Request, res: Response): Promise<any> => {
+  updateCommunity: async (req: Request, res: Response<ISettings>) => {
     const {
       communityName,
       primaryColor,
@@ -65,7 +67,7 @@ const SettingsController = {
     );
     return res.send(community);
   },
-  updateProfile: async (req: Request, res: Response): Promise<any> => {
+  updateProfile: async (req: Request, res: Response<IUser | string>) => {
     const { fullName, username } = req.body;
     const authUser = req.user as AuthUser;
 
@@ -78,14 +80,14 @@ const SettingsController = {
     const updatedUser = await updateProfile(authUser._id, fullName, username);
     return res.send(updatedUser);
   },
-  updatePassword: async (req: Request, res: Response): Promise<any> => {
+  updatePassword: async (req: Request, res: Response<string>) => {
     const authUser = req.user as AuthUser;
     const { password } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
     await updatePassword(authUser._id, passwordHash);
     return res.send('Password updated successfully.');
   },
-  uploadLogo: async (req: Request, res: Response): Promise<any> => {
+  uploadLogo: async (req: Request, res: Response<ISettings | string>) => {
     const { imagePublicId } = req.body;
     const image = req.file;
 
@@ -104,7 +106,7 @@ const SettingsController = {
 
     return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
   },
-  createUser: async (req: Request, res: Response): Promise<any> => {
+  createUser: async (req: Request, res: Response<IUser | string>) => {
     const { fullName, email, password, role } = req.body;
 
     if (!fullName || !email || !password || !role) {

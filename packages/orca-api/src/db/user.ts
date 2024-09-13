@@ -1,7 +1,8 @@
-// @ts-nocheck
+import { FilterQuery } from 'mongoose';
 import { User } from '../models';
+import { IUser } from '../models/user';
 
-export const getAuthUser = async (id: string): Promise<any> => {
+export const getAuthUser = async (id: string): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: id }, { isOnline: true })
     .select('-password')
     .populate({ path: 'posts', options: { sort: { createdAt: 'desc' } } })
@@ -21,8 +22,8 @@ export const getAuthUser = async (id: string): Promise<any> => {
   return user;
 };
 
-export const getUserById = async (id: string, hideBannedUser?: boolean): Promise<any> => {
-  const query = { _id: id };
+export const getUserById = async (id: string, hideBannedUser?: boolean): Promise<IUser> => {
+  const query: FilterQuery<IUser> = { _id: id };
   if (hideBannedUser) {
     query.banned = { $ne: true };
   }
@@ -40,22 +41,22 @@ export const getUserById = async (id: string, hideBannedUser?: boolean): Promise
   return user;
 };
 
-export const getUserByEmail = async (email: string): Promise<any> => {
+export const getUserByEmail = async (email: string): Promise<IUser> => {
   const user = await User.findOne({ email });
   return user;
 };
 
-export const getUserByUsername = async (username: string): Promise<any> => {
+export const getUserByUsername = async (username: string): Promise<IUser> => {
   const user = await User.findOne({ username }).select('-password');
   return user;
 };
 
-export const updateUserIsOnline = async (userId: string, isOnline: boolean): Promise<any> => {
+export const updateUserIsOnline = async (userId: string, isOnline: boolean): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: userId }, { isOnline });
   return user;
 };
 
-export const updateUserResetPasswordToken = async (userId: string, token: string): Promise<any> => {
+export const updateUserResetPasswordToken = async (userId: string, token: string): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: userId }, { resetPasswordToken: token });
   return user;
 };
@@ -85,7 +86,7 @@ export const getUsers = async (
   hideBannedUsers?: boolean,
   searchQuery?: string
 ): Promise<any> => {
-  const query = { _id: { $ne: authUserId } };
+  const query: FilterQuery<IUser> = { _id: { $ne: authUserId } };
   if (emailVerified) {
     query.emailVerified = emailVerified;
   }
@@ -104,18 +105,18 @@ export const getUsers = async (
   return users;
 };
 
-export const countUsers = async (): Promise<any> => {
+export const countUsers = async () => {
   const total = await User.countDocuments({});
   const verified = await User.countDocuments({ emailVerified: true });
   return { total, verified };
 };
 
-export const onlineUsers = async (userId?: string): Promise<any> => {
+export const onlineUsers = async (userId?: string) => {
   const users = User.find({ isOnline: true, _id: { $ne: userId }, banned: { $ne: true } }).select('-password');
   return users;
 };
 
-export const getNewMembers = async (userId?: string): Promise<any> => {
+export const getNewMembers = async (userId?: string) => {
   const users = User.find({ _id: { $ne: userId }, banned: { $ne: true } })
     .select('-password')
     .limit(3)
@@ -123,19 +124,19 @@ export const getNewMembers = async (userId?: string): Promise<any> => {
   return users;
 };
 
-export const updateUser = async (id: string, fieldsToUpdate: any): Promise<any> => {
+export const updateUser = async (id: string, fieldsToUpdate: any): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: id }, { ...fieldsToUpdate }, { new: true })
     .populate('posts')
     .populate('likes');
   return user;
 };
 
-export const deleteUser = async (id: string): Promise<any> => {
+export const deleteUser = async (id: string): Promise<IUser> => {
   const user = await User.findByIdAndRemove(id);
   return user;
 };
 
-export const updateUserBanned = async (id: string, banned: boolean): Promise<any> => {
+export const updateUserBanned = async (id: string, banned: boolean): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: id }, { banned: banned }, { new: true });
 
   return user;

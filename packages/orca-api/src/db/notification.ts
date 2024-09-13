@@ -1,9 +1,8 @@
-// @ts-nocheck
-import Notification from '../models/notification';
-import { NotificationType } from '../constants';
+import { type NotificationType } from '../constants';
+import Notification, { INotification } from '../models/notification';
 import User from '../models/user';
 
-export const notificationById = async (id: string): Promise<any> => {
+export const notificationById = async (id: string): Promise<INotification> => {
   const notification = await Notification.findById(id);
   return notification;
 };
@@ -13,7 +12,7 @@ export const notificationByAuthorUserAndType = async (
   authorId: string,
   notificationType: string,
   postId?: string
-): Promise<any> => {
+): Promise<INotification> => {
   const query = {
     author: authorId,
     user: userId,
@@ -27,7 +26,7 @@ export const notificationByAuthorUserAndType = async (
   return notification;
 };
 
-export const notificationByAuthorAndUserId = async (authorId: string, userId: string): Promise<any> => {
+export const notificationByAuthorAndUserId = async (authorId: string, userId: string): Promise<INotification> => {
   const notification = await Notification.findOne({
     author: authorId,
     user: userId,
@@ -37,8 +36,8 @@ export const notificationByAuthorAndUserId = async (authorId: string, userId: st
   return notification;
 };
 
-export const getUserNotifications = async (userId: any, offset: number, limit: number): Promise<any> => {
-  const notifications: any = await Notification.find({ user: userId })
+export const getUserNotifications = async (userId: any, offset: number, limit: number): Promise<INotification[]> => {
+  const notifications: INotification[] = await Notification.find({ user: userId })
     .populate('author', '-password')
     .populate('user', '-password')
     .populate('follow')
@@ -56,7 +55,7 @@ export const createNotification = async (
   postId: string,
   notificationType: NotificationType,
   notificationTypeId: string
-): Promise<any> => {
+): Promise<INotification> => {
   let newNotification = await new Notification({
     author: authorId,
     user: userId,
@@ -77,7 +76,7 @@ export const createNotification = async (
   return newNotification;
 };
 
-export const deleteNotification = async (id: string): Promise<any> => {
+export const deleteNotification = async (id: string): Promise<INotification> => {
   let notification = await Notification.findByIdAndRemove(id);
 
   // Delete the notification from the user's collection.
@@ -93,12 +92,12 @@ export const deleteNotification = async (id: string): Promise<any> => {
   return notification;
 };
 
-export const updateNotificationSeen = async (userId: string): Promise<any> => {
+export const updateNotificationSeen = async (userId: string) => {
   const notifications = await Notification.updateMany({ user: userId, seen: false }, { seen: true }, { multi: true });
   return notifications;
 };
 
-export const updateMessagesNotificationSeen = async (authUserId: string, userId: string): Promise<any> => {
+export const updateMessagesNotificationSeen = async (authUserId: string, userId: string) => {
   const notifications = await Notification.updateMany(
     { author: userId, user: authUserId, seen: false, message: { $exists: true, $ne: null } },
     { seen: true },

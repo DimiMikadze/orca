@@ -1,8 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document, model, Model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+// 定义接口
+export interface IChannel extends Document {
+  name: string;
+  description?: string;
+  authRequired: boolean;
+  order: number;
+  posts: mongoose.Types.ObjectId[];
+}
 
-const ChannelSchema = new Schema(
+// 定义 Schema
+const ChannelSchema = new Schema<IChannel, Model<IChannel>>(
   {
     name: {
       type: String,
@@ -30,4 +38,5 @@ const ChannelSchema = new Schema(
   }
 );
 
-export default mongoose.model('Channel', ChannelSchema);
+// 导出模型
+export default model<IChannel, Model<IChannel>>('Channel', ChannelSchema);

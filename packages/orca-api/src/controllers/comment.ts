@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import { commentById, createComment, deleteComment } from '../db';
 import { AuthUser, ErrorCodes, ErrorMessages } from '../constants';
+import { commentById, createComment, deleteComment } from '../db';
+import { IComment } from '../models/comment';
 
 const CommentController = {
-  create: async (req: Request, res: Response): Promise<any> => {
+  create: async (req: Request, res: Response<IComment | string>) => {
     const authUser = req.user as AuthUser;
     const { comment, postId } = req.body;
 
@@ -11,15 +12,15 @@ const CommentController = {
       return res.status(ErrorCodes.Internal).send('Please insert a comment.');
     }
 
-    const newComment: any = await createComment(comment, authUser._id, postId);
+    const newComment: IComment = await createComment(comment, authUser._id, postId);
     return res.send(newComment);
   },
-  delete: async (req: Request, res: Response): Promise<any> => {
+  delete: async (req: Request, res: Response<IComment | string>) => {
     const { id } = req.body;
     const authUser = req.user as AuthUser;
 
     // Check if the comment author is removing the comment.
-    const comment: any = await commentById(id);
+    const comment: IComment = await commentById(id);
     if (comment.author.toString() === authUser._id.toString()) {
       const deletedComment = await deleteComment(id);
       return res.send(deletedComment);

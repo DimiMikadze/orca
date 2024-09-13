@@ -1,8 +1,7 @@
-// @ts-nocheck
-import Settings from '../models/settings';
-import User from '../models/user';
+import Settings, { ISettings } from '../models/settings';
+import User, { IUser } from '../models/user';
 
-export const getSettings = async (): Promise<any> => {
+export const getSettings = async (): Promise<ISettings> => {
   const settings = await Settings.findOne({});
   return settings;
 };
@@ -14,7 +13,7 @@ export const createCommunity = async (
   facebookLoginEnabled: boolean,
   googleLoginEnabled: boolean,
   githubLoginEnabled: boolean
-): Promise<any> => {
+): Promise<ISettings> => {
   const newSettings = await Settings.create({
     communityName,
     primaryColor,
@@ -28,12 +27,12 @@ export const createCommunity = async (
 
 export const updateCommunity = async (
   communityName: string,
-  primaryColor: boolean,
+  primaryColor: string,
   isEmailVerificationRequired: boolean,
   facebookLoginEnabled: boolean,
   googleLoginEnabled: boolean,
   githubLoginEnabled: boolean
-): Promise<any> => {
+) => {
   const settings = await getSettings();
   const updatedSettings = await Settings.findOneAndUpdate(
     { _id: settings._id },
@@ -50,17 +49,17 @@ export const updateCommunity = async (
   return updatedSettings;
 };
 
-export const updateProfile = async (id: string, fullName: string, username: string): Promise<any> => {
+export const updateProfile = async (id: string, fullName: string, username: string): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: id }, { fullName, username }, { new: true });
   return user;
 };
 
-export const updatePassword = async (id: string, password: string): Promise<any> => {
+export const updatePassword = async (id: string, password: string): Promise<IUser> => {
   const user = await User.findOneAndUpdate({ _id: id }, { password }, { new: true });
   return user;
 };
 
-export const updateLogo = async (logo: string, logoPublicId: string): Promise<any> => {
+export const updateLogo = async (logo: string, logoPublicId: string): Promise<ISettings> => {
   const settings = await getSettings();
   if (!settings) {
     const newSettings = await Settings.create({ communityLogo: logo, communityLogoPublicId: logoPublicId });
@@ -80,7 +79,7 @@ export const settingsCreateUser = async (
   email: string,
   password: string,
   role: string
-): Promise<any> => {
+): Promise<IUser> => {
   const user = await User.create({
     fullName,
     email,

@@ -1,8 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface INotification extends Document {
+  author: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
+  post: mongoose.Types.ObjectId;
+  like: mongoose.Types.ObjectId;
+  follow: mongoose.Types.ObjectId;
+  comment: mongoose.Types.ObjectId;
+  message: mongoose.Types.ObjectId;
+  seen: boolean;
+}
 
-const NotificationSchema = new Schema(
+const NotificationSchema = new Schema<INotification, Model<INotification>>(
   {
     author: {
       type: Schema.Types.ObjectId,
@@ -39,4 +48,4 @@ const NotificationSchema = new Schema(
   }
 );
 
-export default mongoose.model('Notification', NotificationSchema);
+export default mongoose.model<INotification, Model<INotification>>('Notification', NotificationSchema);

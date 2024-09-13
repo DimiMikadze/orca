@@ -1,8 +1,24 @@
 import mongoose from 'mongoose';
 import { Message, User } from '../models';
+import { IMessage } from '../models/message';
 
-export const getConversations = async (authUserId: string): Promise<any> => {
-  const lastConversations = await Message.aggregate([
+export interface IConversation {
+  _id: mongoose.Types.ObjectId[];
+  message: string;
+  createdAt: Date;
+  sender: {
+    _id: mongoose.Types.ObjectId;
+    username: string;
+  };
+  receiver: {
+    _id: mongoose.Types.ObjectId;
+    username: string;
+  };
+  seen: boolean;
+}
+
+export const getConversations = async (authUserId: string) => {
+  const lastConversations = await Message.aggregate<IConversation>([
     {
       $match: {
         $or: [
@@ -97,11 +113,11 @@ export const getConversations = async (authUserId: string): Promise<any> => {
   return lastConversations;
 };
 
-export const getMessages = async (authUserId: string, userId: string): Promise<any> => {
+export const getMessages = async (authUserId: string, userId: string): Promise<IMessage[]> => {
   const message = await Message.find()
     .and([
-      { $or: [{ sender: authUserId }, { receiver: authUserId }] },
-      { $or: [{ sender: userId }, { receiver: userId }] },
+      { $or: [{ sender: mongoose.Types.ObjectId(authUserId) }, { receiver: mongoose.Types.ObjectId(authUserId) }] },
+      { $or: [{ sender: mongoose.Types.ObjectId(userId) }, { receiver: mongoose.Types.ObjectId(userId) }] },
     ])
     .populate('sender', '-password')
     .populate('receiver', '-password')
@@ -109,7 +125,7 @@ export const getMessages = async (authUserId: string, userId: string): Promise<a
   return message;
 };
 
-export const createMessage = async (message: string, sender: string, receiver: string): Promise<any> => {
+export const createMessage = async (message: string, sender: string, receiver: string): Promise<IMessage> => {
   let newMessage = await new Message({
     message,
     sender,
@@ -120,7 +136,7 @@ export const createMessage = async (message: string, sender: string, receiver: s
 
   // Check if user already had a conversation. If not push their ids to users collection.
   const senderUser = await User.findById(sender);
-  if (!senderUser.messages.includes(receiver)) {
+  if (!senderUser.messages.includes(mongoose.Types.ObjectId(receiver))) {
     await User.findOneAndUpdate({ _id: sender }, { $push: { messages: receiver } });
     await User.findOneAndUpdate({ _id: receiver }, { $push: { messages: sender } });
   }
@@ -128,7 +144,7 @@ export const createMessage = async (message: string, sender: string, receiver: s
   return newMessage;
 };
 
-export const updateMessageSeen = async (sender: string, receiver: string): Promise<any> => {
+export const updateMessageSeen = async (sender: string, receiver: string) => {
   const messages = await Message.updateMany({ sender, receiver, seen: false }, { seen: true }, { multi: true });
   return messages;
 };

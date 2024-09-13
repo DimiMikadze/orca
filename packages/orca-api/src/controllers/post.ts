@@ -1,43 +1,44 @@
 import { Request, Response } from 'express';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
-import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinary';
 import {
-  getPostsByChannelId,
-  getPostsByAuthorId,
-  getPostById,
   createPost,
   deletePost,
   getFollowedPosts,
+  getPostById,
+  getPostsByAuthorId,
+  getPostsByChannelId,
+  pinPost,
   postById,
   updatePost,
-  pinPost,
 } from '../db';
+import { deleteFromCloudinary, uploadToCloudinary } from '../utils/cloudinary';
+import { IPost } from '../models/post';
 
 const PostController = {
-  postsByFollowing: async (req: Request, res: Response): Promise<any> => {
+  postsByFollowing: async (req: Request, res: Response<IPost[]>): Promise<Response<IPost[]>> => {
     const authUser = req.user as AuthUser;
     const { offset, limit } = req.query;
     const posts = await getFollowedPosts(authUser?._id, +offset, +limit);
     return res.send(posts);
   },
-  postsByChannelId: async (req: Request, res: Response): Promise<any> => {
+  postsByChannelId: async (req: Request, res: Response<IPost[]>): Promise<Response<IPost[]>> => {
     const { channelId } = req.params;
     const { offset, limit } = req.query;
     const posts = await getPostsByChannelId(channelId, +offset, +limit);
     return res.send(posts);
   },
-  postsByAuthorId: async (req: Request, res: Response): Promise<any> => {
+  postsByAuthorId: async (req: Request, res: Response<IPost[]>): Promise<Response<IPost[]>> => {
     const { authorId } = req.params;
     const { offset, limit } = req.query;
     const posts = await getPostsByAuthorId(authorId, +offset, +limit);
     return res.send(posts);
   },
-  postById: async (req: Request, res: Response): Promise<any> => {
+  postById: async (req: Request, res: Response<IPost>): Promise<Response<IPost>> => {
     const { id } = req.params;
     const post = await getPostById(id);
     return res.send(post);
   },
-  create: async (req: Request, res: Response): Promise<any> => {
+  create: async (req: Request, res: Response<IPost | string>): Promise<Response<IPost>> => {
     const authUser = req.user as AuthUser;
     const { title, channelId } = req.body;
     const image = req.file;
@@ -59,10 +60,10 @@ const PostController = {
       imageUrl = uploadImage.secure_url;
       imagePublicId = uploadImage.public_id;
     }
-    const newPost: any = await createPost(title, imageUrl, imagePublicId, channelId, authUser._id);
+    const newPost: IPost = await createPost(title, imageUrl, imagePublicId, channelId, authUser._id);
     return res.send(newPost);
   },
-  update: async (req: Request, res: Response): Promise<any> => {
+  update: async (req: Request, res: Response<IPost | string>): Promise<Response<IPost>> => {
     const authUser = req.user as AuthUser;
     const { postId, title, imageToDeletePublicId, channelId } = req.body;
     const image = req.file;
@@ -70,7 +71,7 @@ const PostController = {
     // Super Admins can update another user's post.
     if (authUser.role !== UserRole.SuperAdmin) {
       // Check if the post author is updating the post.
-      const post: any = await postById(postId);
+      const post: IPost = await postById(postId);
       if (post.author.toString() !== authUser._id.toString()) {
         return res.status(ErrorCodes.Bad_Request).send('Unauthorized');
       }
@@ -96,17 +97,24 @@ const PostController = {
       imagePublicId = uploadImage.public_id;
     }
 
-    const updatedPost = await updatePost(postId, title, imageUrl, imagePublicId, imageToDeletePublicId, channelId);
+    const updatedPost: IPost = await updatePost({
+      postId,
+      title,
+      imageUrl,
+      imagePublicId,
+      imageToDeletePublicId,
+      channelId,
+    });
     return res.send(updatedPost);
   },
-  delete: async (req: Request, res: Response): Promise<any> => {
+  delete: async (req: Request, res: Response<IPost | string>): Promise<Response<IPost>> => {
     const { id, imagePublicId } = req.body;
     const authUser = req.user as AuthUser;
 
     // Super Admins can delete another user's post.
     if (authUser.role !== UserRole.SuperAdmin) {
       // Check if the post author is removing the post.
-      const post: any = await postById(id);
+      const post: IPost = await postById(id);
       if (post.author.toString() !== authUser._id.toString()) {
         return res.status(ErrorCodes.Bad_Request).send(ErrorMessages.Generic);
       }
@@ -119,12 +127,12 @@ const PostController = {
       }
     }
 
-    const deletedPost = await deletePost(id);
+    const deletedPost: IPost = await deletePost(id);
     return res.send(deletedPost);
   },
-  pin: async (req: Request, res: Response): Promise<any> => {
+  pin: async (req: Request, res: Response<IPost>): Promise<Response<IPost>> => {
     const { id, pinned } = req.body;
-    const updatedPost = await pinPost(id, pinned);
+    const updatedPost: IPost = await pinPost(id, pinned);
     return res.send(updatedPost);
   },
 };

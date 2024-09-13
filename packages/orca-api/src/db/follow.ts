@@ -1,13 +1,12 @@
-// @ts-nocheck
-import Follow from '../models/follow';
+import Follow, { IFollow } from '../models/follow';
 import User from '../models/user';
 
-export const followById = async (id: string): Promise<any> => {
+export const followById = async (id: string): Promise<IFollow> => {
   const follow = await Follow.findById(id);
   return follow;
 };
 
-export const createFollow = async (userId: string, followerId: string): Promise<any> => {
+export const createFollow = async (userId: string, followerId: string): Promise<IFollow> => {
   const follow = await new Follow({
     user: userId,
     follower: followerId,
@@ -20,7 +19,7 @@ export const createFollow = async (userId: string, followerId: string): Promise<
   return follow;
 };
 
-export const deleteFollow = async (id: string): Promise<any> => {
+export const deleteFollow = async (id: string): Promise<IFollow> => {
   const follow = await Follow.findByIdAndRemove(id);
 
   // Delete the follow from the user's collection.

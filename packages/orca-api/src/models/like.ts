@@ -1,8 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 
-const Schema = mongoose.Schema;
+export interface ILike extends Document {
+  post: mongoose.Types.ObjectId;
+  user: mongoose.Types.ObjectId;
+}
 
-const LikeSchema = new Schema(
+const LikeSchema = new Schema<ILike, Model<ILike>>(
   {
     post: {
       type: Schema.Types.ObjectId,
@@ -18,4 +21,4 @@ const LikeSchema = new Schema(
   }
 );
 
-export default mongoose.model('Like', LikeSchema);
+export default mongoose.model<ILike, Model<ILike>>('Like', LikeSchema);

@@ -1,23 +1,23 @@
-// @ts-nocheck
-import Post from '../models/post';
 import Channel from '../models/channel';
-import User from '../models/user';
-import Like from '../models/like';
 import Comment from '../models/comment';
-import Notification from '../models/notification';
 import Follow from '../models/follow';
+import Like from '../models/like';
+import Notification from '../models/notification';
+import Post, { IPost } from '../models/post';
+import User from '../models/user';
+import mongoose, { FilterQuery, UpdateQuery } from 'mongoose';
 
-export const postById = async (id: string): Promise<any> => {
+export const postById = async (id: string): Promise<IPost> => {
   const post = await Post.findById(id);
   return post;
 };
 
-export const getFollowedPosts = async (userId: string, offset: number, limit: number): Promise<any> => {
+export const getFollowedPosts = async (userId: string, offset: number, limit: number): Promise<IPost[]> => {
   const userFollowing = [];
   const follow = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
   follow.map((f) => userFollowing.push(f.user));
   const posts = await Post.find({
-    $or: [{ author: { $in: userFollowing } }, { author: userId }],
+    $or: [{ author: { $in: userFollowing } }, { author: mongoose.Types.ObjectId(userId) }],
   })
     .populate({
       path: 'author',
@@ -50,12 +50,12 @@ export const getFollowedPosts = async (userId: string, offset: number, limit: nu
   return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
-export const getChannelPosts = async (channelId: any): Promise<any> => {
-  const posts: any = await Post.find({ channel: channelId });
+export const getChannelPosts = async (channelId: any): Promise<IPost[]> => {
+  const posts: IPost[] = await Post.find({ channel: channelId });
   return posts;
 };
 
-export const getPostsByChannelId = async (channelId: any, offset: number, limit: number): Promise<any> => {
+export const getPostsByChannelId = async (channelId: any, offset: number, limit: number): Promise<IPost[]> => {
   const posts = await Post.find({ channel: channelId })
     .populate({
       path: 'author',
@@ -84,7 +84,7 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
   return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
-export const getPostsByAuthorId = async (authorId: any, offset: number, limit: number): Promise<any> => {
+export const getPostsByAuthorId = async (authorId: any, offset: number, limit: number): Promise<IPost[]> => {
   const posts = await Post.find({ author: authorId })
     .populate({
       path: 'author',
@@ -113,7 +113,7 @@ export const getPostsByAuthorId = async (authorId: any, offset: number, limit: n
   return posts;
 };
 
-export const getPostById = async (id: string): Promise<any> => {
+export const getPostById = async (id: string): Promise<IPost> => {
   const post = await Post.findById(id)
     .populate({
       path: 'author',
@@ -141,7 +141,7 @@ export const createPost = async (
   imagePublicId: string,
   channelId: string,
   authorId: string
-): Promise<any> => {
+): Promise<IPost> => {
   const newPost = await new Post({
     title,
     image: imageUrl,
@@ -158,15 +158,22 @@ export const createPost = async (
   return newPost;
 };
 
-export const updatePost = async (
-  postId: string,
-  title: string,
-  imageUrl?: string,
-  imagePublicId?: string,
-  imageToDeletePublicId?: string,
-  channelId: string
-): Promise<any> => {
-  const fields = {
+export const updatePost = async ({
+  postId,
+  title,
+  imageUrl,
+  imagePublicId,
+  imageToDeletePublicId,
+  channelId,
+}: {
+  postId: string;
+  title: string;
+  imageUrl?: string;
+  imagePublicId?: string;
+  imageToDeletePublicId?: string;
+  channelId: string;
+}): Promise<IPost> => {
+  const fields: FilterQuery<IPost> = {
     title,
     channel: channelId,
   };
@@ -181,7 +188,7 @@ export const updatePost = async (
     fields.imagePublicId = '';
   }
 
-  const updatedPost = await Post.findOneAndUpdate({ _id: postId }, { ...fields }, { new: true })
+  const updatedPost = await Post.findOneAndUpdate({ _id: postId }, { ...(fields as UpdateQuery<IPost>) }, { new: true })
     .populate({
       path: 'author',
       select: '-password',
@@ -209,7 +216,7 @@ export const updatePost = async (
   return updatedPost;
 };
 
-export const deletePost = async (id: string): Promise<any> => {
+export const deletePost = async (id: string): Promise<IPost> => {
   const post = await Post.findByIdAndRemove(id);
 
   // Pull the post from the channel collection.
@@ -246,7 +253,7 @@ export const deletePost = async (id: string): Promise<any> => {
   return post;
 };
 
-export const pinPost = async (id: string, pinned: boolean): Promise<any> => {
+export const pinPost = async (id: string, pinned: boolean): Promise<IPost> => {
   const updatedPost = await Post.findOneAndUpdate({ _id: id }, { pinned }, { new: true })
     .populate({
       path: 'author',

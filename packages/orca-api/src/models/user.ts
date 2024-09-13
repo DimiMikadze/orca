@@ -1,10 +1,37 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Schema, Model } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { UserRole } from '../constants/types';
 
-const Schema = mongoose.Schema;
+export interface IUser extends Document {
+  role: string;
+  fullName: string;
+  email: string;
+  emailVerified: boolean;
+  banned: boolean;
+  password: string;
+  username: string;
+  resetPasswordToken: string;
+  facebookId: string;
+  googleId: string;
+  githubId: string;
+  image: string;
+  imagePublicId: string;
+  about: string;
+  website: string;
+  coverImage: string;
+  coverImagePublicId: string;
+  isOnline: boolean;
+  posts: mongoose.Types.ObjectId[];
+  likes: mongoose.Types.ObjectId[];
+  comments: mongoose.Types.ObjectId[];
+  followers: mongoose.Types.ObjectId[];
+  following: mongoose.Types.ObjectId[];
+  notifications: mongoose.Types.ObjectId[];
+  messages: mongoose.Types.ObjectId[];
+  isValidPassword: (password: string) => Promise<boolean>;
+}
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<IUser, Model<IUser>>(
   {
     role: {
       type: String,
@@ -112,39 +139,9 @@ const UserSchema = new Schema(
   }
 );
 
-export interface IUser extends Document {
-  role: string;
-  fullName: string;
-  email: string;
-  emailVerified: boolean;
-  banned: boolean;
-  password: string;
-  username: string;
-  resetPasswordToken: string;
-  facebookId: string;
-  googleId: string;
-  githubId: string;
-  image: string;
-  imagePublicId: string;
-  about: string;
-  website: string;
-  coverImage: string;
-  coverImagePublicId: string;
-  isOnline: boolean;
-  posts: string[];
-  likes: string[];
-  comments: string[];
-  followers: string[];
-  following: string[];
-  notifications: string[];
-  messages: string[];
-  isValidPassword: (password: string) => Promise<boolean>;
-}
-
 UserSchema.pre<IUser>('save', async function (next) {
   if (this.password) {
     const hash = await bcrypt.hash(this.password, 10);
-
     this.password = hash;
   }
   next();
@@ -153,8 +150,7 @@ UserSchema.pre<IUser>('save', async function (next) {
 UserSchema.methods.isValidPassword = async function (password) {
   const user = this as IUser;
   const compare = await bcrypt.compare(password, user.password);
-
   return compare;
 };
 
-export default mongoose.model<IUser>('User', UserSchema);
+export default mongoose.model<IUser, Model<IUser>>('User', UserSchema);
