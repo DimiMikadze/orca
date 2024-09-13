@@ -1,10 +1,11 @@
-import { FC, useState, FormEvent, useEffect } from 'react';
-import { Modal, Button, Text, Spacing, InputText, Select } from '../../ui';
-import { openAlert, AlertTypes } from '../../../store/alert';
-import { useQueryClient } from 'react-query';
-import { UserRole } from '../../../constants';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { FC, FormEvent, useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { UserRole } from '../../../constants';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import { Button, InputText, Modal, Select, Spacing, Text } from '../../ui';
 
 interface User {
   fullName: string;
@@ -34,7 +35,7 @@ const SettingsCreateUser: FC<SettingsCreateUserProps> = ({ searchQuery }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const queryClient = useQueryClient();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
 
   const onChange = (e: FormEvent<HTMLInputElement>) => {
     const { name, value } = e.target as HTMLInputElement;

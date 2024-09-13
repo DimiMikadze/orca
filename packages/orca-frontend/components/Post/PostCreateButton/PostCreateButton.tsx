@@ -1,12 +1,13 @@
 import { FC, useState } from 'react';
-import { Button, Avatar } from '../../ui';
-import { Root, Container } from './style';
-import PostCreate from '../../PostCreate';
-import { Channel } from '../../../constants';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { AlertTypes, openAlert } from '../../../store/alert';
+import { Dispatch } from 'redux';
+import { Channel } from '../../../constants';
 import { RootState } from '../../../store';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import PostCreate from '../../PostCreate';
+import { Avatar, Button } from '../../ui';
+import { Container, Root } from './style';
 
 interface PostCreateButtonProps {
   channel?: Channel;
@@ -16,7 +17,7 @@ interface PostCreateButtonProps {
 const PostCreateButton: FC<PostCreateButtonProps> = ({ channel, queryKey }) => {
   const [isPostCreateOpen, setIsPostCreateOpen] = useState(false);
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const queryClient = useQueryClient();
   const channels: Channel[] = queryClient.getQueryData(['channels']);
 

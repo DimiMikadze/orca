@@ -22,7 +22,7 @@ const getHeadingStyles = (defaultSize: FontSize) => css<GetHeadingStylesProps>`
   color: ${(p) => (p.color ? p.theme.colors.general[p.color] : p.theme.colors.general.text)};
 `;
 
-export const H1 = styled.h1`
+export const H1 = styled.h1<GetHeadingStylesProps>`
   ${getHeadingStyles('xl')};
 `;
 

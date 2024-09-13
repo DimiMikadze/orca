@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Root } from './style';
+import { Theme } from '../../../theme';
 
 export interface SkeletonProps {
   count?: number;
@@ -11,6 +12,7 @@ export interface SkeletonProps {
   bottom?: string;
   left?: string;
   radius?: string;
+  theme?: Theme;
 }
 
 const Skeleton: FC<SkeletonProps> = ({ count, width, height, inline, top, right, bottom, left, radius }) => {

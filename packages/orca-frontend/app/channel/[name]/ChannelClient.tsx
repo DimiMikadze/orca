@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { FC, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChannelInfo } from '../../../components/Channel';
@@ -10,16 +11,16 @@ import { Button, Container, LoadingDots, Skeleton, Spacing, Text } from '../../.
 import { CommunityIcon } from '../../../components/ui/icons';
 import { Channel as ChannelType, DataLimit, Post } from '../../../constants';
 import { RootState } from '../../../store';
-import { PopupType, openAuthPopup } from '../../../store/auth';
+import { AuthActionTypes, PopupType, openAuthPopup } from '../../../store/auth';
 import { useInfiniteScroll } from '../../../utils';
-import axios from 'axios';
+import { Dispatch } from 'redux';
 
 interface ChannelProps {
   channel: ChannelType;
 }
 
 const ChannelClient: FC<ChannelProps> = ({ channel }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const authUser = useSelector((state: RootState) => state.auth.user);
 
   const { data, isFetching, isFetchingNextPage, refetch } = useInfiniteScroll({

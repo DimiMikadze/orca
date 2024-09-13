@@ -5,7 +5,7 @@ export const getChannels = async (): Promise<IChannel[]> => {
   return channels;
 };
 
-export const getChannelByName = async (name: string): Promise<IChannel | null> => {
+export const getChannelByName = async (name: string): Promise<IChannel> => {
   const channel = await Channel.findOne({ name });
   return channel;
 };

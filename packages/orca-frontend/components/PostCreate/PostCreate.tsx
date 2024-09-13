@@ -1,22 +1,24 @@
-import { ChangeEvent, FC, FormEvent, useState, Fragment } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, FormEvent, Fragment, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { Channel, MaxImageSize } from '../../constants';
+import { RootState } from '../../store';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../store/alert';
+import { Avatar, Button, Modal, Select, Spacing, TextAreaAutoSize } from '../ui';
 import { CloseIcon } from '../ui/icons';
+import { updateCache } from './cache';
 import PostImageUpload from './PostImageUpload';
-import { MaxImageSize, Channel } from '../../constants';
-import { TextAreaAutoSize, Spacing, Button, Modal, Select, Avatar } from '../ui';
 import {
+  CloseIconContainer,
+  ImagePreview,
+  ImagePreviewContainer,
   Options,
   OptionsText,
   SelectContainer,
-  ImagePreviewContainer,
-  CloseIconContainer,
-  ImagePreview,
 } from './style';
-import { RootState } from '../../store';
-import { AlertTypes, openAlert } from '../../store/alert';
-import { updateCache } from './cache';
+import { Dispatch } from 'redux';
+import { AuthActionTypes } from '../../store/auth';
 
 const config = {
   headers: {
@@ -70,7 +72,7 @@ const PostCreate: FC<PostCreateProps> = ({
   const authUser = useSelector((state: RootState) => state.auth.user);
   const queryClient = useQueryClient();
   const channels: Channel[] = queryClient.getQueryData(['channels']);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes | AlertActionTypes>>();
   const initialState = {
     title: postTitle || '',
     channelId: channelId ? channelId : channels && channels[0]?._id,

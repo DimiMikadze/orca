@@ -4,9 +4,10 @@ import { FC, FormEvent, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setAuthUser, setToken } from '../../store/auth';
+import { AuthActionTypes, setAuthUser, setToken } from '../../store/auth';
 import { Cookies, setCookie } from '../../utils';
 import { Button, Container, H1, InputText, Spacing, Text } from '../ui';
+import { Dispatch } from 'redux';
 
 interface resetPasswordProps {
   password: string;
@@ -27,7 +28,7 @@ const INITIAL_STATE = {
 const ResetPassword: FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');

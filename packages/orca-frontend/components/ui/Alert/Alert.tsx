@@ -1,9 +1,10 @@
 import { FC, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { closeAlert, AlertTypes, AlertAlignment } from '../../../store/alert';
-import { Root } from './style';
-import { CloseIcon } from '../icons';
+import { Dispatch } from 'redux';
+import { AlertActionTypes, AlertAlignment, AlertTypes, closeAlert } from '../../../store/alert';
 import { Button } from '../../ui';
+import { CloseIcon } from '../icons';
+import { Root } from './style';
 
 export interface AlertProps {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ export interface AlertProps {
 }
 
 const Alert: FC<AlertProps> = ({ children, type, autoClose, alignment }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
 
   const close = useCallback(() => {
     dispatch(closeAlert());

@@ -1,28 +1,29 @@
-import { useState, forwardRef, ForwardRefRenderFunction, useRef, RefObject, useEffect } from 'react';
+import { forwardRef, ForwardRefRenderFunction, RefObject, useEffect, useRef, useState } from 'react';
 // import Router from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import { useMutation } from 'react-query';
 import { useRouter } from 'next/navigation';
+import { useMutation } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Root,
-  Wrapper,
-  Hamburger,
   Container,
-  SearchContainer,
+  Hamburger,
+  Logo,
   NotificationsAndAvatar,
   NotificationsCount,
-  Logo,
+  Root,
+  SearchContainer,
+  Wrapper,
 } from './style';
 
-import { MenuIcon, NotificationIcon } from '../ui/icons';
-import { Link, Button, Avatar, Spacing } from '../ui';
-import { openAuthPopup, cleanUserNotifications, PopupType } from '../../store/auth';
-import HeaderUser from './HeaderUser';
-import HeaderNotifications from './HeaderNotifications';
-import Search from '../Search';
-import { RootState } from '../../store';
-import { useBreakpoints } from '../../utils';
 import { updateNotificationSeen } from '../../app/notifications';
+import { RootState } from '../../store';
+import { AuthActionTypes, cleanUserNotifications, openAuthPopup, PopupType } from '../../store/auth';
+import { useBreakpoints } from '../../utils';
+import Search from '../Search';
+import { Avatar, Button, Link, Spacing } from '../ui';
+import { MenuIcon, NotificationIcon } from '../ui/icons';
+import HeaderNotifications from './HeaderNotifications';
+import HeaderUser from './HeaderUser';
+import { Dispatch } from 'redux';
 
 interface HeaderProps {
   toggleSidebar?: () => void;
@@ -31,7 +32,7 @@ interface HeaderProps {
 
 const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ toggleSidebar }, ref) => {
   const breakpoint = useBreakpoints();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const logo = useSelector((state: RootState) => state.settings.communityLogo);
   const { mutateAsync: updateSeen } = useMutation(updateNotificationSeen);

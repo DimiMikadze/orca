@@ -10,15 +10,7 @@ import { Container, Empty, LoadingDots, Skeleton, Spacing, Text } from '../../..
 import { DataLimit, Post } from '../../../constants';
 import { RootState } from '../../../store';
 import { useInfiniteScroll } from '../../../utils';
-import axios from 'axios';
-
-const fetchPostsByAuthorId = async ({ queryKey, pageParam = 0 }) => {
-  const [, authorId] = queryKey;
-  const { data } = await axios.get(
-    `http://localhost:4000/posts/author/${authorId}?offset=${pageParam}&limit=${DataLimit.PostsByAuthorId}`
-  );
-  return data;
-};
+import { fetchPostsByAuthorId } from './fetch-user';
 
 interface ProfilePageProps {
   user: any;

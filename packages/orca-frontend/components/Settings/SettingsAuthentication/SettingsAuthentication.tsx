@@ -1,9 +1,10 @@
-import { FC, FormEvent, useState } from 'react';
 import axios from 'axios';
+import { FC, FormEvent, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
 import { Button, Divider, H2, InputText, Spacing, Text } from '../../ui';
-import { AlertTypes, openAlert } from '../../../store/alert';
 
 const updatePassword = async (password: string) => {
   const updatedSettings = await axios.put('/settings/update-password', { password });
@@ -11,7 +12,7 @@ const updatePassword = async (password: string) => {
 };
 
 const SettingsAuthentication: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const [apiError, setApiError] = useState('');
   const [values, setValues] = useState({
     password: '',

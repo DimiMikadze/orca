@@ -1,11 +1,12 @@
-import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
-import { RootState } from '../../../store';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import { AuthActionTypes, setAuthUser } from '../../../store/auth';
 import { Button, Divider, H2, InputText, Spacing, Text } from '../../ui';
-import { AlertTypes, openAlert } from '../../../store/alert';
-import { setAuthUser } from '../../../store/auth';
+import { Dispatch } from 'redux';
 
 interface AccountSettings {
   fullName: string;
@@ -18,7 +19,7 @@ const updateAccountSettings = async (settings: AccountSettings) => {
 };
 
 const SettingsAccount: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes | AlertActionTypes>>();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [apiError, setApiError] = useState('');
   const [formTouched, setFormTouched] = useState(false);

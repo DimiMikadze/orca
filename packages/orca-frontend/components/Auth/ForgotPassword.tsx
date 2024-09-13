@@ -1,10 +1,11 @@
-import React, { FC, useState, FormEvent, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { PopupType, openAuthPopup } from '../../store/auth';
-import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
-import { RootState } from '../../store';
 import axios from 'axios';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { AuthActionTypes, PopupType, openAuthPopup } from '../../store/auth';
+import { Button, Container, InputText, LinkButton, Spacing, Text } from '../ui';
+import { Dispatch } from 'redux';
 
 const forgotPassword = async (email: string) => {
   const response = await axios.post('/forgot-password', { email });
@@ -13,7 +14,7 @@ const forgotPassword = async (email: string) => {
 
 const ForgotPassword: FC = () => {
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const { mutateAsync: forgotPasswordMutation } = useMutation(forgotPassword);

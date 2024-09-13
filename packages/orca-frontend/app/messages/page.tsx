@@ -5,14 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../components/Layout';
 import { Messages } from '../../components/Messages';
 import Seo from '../../components/Seo';
-import { Button, Spacing, Text, Container } from '../../components/ui';
+import { Button, Container, Spacing, Text } from '../../components/ui';
 import { CommunityIcon } from '../../components/ui/icons';
 import { RootState } from '../../store';
-import { openAuthPopup, PopupType } from '../../store/auth';
+import { AuthActionTypes, openAuthPopup, PopupType } from '../../store/auth';
+import { Dispatch } from 'redux';
 
 const MessagesPage: FC = () => {
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));

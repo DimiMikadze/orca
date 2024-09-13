@@ -1,11 +1,12 @@
-import { FC, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { FC, FormEvent } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { openAlert, AlertTypes } from '../../store/alert';
-import ChannelForm, { ChannelFormMode } from './ChannelForm';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { Channel } from '../../constants';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../store/alert';
+import ChannelForm, { ChannelFormMode } from './ChannelForm';
 
 interface ChannelCreateProps {
   closeModal: () => void;
@@ -23,7 +24,7 @@ const createChannel = async (channel: Channel) => {
 
 const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal, channels }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const queryClient = useQueryClient();
   const { mutateAsync, isLoading, error } = useMutation(createChannel);
 

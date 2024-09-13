@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Socket, io } from 'socket.io-client';
 import { RootState } from '../store';
-import { setSocket } from '../store/auth';
+import { AuthActionTypes, setSocket } from '../store/auth';
 import { Config } from '../utils';
+import { Dispatch } from 'redux';
 
 const useSocket = (): Socket => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const { socket, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {

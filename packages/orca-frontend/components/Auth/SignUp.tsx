@@ -1,13 +1,14 @@
-import React, { FC, useState, FormEvent, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { PopupType, openAuthPopup, setAuthUser, setToken, closeAuthPopup } from '../../store/auth';
-import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
-import { SuccessContainer, SocialButton, Or, Bottom } from './style';
-import { RootState } from '../../store';
 import axios from 'axios';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
-import { GoogleIcon, FacebookIcon, GithubIcon, SuccessIcon } from '../ui/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { AuthActionTypes, PopupType, closeAuthPopup, openAuthPopup, setAuthUser, setToken } from '../../store/auth';
 import { Config, Cookies, setCookie } from '../../utils';
+import { Button, Container, InputText, LinkButton, Spacing, Text } from '../ui';
+import { FacebookIcon, GithubIcon, GoogleIcon, SuccessIcon } from '../ui/icons';
+import { Bottom, Or, SocialButton, SuccessContainer } from './style';
+import { Dispatch } from 'redux';
 
 interface User {
   fullName: string;
@@ -31,7 +32,7 @@ const SignUp: FC = () => {
   const { isEmailVerificationRequired, facebookLoginEnabled, githubLoginEnabled, googleLoginEnabled } = useSelector(
     (state: RootState) => state.settings
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const [errorMessage, setErrorMessage] = useState('');
   const { mutateAsync: signUpMutation } = useMutation(signUp);
   const [values, setValues] = useState(INITIAL_STATE);

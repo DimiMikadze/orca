@@ -1,15 +1,16 @@
-import React, { FC, useState, useRef } from 'react';
 import axios from 'axios';
+import { usePathname, useRouter } from 'next/navigation';
+import { FC, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import { UserRole } from '../../../constants';
+import { RootState } from '../../../store';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import { useClickOutside } from '../../../utils';
 import { Button, Confirm } from '../../ui';
 import { ThreeDotsIcon } from '../../ui/icons';
-import { useClickOutside } from '../../../utils';
 import { Popover, PopoverContent } from './style';
-import { openAlert, AlertTypes } from '../../../store/alert';
-import { useRouter } from 'next/navigation';
-import { RootState } from '../../../store';
-import { UserRole } from '../../../constants';
 
 interface PostCardPopoverProps {
   postId: string;
@@ -39,10 +40,11 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({
   refetch,
   openPostCreate,
 }) => {
+  const pathname = usePathname();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
   const ref = useRef(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const queryClient = useQueryClient();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -78,7 +80,7 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({
       const deletedPost = await deletePostMutation({ id: postId, imagePublicId });
       // If a user deletes a post on which page they are on, we'll redirect them to the home page.
       // Hence, we don't need to update the cache.
-      if (router.route !== '/post/[id]') {
+      if (/* router.route !== '/post/[id]' */ pathname !== '/post/[id]') {
         queryClient.setQueryData(queryKey, (existingPosts: any) => {
           return {
             ...existingPosts,
@@ -94,7 +96,7 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({
           type: AlertTypes.Success,
         })
       );
-      if (router.route === '/post/[id]') {
+      if (/* router.route === '/post/[id]' */ pathname === '/post/[id]') {
         router.push('/');
       }
     } catch (error) {

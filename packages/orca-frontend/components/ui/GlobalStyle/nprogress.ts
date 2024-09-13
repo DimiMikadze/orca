@@ -1,7 +1,7 @@
-import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { css } from 'styled-components';
 import { Theme } from '../../../theme';
 
-const nProgress = (theme: Theme): FlattenSimpleInterpolation => css`
+const nProgress = (theme: Theme) => css`
   /* Make clicks pass-through */
   #nprogress {
     pointer-events: none;
@@ -26,7 +26,9 @@ const nProgress = (theme: Theme): FlattenSimpleInterpolation => css`
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px ${theme.colors.general.primary}, 0 0 5px ${theme.colors.general.primary};
+    box-shadow:
+      0 0 10px ${theme.colors.general.primary},
+      0 0 5px ${theme.colors.general.primary};
     opacity: 1;
 
     -webkit-transform: rotate(3deg) translate(0px, -4px);

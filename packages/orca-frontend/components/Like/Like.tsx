@@ -1,16 +1,17 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { useMutation, useQueryClient } from 'react-query';
 import debounce from 'lodash/debounce';
-import { openAuthPopup, PopupType } from '../../store/auth';
+import { FC } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { NotificationType } from '../../constants/Notification';
+import { RootState } from '../../store';
+import { AuthActionTypes, openAuthPopup, PopupType } from '../../store/auth';
+import { useNotifications } from '../../utils';
+import { Button } from '../ui/Button';
 import { LikeIcon } from '../ui/icons';
 import Spacing from '../ui/Spacing';
-import { RootState } from '../../store';
-import { useNotifications } from '../../utils';
-import { NotificationType } from '../../constants/Notification';
-import { Button } from '../ui/Button';
+import { Dispatch } from 'redux';
 
 const createLike = async ({ postId }) => {
   const like = await axios.post('/likes/create', { postId });
@@ -35,7 +36,7 @@ const StyledButton = styled(Button)`
 `;
 
 const Like: FC<LikeProps> = ({ withText, fullWidth, hasLiked, post, queryKey }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const color = hasLiked ? 'primary' : 'textSecondary';
   const queryClient = useQueryClient();
@@ -101,7 +102,11 @@ const Like: FC<LikeProps> = ({ withText, fullWidth, hasLiked, post, queryKey }) 
   const likeMutation = async () => {
     try {
       const like = hasLiked ? await deleteLikeMutation(hasLiked?._id) : await createLikeMutation({ postId: post._id });
-      hasLiked ? updateAfterUnLike(like._id) : updateAfterLike(like);
+      if (hasLiked) {
+        updateAfterUnLike(like._id);
+      } else {
+        updateAfterLike(like);
+      }
 
       if (hasLiked) {
         const notification = post.author.notifications.find((n) => n?.like?._id === hasLiked?._id);

@@ -1,13 +1,14 @@
-import React, { FC, ChangeEvent, useEffect } from 'react';
 import axios from 'axios';
-import { Input, Label, Text } from './style';
-import { UploadIcon } from '../ui/icons';
-import { MaxImageSize } from '../../constants';
+import { ChangeEvent, FC, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { MaxImageSize } from '../../constants';
 import { RootState } from '../../store';
-import { addUserImage, addUserCover } from '../../store/auth';
+import { addUserCover, addUserImage, AuthActionTypes } from '../../store/auth';
 import { ProfileLoading } from '../Profile/Profile';
+import { UploadIcon } from '../ui/icons';
+import { Input, Label, Text } from './style';
+import { Dispatch } from 'redux';
 
 interface UploadImageProps {
   isCover?: boolean;
@@ -27,7 +28,7 @@ const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePubl
 
 const UploadImage: FC<UploadImageProps> = ({ isCover = false, setIsLoading }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const { mutateAsync, isLoading: isFetching } = useMutation(createUploadImage);
 

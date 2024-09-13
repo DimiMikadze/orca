@@ -1,16 +1,17 @@
-import React, { FC, useState, useRef } from 'react';
 import axios from 'axios';
+import dynamic from 'next/dynamic';
+import { useParams, useRouter } from 'next/navigation';
+import { FC, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { openAlert, AlertTypes } from '../../store/alert';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
-import { Popover, PopoverContent, ThreeDots } from './style';
-import { Button, Modal, Confirm, Spacing } from '../ui';
-const ChannelEdit = dynamic(() => import('../Channel/ChannelEdit'));
-import { ThreeDotsIcon } from '../ui/icons';
-import { useClickOutside } from '../../utils';
+import { Dispatch } from 'redux';
 import { Channel } from '../../constants';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../store/alert';
+import { useClickOutside } from '../../utils';
+import { Button, Confirm, Modal, Spacing } from '../ui';
+import { ThreeDotsIcon } from '../ui/icons';
+import { Popover, PopoverContent, ThreeDots } from './style';
+const ChannelEdit = dynamic(() => import('../Channel/ChannelEdit'));
 
 interface ChannelPopoverProps {
   channel: Channel;
@@ -22,7 +23,8 @@ const deleteChannel = async (id: string) => {
 };
 
 const ChannelPopover: FC<ChannelPopoverProps> = ({ channel }) => {
-  const dispatch = useDispatch();
+  const params = useParams();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const router = useRouter();
   const queryClient = useQueryClient();
   const ref = useRef(null);
@@ -46,7 +48,10 @@ const ChannelPopover: FC<ChannelPopoverProps> = ({ channel }) => {
       setIsEditModalOpen(false);
       setIsDeleteModalOpen(false);
 
-      if (router.query.name === channel.name) {
+      // if (router.query.name === channel.name) {
+      //   router.push('/');
+      // }
+      if (params.name === channel.name) {
         router.push('/');
       }
 
@@ -57,6 +62,7 @@ const ChannelPopover: FC<ChannelPopoverProps> = ({ channel }) => {
         })
       );
     } catch (error) {
+      console.error(error);
       dispatch(
         openAlert({
           message: 'An error occurred while deleting a channel.',

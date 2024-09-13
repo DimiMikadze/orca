@@ -14,7 +14,8 @@ import Skeleton from '../../components/ui/Skeleton';
 import Spacing from '../../components/ui/Spacing';
 import CommunityIcon from '../../components/ui/icons/CommunityIcon';
 import { RootState } from '../../store';
-import { PopupType, openAuthPopup } from '../../store/auth';
+import { AuthActionTypes, PopupType, openAuthPopup } from '../../store/auth';
+import { Dispatch } from 'redux';
 
 export const updateNotificationSeen = async (): Promise<any> => {
   const { data } = await axios.put('/notifications/seen');
@@ -32,7 +33,7 @@ const NotificationsPage: FC = () => {
     enabled: authUser !== null,
   });
   const { mutateAsync } = useMutation(updateNotificationSeen);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
@@ -86,9 +87,7 @@ const NotificationsPage: FC = () => {
 
         {isEmpty && authUser !== null && <Empty>You don&apos;t have notifications yet.</Empty>}
 
-        {notifications?.map((notification) => (
-          <Notification key={notification._id} notification={notification} />
-        ))}
+        {notifications?.map((notification) => <Notification key={notification._id} notification={notification} />)}
       </Container>
     </Layout>
   );

@@ -1,18 +1,20 @@
 import axios from 'axios';
-import theme, { Theme } from '../theme';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setCommunityName,
-  setCommunityLogo,
-  setPrimaryColor,
-  setCommunityLogoPublicId,
-  setIsEmailVerificationRequired,
-  setFacebookLoginEnabled,
-  setGoogleLoginEnabled,
-  setGithubLoginEnabled,
-} from '../store/settings';
+import { Dispatch } from 'redux';
 import { RootState } from '../store';
+import {
+  setCommunityLogo,
+  setCommunityLogoPublicId,
+  setCommunityName,
+  setFacebookLoginEnabled,
+  setGithubLoginEnabled,
+  setGoogleLoginEnabled,
+  setIsEmailVerificationRequired,
+  setPrimaryColor,
+  SettingsActionTypes,
+} from '../store/settings';
+import theme, { Theme } from '../theme';
 
 interface useFetchSettingsPayload {
   isSettingsFetching: boolean;
@@ -20,7 +22,7 @@ interface useFetchSettingsPayload {
 
 const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPayload => {
   const settings = useSelector((state: RootState) => state.settings);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<SettingsActionTypes>>();
   const [isSettingsFetching, setIsSettingsFetching] = useState(true);
   const [values, setValues] = useState({
     communityLogo: null,

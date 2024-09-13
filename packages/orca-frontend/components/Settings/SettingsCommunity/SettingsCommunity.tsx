@@ -1,18 +1,21 @@
-import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Divider, H2, H3, InputText, Spacing, Toggle, P } from '../../ui';
-import { PrimaryColor, PrimaryColorPreview, CommunityLogoContainer, CommunityLogo, LabelAndToggle } from './style';
+import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import UploadLogo from './UploadLogo';
 import { RootState } from '../../../store';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
 import {
   setFacebookLoginEnabled,
   setGithubLoginEnabled,
   setGoogleLoginEnabled,
   setPrimaryColor,
+  SettingsActionTypes,
 } from '../../../store/settings';
-import { AlertTypes, openAlert } from '../../../store/alert';
+import { Button, Divider, H2, H3, InputText, P, Spacing, Toggle } from '../../ui';
+import { CommunityLogo, CommunityLogoContainer, LabelAndToggle, PrimaryColor, PrimaryColorPreview } from './style';
+import UploadLogo from './UploadLogo';
+import { Dispatch } from 'redux';
+import { AuthActionTypes } from '../../../store/auth';
 
 interface CommunitySettings {
   communityName: string;
@@ -29,7 +32,7 @@ const updateCommunitySettings = async (settings: CommunitySettings) => {
 };
 
 const SettingsCommunity: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes | SettingsActionTypes | AlertActionTypes>>();
   const settings = useSelector((state: RootState) => state.settings);
   const [values, setValues] = useState({
     communityName: settings.communityName,

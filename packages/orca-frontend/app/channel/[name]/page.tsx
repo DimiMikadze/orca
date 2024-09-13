@@ -1,8 +1,7 @@
-import axios from 'axios';
 import ChannelClient from './ChannelClient';
 
 const fetchChannelByName = async (channelName: string) => {
-  const { data } = await axios.get(`http://localhost:4000/channels/${channelName}`);
+  const data = await (await fetch(`http://localhost:4000/channels/${channelName}`, { method: 'GET' })).json();
   console.log(data);
   return data;
 };

@@ -1,32 +1,33 @@
-import React, { FC, KeyboardEvent, useEffect, useState, useRef, FormEvent } from 'react';
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
+import { FC, FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import { Events } from '../../../constants';
+import { NotificationType } from '../../../constants/Notification';
+import { RootState } from '../../../store';
+import { AuthActionTypes, removeUserNotification } from '../../../store/auth';
+import { date, useNotifications, useSocket } from '../../../utils';
+import Linkify from '../../Linkify';
+import Search from '../../Search';
+import { Avatar, Button, Link, Spacing } from '../../ui';
+import { PlusIcon } from '../../ui/icons';
+import { addToMessagesList } from '../cache';
 import {
-  Root,
-  Header,
   Container,
-  FullName,
-  MessageWrapper,
-  MessagesConversation,
   Conversation,
   Form,
+  FullName,
+  Header,
   Message,
   MessageDate,
-  Textarea,
+  MessageWrapper,
+  MessagesConversation,
+  Root,
   ScrollWrapper,
+  Textarea,
 } from './style';
-import { Avatar, Link, Spacing, Button } from '../../ui';
-import Search from '../../Search';
-import { PlusIcon } from '../../ui/icons';
-import { RootState } from '../../../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { useSocket, date, useNotifications } from '../../../utils';
-import { Events } from '../../../constants';
-import { addToMessagesList } from '../cache';
-import { NotificationType } from '../../../constants/Notification';
-import { removeUserNotification } from '../../../store/auth';
-import Linkify from '../../Linkify';
-import { useRouter } from 'next/navigation';
 
 interface MessagesChatProps {
   onSearchItemClick: (user: any) => void;
@@ -51,8 +52,8 @@ const updateMessagesSeen = async (userId) => {
 };
 
 const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }) => {
-  const router = useRouter();
   const [message, setMessage] = useState('');
+  const pathname = usePathname();
   const scrollToBottomRef = useRef(null);
   const authUser = useSelector((state: RootState) => state.auth.user);
   const queryClient = useQueryClient();
@@ -62,7 +63,7 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
   const { mutateAsync: sendMessage } = useMutation(createMessage);
   const { mutateAsync: updateMessagesSeenMutation } = useMutation(updateMessagesSeen);
   const socket = useSocket();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const { createNotification } = useNotifications();
 
   useEffect(() => {
@@ -202,16 +203,18 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
           </Conversation>
         </MessagesConversation>
 
-        {router.pathname !== '/messages' && (
-          <Form onSubmit={onSubmit}>
-            <Textarea value={message} onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress} />
-            <Spacing left="sm" top="xxs">
-              <Button type="submit" ghost>
-                <PlusIcon width="28" />
-              </Button>
-            </Spacing>
-          </Form>
-        )}
+        {
+          /* router.pathname !== '/messages' */ pathname !== '/messages' && (
+            <Form onSubmit={onSubmit}>
+              <Textarea value={message} onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress} />
+              <Spacing left="sm" top="xxs">
+                <Button type="submit" ghost>
+                  <PlusIcon width="28" />
+                </Button>
+              </Spacing>
+            </Form>
+          )
+        }
       </ScrollWrapper>
     </Root>
   );

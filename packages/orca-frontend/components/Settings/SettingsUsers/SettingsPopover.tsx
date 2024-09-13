@@ -1,11 +1,12 @@
-import { FC, useState } from 'react';
 import axios from 'axios';
+import { FC, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { openAlert, AlertTypes } from '../../../store/alert';
-import { StyledButton } from './style';
+import { Dispatch } from 'redux';
 import { Confirm } from '../../../components/ui';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
 import { BanIcon, UnbanIcon } from '../../ui/icons';
+import { StyledButton } from './style';
 
 interface SettingsPopoverProps {
   userId: string;
@@ -20,7 +21,7 @@ const banUser = async ({ id, banned }) => {
 
 const SettingsPopover: FC<SettingsPopoverProps> = ({ userId, banned, searchQuery }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation(banUser);
@@ -47,6 +48,7 @@ const SettingsPopover: FC<SettingsPopoverProps> = ({ userId, banned, searchQuery
         })
       );
     } catch (error) {
+      console.error(error);
       dispatch(
         openAlert({
           message: 'An error occurred while banning a user.',

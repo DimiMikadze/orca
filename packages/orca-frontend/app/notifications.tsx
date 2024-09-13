@@ -1,14 +1,15 @@
-import { FC, useEffect } from 'react';
-import Layout from '../components/Layout';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import Notification from '../components/Notification';
-import { Empty, Container, Skeleton, Spacing, Button, Text } from '../components/ui';
+import { FC, useEffect } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { RootState } from '../store';
-import { openAuthPopup, PopupType } from '../store/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import Layout from '../components/Layout';
+import Notification from '../components/Notification';
 import Seo from '../components/Seo';
+import { Button, Container, Empty, Skeleton, Spacing, Text } from '../components/ui';
 import { CommunityIcon } from '../components/ui/icons';
+import { RootState } from '../store';
+import { AuthActionTypes, openAuthPopup, PopupType } from '../store/auth';
+import { Dispatch } from 'redux';
 
 export const updateNotificationSeen = async (): Promise<any> => {
   const { data } = await axios.put('/notifications/seen');
@@ -26,7 +27,7 @@ const NotificationsPage: FC = () => {
     enabled: authUser !== null,
   });
   const { mutateAsync } = useMutation(updateNotificationSeen);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
@@ -79,9 +80,7 @@ const NotificationsPage: FC = () => {
 
         {isEmpty && authUser !== null && <Empty>You don&apos;t have notifications yet.</Empty>}
 
-        {notifications?.map((notification) => (
-          <Notification key={notification._id} notification={notification} />
-        ))}
+        {notifications?.map((notification) => <Notification key={notification._id} notification={notification} />)}
       </Container>
     </Layout>
   );

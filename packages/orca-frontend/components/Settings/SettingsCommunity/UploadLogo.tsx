@@ -1,13 +1,14 @@
-import React, { FC, ChangeEvent, useState } from 'react';
 import axios from 'axios';
-import { Input, Label, Text } from './style';
-import { UploadIcon } from '../../ui/icons';
-import { MaxImageSize } from '../../../constants';
+import { ChangeEvent, FC, useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { setCommunityLogo, setCommunityLogoPublicId } from '../../../store/settings';
-import { AlertTypes, openAlert } from '../../../store/alert';
+import { Dispatch } from 'redux';
+import { MaxImageSize } from '../../../constants';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import { setCommunityLogo, setCommunityLogoPublicId, SettingsActionTypes } from '../../../store/settings';
 import { Loading } from '../../ui';
+import { UploadIcon } from '../../ui/icons';
+import { Input, Label, Text } from './style';
 
 interface UploadImageProps {
   imagePublicId?: string;
@@ -23,7 +24,7 @@ const uploadLogo = async ({ image, imagePublicId }) => {
 };
 
 const UploadLogo: FC<UploadImageProps> = ({ imagePublicId }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<SettingsActionTypes | AlertActionTypes>>();
   const [isLoading, setIsLoading] = useState(false);
   const { mutateAsync } = useMutation(uploadLogo);
 

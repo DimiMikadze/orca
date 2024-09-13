@@ -1,11 +1,12 @@
-import { FC, FormEvent } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { FC, FormEvent } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { openAlert, AlertTypes } from '../../store/alert';
-import ChannelForm, { IChannelForm, ChannelFormMode } from './ChannelForm';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { Channel } from '../../constants';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../store/alert';
+import ChannelForm, { ChannelFormMode, IChannelForm } from './ChannelForm';
 
 interface ChannelEditProps {
   channel: Channel;
@@ -23,7 +24,7 @@ const updateChannel = async (channel: any) => {
 
 const ChannelEdit: FC<ChannelEditProps> = ({ channel, closeModal }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
   const queryClient = useQueryClient();
 
   const { mutateAsync, isLoading, error } = useMutation(updateChannel);

@@ -3,9 +3,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Cookies, setCookie } from '.';
-import { AlertTypes, openAlert } from '../store/alert';
-import { setAuthUser, setToken } from '../store/auth';
+import { AlertActionTypes, AlertTypes, openAlert } from '../store/alert';
+import { AuthActionTypes, setAuthUser, setToken } from '../store/auth';
 import { getCookie } from './cookie';
+import { Dispatch } from 'redux';
 
 interface useAuthPayload {
   isAuthFetching: boolean;
@@ -17,7 +18,7 @@ const capitalizeFirstLetter = (text: string) => {
 };
 
 const useAuth = (): useAuthPayload => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes | AuthActionTypes>>();
   const [isAuthFetching, setIsAuthFetching] = useState(true);
   const [authError, setAuthError] = useState(false);
   const router = useRouter();

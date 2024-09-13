@@ -1,14 +1,15 @@
-import React, { FC } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
 import debounce from 'lodash/debounce';
+import { FC } from 'react';
 import { useMutation } from 'react-query';
-import { RootState } from '../../store';
-import { addUserFollowing, removeUserFollowing } from '../../store/auth';
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthUser } from '../../constants';
-import { useNotifications } from '../../utils';
 import { NotificationType } from '../../constants/Notification';
+import { RootState } from '../../store';
+import { addUserFollowing, AuthActionTypes, removeUserFollowing } from '../../store/auth';
+import { useNotifications } from '../../utils';
 import { Root } from './style';
+import { Dispatch } from 'redux';
 
 const createFollow = async ({ userId }) => {
   const follow = await axios.post('/follow/create', { userId });
@@ -28,7 +29,7 @@ interface FollowProps {
 const Follow: FC<FollowProps> = ({ user, queryKey }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const isFollowing: any = authUser.following.find((f: any) => f.user === user._id);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const { createNotification, deleteNotification } = useNotifications();
   const { mutateAsync: createFollowMutation } = useMutation(createFollow);
@@ -38,8 +39,11 @@ const Follow: FC<FollowProps> = ({ user, queryKey }) => {
     const follow = isFollowing
       ? await deleteFollowMutation(isFollowing._id)
       : await createFollowMutation({ userId: user._id });
-
-    isFollowing ? dispatch(removeUserFollowing(follow._id)) : dispatch(addUserFollowing(follow));
+    if (isFollowing) {
+      dispatch(removeUserFollowing(follow._id));
+    } else {
+      dispatch(addUserFollowing(follow));
+    }
 
     if (isFollowing) {
       const notification: any = user.notifications.find((n: any) => n?.follow?._id === isFollowing?._id);

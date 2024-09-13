@@ -1,17 +1,18 @@
 'use client';
 
-import { FC, Fragment } from 'react';
 import axios from 'axios';
+import { FC, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/Layout';
-import { useInfiniteScroll } from '../utils';
+import { PostCard, PostCreateButton } from '../components/Post';
+import Seo from '../components/Seo';
+import { Button, Container, LoadingDots, Skeleton, Spacing, Text } from '../components/ui';
+import { CommunityIcon } from '../components/ui/icons';
 import { DataLimit, Post } from '../constants';
 import { RootState } from '../store';
-import { PostCard, PostCreateButton } from '../components/Post';
-import { Container, Button, Spacing, LoadingDots, Skeleton, Text } from '../components/ui';
-import { openAuthPopup, PopupType } from '../store/auth';
-import { CommunityIcon } from '../components/ui/icons';
-import Seo from '../components/Seo';
+import { AuthActionTypes, openAuthPopup, PopupType } from '../store/auth';
+import { useInfiniteScroll } from '../utils';
+import { Dispatch } from 'redux';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -19,7 +20,7 @@ const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
 };
 
 const Home: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
     key: 'postsByFollowing',

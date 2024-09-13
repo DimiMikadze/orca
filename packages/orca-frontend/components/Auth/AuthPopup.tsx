@@ -1,15 +1,16 @@
-import React, { FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { closeAuthPopup, PopupType } from '../../store/auth';
-import { Modal } from '../ui';
+import { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import SignUp from './SignUp';
-import Login from './Login';
+import { AuthActionTypes, closeAuthPopup, PopupType } from '../../store/auth';
+import { Modal } from '../ui';
 import ForgotPassword from './ForgotPassword';
+import Login from './Login';
+import SignUp from './SignUp';
+import { Dispatch } from 'redux';
 
 const AuthPopup: FC = () => {
   const { isPopupOpen, popupType } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AuthActionTypes>>();
 
   const closeModal = () => {
     dispatch(closeAuthPopup());

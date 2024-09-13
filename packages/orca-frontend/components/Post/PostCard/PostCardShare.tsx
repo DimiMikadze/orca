@@ -1,10 +1,11 @@
-import React, { ForwardRefRenderFunction, forwardRef, RefObject } from 'react';
-import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
-import { SharePopover, ShareItem, ShareButton } from './style';
-import { FacebookIcon, LinkedInIcon, TwitterIcon, LinkIcon } from '../../ui/icons';
-import { Spacing } from '../../ui';
+import { forwardRef, ForwardRefRenderFunction, RefObject } from 'react';
 import { useDispatch } from 'react-redux';
-import { AlertTypes, openAlert } from '../../../store/alert';
+import { FacebookShareButton, LinkedinShareButton, TwitterShareButton } from 'react-share';
+import { Dispatch } from 'redux';
+import { AlertActionTypes, AlertTypes, openAlert } from '../../../store/alert';
+import { Spacing } from '../../ui';
+import { FacebookIcon, LinkedInIcon, LinkIcon, TwitterIcon } from '../../ui/icons';
+import { ShareButton, ShareItem, SharePopover } from './style';
 
 interface PostCardShareProps {
   url: string;
@@ -17,7 +18,7 @@ const PostCardShare: ForwardRefRenderFunction<HTMLDivElement, PostCardShareProps
   { url, title, setIsShareOpen },
   ref
 ) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AlertActionTypes>>();
 
   const saveToClipboard = (): void => {
     navigator.clipboard.writeText(window.location.href);
@@ -32,7 +33,7 @@ const PostCardShare: ForwardRefRenderFunction<HTMLDivElement, PostCardShareProps
 
   return (
     <SharePopover ref={ref}>
-      <FacebookShareButton url={url} quote={title}>
+      <FacebookShareButton url={url} /*  quote={title} */ title={title}>
         <ShareItem>
           <FacebookIcon color="facebook" />
           <Spacing left="xs" />
