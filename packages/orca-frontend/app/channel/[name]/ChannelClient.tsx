@@ -12,6 +12,7 @@ import { Channel as ChannelType, DataLimit, Post } from '../../../constants';
 import { RootState } from '../../../store';
 import { PopupType, openAuthPopup } from '../../../store/auth';
 import { useInfiniteScroll } from '../../../utils';
+import axios from 'axios';
 
 interface ChannelProps {
   channel: ChannelType;

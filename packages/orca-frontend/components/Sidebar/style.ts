@@ -6,7 +6,7 @@ interface RootProps {
   isOpen: boolean;
 }
 
-export const Root = styled.div.attrs<RootProps>((props) => ({
+export const Root = styled.div.attrs<RootProps>(() => ({
   isOpen: undefined, // 过滤掉 isOpen 属性
 }))<RootProps>`
   position: fixed;
@@ -56,7 +56,7 @@ interface ThreeDotsProps {
   isOpen: boolean;
 }
 
-export const ThreeDots = styled.div.attrs<ThreeDotsProps>((props) => ({
+export const ThreeDots = styled.div.attrs<ThreeDotsProps>(() => ({
   isOpen: undefined, // 过滤掉 isOpen 属性
 }))<ThreeDotsProps>`
   ${(p) => !p.isOpen && 'opacity: 0;'};
@@ -88,7 +88,7 @@ interface LIProps {
   noHover?: boolean;
 }
 
-export const LI = styled.li.attrs<LIProps>((props) => ({
+export const LI = styled.li.attrs<LIProps>(() => ({
   noHover: undefined, // 过滤掉 noHover 属性
 }))<LIProps>`
   display: flex;
