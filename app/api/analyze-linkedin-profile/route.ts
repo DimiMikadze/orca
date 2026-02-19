@@ -1,7 +1,18 @@
 import { NextRequest } from 'next/server';
 import { analyzeProfile, getCredits } from '@/orca-ai';
+import { createSupabaseServerClient } from '@/app/supabase/server';
 
 export const POST = async (request: NextRequest) => {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    const supabase = await createSupabaseServerClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+  }
+
   const { url } = await request.json();
 
   if (!url || typeof url !== 'string') {

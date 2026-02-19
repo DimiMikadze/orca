@@ -19,6 +19,7 @@ import type {
 import { LINKEDIN_CREDITS_COOKIE_NAME } from '@/orca-ai/config';
 import { ProfileAnalysisResult } from './profile-analysis-result';
 import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-data-modal';
+import { LogoutButton } from '../components/logout-button';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
 
 interface ApiResult {
@@ -154,14 +155,14 @@ export const ProfileAnalysis = () => {
       </div>
 
       {/* Header */}
-      <header className='border-b border-border'>
-        <div className='max-w-4xl mx-auto px-8 py-4 flex items-center justify-between gap-6'>
+      <header className='relative border-b border-border'>
+        <div className='max-w-4xl mx-auto px-8 pr-16 py-4 flex items-center gap-6'>
           {/* Logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src='/logo-white.png' alt='Orca' className='h-8 shrink-0' />
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className='flex-1 w-full'>
+          <form onSubmit={handleSubmit} className='flex-1 w-full min-w-0'>
             <div className='relative flex items-center bg-background-light border border-border rounded-full px-3 py-2'>
               <input
                 type='text'
@@ -179,6 +180,10 @@ export const ProfileAnalysis = () => {
               </button>
             </div>
           </form>
+        </div>
+
+        <div className='absolute right-6 top-1/2 -translate-y-1/2'>
+          <LogoutButton />
         </div>
 
         {/* Error Message */}

@@ -19,6 +19,7 @@ Orca is an agentic AI system that analyzes LinkedIn profiles and the people they
 Single-agent system. `collectLinkedInData` scrapes baseline data (profile, posts, comments, reactions, top post engagement — ~11 API credits, no LLM), then the Analysis Agent processes it to extract structured insights. The agent has scraping tools so it can autonomously gather more data if needed.
 
 **Preventing duplicate scraping:** The agent must never re-fetch data already collected in baseline — it wastes credits and returns no new information. Two mechanisms enforce this:
+
 - `scrape_more_activity`: `collectLinkedInData` stores the pagination token from each baseline activity page in `activityPaginationTokens`. The tool uses this token with `startFrom=50` to start at page 2, making it structurally impossible to re-fetch page 1.
 - `scrape_post_comments` / `scrape_post_reactions`: comments and reactions for top posts are already collected in baseline. The agent caches them in a `Map` (keyed by URN) before tools run — any call for an already-collected URN returns cached data without an API call.
 
@@ -58,6 +59,15 @@ Types for all API responses are in `orca-ai/types.ts`. All fields are optional s
 - `ProfileAnalysis.tsx` — page-level component. Owns all state (form, loading, results, modal). Streams SSE from `/api/linkedin-profile`. Has `USE_DUMMY_DATA` flag for dev.
 - `ProfileAnalysisResult.tsx` — profile header + insight cards. Contains `RichText` helper that renders markdown links and LinkedIn URLs as clickable labels.
 - `CollectedDataModal.tsx` — modal showing raw collected data across tabs: Profile, Posts, Comments, Reactions, Audience Engagements.
+
+## Authentication
+
+Auth is **optional**. If `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set in `.env.local`, the app enables Supabase email/password login and protects all pages and the API route. Without these variables, the app runs with no auth.
+
+- `app/supabase/` — Supabase client helpers (browser, server, proxy)
+- `app/login/` — Login page (client-side auth via browser Supabase client)
+- `app/components/logout-button.tsx` — Logout button, only renders when auth is configured
+- `proxy.ts` — Refreshes session and redirects unauthenticated users to `/login` (only active when env vars are set)
 
 ## Stack
 

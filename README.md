@@ -56,6 +56,15 @@ RAPIDAPI_KEY=your_key
 OPENAI_API_KEY=your_key
 ```
 
+Authentication is **optional**. To restrict access with a login page, add Supabase credentials:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+When set, all pages and the API are protected behind email/password login. Without them, the app runs open with no auth.
+
 ## Installation
 
 ```bash

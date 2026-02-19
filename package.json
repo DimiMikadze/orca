@@ -15,10 +15,13 @@
     "test:linkedin-post-comments-scraper": "vitest run orca-ai/__tests__/services/linkedin-post-comments-scraper",
     "test:linkedin-post-reactions-scraper": "vitest run orca-ai/__tests__/services/linkedin-post-reactions-scraper",
     "test:format-linkedin-data": "vitest run orca-ai/__tests__/utils/format-linkedin-data",
-    "test:analysis-agent": "vitest run orca-ai/__tests__/agents/analysis-agent"
+    "test:analysis-agent": "vitest run orca-ai/__tests__/agents/analysis-agent",
+    "generate-types": "supabase gen types typescript --project-id iwzpupxauyaukuljmjjg > ./app/supabase/database.types.ts"
   },
   "dependencies": {
     "@langchain/openai": "^1.2.7",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.97.0",
     "langchain": "^1.2.21",
     "lucide-react": "^0.574.0",
     "next": "16.1.6",
