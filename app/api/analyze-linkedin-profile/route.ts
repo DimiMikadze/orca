@@ -1,8 +1,11 @@
 import { NextRequest } from 'next/server';
 import { analyzeProfile, getCredits } from '@/orca-ai';
 import { createSupabaseServerClient } from '@/app/supabase/server';
+import { insertAnalysis, getAnalysisCount, ANALYSIS_CAP } from '@/app/supabase/orm';
 
 export const POST = async (request: NextRequest) => {
+  let userId: string | null = null;
+
   if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
     const supabase = await createSupabaseServerClient();
     const {
@@ -10,6 +13,15 @@ export const POST = async (request: NextRequest) => {
     } = await supabase.auth.getUser();
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    userId = user.id;
+
+    const count = await getAnalysisCount(supabase, userId);
+    if (count >= ANALYSIS_CAP) {
+      return Response.json(
+        { error: `You've used all ${ANALYSIS_CAP} analyses. Email hi@dimimikadze.com to get more.` },
+        { status: 429 },
+      );
     }
   }
 
@@ -42,6 +54,11 @@ export const POST = async (request: NextRequest) => {
           `\n  Insights: ${stats.insightCount}`,
           `\n  Credits: ${credits?.remaining ?? '?'}/${credits?.limit ?? '?'} remaining`,
         );
+
+        if (userId) {
+          const supabase = await createSupabaseServerClient();
+          await insertAnalysis(supabase, userId, url);
+        }
 
         send('result', { analysis, collectedData, stats, credits });
       } catch (err) {
