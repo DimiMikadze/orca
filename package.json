@@ -1,0 +1,44 @@
+{
+  "name": "orca",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:services": "vitest run orca-ai/__tests__/services",
+    "test:agents": "vitest run orca-ai/__tests__/agents",
+    "test:linkedin-profile-scraper": "vitest run orca-ai/__tests__/services/linkedin-profile-scraper",
+    "test:linkedin-activity-scraper": "vitest run orca-ai/__tests__/services/linkedin-activity-scraper",
+    "test:linkedin-post-comments-scraper": "vitest run orca-ai/__tests__/services/linkedin-post-comments-scraper",
+    "test:linkedin-post-reactions-scraper": "vitest run orca-ai/__tests__/services/linkedin-post-reactions-scraper",
+    "test:format-linkedin-data": "vitest run orca-ai/__tests__/utils/format-linkedin-data",
+    "test:analysis-agent": "vitest run orca-ai/__tests__/agents/analysis-agent"
+  },
+  "dependencies": {
+    "@langchain/openai": "^1.2.7",
+    "langchain": "^1.2.21",
+    "lucide-react": "^0.574.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@next/env": "^16.1.6",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^6.1.0",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "attributes": [],
+    "images": [],
+    "num_comments": 2,
+    "num_likes": 14,
+    "num_reactions": 14,
+    "num_reposts": 0,
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/",
+    "posted": "2025-09-29 05:57:42",
+    "poster": {
+      "first": "Dimi",
+      "headline": "Software Engineer | Agentic AI Systems",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFaCypq2FNyTw/profile-displayphoto-crop_800_800/B4DZg95CCbHsAQ-/0/1753385018039?e=1772668800&v=beta&t=2-vAxY1usnxaNOOYUlo_HKTbaRbp98Sjnin03egBYF0",
+      "last": "Mikadze",
+      "linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+      "public_id": "dimimikadze",
+      "urn": "ACoAABSP054Bo0lFHWLnNhLCpS0OGVpgczp3J6k"
+    },
+    "poster_linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+    "reshared": false,
+    "text": "Last month I shared the first version of Mira, an open-source agentic AI project.\n\nSince then, the system has grown quickly with new capabilities that take it beyond research into full workflows.\n\nI put together a short demo video to show how far it’s come and what it can do now.\n\nFor the full walkthrough, check out the YouTube link in the comments.",
+    "time": "4 months ago",
+    "urn": "7378306963828441088",
+    "video": {
+      "duration": 82666,
+      "stream_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1771437600&v=beta&t=-2hC2YWyl2w2U2nrqgJRD5Lgw2kPal94N7EOvLZmEZ0"
+    }
+  },
+  {
+    "attributes": [],
+    "images": [],
+    "num_appreciations": 1,
+    "num_comments": 2,
+    "num_empathy": 1,
+    "num_likes": 22,
+    "num_praises": 2,
+    "num_reactions": 26,
+    "num_reposts": 2,
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/",
+    "posted": "2025-08-25 07:00:15",
+    "poster": {
+      "first": "Dimi",
+      "headline": "Software Engineer | Agentic AI Systems",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFaCypq2FNyTw/profile-displayphoto-crop_800_800/B4DZg95CCbHsAQ-/0/1753385018039?e=1772668800&v=beta&t=2-vAxY1usnxaNOOYUlo_HKTbaRbp98Sjnin03egBYF0",
+      "last": "Mikadze",
+      "linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+      "public_id": "dimimikadze",
+      "urn": "ACoAABSP054Bo0lFHWLnNhLCpS0OGVpgczp3J6k"
+    },
+    "poster_linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+    "reshared": false,
+    "text": "🚀 I just open-sourced Mira — an Agentic AI system that automates company research at scale.\n\nGive it a website URL, get a full company profile in minutes. Free, open source, and easy to customize.",
+    "time": "6 months ago",
+    "urn": "7365639131323863040",
+    "video": {
+      "duration": 42533,
+      "stream_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1771437600&v=beta&t=5ojzTM0zr1CB9WATyMxHc7Nrjt2Nq2saiIf2YEF4wH4"
+    }
+  },
+  {
+    "attributes": [],
+    "document": {
+      "page_count": 9,
+      "title": "ChatGPT Features Worth Knowing",
+      "url": "https://media.licdn.com/dms/document/media/v2/D4D1FAQEaZVgA24hNaA/feedshare-document-chunked-pdf/B4DZiiYxAKHwBo-/0/1755071075039?e=1771437600&v=beta&t=jgHowiD95YQ2tWf8bilQvFAn9uH_ko5RjiP6fU8CpHU"
+    },
+    "images": [],
+    "num_comments": 1,
+    "num_likes": 4,
+    "num_reactions": 4,
+    "num_reposts": 0,
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/",
+    "posted": "2025-08-13 07:45:54",
+    "poster": {
+      "first": "Dimi",
+      "headline": "Software Engineer | Agentic AI Systems",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFaCypq2FNyTw/profile-displayphoto-crop_800_800/B4DZg95CCbHsAQ-/0/1753385018039?e=1772668800&v=beta&t=2-vAxY1usnxaNOOYUlo_HKTbaRbp98Sjnin03egBYF0",
+      "last": "Mikadze",
+      "linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+      "public_id": "dimimikadze",
+      "urn": "ACoAABSP054Bo0lFHWLnNhLCpS0OGVpgczp3J6k"
+    },
+    "poster_linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+    "reshared": false,
+    "text": "If you’re using ChatGPT at work, these features are worth knowing.\n\nI use them to review contracts, clean up spreadsheets, simulate client conversations, keep track of long-term projects, and more.\n\nQuick breakdown in the slides.",
+    "time": "6 months ago",
+    "urn": "7361301965022150658"
+  },
+  {
+    "attributes": [],
+    "images": [],
+    "num_comments": 4,
+    "num_empathy": 3,
+    "num_interests": 1,
+    "num_likes": 12,
+    "num_praises": 3,
+    "num_reactions": 19,
+    "num_reposts": 1,
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/",
+    "posted": "2025-08-05 06:06:33",
+    "poster": {
+      "first": "Dimi",
+      "headline": "Software Engineer | Agentic AI Systems",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFaCypq2FNyTw/profile-displayphoto-crop_800_800/B4DZg95CCbHsAQ-/0/1753385018039?e=1772668800&v=beta&t=2-vAxY1usnxaNOOYUlo_HKTbaRbp98Sjnin03egBYF0",
+      "last": "Mikadze",
+      "linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+      "public_id": "dimimikadze",
+      "urn": "ACoAABSP054Bo0lFHWLnNhLCpS0OGVpgczp3J6k"
+    },
+    "poster_linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+    "reshared": false,
+    "text": "Just published a new YouTube video on some of the most useful ChatGPT features you might not be using yet.\n\nVoice Mode\nDeep Research\nAgent Mode\nCustom GPTs\nProjects\n…and more\n\nReal examples and a quick walkthrough of how to use each one in your workflow.\n\nIf you’re already using ChatGPT and want to get more out of it, this might be helpful.\n\nLink in comments.",
+    "time": "6 months ago",
+    "urn": "7358377857074577409",
+    "video": {
+      "duration": 38933,
+      "stream_url": "https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1771437600&v=beta&t=-_TLjyUBNYhQaglgvUrboHUsRImFJvWiSLGTF7mYahA"
+    }
+  },
+  {
+    "attributes": [],
+    "images": [],
+    "num_comments": 3,
+    "num_likes": 13,
+    "num_praises": 1,
+    "num_reactions": 14,
+    "num_reposts": 1,
+    "post_url": "https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/",
+    "posted": "2025-07-25 08:51:23",
+    "poster": {
+      "first": "Dimi",
+      "headline": "Software Engineer | Agentic AI Systems",
+      "image_url": "https://media.licdn.com/dms/image/v2/D4D03AQFaCypq2FNyTw/profile-displayphoto-crop_800_800/B4DZg95CCbHsAQ-/0/1753385018039?e=1772668800&v=beta&t=2-vAxY1usnxaNOOYUlo_HKTbaRbp98Sjnin03egBYF0",
+      "last": "Mikadze",
+      "linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+      "public_id": "dimimikadze",
+      "urn": "ACoAABSP054Bo0lFHWLnNhLCpS0OGVpgczp3J6k"
+    },
+    "poster_linkedin_url": "https://www.linkedin.com/in/dimimikadze",
+    "reshared": false,
+    "text": "I just launched a YouTube channel to help business leaders use AI in simple, practical ways.\n\nI'll be posting regularly, starting with this first video:\n📹 How businesses are using AI\n\nIt covers real-world examples of companies using AI to:\n- Create content faster\n– Automate support\n– Summarize research\n– Personalize sales outreach\n– Streamline internal ops\n\nIf you're wondering where to start with AI, this is a great place to start.\n\n🔗 Link is in the first comment below 👇\nLet me know what you think or how you're using AI in your own work.",
+    "time": "7 months ago",
+    "urn": "7354433074971009024"
+  }
+]
