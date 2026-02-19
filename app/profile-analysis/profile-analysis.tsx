@@ -159,7 +159,7 @@ export const ProfileAnalysis = () => {
         <div className='max-w-4xl mx-auto px-8 pr-16 py-4 flex items-center gap-6'>
           {/* Logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src='/logo-white.png' alt='Orca' className='h-8 shrink-0' />
+          <img src='/logo-white.png' alt='Orca' className='h-8 shrink-0 hidden sm:block' />
 
           {/* Input */}
           <form onSubmit={handleSubmit} className='flex-1 w-full min-w-0'>

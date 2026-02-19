@@ -10,7 +10,7 @@ const LoginForm = () => {
   const router = useRouter();
 
   return (
-    <div className='relative min-h-screen'>
+    <div className='relative min-h-screen px-8'>
       {/* Particles */}
       <div className='pointer-events-none fixed inset-0 overflow-hidden'>
         <div className='absolute -left-32 top-1/4 h-64 w-64 rounded-full bg-accent/5 blur-3xl' />
@@ -45,7 +45,7 @@ const LoginForm = () => {
       >
         <div className='flex flex-col items-center mb-8'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src='/logo-black.png' alt='Orca Logo' className='hidden sm:block h-10 w-auto shrink-0' />
+          <img src='/logo-black.png' alt='Orca Logo' className='h-10 w-auto shrink-0' />
         </div>
 
         <div className='mb-4'>
