@@ -7,7 +7,7 @@
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Build Status](https://github.com/dimimikadze/orca-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/dimimikadze/orca-ai/actions/workflows/ci.yml)
+[![Build Status](https://github.com/dimimikadze/orca/actions/workflows/ci.yml/badge.svg)](https://github.com/dimimikadze/orca/actions/workflows/ci.yml)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](CONTRIBUTING.md)
 
 </div>
