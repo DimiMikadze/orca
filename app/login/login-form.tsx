@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import Particles from '@/app/components/particles';
+import Particles from '@/components/particles';
 
 const LoginForm = () => {
   const [error, setError] = useState('');
@@ -48,24 +48,12 @@ const LoginForm = () => {
 
         <div className='mb-4'>
           <Label htmlFor='email'>Email</Label>
-          <Input
-            id='email'
-            name='email'
-            type='email'
-            required
-            className='mt-2'
-          />
+          <Input id='email' name='email' type='email' required className='mt-2' />
         </div>
 
         <div className='mb-4'>
           <Label htmlFor='password'>Password</Label>
-          <Input
-            id='password'
-            name='password'
-            type='password'
-            required
-            className='mt-2'
-          />
+          <Input id='password' name='password' type='password' required className='mt-2' />
         </div>
 
         {error && (
@@ -74,11 +62,7 @@ const LoginForm = () => {
           </Alert>
         )}
 
-        <Button
-          type='submit'
-          disabled={loading}
-          className='mt-4 w-full cursor-pointer'
-        >
+        <Button type='submit' disabled={loading} className='mt-4 w-full cursor-pointer'>
           {loading && <Loader2 className='animate-spin' />}
           {loading ? 'Signing in…' : 'Log in'}
         </Button>

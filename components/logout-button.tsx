@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { CircleUser } from 'lucide-react';
-import { createSupabaseClient } from '../supabase/client';
+import { createSupabaseClient } from '../app/supabase/client';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,

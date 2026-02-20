@@ -66,7 +66,6 @@ Auth is **optional**. If `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_AN
 
 - `app/supabase/` — Supabase client helpers (browser, server, proxy)
 - `app/login/` — Login page (client-side auth via browser Supabase client)
-- `app/components/logout-button.tsx` — Logout button, only renders when auth is configured
 - `proxy.ts` — Refreshes session and redirects unauthenticated users to `/login` (only active when env vars are set)
 - Each analysis is recorded in the `analysis` Supabase table. `ANALYSIS_CAP` in `app/supabase/orm.ts` sets the per-user limit — users who hit it get a friendly error with a contact email.
 
