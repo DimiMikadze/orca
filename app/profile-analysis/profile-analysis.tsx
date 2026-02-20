@@ -163,9 +163,12 @@ export const ProfileAnalysis = () => {
               <Input
                 type='text'
                 value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                onChange={(e) => {
+                  setUrl(e.target.value);
+                  if (error) setError(null);
+                }}
                 placeholder='Enter LinkedIn profile URL'
-                className='rounded-full bg-background-light border-border pr-14 py-7 text-sm placeholder:text-foreground-secondary'
+                className={`rounded-full bg-background-light border-border pr-14 py-7 text-sm placeholder:text-foreground-secondary${error ? ' border-destructive focus-visible:ring-destructive' : ''}`}
               />
               <Button
                 type='submit'
@@ -182,12 +185,14 @@ export const ProfileAnalysis = () => {
         <div className='absolute right-6 top-1/2 -translate-y-1/2'>
           <LogoutButton />
         </div>
-
-        {/* Error Message */}
-        <div className='max-w-4xl mx-auto px-8 text-center'>
-          {error && !loading && <p className='text-error mb-4 text-sm'>{error}</p>}
-        </div>
       </header>
+
+      {/* Error Message */}
+      {error && !loading && (
+        <div className='max-w-4xl mx-auto px-8 text-center mt-6'>
+          <p className='text-error text-sm'>{error}</p>
+        </div>
+      )}
 
       <div className='max-w-4xl mx-auto px-8 py-6 pb-12'>
         {/* How it works */}
