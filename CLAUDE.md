@@ -79,8 +79,7 @@ Auth is **optional**. If `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_AN
 
 ### File Naming
 
-- Use kebab-case for files: `company-analysis.ts`, `data-merger.ts`
-- Use PascalCase for components: `CompanyProgress.tsx`
+- Use kebab-case for ALL files, including components: `company-analysis.ts`, `logout-button.tsx`, `particles.tsx`
 - Use descriptive names that explain purpose: `linkedin-company-scraper.ts`
 
 ### Variable & Function Naming
