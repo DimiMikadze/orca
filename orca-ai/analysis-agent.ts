@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { createAgent, tool } from 'langchain';
+import { ChatOpenAI } from '@langchain/openai';
 import { scrapePostComments } from './services/linkedin-post-comments-scraper';
 import { scrapePostReactions } from './services/linkedin-post-reactions-scraper';
 import { scrapeLinkedInActivity } from './services/linkedin-activity-scraper';
@@ -189,7 +190,7 @@ export const runAnalysis = async (
   onProgress?.({ message: 'Analyzing profile...' });
 
   const agent = createAgent({
-    model: ANALYSIS_MODEL,
+    model: new ChatOpenAI({ model: ANALYSIS_MODEL }),
     tools,
     name: 'analysis_agent',
     systemPrompt: SYSTEM_PROMPT,

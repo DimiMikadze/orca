@@ -18,9 +18,9 @@ export const DEFAULT_MAX_TOOL_CALLS = 3;
 
 /**
  * AI model used by the analysis agent.
- * 'openai:gpt-5.2', 'openai:gpt-5-mini'
+ * e.g. 'gpt-5.2', 'gpt-5-mini'
  */
-export const ANALYSIS_MODEL = 'openai:gpt-5.2';
+export const ANALYSIS_MODEL = 'gpt-5.2';
 
 /**
  * Safety cap on the number of pages fetched per scraper call.
