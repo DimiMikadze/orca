@@ -7,11 +7,18 @@ let latestCredits: LinkedInApiCredits | null = null;
  * Call this after every fetch to a RapidAPI endpoint.
  */
 export const trackCredits = (response: Response) => {
-  const limit = response.headers.get('x-ratelimit-credits-limit');
-  const remaining = response.headers.get('x-ratelimit-requests-remaining');
+  const creditsLimit = response.headers.get('x-ratelimit-credits-limit');
+  const creditsRemaining = response.headers.get('x-ratelimit-credits-remaining');
+  const requestsLimit = response.headers.get('x-ratelimit-requests-limit');
+  const requestsRemaining = response.headers.get('x-ratelimit-requests-remaining');
 
-  if (limit && remaining) {
-    latestCredits = { limit: Number(limit), remaining: Number(remaining) };
+  if (creditsLimit && creditsRemaining && requestsLimit && requestsRemaining) {
+    latestCredits = {
+      creditsLimit: Number(creditsLimit),
+      creditsRemaining: Number(creditsRemaining),
+      requestsLimit: Number(requestsLimit),
+      requestsRemaining: Number(requestsRemaining),
+    };
   }
 };
 

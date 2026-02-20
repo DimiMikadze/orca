@@ -57,7 +57,7 @@ export const POST = async (request: NextRequest) => {
           `\n  Total: ${(stats.totalDurationMs / 1000).toFixed(1)}s`,
           `\n  Tool calls: ${stats.toolCallCount}`,
           `\n  Insights: ${stats.insightCount}`,
-          `\n  Credits: ${credits?.remaining ?? '?'}/${credits?.limit ?? '?'} remaining`,
+          `\n  Credits: ${credits?.creditsRemaining ?? '?'} of ${credits?.creditsLimit ?? '?'} remaining, requests: ${credits?.requestsRemaining ?? '?'} of ${credits?.requestsLimit ?? '?'} remaining`,
         );
 
         if (userId) {

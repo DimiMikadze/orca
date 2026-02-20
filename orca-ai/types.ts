@@ -274,6 +274,8 @@ export type OnProgress = (event: ProgressEvent) => void;
 // ---------------------------------------------------
 
 export interface LinkedInApiCredits {
-  limit: number;
-  remaining: number;
+  creditsLimit: number;
+  creditsRemaining: number;
+  requestsLimit: number;
+  requestsRemaining: number;
 }

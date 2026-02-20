@@ -51,6 +51,7 @@ Extract these insights:
 ${insightList}
 
 Rules:
+- Output exactly one entry per insight category. Never split an insight into multiple entries. 
 - Write in paragraphs. One paragraph per observation. No bullet lists, no bold text.
 - Describe what the person does and what it reveals. Do not quote post titles or paste metrics inline.
 - When referencing a post or comment, add [post](url) at the end of the sentence. Use the exact URL from the data. Never fabricate URLs.
@@ -207,9 +208,7 @@ export const runAnalysis = async (
       throw new Error('Analysis agent returned no structured response');
     }
 
-    console.info(
-      `[analysis-agent] Done. ${result.structuredResponse.insights.length} insights, ${toolCallCount} tool calls`,
-    );
+    console.info(`[analysis-agent] Done. ${result.structuredResponse.insights.length} insights, ${toolCallCount} tool calls`);
 
     return {
       analysis: {

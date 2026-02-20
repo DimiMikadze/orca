@@ -68,7 +68,7 @@ export const ProfileAnalysis = () => {
     if (match) {
       try {
         const credits = JSON.parse(decodeURIComponent(match[1]));
-        console.info(`[credits] ${credits.remaining}/${credits.limit} remaining`);
+        console.info(`[credits] ${credits.creditsRemaining} of ${credits.creditsLimit} credits remaining, ${credits.requestsRemaining} of ${credits.requestsLimit} requests remaining`);
       } catch {}
     }
   }, []);
@@ -117,7 +117,7 @@ export const ProfileAnalysis = () => {
               console.log('[orca] Collected data:', parsed.collectedData);
               console.log('[orca] Stats:', parsed.stats);
               if (parsed.credits) {
-                console.info(`[credits] ${parsed.credits.remaining}/${parsed.credits.limit} remaining`);
+                console.info(`[credits] ${parsed.credits.creditsRemaining} of ${parsed.credits.creditsLimit} credits remaining, ${parsed.credits.requestsRemaining} of ${parsed.credits.requestsLimit} requests remaining`);
                 const maxAge = 60 * 60 * 24 * 7;
                 document.cookie = `${LINKEDIN_CREDITS_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(parsed.credits))}; path=/; max-age=${maxAge}`;
               }
