@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import type { ProfileAnalysis, LinkedInProfile } from '@/orca-ai/types';
 import { Badge } from '@/components/ui/badge';
+import { MoveUpRight } from 'lucide-react';
 
 const MARKDOWN_LINK_REGEX = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -111,8 +112,13 @@ export const ProfileAnalysisResult = ({ analysis, profile }: ProfileAnalysisResu
                     <span className='text-xs text-foreground-secondary/40 tracking-wide mr-2 mt-0.5'>Sources</span>
                     {links.map((link, j) => (
                       <Badge key={j} asChild variant='outline'>
-                        <a href={link.url} target='_blank' rel='noopener noreferrer'>
-                          ↗ {link.label}
+                        <a
+                          href={link.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-foreground-secondary/80'
+                        >
+                          <MoveUpRight /> {link.label}
                         </a>
                       </Badge>
                     ))}
