@@ -64,7 +64,7 @@ const LoginForm = () => {
 
         <Button type='submit' disabled={loading} className='mt-4 w-full cursor-pointer'>
           {loading && <Loader2 className='animate-spin' />}
-          {loading ? 'Signing in…' : 'Log in'}
+          {loading ? 'Logging in…' : 'Log in'}
         </Button>
       </form>
     </div>

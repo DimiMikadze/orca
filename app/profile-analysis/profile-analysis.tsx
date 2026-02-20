@@ -68,7 +68,9 @@ export const ProfileAnalysis = () => {
     if (match) {
       try {
         const credits = JSON.parse(decodeURIComponent(match[1]));
-        console.info(`[credits] ${credits.creditsRemaining} of ${credits.creditsLimit} credits remaining, ${credits.requestsRemaining} of ${credits.requestsLimit} requests remaining`);
+        console.info(
+          `[credits] ${credits.creditsRemaining} of ${credits.creditsLimit} credits remaining, ${credits.requestsRemaining} of ${credits.requestsLimit} requests remaining`,
+        );
       } catch {}
     }
   }, []);
@@ -117,7 +119,9 @@ export const ProfileAnalysis = () => {
               console.log('[orca] Collected data:', parsed.collectedData);
               console.log('[orca] Stats:', parsed.stats);
               if (parsed.credits) {
-                console.info(`[credits] ${parsed.credits.creditsRemaining} of ${parsed.credits.creditsLimit} credits remaining, ${parsed.credits.requestsRemaining} of ${parsed.credits.requestsLimit} requests remaining`);
+                console.info(
+                  `[credits] ${parsed.credits.creditsRemaining} of ${parsed.credits.creditsLimit} credits remaining, ${parsed.credits.requestsRemaining} of ${parsed.credits.requestsLimit} requests remaining`,
+                );
                 const maxAge = 60 * 60 * 24 * 7;
                 document.cookie = `${LINKEDIN_CREDITS_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(parsed.credits))}; path=/; max-age=${maxAge}`;
               }
@@ -157,7 +161,7 @@ export const ProfileAnalysis = () => {
 
       {/* Header */}
       <header className='relative border-b border-border'>
-        <div className='max-w-4xl mx-auto px-8 pr-16 py-4 flex items-center gap-6'>
+        <div className='max-w-4xl mx-auto px-4 pr-16 py-4 flex items-center gap-6'>
           {/* Logo */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src='/logo-white.png' alt='Orca' className='h-8 shrink-0 hidden sm:block' />
@@ -196,7 +200,7 @@ export const ProfileAnalysis = () => {
           </form>
         </div>
 
-        <div className='absolute right-6 top-1/2 -translate-y-1/2'>
+        <div className='absolute right-4 top-1/2 -translate-y-1/2'>
           <LogoutButton />
         </div>
       </header>
