@@ -60,7 +60,7 @@ export const ProfileAnalysisInsightsModal = ({
         {/* Scrollable area — header scrolls with content */}
         <div className='flex-1 overflow-y-auto min-h-0'>
           <div className='px-6 pt-6 pb-2'>
-            <DialogTitle>Customize Insights</DialogTitle>
+            <DialogTitle>Insights</DialogTitle>
             <DialogDescription className='mt-2'>
               Define which insights Orca should extract from the LinkedIn profile.
             </DialogDescription>
