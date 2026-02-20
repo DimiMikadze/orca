@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 import { createSupabaseClient } from '../supabase/client';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const LoginForm = () => {
   const [error, setError] = useState('');
@@ -41,48 +45,49 @@ const LoginForm = () => {
 
           router.push('/');
         }}
-        className='p-6 py-8 mt-8 rounded-md max-w-md bg-gray-100 mx-auto'
+        className='p-6 py-8 mt-8 rounded-md max-w-md bg-card border border-border mx-auto'
       >
         <div className='flex flex-col items-center mb-8'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src='/logo-black.png' alt='Orca Logo' className='h-10 w-auto shrink-0' />
+          <img src='/logo-white.png' alt='Orca Logo' className='h-10 w-auto shrink-0' />
         </div>
 
         <div className='mb-4'>
-          <label htmlFor='email' className='text-sm font-medium text-gray-900'>
-            Email
-          </label>
+          <Label htmlFor='email'>Email</Label>
           <input
             id='email'
             name='email'
             type='email'
             required
-            className='bg-white mt-2 w-full rounded-xl border px-3 py-2 text-sm text-gray-900'
+            className='bg-input mt-2 w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground'
           />
         </div>
 
         <div className='mb-4'>
-          <label htmlFor='password' className='text-sm font-medium text-gray-900'>
-            Password
-          </label>
+          <Label htmlFor='password'>Password</Label>
           <input
             id='password'
             name='password'
             type='password'
             required
-            className='bg-white mt-2 w-full rounded-xl border px-3 py-2 text-sm text-gray-900'
+            className='bg-input mt-2 w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground'
           />
         </div>
 
-        {error && <p className='mb-4 text-red-600 text-sm'>{error}</p>}
+        {error && (
+          <Alert variant='destructive' className='mb-4'>
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
-        <button
+        <Button
           type='submit'
           disabled={loading}
-          className='cursor-pointer mt-4 w-full rounded-xl bg-black px-4 py-3 text-sm font-medium text-white disabled:opacity-50'
+          className='mt-4 w-full cursor-pointer'
         >
+          {loading && <Loader2 className='animate-spin' />}
           {loading ? 'Signing in…' : 'Log in'}
-        </button>
+        </Button>
       </form>
     </div>
   );
