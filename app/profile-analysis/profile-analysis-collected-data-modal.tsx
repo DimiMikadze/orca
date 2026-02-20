@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { X } from 'lucide-react';
 import type { CollectedLinkedInData } from '@/orca-ai/types';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 type Section = 'profile' | 'posts' | 'comments' | 'reactions' | 'engagement';
 
@@ -38,26 +37,14 @@ export const ProfileAnalysisCollectedDataModal = ({
 
   const profileUrl = profile.linkedin_url?.replace(/\/$/, '');
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
-  }, [onClose]);
-
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center' onClick={onClose}>
-      {/* Backdrop */}
-      <div className='absolute inset-0 bg-black/60' />
-
-      {/* Panel */}
-      <div
-        className='relative z-10 w-full max-w-3xl max-h-[80vh] bg-background border border-border rounded-xl shadow-2xl flex flex-col mx-4'
-        onClick={(e) => e.stopPropagation()}
+    <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
+      <DialogContent
+        showCloseButton={false}
+        className='sm:max-w-3xl max-h-[80vh] flex flex-col p-0 gap-0'
       >
         {/* Header */}
-        <div className='flex items-center justify-between px-6 pt-5 pb-4 border-b border-border shrink-0'>
+        <div className='flex items-center px-6 pt-5 pb-4 border-b border-border shrink-0'>
           <div className='flex gap-1 flex-wrap'>
             {TABS.map((tab) => (
               <button
@@ -65,7 +52,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                 onClick={() => onSectionChange(tab.key)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
                   activeSection === tab.key
-                    ? 'bg-accent text-white'
+                    ? 'bg-primary text-primary-foreground'
                     : 'text-foreground-secondary hover:text-foreground hover:bg-background-light'
                 }`}
               >
@@ -73,12 +60,6 @@ export const ProfileAnalysisCollectedDataModal = ({
               </button>
             ))}
           </div>
-          <button
-            onClick={onClose}
-            className='text-foreground-secondary hover:text-foreground transition-colors cursor-pointer p-1 ml-2 shrink-0'
-          >
-            <X className='w-5 h-5' />
-          </button>
         </div>
 
         {/* Content */}
@@ -138,7 +119,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                       href={post.post_url}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='text-accent text-xs hover:underline'
+                      className='text-primary text-xs hover:underline'
                     >
                       View post
                     </a>
@@ -168,7 +149,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                       href={item.post_url}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='text-accent text-xs hover:underline'
+                      className='text-primary text-xs hover:underline'
                     >
                       View post
                     </a>
@@ -198,7 +179,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                       href={item.post_url}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='text-accent text-xs hover:underline'
+                      className='text-primary text-xs hover:underline'
                     >
                       View post
                     </a>
@@ -247,7 +228,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                                 href={comment.permalink}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='text-accent text-xs hover:underline'
+                                className='text-primary text-xs hover:underline'
                               >
                                 View comment
                               </a>
@@ -272,7 +253,7 @@ export const ProfileAnalysisCollectedDataModal = ({
                                   href={reaction.reactor.linkedin_url}
                                   target='_blank'
                                   rel='noopener noreferrer'
-                                  className='text-accent text-xs hover:underline'
+                                  className='text-primary text-xs hover:underline'
                                 >
                                   Profile
                                 </a>
@@ -288,7 +269,7 @@ export const ProfileAnalysisCollectedDataModal = ({
             </div>
           )}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };

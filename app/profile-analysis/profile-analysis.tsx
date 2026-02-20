@@ -22,6 +22,9 @@ import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-
 import { LogoutButton } from '../components/logout-button';
 import Particles from '../components/particles';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 
 interface ApiResult {
   analysis: ProfileAnalysisType;
@@ -156,21 +159,22 @@ export const ProfileAnalysis = () => {
 
           {/* Input */}
           <form onSubmit={handleSubmit} className='flex-1 w-full min-w-0'>
-            <div className='relative flex items-center bg-background-light border border-border rounded-full px-3 py-2'>
-              <input
+            <div className='relative'>
+              <Input
                 type='text'
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder='Enter LinkedIn profile URL'
-                className='flex-1 bg-transparent text-sm text-foreground placeholder:text-foreground-secondary focus:outline-none py-2'
+                className='rounded-full bg-background-light border-border pr-14 py-7 text-sm placeholder:text-foreground-secondary'
               />
-              <button
+              <Button
                 type='submit'
-                disabled={loading || !url}
-                className='ml-3 bg-black text-white rounded-full p-2.5 disabled:cursor-not-allowed  transition-all shrink-0 cursor-pointer'
+                size='icon'
+                disabled={loading}
+                className='absolute right-3 top-1/2 -translate-y-1/2 rounded-full cursor-pointer'
               >
                 <Search className='w-4 h-4' />
-              </button>
+              </Button>
             </div>
           </form>
         </div>
@@ -209,7 +213,7 @@ export const ProfileAnalysis = () => {
             ].map((step, i) => (
               <div key={i} className='flex flex-col items-center text-center'>
                 <div className='bg-background-light rounded-xl p-3 mb-4'>
-                  <step.icon className='w-6 h-6 text-accent' />
+                  <step.icon className='w-6 h-6 text-primary' />
                 </div>
                 <h3 className='text-md font-semibold text-foreground mb-1'>
                   {i + 1}. {step.title}
@@ -244,21 +248,20 @@ export const ProfileAnalysis = () => {
                   return engagementCount > 0 ? [`${engagementCount} audience engagements`] : [];
                 })(),
               ].map((label) => (
-                <span
-                  key={label}
-                  className='text-xs text-foreground-secondary bg-background-light border border-border rounded-full px-2.5 py-1'
-                >
+                <Badge key={label} variant='secondary'>
                   {label}
-                </span>
+                </Badge>
               ))}
               <span className='flex items-center gap-1'>
-                <button
+                <Button
+                  variant='ghost'
+                  size='sm'
                   onClick={() => setModalSection('profile')}
-                  className='flex items-center text-xs text-foreground-secondary bg-transparent underline rounded-full p-1.5 hover:text-accent hover:border-accent transition-colors cursor-pointer'
+                  className='text-xs text-foreground-secondary cursor-pointer px-1.5'
                 >
                   View Raw Data
-                  <SquareArrowOutUpRight className='w-3 h-3 ml-1' />
-                </button>
+                  <SquareArrowOutUpRight className='w-3 h-3' />
+                </Button>
               </span>
             </div>
             <ProfileAnalysisResult analysis={data.analysis} profile={data.collectedData.profile} />

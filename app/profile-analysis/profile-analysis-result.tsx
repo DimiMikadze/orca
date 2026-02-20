@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import type { ProfileAnalysis, LinkedInProfile } from '@/orca-ai/types';
+import { Badge } from '@/components/ui/badge';
 
 const MARKDOWN_LINK_REGEX = /\[([^\]]+)\]\(([^)]+)\)/g;
 
@@ -72,7 +73,7 @@ export const ProfileAnalysisResult = ({ analysis, profile }: ProfileAnalysisResu
             href={analysis.profileUrl}
             target='_blank'
             rel='noopener noreferrer'
-            className='text-xs text-accent hover:underline mt-1 inline-block'
+            className='text-xs text-primary hover:underline mt-1 inline-block'
           >
             View LinkedIn profile
           </a>
@@ -94,7 +95,7 @@ export const ProfileAnalysisResult = ({ analysis, profile }: ProfileAnalysisResu
                         href={resolveHref(href ?? '')}
                         target='_blank'
                         rel='noopener noreferrer'
-                        className='underline rounded px-1 py-0.5 hover:text-accent transition-colors'
+                        className='underline rounded px-1 py-0.5 hover:text-primary transition-colors'
                       >
                         {children}
                       </a>
@@ -109,15 +110,11 @@ export const ProfileAnalysisResult = ({ analysis, profile }: ProfileAnalysisResu
                   <div className='flex flex-wrap gap-1.5 mt-1.5'>
                     <span className='text-xs text-foreground-secondary/40 tracking-wide mr-2 mt-0.5'>Sources</span>
                     {links.map((link, j) => (
-                      <a
-                        key={j}
-                        href={link.url}
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='inline-flex items-center text-xs text-foreground-secondary/60 hover:text-accent border border-border/40 hover:border-accent/40 rounded px-2 py-0.5 transition-colors'
-                      >
-                        ↗ {link.label}
-                      </a>
+                      <Badge key={j} asChild variant='outline'>
+                        <a href={link.url} target='_blank' rel='noopener noreferrer'>
+                          ↗ {link.label}
+                        </a>
+                      </Badge>
                     ))}
                   </div>
                 </div>

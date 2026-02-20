@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { createSupabaseClient } from '../supabase/client';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import Particles from '@/app/components/particles';
@@ -47,23 +48,23 @@ const LoginForm = () => {
 
         <div className='mb-4'>
           <Label htmlFor='email'>Email</Label>
-          <input
+          <Input
             id='email'
             name='email'
             type='email'
             required
-            className='bg-input mt-2 w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground'
+            className='mt-2'
           />
         </div>
 
         <div className='mb-4'>
           <Label htmlFor='password'>Password</Label>
-          <input
+          <Input
             id='password'
             name='password'
             type='password'
             required
-            className='bg-input mt-2 w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground'
+            className='mt-2'
           />
         </div>
 
