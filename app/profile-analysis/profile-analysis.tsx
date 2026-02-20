@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  Search,
-  LoaderCircle,
-  UserSearch,
-  Activity,
-  BrainCircuit,
-  Lightbulb,
-  SquareArrowOutUpRight,
-} from 'lucide-react';
+import { Search, UserSearch, Activity, BrainCircuit, Lightbulb, SquareArrowOutUpRight } from 'lucide-react';
 import type {
   ProfileAnalysis as ProfileAnalysisType,
   CollectedLinkedInData,
@@ -19,6 +11,7 @@ import type {
 import { LINKEDIN_CREDITS_COOKIE_NAME } from '@/orca-ai/config';
 import { ProfileAnalysisResult } from './profile-analysis-result';
 import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-data-modal';
+import { ProfileAnalysisProgress } from './profile-analysis-progress';
 import { LogoutButton } from '../components/logout-button';
 import Particles from '../components/particles';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
@@ -33,7 +26,7 @@ interface ApiResult {
   credits: LinkedInApiCredits | null;
 }
 
-const USE_DUMMY_DATA = false;
+const USE_DUMMY_DATA = true;
 
 export const ProfileAnalysis = () => {
   const [url, setUrl] = useState('');
@@ -230,12 +223,7 @@ export const ProfileAnalysis = () => {
         )}
 
         {/* Loading Progress */}
-        {loading && (
-          <div className='flex items-center gap-3 text-white'>
-            <LoaderCircle className='w-4 h-4 animate-spin' />
-            <p>{progress ?? 'Starting...'}</p>
-          </div>
-        )}
+        {loading && <ProfileAnalysisProgress progress={progress} />}
 
         {data && !loading && (
           <div className='mt-2'>
