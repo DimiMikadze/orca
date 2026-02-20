@@ -47,9 +47,16 @@ export const ProfileAnalysisInsightsModal = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>
-      <DialogContent className='max-w-[calc(100%-2rem)] sm:max-w-2xl lg:max-w-3xl flex flex-col gap-0 p-0 max-h-[85vh]' showCloseButton={false}>
-
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) onClose();
+      }}
+    >
+      <DialogContent
+        className='max-w-[calc(100%-2rem)] sm:max-w-2xl lg:max-w-3xl flex flex-col gap-0 p-0 max-h-[85vh]'
+        showCloseButton={false}
+      >
         {/* Scrollable area — header scrolls with content */}
         <div className='flex-1 overflow-y-auto min-h-0'>
           <div className='px-6 pt-6 pb-2'>
@@ -63,10 +70,7 @@ export const ProfileAnalysisInsightsModal = ({
             {local.map((insight, i) => (
               <div key={i} className='group flex gap-3 items-start pt-4'>
                 {/* Border-b only on the input column so separator matches input width */}
-                <div className={cn(
-                  'flex-1 space-y-2 pb-4',
-                  i < local.length - 1 && 'border-b border-border',
-                )}>
+                <div className={cn('flex-1 space-y-2 pb-4', i < local.length - 1 && 'border-b border-border')}>
                   <Input
                     value={insight.name}
                     onChange={(e) => update(i, 'name', e.target.value)}
@@ -116,7 +120,7 @@ export const ProfileAnalysisInsightsModal = ({
         <DialogFooter className='px-6 py-4 border-t border-border shrink-0 flex-row items-center'>
           <Button
             type='button'
-            variant='ghost'
+            variant='outline'
             size='sm'
             onClick={() => setLocal(DEFAULT_INSIGHTS)}
             className='mr-auto text-foreground-secondary cursor-pointer'
