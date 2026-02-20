@@ -1,7 +1,7 @@
 'use client';
 
 import type { CollectedLinkedInData } from '@/orca-ai/types';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 type Section = 'profile' | 'posts' | 'comments' | 'reactions' | 'engagement';
 
@@ -38,11 +38,14 @@ export const ProfileAnalysisCollectedDataModal = ({
   const profileUrl = profile.linkedin_url?.replace(/\/$/, '');
 
   return (
-    <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
-      <DialogContent
-        showCloseButton={false}
-        className='sm:max-w-3xl max-h-[80vh] flex flex-col p-0 gap-0'
-      >
+    <Dialog
+      open
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+    >
+      <DialogContent showCloseButton={false} className='sm:max-w-3xl max-h-[80vh] flex flex-col p-0 gap-0' aria-describedby={undefined}>
+        <DialogTitle className='sr-only'>Collected LinkedIn Data</DialogTitle>
         {/* Header */}
         <div className='flex items-center px-6 pt-5 pb-4 border-b border-border shrink-0'>
           <div className='flex gap-1 flex-wrap'>

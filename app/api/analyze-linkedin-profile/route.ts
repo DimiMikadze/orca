@@ -25,10 +25,14 @@ export const POST = async (request: NextRequest) => {
     }
   }
 
-  const { url } = await request.json();
+  const { url, insights } = await request.json();
 
   if (!url || typeof url !== 'string') {
     return Response.json({ error: 'Missing or invalid "url" field' }, { status: 400 });
+  }
+
+  if (!Array.isArray(insights) || insights.length === 0) {
+    return Response.json({ error: 'Missing or invalid "insights" field' }, { status: 400 });
   }
 
   const encoder = new TextEncoder();
@@ -41,6 +45,7 @@ export const POST = async (request: NextRequest) => {
       try {
         const { analysis, collectedData, stats } = await analyzeProfile(url, {
           onProgress: (event) => send('progress', event),
+          insights,
         });
 
         const credits = getCredits();

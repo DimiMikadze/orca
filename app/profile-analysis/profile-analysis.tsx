@@ -1,7 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, UserSearch, Activity, BrainCircuit, Lightbulb, SquareArrowOutUpRight } from 'lucide-react';
+import {
+  Search,
+  UserSearch,
+  Activity,
+  BrainCircuit,
+  Lightbulb,
+  SquareArrowOutUpRight,
+  SlidersHorizontal,
+} from 'lucide-react';
 import type {
   ProfileAnalysis as ProfileAnalysisType,
   CollectedLinkedInData,
@@ -12,6 +20,8 @@ import { LINKEDIN_CREDITS_COOKIE_NAME } from '@/orca-ai/config';
 import { ProfileAnalysisResult } from './profile-analysis-result';
 import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-data-modal';
 import { ProfileAnalysisProgress } from './profile-analysis-progress';
+import { ProfileAnalysisInsightsModal } from './profile-analysis-insights-modal';
+import { useInsights } from './use-insights';
 import { LogoutButton } from '@/components/logout-button';
 import Particles from '@/components/particles';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
@@ -26,7 +36,7 @@ interface ApiResult {
   credits: LinkedInApiCredits | null;
 }
 
-const USE_DUMMY_DATA = true;
+const USE_DUMMY_DATA = false;
 
 export const ProfileAnalysis = () => {
   const [url, setUrl] = useState('');
@@ -50,6 +60,8 @@ export const ProfileAnalysis = () => {
   const [progress, setProgress] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [modalSection, setModalSection] = useState<string | null>(null);
+  const [insightsModalOpen, setInsightsModalOpen] = useState(false);
+  const { insights, saveInsights } = useInsights();
 
   useEffect(() => {
     const match = document.cookie.match(new RegExp(`(?:^|; )${LINKEDIN_CREDITS_COOKIE_NAME}=([^;]*)`));
@@ -79,7 +91,7 @@ export const ProfileAnalysis = () => {
       const res = await fetch('/api/analyze-linkedin-profile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ url, insights }),
       });
 
       if (!res.ok) {
@@ -161,8 +173,17 @@ export const ProfileAnalysis = () => {
                   if (error) setError(null);
                 }}
                 placeholder='Enter LinkedIn profile URL'
-                className={`rounded-full bg-background-light border-border pr-14 py-7 text-sm placeholder:text-foreground-secondary${error ? ' border-destructive focus-visible:ring-destructive' : ''}`}
+                className={`rounded-full bg-background-light border-border pr-24 py-7 text-sm placeholder:text-foreground-secondary${error ? ' border-destructive focus-visible:ring-destructive' : ''}`}
               />
+              <Button
+                type='button'
+                size='icon'
+                variant='ghost'
+                onClick={() => setInsightsModalOpen(true)}
+                className='absolute right-14 top-1/2 -translate-y-1/2 rounded-full cursor-pointer text-foreground-secondary hover:text-foreground'
+              >
+                <SlidersHorizontal className='w-4 h-4' />
+              </Button>
               <Button
                 type='submit'
                 size='icon'
@@ -223,7 +244,7 @@ export const ProfileAnalysis = () => {
         )}
 
         {/* Loading Progress */}
-        {loading && <ProfileAnalysisProgress progress={progress} />}
+        {loading && <ProfileAnalysisProgress progress={progress} insightCount={insights.length} />}
 
         {data && !loading && (
           <div className='mt-2'>
@@ -270,6 +291,13 @@ export const ProfileAnalysis = () => {
           />
         )}
       </div>
+
+      <ProfileAnalysisInsightsModal
+        open={insightsModalOpen}
+        insights={insights}
+        onSave={saveInsights}
+        onClose={() => setInsightsModalOpen(false)}
+      />
     </div>
   );
 };

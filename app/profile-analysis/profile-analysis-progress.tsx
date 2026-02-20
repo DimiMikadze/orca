@@ -3,8 +3,6 @@
 import { LoaderCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const INSIGHT_COUNT = 10;
-
 // Simulate varying paragraph widths for a more natural skeleton look
 const INSIGHT_LINES = [
   ['w-full', 'w-full', 'w-4/5'],
@@ -14,13 +12,14 @@ const INSIGHT_LINES = [
 
 interface ProfileAnalysisProgressProps {
   progress: string | null;
+  insightCount: number;
 }
 
 /**
  * Loading state for profile analysis. Shows a live progress message alongside
  * skeleton placeholders that mirror the layout of ProfileAnalysisResult.
  */
-export const ProfileAnalysisProgress = ({ progress }: ProfileAnalysisProgressProps) => {
+export const ProfileAnalysisProgress = ({ progress, insightCount }: ProfileAnalysisProgressProps) => {
   return (
     <div>
       {/* Progress message */}
@@ -51,7 +50,7 @@ export const ProfileAnalysisProgress = ({ progress }: ProfileAnalysisProgressPro
 
       {/* Insight skeletons */}
       <div className='space-y-8'>
-        {Array.from({ length: INSIGHT_COUNT }).map((_, i) => {
+        {Array.from({ length: insightCount }).map((_, i) => {
           const lines = INSIGHT_LINES[i % INSIGHT_LINES.length];
           return (
             <div key={i}>
