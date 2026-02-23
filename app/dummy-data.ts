@@ -3,54 +3,19 @@ export const DummyProfileAnalysis = {
   profileName: 'Dimi Mikadze',
   insights: [
     {
-      name: 'Pain points',
+      name: 'Pain points:',
       content:
-        'Most of the observable “problems” are framed as user friction and capability gaps rather than explicit complaints. Dimi Mikadze repeatedly positions his content around the idea that many people are underusing ChatGPT at work and are missing practical features that would make day to day tasks easier, which implies a recurring pain point of wasted effort and inefficient workflows when teams do not know the right features or patterns to use. This shows up in the posts that focus on “features worth knowing” and “useful features you might not be using yet,” both aimed at closing a knowledge and adoption gap rather than debating AI at a high level. [post](https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)\n\nA second implied pain point is the difficulty of doing company research quickly and consistently at scale, which he addresses by building and open sourcing an agentic system that takes a website URL and returns a full company profile, then later emphasizing that it has expanded from research into end to end workflows. The repeated emphasis on automation and scale indicates that manual research and one off processes are a core frustration he is actively solving through productized engineering work. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)',
+        'Across the visible posts and comments, Dimi Mikadze does not spend time complaining about problems or expressing frustrations, so there is no direct evidence of specific pain points in the dataset. Instead, the activity is framed as solution delivery and enablement, centered on reducing the effort and time involved in tasks like company research and day-to-day knowledge work by turning them into automated or repeatable workflows through an agentic system and through better use of ChatGPT features, which implicitly targets the pain of manual research and underused tooling rather than explicitly naming it. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/)',
     },
     {
-      name: 'Current focus',
+      name: 'Current focus:',
       content:
-        'Recent authored posting is dominated by two threads: shipping and iterating on an open source agentic AI system (Mira), and distributing practical AI education content via YouTube tied to workplace use cases. The Mira thread is visible in the initial open source announcement and the later update describing rapid capability growth from research into broader workflows, with follow up comments repeatedly directing readers to a GitHub repo and a video walkthrough, which indicates active building and evangelizing rather than a one time release. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)\n\nThe education thread is visible in the launch of a YouTube channel for business leaders and subsequent posts that promote a video and slides on ChatGPT features with concrete work tasks like reviewing contracts, cleaning spreadsheets, and simulating client conversations. The behavior of placing the video link in comments and asking for feedback on how others use AI suggests a current focus on building an audience and feedback loop around applied AI workflows. [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/)',
+        'Dimi Mikadze’s recent activity concentrates on building and shipping agentic AI work and packaging it for adoption via open source and tutorial content, with Mira repeatedly positioned as an agentic system that turns a company website into a full company profile and, later, as something that has expanded from research into fuller workflow automation; this is reinforced by the repeated pattern of attaching walkthrough videos and a repository link in the comments to drive hands-on usage. In parallel, he is investing in educational distribution about using ChatGPT effectively at work, publishing posts that highlight specific features and showing how they fit into practical workflows, and he explicitly ties this to a YouTube channel aimed at helping business leaders apply AI in simple ways. [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)',
     },
     {
-      name: 'Values',
+      name: 'Values:',
       content:
-        'Open source and shareability are consistently reinforced as a value through repeated calls to “open sourced,” “free,” and “easy to customize,” plus immediate distribution of the GitHub repository in the comments on the key Mira posts. The pattern is not just announcing work, but making it inspectable and reusable, which is a concrete behavioral signal of valuing transparency and community enabled iteration. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)\n\nPracticality over hype is also consistently emphasized. Even when discussing broad tools like ChatGPT, he frames content around “real examples,” “quick walkthrough,” and specific workflows rather than abstract trends, and he positions the channel explicitly as helping business leaders use AI in “simple, practical ways.” That repeated positioning shows a value for utility and execution focused learning. [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)\n\nHe also shows a relational value of acknowledging and encouraging engagement in small ways, for example directly thanking a commenter by name, which signals attentiveness to community response even when his comments are otherwise mostly used to share links. [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)',
-    },
-    {
-      name: 'Network influence',
-      content:
-        'Within his own posts, repeated engagers across multiple top posts indicate a stable support circle that reliably reacts when he ships. Accounts such as [Nodar Tsurtsumia](https://www.linkedin.com/in/ACoAAA2mb9MBkEXSwUyTecsj5tJ_3WJGdg6M2bs), [ლევან დოგრაშვილი](https://www.linkedin.com/in/ACoAABcTBysB8pm_ZCcZGDfmeB7NiiF324SFgjc), [Salome Sakvarelidze](https://www.linkedin.com/in/ACoAACrZD1UBa3Bb2fgbSWcG2U1wjyGnJPmRMqU), [Ani Barjadze](https://www.linkedin.com/in/ACoAACImZ0IBtuy0VsIWMjygJ7p-m2uhmMrKlfo), [Beka Tomashvili](https://www.linkedin.com/in/ACoAAALPu8cBKQO3BBnrYupVrYVsHJTEJKTXBR4), [Gvantsa Ioramashvili](https://www.linkedin.com/in/ACoAACJGqf8BrkJ8dlEGKfVNLHpus2GP-ee6ElQ), [Mariam Dzidziguri](https://www.linkedin.com/in/ACoAABfUCMYBgagu925sH8p0JCpimxyORGCQbyI), and [Irakli L.](https://www.linkedin.com/in/ACoAABZZsv4BPHhKsA6gA5HOc8uep5MdFed73A4) appear reacting across the Mira open source post, the Mira progress update, and the ChatGPT features video post, suggesting they form a consistent audience cluster rather than one off virality. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)\n\nThere is evidence of bidirectional relationship with [Popoola Toheeb](https://www.linkedin.com/in/popoola-toheeb-474199229), who both reacts and comments on Dimi’s posts, and receives a direct reply from Dimi. This is one of the few visible cases where engagement moves beyond reactions into conversational exchange, even if brief. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)\n\nOutside his own content, his reactions indicate an influence footprint that includes a Georgian professional network that he regularly supports during career milestones and event recaps. He reacts to updates from [Mariam Khurtsilava](https://www.linkedin.com/in/mariam-khurtsilava), [Irakli Davarashvili](https://www.linkedin.com/in/irakli-davarashvili), and [Shota Megrelishvili](https://www.linkedin.com/in/shotamegrelishvili) across different months, which shows ongoing attention to a small set of people rather than broad reacting across many unrelated accounts. [post](https://www.linkedin.com/feed/update/urn:li:activity:7427444028679462912/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7420405039845867521/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7355652819875520513/)',
-    },
-    {
-      name: 'Expertise',
-      content:
-        'Depth is most evident where he ships a concrete system with a clear interface and distribution artifacts. The Mira posts describe an agentic AI system that automates company research from a website URL to a full profile, and later describe an expansion into full workflows, which demonstrates hands on engineering and iteration rather than only commentary on AI trends. His behavior of consistently linking the code repository and walkthroughs indicates the work is reproducible and detailed enough to warrant external inspection. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)\n\nHis ChatGPT content signals applied product knowledge and workflow design rather than deep technical exposition in text. He lists multiple business tasks he uses ChatGPT for and formats the content as slides and a video walkthrough, which suggests strength in translating tool capability into operational habits. At the same time, the posts as provided do not include technical implementation details, benchmarks, or architecture discussion in the feed text itself, so the demonstrated depth there is practical and use case oriented rather than engineering deep dives. [post](https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)',
-    },
-    {
-      name: 'Communication style',
-      content:
-        'Authored posts are short, product oriented announcements and tutorials that lead with the outcome and then route readers to richer media, usually via “link in comments,” YouTube walkthroughs, or slides. This indicates a distribution style optimized for scannability in the feed, with depth offloaded to external content. [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)\n\nThe tone is practical and instructional, using direct statements and lists of features or use cases, with occasional calls for feedback. The most conversational move is inviting others to share how they use AI, but most posts primarily present what was built or what is useful, suggesting he treats LinkedIn as a release and teaching channel more than a debate or discussion forum. [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/)\n\nIn comments, he uses the comment section primarily as a delivery mechanism for links and resources rather than extended back and forth. Across multiple posts, his own comments are dominated by the video walkthrough and GitHub links, with only a brief gratitude response to a commenter, which reinforces a broadcast plus resource sharing style. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)',
-    },
-    {
-      name: 'Hidden interests',
-      content:
-        'Reactions show attention beyond agentic AI and ChatGPT tutorials, particularly toward community, career progress, and event based professional storytelling within his network. He reacts to people announcing new roles and sharing conference reflections, suggesting a personal interest in peers’ trajectories and community milestones that is not a major theme in his own authored posts. [post](https://www.linkedin.com/feed/update/urn:li:activity:7427444028679462912/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7420405039845867521/)\n\nReactions also reveal interest in adjacent maker and product building ecosystems outside his stated sales intelligence focus, including posts about gaming and developer conferences and a post about using ChatGPT for market mapping. This indicates he monitors how others apply AI research capabilities and participates in broader builder communities, even though his own posts stay tightly focused on Mira and practical ChatGPT usage. [post](https://www.linkedin.com/feed/update/urn:li:activity:7394705840869367808/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7396920722180231168/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7396920722180231168/)',
-    },
-    {
-      name: 'Beyond the bio',
-      content:
-        'The profile frames him as a software engineer building multi agent systems for sales intelligence and enterprise automation, and the authored content strongly aligns with that through Mira, which automates company research and evolves into workflows. The gap is that, in day to day LinkedIn behavior, a substantial share of his authored activity is not about sales intelligence specifically but about general ChatGPT capability education for business leaders, indicating that his attention is split between building agentic systems and acting as an educator for broad workplace AI adoption. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/)\n\nHis bio emphasizes long experience scaling platforms and technical leadership, but his recent feed behavior is less about leadership narratives or scaling war stories and more about shipping open source code and publishing tutorials. That suggests his current public identity is being shaped more by maker output and knowledge distribution than by the senior leadership storyline in the about section. [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)',
-    },
-    {
-      name: 'What resonates',
-      content:
-        'Among authored posts, the open source Mira announcement draws the strongest engagement of the set, indicating his audience responds most to tangible shipped artifacts that are reusable and clearly scoped. The reaction list also includes multiple “praise” style reactions, suggesting the network rewards visible building and release moments. [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/)\n\nThe ChatGPT features YouTube post also performs strongly, which suggests his audience responds to practical how to content that promises immediate workflow improvement, especially when packaged as a walkthrough with examples. Comments include a subscription confirmation and thanks, showing that the content converts some feed attention into channel following. [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)\n\nThe lowest engagement among his authored posts is the slides based “features worth knowing” ChatGPT post, which indicates that, for his audience, general tips without the stronger “new video published” hook or without the novelty of an open source release may drive less interaction. This suggests that packaging and perceived novelty matter, not just the topic category. [post](https://www.linkedin.com/feed/update/urn:li:activity:7361301965022150658/)',
-    },
-    {
-      name: 'Topic evolution',
-      content:
-        'Across the visible authored timeline, his content moves from establishing an educational channel for business leaders, to publishing how to material on ChatGPT features, to shipping and then rapidly iterating an open source agentic system. This shows a shift from broad “AI for business” education in late July toward more builder centric updates and open source product iteration by late August and September, while still keeping the practical adoption theme running underneath. [post](https://www.linkedin.com/feed/update/urn:li:activity:7354433074971009024/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7365639131323863040/) [post](https://www.linkedin.com/feed/update/urn:li:activity:7378306963828441088/)\n\nReactions extend the evolution beyond his authored posting window by showing continued interest into 2026 in peers’ milestones and community updates, while also reacting in mid 2025 to a post about AI SDRs not meeting expectations. That reaction suggests ongoing attention to practical effectiveness of AI in sales, aligning with the bio’s sales intelligence direction even when his own posts in that period focused more on general AI enablement and company research automation. [post](https://www.linkedin.com/feed/update/urn:li:activity:7343190687112200193/)',
+        'Dimi Mikadze consistently signals a builder-teacher orientation that values practical usefulness, accessibility, and sharing work openly: he repeatedly emphasizes that Mira is free, open source, and customizable and then follows through by directing readers to the code repository and full walkthroughs, suggesting a preference for transparent, reproducible tooling over closed demonstrations. He also values applied, workflow-first adoption of AI, framing ChatGPT and agent capabilities in terms of concrete business tasks and step-by-step walkthroughs rather than abstract commentary, and he reinforces a respectful, community-minded stance through brief appreciative replies to commenters who engage with his content. [post](https://www.linkedin.com/feed/update/urn:li:activity:7358377857074577409/)',
     },
   ],
 };
@@ -58,7 +23,7 @@ export const DummyProfileAnalysis = {
 export const DummyCollectedData = {
   profile: {
     about:
-      "Software Engineer with 15 years of experience in hands-on engineering and technical leadership. I've led teams that scaled platforms from zero to 10 million users and built tools used by companies like Disney and Microsoft.\n\nRecently I've been building multi-agent AI systems, mainly for sales intelligence and enterprise automation.\n\nI've open sourced some of this work, including systems for automated company research and LinkedIn engagement analysis.",
+      "Software Engineer with 15 years of experience in hands-on engineering and technical leadership. I've led teams that scaled platforms from zero to 10 million users and built tools used by companies like Disney and Microsoft.\n\nNow I focus on building agentic AI systems and have open sourced some of this work:\n- Orca: AI agent for deep LinkedIn profile analysis. \n- Mira: Multi-Agent AI System for Company Research",
     certifications: [],
     city: '',
     company: 'enumeral.ai',
@@ -83,11 +48,12 @@ export const DummyCollectedData = {
         degree: "Master's degree",
         end_month: '',
         end_year: 2010,
-        field_of_study: 'Business Administration and Management, General',
+        field_of_study: 'Business Administration and Management',
         school: 'European School of Economics',
         school_id: '34750',
         school_linkedin_url: 'https://www.linkedin.com/company/34750/',
-        school_logo_url: '',
+        school_logo_url:
+          'https://media.licdn.com/dms/image/v2/C4E0BAQE8LIaT_aKCYg/company-logo_200_200/company-logo_200_200/0/1630632741008?e=1773273600&v=beta&t=1D_foRBLgV_dWz1A76WMEkyN4LdknAx0S3PK1q16woM',
         start_month: '',
         start_year: 2009,
       },
@@ -101,7 +67,8 @@ export const DummyCollectedData = {
         school: 'Georgian Technical University',
         school_id: '820895',
         school_linkedin_url: 'https://www.linkedin.com/company/820895/',
-        school_logo_url: '',
+        school_logo_url:
+          'https://media.licdn.com/dms/image/v2/D4D0BAQG2mNzmHmneeA/company-logo_200_200/company-logo_200_200/0/1702619028439?e=1773273600&v=beta&t=dAZlxuxIEim8UnovEq5KQDB3sydeZ_zPwfnoPg9gVDk',
         start_month: '',
         start_year: 2005,
       },
@@ -121,8 +88,8 @@ export const DummyCollectedData = {
         end_month: '',
         end_year: '',
         is_current: true,
-        job_type: '',
-        location: 'Tbilisi, Georgia',
+        job_type: 'Full-time',
+        location: 'Tbilisi, Georgia · Remote',
         skills: '',
         start_month: 2,
         start_year: 2024,
@@ -132,7 +99,8 @@ export const DummyCollectedData = {
         company: 'Placester',
         company_id: '556073',
         company_linkedin_url: 'https://www.linkedin.com/company/556073',
-        company_logo_url: '',
+        company_logo_url:
+          'https://media.licdn.com/dms/image/v2/C560BAQFVv1JpLR7Gkg/company-logo_200_200/company-logo_200_200/0/1630641797034/placester_inc_logo?e=1773273600&v=beta&t=GcTh3g9JdNalaGpKEYkW94SixUR8h7C_hQQbPA2YVRQ',
         company_public_url: 'https://www.linkedin.com/company/placester-inc',
         date_range: 'Nov 2022 - Jan 2024',
         description:
@@ -141,8 +109,8 @@ export const DummyCollectedData = {
         end_month: 1,
         end_year: 2024,
         is_current: false,
-        job_type: '',
-        location: 'Boston, Massachusetts, United States',
+        job_type: 'Contract',
+        location: 'Boston, Massachusetts, United States · Remote',
         skills: '',
         start_month: 11,
         start_year: 2022,
@@ -152,7 +120,8 @@ export const DummyCollectedData = {
         company: 'Jam.gg',
         company_id: '40913394',
         company_linkedin_url: 'https://www.linkedin.com/company/40913394',
-        company_logo_url: '',
+        company_logo_url:
+          'https://media.licdn.com/dms/image/v2/D4D0BAQG_FSJOplvpEw/company-logo_200_200/company-logo_200_200/0/1709569116325/jamgg_logo?e=1773273600&v=beta&t=7-KnzYLiEyfKdVHg-pryIjQQum6DmwDzGQx82zFzA0U',
         company_public_url: 'https://www.linkedin.com/company/jamgg',
         date_range: 'Oct 2020 - Mar 2022',
         description:
@@ -161,7 +130,7 @@ export const DummyCollectedData = {
         end_month: 3,
         end_year: 2022,
         is_current: false,
-        job_type: '',
+        job_type: 'Full-time',
         location: 'Santa Clara County, California, United States',
         skills: '',
         start_month: 10,
@@ -172,7 +141,8 @@ export const DummyCollectedData = {
         company: 'DataStax',
         company_id: '1786002',
         company_linkedin_url: 'https://www.linkedin.com/company/1786002',
-        company_logo_url: '',
+        company_logo_url:
+          'https://media.licdn.com/dms/image/v2/D560BAQEOc-Rr7UaiOA/company-logo_200_200/company-logo_200_200/0/1726862282281/datastax_logo?e=1773273600&v=beta&t=Wnb4PqZD-IXWa5i5hk1ka4AqPdm_FPDa5Dd1iO54xs0',
         company_public_url: 'https://www.linkedin.com/company/datastax',
         date_range: 'Jul 2018 - Mar 2020',
         description:
@@ -181,7 +151,7 @@ export const DummyCollectedData = {
         end_month: 3,
         end_year: 2020,
         is_current: false,
-        job_type: '',
+        job_type: 'Full-time',
         location: 'Santa Clara, California, United States',
         skills: '',
         start_month: 7,
@@ -192,7 +162,8 @@ export const DummyCollectedData = {
         company: 'StarOfService',
         company_id: '2862947',
         company_linkedin_url: 'https://www.linkedin.com/company/2862947',
-        company_logo_url: '',
+        company_logo_url:
+          'https://media.licdn.com/dms/image/v2/C4D0BAQHzFoiHg47Azg/company-logo_200_200/company-logo_200_200/0/1631339529199?e=1773273600&v=beta&t=wgf_fn4L569h_T2nvNgKhI1nAPNrrQMfHz3GGAFcN2Q',
         company_public_url: 'https://www.linkedin.com/company/starofservice-com',
         date_range: 'Dec 2015 - Aug 2018',
         description:
@@ -201,7 +172,7 @@ export const DummyCollectedData = {
         end_month: 8,
         end_year: 2018,
         is_current: false,
-        job_type: '',
+        job_type: 'Full-time',
         location: 'Paris Area, France',
         skills: '',
         start_month: 12,
@@ -212,7 +183,8 @@ export const DummyCollectedData = {
         company: 'LeasePlan Nederland',
         company_id: '2404697',
         company_linkedin_url: 'https://www.linkedin.com/company/2404697',
-        company_logo_url: '',
+        company_logo_url:
+          'https://media.licdn.com/dms/image/v2/C4E0BAQHKavj8xSOjxQ/company-logo_200_200/company-logo_200_200/0/1657006379866/leaseplan_nederland_logo?e=1773273600&v=beta&t=R-CYMNt4-epM0BjtbYYs9Wt01Icu1yvtTA9tXMv27EU',
         company_public_url: 'https://www.linkedin.com/company/leaseplan-nederland',
         date_range: 'Nov 2014 - Feb 2016',
         description:
@@ -221,7 +193,7 @@ export const DummyCollectedData = {
         end_month: 2,
         end_year: 2016,
         is_current: false,
-        job_type: '',
+        job_type: 'Contract',
         location: 'Amsterdam, North Holland, Netherlands',
         skills: '',
         start_month: 11,
@@ -250,10 +222,10 @@ export const DummyCollectedData = {
       },
       {
         company: 'Upme',
-        company_id: '6415202',
-        company_linkedin_url: 'https://www.linkedin.com/company/6415202',
+        company_id: '',
+        company_linkedin_url: '',
         company_logo_url: '',
-        company_public_url: 'https://www.linkedin.com/company/upme',
+        company_public_url: null,
         date_range: 'Apr 2010 - Sep 2014',
         description:
           '•  Participated in full product development cycle from ideation through deployment.\n•  Managed project scheduling and coordinated with clients on scope changes and technical challenges.',
@@ -337,7 +309,7 @@ export const DummyCollectedData = {
       video: {
         duration: 82666,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772092800&v=beta&t=iKRCBg3pi9M4SmjgbsfEyDeJDmY4636YtZGkg-CMNwE',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772438400&v=beta&t=NOHDyotpK7GUOX-__cQhkvKTx4gcCvnNG71dtBtDGt4',
       },
     },
     {
@@ -370,7 +342,7 @@ export const DummyCollectedData = {
       video: {
         duration: 42533,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772092800&v=beta&t=4dCH014oR_uvYxhUsE_afePEQTvtgENyRiUy6vIxcPc',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772438400&v=beta&t=4-StDkzh5EXZShc-Xw5ZUfCrTWAG5cJYh5It8VyQ-0o',
       },
     },
     {
@@ -378,7 +350,7 @@ export const DummyCollectedData = {
       document: {
         page_count: 9,
         title: 'ChatGPT Features Worth Knowing',
-        url: 'https://media.licdn.com/dms/document/media/v2/D4D1FAQEaZVgA24hNaA/feedshare-document-chunked-pdf/B4DZiiYxAKHwBo-/0/1755071075039?e=1772092800&v=beta&t=zW1ZRcsRQxFCNk2VkO7bK9an8218pGkPeqduRhIlPGI',
+        url: 'https://media.licdn.com/dms/document/media/v2/D4D1FAQEaZVgA24hNaA/feedshare-document-chunked-pdf/B4DZiiYxAKHwBo-/0/1755071075039?e=1772438400&v=beta&t=yq8j6bMXfRIl4sjDr1xlosNDC1vclSIu4br-IQLeJJE',
       },
       images: [],
       num_comments: 1,
@@ -433,7 +405,7 @@ export const DummyCollectedData = {
       video: {
         duration: 38933,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
       },
     },
     {
@@ -494,7 +466,7 @@ export const DummyCollectedData = {
       video: {
         duration: 82666,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772092800&v=beta&t=iKRCBg3pi9M4SmjgbsfEyDeJDmY4636YtZGkg-CMNwE',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772438400&v=beta&t=NOHDyotpK7GUOX-__cQhkvKTx4gcCvnNG71dtBtDGt4',
       },
     },
     {
@@ -528,7 +500,7 @@ export const DummyCollectedData = {
       video: {
         duration: 38933,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
       },
     },
     {
@@ -564,7 +536,7 @@ export const DummyCollectedData = {
       video: {
         duration: 42533,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772092800&v=beta&t=4dCH014oR_uvYxhUsE_afePEQTvtgENyRiUy6vIxcPc',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772438400&v=beta&t=4-StDkzh5EXZShc-Xw5ZUfCrTWAG5cJYh5It8VyQ-0o',
       },
     },
     {
@@ -598,7 +570,7 @@ export const DummyCollectedData = {
       video: {
         duration: 38933,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
       },
     },
     {
@@ -649,11 +621,11 @@ export const DummyCollectedData = {
       ],
       images: [],
       num_appreciations: 7,
-      num_comments: 22,
+      num_comments: 27,
       num_empathy: 10,
-      num_likes: 36,
+      num_likes: 38,
       num_praises: 12,
-      num_reactions: 65,
+      num_reactions: 67,
       num_reposts: 0,
       post_url: 'https://www.linkedin.com/feed/update/urn:li:activity:7427444028679462912/',
       posted: '2026-02-11 20:10:51',
@@ -793,7 +765,7 @@ export const DummyCollectedData = {
       poster_linkedin_url: 'https://www.linkedin.com/in/irakli-davarashvili',
       reshared: false,
       text: '✨ Some moments feel bigger because of the road that leads to them.\n\n🧭 ICE has been part of my story for almost a decade.\n\nIt was the first major conference where I truly saw the scale, ambition, and creativity of this industry 🌍\n\nBack then, it was pure inspiration, a moment that quietly shaped many decisions that followed.\n\n⏩ Fast forward to ICE Barcelona 2026 🇪🇸\n\n🏆 PROMOFY winning the ICE Pitch feels proud. \n\nNot just as an achievement, but as a full-circle moment from being inspired by others on stage to having our own vision recognised 🎤\n\n⚡ The conference itself was intense in the best way possible.\nThree days. Full calendar. Non-stop meetings. Real conversations about the future of engagement, loyalty, and how brands connect with users 🤝\n\n🙏 Thank you to the organisers, judges, partners, and future partners for the trust and belief that what we’re building truly matters.\n\nParis Smith Maxime Sbeghen Jeff Millar Adam Rosenberg Meir Shachar\n\n💜 And above all, this win belongs to our small, united, relentlessly driven team. Vakhtang Mdivani, Negin Namazi and All others. \n\nBehind every pitch, every meeting, every result, there’s discipline, ownership, and belief.\n\n🚀 Proud of how far we’ve come.\n\n🔮 Excited for what we’re about to achieve next.',
-      time: '3 weeks ago',
+      time: '1 month ago',
       urn: '7420405039845867521',
     },
     {
@@ -832,7 +804,7 @@ export const DummyCollectedData = {
       document: {
         page_count: 2,
         title: 'ICE Pitch WINNER',
-        url: 'https://media.licdn.com/dms/document/media/v2/D4D1FAQHJi6aT8EWXMg/feedshare-document-chunked-pdf/B4DZvf3_9PI0Bk-/0/1768987559264?e=1772092800&v=beta&t=97A4Z7AKOlvICOF8lFz6MbuDCzUSRDpFbiXv5VJzGMk',
+        url: 'https://media.licdn.com/dms/document/media/v2/D4D1FAQHJi6aT8EWXMg/feedshare-document-chunked-pdf/B4DZvf3_9PI0Bk-/0/1768987559264?e=1772438400&v=beta&t=PMoIFjXSkwt8IcI1XOb0C6Hv8c6NFSajSCPjez_--0A',
       },
       images: [],
       num_appreciations: 3,
@@ -1237,7 +1209,7 @@ export const DummyCollectedData = {
       posted: '2025-11-19 14:42:08',
       poster: {
         first: 'Gabriel',
-        headline: 'Tech Entrepreneur | Printomato.com',
+        headline: 'Tech Entrepreneur',
         image_url:
           'https://media.licdn.com/dms/image/v2/D4D03AQGbFiUwrykstA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1664954689671?e=1773273600&v=beta&t=xnNBWvoYbXMzcBLU5IYgA5h2azCReNj8bh4CO8KJXW8',
         last: 'Meliva',
@@ -1442,7 +1414,7 @@ export const DummyCollectedData = {
       reshared: true,
       resharer_comment: 'Vision: first silent marketing companion for venues\nPlan: 3 years - 5000 units ✌🏻',
       text: '🍅Very important milestone: we’ve started first commercial deliveries.\n\nYes, there were the usual startup adventures and devil-in-the-details delays. But all good now.\n\nNext up: 🇧🇪Belgium and the 🇳🇱Netherlands for rollouts and partner meetings.\n\nOur plan: 5,000 units in 3 years.\n\nAnd also very emotional for us that its proudly designed and assembled in 🇬🇪Georgia.\n\n📢If you’re in BE/NL and want to see it in action or know venues/brands we should meet, reach out.',
-      time: '5 months ago',
+      time: '6 months ago',
       urn: '7370057825064050688',
     },
     {
@@ -1476,7 +1448,7 @@ export const DummyCollectedData = {
       video: {
         duration: 42533,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772092800&v=beta&t=4dCH014oR_uvYxhUsE_afePEQTvtgENyRiUy6vIxcPc',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772438400&v=beta&t=4-StDkzh5EXZShc-Xw5ZUfCrTWAG5cJYh5It8VyQ-0o',
       },
     },
     {
@@ -1590,7 +1562,7 @@ export const DummyCollectedData = {
       video: {
         duration: 5033,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEDzuk83wt0EQ/mp4-720p-30fp-crf28/B4DZkQIBJSGsB4-/0/1756912166390?e=1772092800&v=beta&t=QvI3LGY03bS06cS__yuw58fWdaZOztUNh7o6-gSavTQ',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEDzuk83wt0EQ/mp4-720p-30fp-crf28/B4DZkQIBJSGsB4-/0/1756912166390?e=1772438400&v=beta&t=hbhkzpBH0BenO4vI8kzX6zoaMCdgOnatw2BSYtLtbhc',
       },
     },
     {
@@ -1764,7 +1736,7 @@ export const DummyCollectedData = {
       video: {
         duration: 38933,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
       },
     },
     {
@@ -1772,9 +1744,9 @@ export const DummyCollectedData = {
       images: [],
       num_comments: 3,
       num_empathy: 1,
-      num_likes: 50,
+      num_likes: 51,
       num_praises: 3,
-      num_reactions: 54,
+      num_reactions: 55,
       num_reposts: 5,
       post_url: 'https://www.linkedin.com/feed/update/urn:li:activity:7364304426901168129/',
       posted: '2025-08-21 14:36:37',
@@ -1801,7 +1773,7 @@ export const DummyCollectedData = {
       video: {
         duration: 27133,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEA6B66rpiEvw/mp4-720p-30fp-crf28/B4DZjNC7SBHsB0-/0/1755786852535?e=1772092800&v=beta&t=gn8-vDyjWq0cCUrWh-ENtfaRG5zkBvL-vLhhIgHifI0',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEA6B66rpiEvw/mp4-720p-30fp-crf28/B4DZjNC7SBHsB0-/0/1755786852535?e=1772438400&v=beta&t=lllLp6Pxk1JVV5J9eLvCRJ8eaE-x4slFhlMFybtypuE',
       },
     },
     {
@@ -1836,7 +1808,7 @@ export const DummyCollectedData = {
       attributes: [],
       images: [
         {
-          url: 'https://media.licdn.com/dms/image/v2/D4D10AQGpRhdbdm7UwA/image-shrink_1280/B4DZjBNqW_HsAU-/0/1755588242121?e=1772092800&v=beta&t=6h7JCrzcNta380rUojyg088YR4qc0FG4uTitNseslZY',
+          url: 'https://media.licdn.com/dms/image/v2/D4D10AQGpRhdbdm7UwA/image-shrink_1280/B4DZjBNqW_HsAU-/0/1755588242121?e=1772438400&v=beta&t=O_HDD_ilpVNzmRaW3Y6H9g74ACxHObsaC14aX3yWVcg',
         },
       ],
       num_appreciations: 1,
@@ -1988,7 +1960,7 @@ export const DummyCollectedData = {
       poster_linkedin_url: 'https://www.linkedin.com/in/giorgi-kontuadze',
       reshared: false,
       text: 'როცა Giffer-ის იდეა გაჩნდა კონსულტაცია გავიარე ერთ კომპანიასთან და რამოდენიმე პროფესიონალთან, ასე ვთქვათ მოვუყევი იდეა, პასუხად მივიღე რომ ბაზარზე არ არსებობდა მოთხოვნა და ტყუილად დავკარგავდი დროს და ფინანსებს.\n\nდღეს გიფერი წარმატებული კომპანიაა, მისი ფრანჩაიზი 5 ქვეყანაშია, კომპანია რომელთანაც კონსულტაცია გავიარე 2 წელიწადში მსგავსი პროდუქტი შექმნა და კონკურენტი გახდა. \n\nთუ იდეის გჯერათ, ნუ დაუჯერებთ "ჭკვიან" ხალხს.',
-      time: '6 months ago',
+      time: '7 months ago',
       urn: '7359146524255096835',
     },
     {
@@ -2034,12 +2006,12 @@ export const DummyCollectedData = {
       reshared: true,
       resharer_comment: 'Fresh Web Page, check this out 👉 www.printomato.com',
       text: '🍅 Check out a new website 👉 www.printomato.com \nYes, a real one. With buttons, pixels, and personality 😁 \n\nWe wanted something weird, different, and a bit delightful.\nSure, it’s a landing page, and we’ll probably change it 100 times \nbut for now, we think it’s nice.\n\nBig thanks to Luka Janjgava and for the playful design\nand to Plexygon for turning pixels into reality.',
-      time: '6 months ago',
+      time: '7 months ago',
       urn: '7359169412140064768',
       video: {
         duration: 14100,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEW4V1zn11JsA/mp4-720p-30fp-crf28/B4DZiEFjUQH4B0-/0/1754562710668?e=1772092800&v=beta&t=X4X_565TAYSvIc44y-rQYnCSZXPbcgsE01rJTH1RprA',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQEW4V1zn11JsA/mp4-720p-30fp-crf28/B4DZiEFjUQH4B0-/0/1754562710668?e=1772438400&v=beta&t=OqFIWM_WWEGbzB0Q_MJ-t0glMYC2MjP2IUWJ6PPgPmY',
       },
     },
     {
@@ -2073,7 +2045,7 @@ export const DummyCollectedData = {
       video: {
         duration: 38933,
         stream_url:
-          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+          'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
       },
     },
     {
@@ -2178,7 +2150,7 @@ export const DummyCollectedData = {
       poster_linkedin_url: 'https://www.linkedin.com/in/gigachkhikvadze',
       reshared: false,
       text: 'What an event Proof of Talk ! 🇫🇷\n\nWe had the chance to connect with brilliant minds from the #Bittensor ecosystem, meet fellow subnet builders and share Desearch AI journey with people just as passionate about AI and Web3 as we are\n\nMost surprising part? It all happened inside the Louvre. Can’t imagine a more iconic backdrop for the future of tech\n\nBig thanks to the organisers and everyone we crossed paths with \n\nuntil next year!',
-      time: '8 months ago',
+      time: '9 months ago',
       urn: '7338867679149096961',
     },
   ],
@@ -2214,7 +2186,7 @@ export const DummyCollectedData = {
         video: {
           duration: 42533,
           stream_url:
-            'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772092800&v=beta&t=4dCH014oR_uvYxhUsE_afePEQTvtgENyRiUy6vIxcPc',
+            'https://dms.licdn.com/playlist/vid/v2/D4D05AQGNuZcXMHdDwg/mp4-720p-30fp-crf28/B4DZjgBoLgH0Bw-/0/1756105211543?e=1772438400&v=beta&t=4-StDkzh5EXZShc-Xw5ZUfCrTWAG5cJYh5It8VyQ-0o',
         },
       },
       comments: [
@@ -2337,7 +2309,7 @@ export const DummyCollectedData = {
           reactor: {
             headline: 'Utility Executive Manager at Neos Advisory',
             linkedin_url: 'https://www.linkedin.com/in/ACoAAC1XuH8BqE4vdiLguDiN0amEoZMrOIW5jqc',
-            name: 'გიორგი ლომიძე',
+            name: 'Giorgi Lomidze',
             urn: 'ACoAAC1XuH8BqE4vdiLguDiN0amEoZMrOIW5jqc',
           },
           type: 'LIKE',
@@ -2560,7 +2532,7 @@ export const DummyCollectedData = {
         video: {
           duration: 38933,
           stream_url:
-            'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772092800&v=beta&t=QmB52N7Qbd22dMkN-Mdq8XsdERU9TOOKkAiXfNanECY',
+            'https://dms.licdn.com/playlist/vid/v2/D4D05AQFuez_NS8qx-Q/mp4-720p-30fp-crf28/B4DZh41b3eH8Bw-/0/1754373990095?e=1772438400&v=beta&t=RkJrCsLevzay9KgVvajuShPLyl-hmtbx1MK87F36ANo',
         },
       },
       comments: [
@@ -2666,7 +2638,7 @@ export const DummyCollectedData = {
           reactor: {
             headline: 'Utility Executive Manager at Neos Advisory',
             linkedin_url: 'https://www.linkedin.com/in/ACoAAC1XuH8BqE4vdiLguDiN0amEoZMrOIW5jqc',
-            name: 'გიორგი ლომიძე',
+            name: 'Giorgi Lomidze',
             urn: 'ACoAAC1XuH8BqE4vdiLguDiN0amEoZMrOIW5jqc',
           },
           type: 'LIKE',
@@ -2776,7 +2748,7 @@ export const DummyCollectedData = {
         {
           following_state: null,
           reactor: {
-            headline: 'Tech Entrepreneur | Printomato.com',
+            headline: 'Tech Entrepreneur',
             linkedin_url: 'https://www.linkedin.com/in/ACoAAAR7nQkB-H10EkXV0ZdFeo6rITVez60C0aI',
             name: 'Gabriel Meliva',
             urn: 'ACoAAAR7nQkB-H10EkXV0ZdFeo6rITVez60C0aI',
@@ -2817,7 +2789,7 @@ export const DummyCollectedData = {
         {
           following_state: null,
           reactor: {
-            headline: '94,133 followers',
+            headline: '94,188 followers',
             linkedin_url: 'https://www.linkedin.com/company/inspoexperts/',
             name: 'INSPO',
             urn: 'urn:li:fsd_company:100832211',
@@ -2864,7 +2836,7 @@ export const DummyCollectedData = {
         video: {
           duration: 82666,
           stream_url:
-            'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772092800&v=beta&t=iKRCBg3pi9M4SmjgbsfEyDeJDmY4636YtZGkg-CMNwE',
+            'https://dms.licdn.com/playlist/vid/v2/D4D05AQELBYlSseRi3w/mp4-720p-30fp-crf28/B4DZmUC705JABk-/0/1759125459421?e=1772438400&v=beta&t=NOHDyotpK7GUOX-__cQhkvKTx4gcCvnNG71dtBtDGt4',
         },
       },
       comments: [
