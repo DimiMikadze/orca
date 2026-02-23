@@ -177,7 +177,6 @@ export const ProfileAnalysisResultTimeline = ({ collectedData }: ProfileAnalysis
                       width: DOT,
                       height: DOT,
                       backgroundColor: color,
-                      boxShadow: `0 0 8px ${color}99`,
                       left: `${pct}%`,
                       top: `calc(50% + ${yPx}px)`,
                       transform: 'translateX(-50%) translateY(-50%)',

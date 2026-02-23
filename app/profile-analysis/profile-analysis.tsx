@@ -23,7 +23,6 @@ import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-
 interface ApiResult {
   analysis: ProfileAnalysisType;
   collectedData: CollectedLinkedInData;
@@ -257,7 +256,13 @@ export const ProfileAnalysis = () => {
 
             {/* Tabs */}
             <div className='flex gap-6 border-b border-border mb-6'>
-              {([['insights', 'Insights'], ['heatmap', 'Activity'], ['timeline', 'Timeline']] as const).map(([tab, label]) => (
+              {(
+                [
+                  ['insights', 'Insights'],
+                  ['heatmap', 'Activity'],
+                  ['timeline', 'Timeline'],
+                ] as const
+              ).map(([tab, label]) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -273,19 +278,13 @@ export const ProfileAnalysis = () => {
             </div>
 
             {/* Insights tab */}
-            {activeTab === 'insights' && (
-              <ProfileAnalysisResultInsights analysis={data.analysis} />
-            )}
+            {activeTab === 'insights' && <ProfileAnalysisResultInsights analysis={data.analysis} />}
 
             {/* Activity heatmap tab */}
-            {activeTab === 'heatmap' && (
-              <ProfileAnalysisResultActivity collectedData={data.collectedData} />
-            )}
+            {activeTab === 'heatmap' && <ProfileAnalysisResultActivity collectedData={data.collectedData} />}
 
             {/* Timeline tab */}
-            {activeTab === 'timeline' && (
-              <ProfileAnalysisResultTimeline collectedData={data.collectedData} />
-            )}
+            {activeTab === 'timeline' && <ProfileAnalysisResultTimeline collectedData={data.collectedData} />}
           </div>
         )}
 
