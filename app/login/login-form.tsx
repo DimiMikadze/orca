@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import Particles from '@/components/particles';
 
 const LoginForm = () => {
   const [error, setError] = useState('');
@@ -17,8 +16,6 @@ const LoginForm = () => {
 
   return (
     <div className='relative min-h-screen px-8'>
-      <Particles />
-
       <form
         onSubmit={async (e) => {
           e.preventDefault();

@@ -18,7 +18,6 @@ import { ProfileAnalysisProgress } from './profile-analysis-progress';
 import { ProfileAnalysisInsightsModal } from './profile-analysis-insights-modal';
 import { useInsights } from './use-insights';
 import { LogoutButton } from '@/components/logout-button';
-import Particles from '@/components/particles';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -152,8 +151,6 @@ export const ProfileAnalysis = () => {
 
   return (
     <div className='relative min-h-screen'>
-      <Particles />
-
       {/* Header */}
       <header className='relative border-b border-border'>
         <div className='max-w-4xl mx-auto px-4 pr-16 py-4 flex items-center gap-6'>
