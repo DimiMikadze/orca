@@ -26,7 +26,8 @@ The core logic lives in orca-ai/ as a standalone library. You can plug it into a
 - Job seeking: research a hiring manager or employer before interviews
 
 <p align="center">
-  <img src="./screenshot.png" alt="Orca Screenshot" width="80%" />
+  <img src="./demo.gif" alt="Orca Demo" width="80%" />
+
 </p>
 
 ## How it works
