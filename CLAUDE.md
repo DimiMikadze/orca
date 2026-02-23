@@ -1,6 +1,6 @@
 # Orca
 
-Orca is an agentic AI system that analyzes LinkedIn profiles and the people they engage with to understand how they actually behave and what they care about. You choose what you want to learn, and Orca analyzes posts, comments, reactions, and interactions to uncover insights like pain points, current focus, values, expertise, influence, and how interests change over time.
+Orca is an AI agent for deep LinkedIn profile analysis. You define the insights you care about, and Orca extracts them. It scrapes posts, comments, reactions, and interaction networks, then reasons over the data autonomously to extract structured insights like pain points, current focus, values, expertise, network influence, communication style, and how interests change over time. It calls additional scraping tools on its own when it needs more data.
 
 ## Project Structure
 
@@ -56,26 +56,13 @@ Types for all API responses are in `orca-ai/types.ts`. All fields are optional s
 
 `app/profile-analysis/` — main UI for profile analysis flow.
 
-- `ProfileAnalysis.tsx` — page-level component. Owns all state (form, loading, results, modal). Streams SSE from `/api/linkedin-profile`. Has `USE_DUMMY_DATA` flag for dev.
-- `ProfileAnalysisResult.tsx` — profile header + insight cards. Contains `RichText` helper that renders markdown links and LinkedIn URLs as clickable labels.
-- `CollectedDataModal.tsx` — modal showing raw collected data across tabs: Profile, Posts, Comments, Reactions, Audience Engagements.
-
-## Planned Visualizations (YouTube Demo)
-
-Result tabs beyond the default Insights tab. Each gets its own component in `app/profile-analysis/`.
-
-**Engagement Heatmap** — tab name "Activity" — Easy — Priority 1 — Done
-**Activity Timeline** — tab name "Timeline" — Easy — Priority 2 — Done
-**Network Graph** — tab name TBD — Medium-Hard — Priority 3 — Not started
-**Sentiment Arc** — Deferred (LinkedIn posts are too professionally neutral; sentiment scores cluster near zero and won't tell a compelling story)
-**Topic Clusters** — Skipped (client-side keyword extraction is too imprecise; good results require LLM tagging per post which is an architecture change)
-
-**Data available for all three builds (no new scraping needed):**
-
-- Heatmap / Timeline: `posts[]`, `comments[]`, `reactions[]` all have `posted: "YYYY-MM-DD HH:MM:SS"` timestamps
-- Network graph: `topPostsEngagement[].comments[].commenter` and `[].reactions[].reactor` have `name`, `headline`, `linkedin_url` per person; `comments[].poster` gives outbound engagement targets
-
-**Component pattern:** each visualization is `profile-analysis-result-[name].tsx`, receives `collectedData: CollectedLinkedInData`, and is registered as a new tab in `profile-analysis.tsx`.
+- `profile-analysis.tsx` — page-level component. Owns all state (form, loading, results, modal). Streams SSE from `/api/linkedin-profile`. Has `USE_DUMMY_DATA` flag for dev. Results are shown across three tabs: Insights, Activity, Timeline.
+- `profile-analysis-result.tsx` — insight cards only.
+- `profile-analysis-result-header.tsx` — profile avatar, name, headline, stats badges, View Raw Data button. Always visible above tabs.
+- `profile-analysis-result-insights.tsx` — Insights tab, wraps `profile-analysis-result.tsx`.
+- `profile-analysis-result-activity.tsx` — Activity tab. GitHub-style heatmap of posts/comments/reactions over the last 12 months.
+- `profile-analysis-result-timeline.tsx` — Timeline tab. Swim-lane dot chart showing posts, comments, and reactions plotted over the last 12 months.
+- `profile-analysis-collected-data-modal.tsx` — modal showing raw collected data across tabs: Profile, Posts, Comments, Reactions, Audience Engagements.
 
 ## Authentication
 
