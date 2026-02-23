@@ -4,7 +4,7 @@ import { useMemo, useState, useRef, useEffect } from 'react';
 import { X, MoveUpRight } from 'lucide-react';
 import type { CollectedLinkedInData, LinkedInPost } from '@/orca-ai/types';
 
-interface ProfileAnalysisResultHeatmapProps {
+interface ProfileAnalysisResultActivityProps {
   collectedData: CollectedLinkedInData;
 }
 
@@ -70,7 +70,7 @@ function formatDate(dateStr: string): string {
   });
 }
 
-export const ProfileAnalysisResultHeatmap = ({ collectedData }: ProfileAnalysisResultHeatmapProps) => {
+export const ProfileAnalysisResultActivity = ({ collectedData }: ProfileAnalysisResultActivityProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [tooltip, setTooltip] = useState<{ date: string; counts: { posts: number; comments: number; reactions: number }; x: number; y: number } | null>(null);

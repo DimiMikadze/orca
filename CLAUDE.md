@@ -64,13 +64,14 @@ Types for all API responses are in `orca-ai/types.ts`. All fields are optional s
 
 Result tabs beyond the default Insights tab. Each gets its own component in `app/profile-analysis/`.
 
-**Engagement Heatmap** — tab name TBD — Easy — Priority 1 — Not started
-**Activity Timeline** — tab name TBD — Easy — Priority 2 — Not started
+**Engagement Heatmap** — tab name "Activity" — Easy — Priority 1 — Done
+**Activity Timeline** — tab name "Timeline" — Easy — Priority 2 — Done
 **Network Graph** — tab name TBD — Medium-Hard — Priority 3 — Not started
 **Sentiment Arc** — Deferred (LinkedIn posts are too professionally neutral; sentiment scores cluster near zero and won't tell a compelling story)
 **Topic Clusters** — Skipped (client-side keyword extraction is too imprecise; good results require LLM tagging per post which is an architecture change)
 
 **Data available for all three builds (no new scraping needed):**
+
 - Heatmap / Timeline: `posts[]`, `comments[]`, `reactions[]` all have `posted: "YYYY-MM-DD HH:MM:SS"` timestamps
 - Network graph: `topPostsEngagement[].comments[].commenter` and `[].reactions[].reactor` have `name`, `headline`, `linkedin_url` per person; `comments[].poster` gives outbound engagement targets
 

@@ -11,7 +11,8 @@ import type {
 import { LINKEDIN_CREDITS_COOKIE_NAME } from '@/orca-ai/config';
 import { ProfileAnalysisResultHeader } from './profile-analysis-result-header';
 import { ProfileAnalysisResultInsights } from './profile-analysis-result-insights';
-import { ProfileAnalysisResultHeatmap } from './profile-analysis-result-heatmap';
+import { ProfileAnalysisResultActivity } from './profile-analysis-result-activity';
+import { ProfileAnalysisResultTimeline } from './profile-analysis-result-timeline';
 import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-data-modal';
 import { ProfileAnalysisProgress } from './profile-analysis-progress';
 import { ProfileAnalysisInsightsModal } from './profile-analysis-insights-modal';
@@ -53,7 +54,7 @@ export const ProfileAnalysis = () => {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'insights' | 'heatmap'>('insights');
+  const [activeTab, setActiveTab] = useState<'insights' | 'heatmap' | 'timeline'>('insights');
   const [modalSection, setModalSection] = useState<string | null>(null);
   const [insightsModalOpen, setInsightsModalOpen] = useState(false);
   const { insights, saveInsights } = useInsights();
@@ -256,7 +257,7 @@ export const ProfileAnalysis = () => {
 
             {/* Tabs */}
             <div className='flex gap-6 border-b border-border mb-6'>
-              {([['insights', 'Insights'], ['heatmap', 'Activity']] as const).map(([tab, label]) => (
+              {([['insights', 'Insights'], ['heatmap', 'Activity'], ['timeline', 'Timeline']] as const).map(([tab, label]) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -278,7 +279,12 @@ export const ProfileAnalysis = () => {
 
             {/* Activity heatmap tab */}
             {activeTab === 'heatmap' && (
-              <ProfileAnalysisResultHeatmap collectedData={data.collectedData} />
+              <ProfileAnalysisResultActivity collectedData={data.collectedData} />
+            )}
+
+            {/* Timeline tab */}
+            {activeTab === 'timeline' && (
+              <ProfileAnalysisResultTimeline collectedData={data.collectedData} />
             )}
           </div>
         )}
