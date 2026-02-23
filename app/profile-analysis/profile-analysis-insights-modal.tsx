@@ -3,12 +3,24 @@
 import { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import type { InsightDefinition } from '@/orca-ai/types';
-import { DEFAULT_INSIGHTS } from '@/orca-ai/config';
+import {
+  DEFAULT_GENERAL_INSIGHTS,
+  DEFAULT_SALES_INSIGHTS,
+  DEFAULT_RECRUITING_INSIGHTS,
+  DEFAULT_INVESTING_INSIGHTS,
+} from '@/orca-ai/config';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AutosizeTextarea } from '@/components/ui/autosize-textarea';
 import { cn } from '@/components/utils';
+
+const PRESETS: { id: string; label: string; insights: InsightDefinition[] }[] = [
+  { id: 'general', label: 'General', insights: DEFAULT_GENERAL_INSIGHTS },
+  { id: 'sales', label: 'Sales', insights: DEFAULT_SALES_INSIGHTS },
+  { id: 'recruiting', label: 'Recruiting', insights: DEFAULT_RECRUITING_INSIGHTS },
+  { id: 'investing', label: 'Investing', insights: DEFAULT_INVESTING_INSIGHTS },
+];
 
 interface ProfileAnalysisInsightsModalProps {
   open: boolean;
@@ -24,11 +36,13 @@ export const ProfileAnalysisInsightsModal = ({
   onClose,
 }: ProfileAnalysisInsightsModalProps) => {
   const [local, setLocal] = useState<InsightDefinition[]>(insights);
+  const [activePreset, setActivePreset] = useState<string | null>(null);
 
   const update = (index: number, field: keyof InsightDefinition, value: string) => {
     const next = [...local];
     next[index] = { ...next[index], [field]: value };
     setLocal(next);
+    setActivePreset(null);
   };
 
   const remove = (index: number) => {
@@ -62,8 +76,28 @@ export const ProfileAnalysisInsightsModal = ({
           <div className='px-6 pt-6 pb-2'>
             <DialogTitle>Insights</DialogTitle>
             <DialogDescription className='mt-2'>
-              Define which insights Orca should extract from the LinkedIn profile.
+              Define which insights Orca should extract from the LinkedIn profile, or start from a preset.
             </DialogDescription>
+            <div className='flex gap-1.5 mt-3 flex-wrap'>
+              {PRESETS.map((preset) => (
+                <button
+                  key={preset.id}
+                  type='button'
+                  onClick={() => {
+                    setLocal(preset.insights);
+                    setActivePreset(preset.id);
+                  }}
+                  className={cn(
+                    'px-3 py-1 text-xs rounded-full border cursor-pointer transition-colors',
+                    activePreset === preset.id
+                      ? 'border-foreground text-foreground'
+                      : 'border-border text-foreground-secondary hover:text-foreground hover:border-foreground',
+                  )}
+                >
+                  {preset.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className='px-6 pb-4'>
@@ -122,7 +156,7 @@ export const ProfileAnalysisInsightsModal = ({
             type='button'
             variant='outline'
             size='sm'
-            onClick={() => setLocal(DEFAULT_INSIGHTS)}
+            onClick={() => setLocal(DEFAULT_GENERAL_INSIGHTS)}
             className='mr-auto text-foreground-secondary cursor-pointer'
           >
             Reset to defaults

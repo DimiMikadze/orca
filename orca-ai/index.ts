@@ -5,7 +5,14 @@ export { scrapePostReactions } from './services/linkedin-post-reactions-scraper'
 export { collectLinkedInData } from './services/collect-linkedin-data';
 export type { CollectLinkedInDataOptions } from './services/collect-linkedin-data';
 export { getCredits } from './utils/linkedin-api-credits';
-export { LINKEDIN_CREDITS_COOKIE_NAME, DEFAULT_INSIGHTS } from './config';
+export {
+  LINKEDIN_CREDITS_COOKIE_NAME,
+  DEFAULT_INSIGHTS,
+  DEFAULT_GENERAL_INSIGHTS,
+  DEFAULT_SALES_INSIGHTS,
+  DEFAULT_RECRUITING_INSIGHTS,
+  DEFAULT_INVESTING_INSIGHTS,
+} from './config';
 export { analyzeProfile } from './orchestrator';
 export type { AnalyzeProfileOptions, AnalyzeProfileResult } from './orchestrator';
 
