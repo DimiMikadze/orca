@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import {
-  Search,
-  UserSearch,
-  Activity,
-  BrainCircuit,
-  Lightbulb,
-  SquareArrowOutUpRight,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { Search, UserSearch, Activity, BrainCircuit, Lightbulb, SlidersHorizontal } from 'lucide-react';
 import type {
   ProfileAnalysis as ProfileAnalysisType,
   CollectedLinkedInData,
@@ -17,7 +9,10 @@ import type {
   AnalysisStats,
 } from '@/orca-ai/types';
 import { LINKEDIN_CREDITS_COOKIE_NAME } from '@/orca-ai/config';
-import { ProfileAnalysisResult } from './profile-analysis-result';
+import { ProfileAnalysisResultHeader } from './profile-analysis-result-header';
+import { ProfileAnalysisResultInsights } from './profile-analysis-result-insights';
+import { ProfileAnalysisResultActivity } from './profile-analysis-result-activity';
+import { ProfileAnalysisResultTimeline } from './profile-analysis-result-timeline';
 import { ProfileAnalysisCollectedDataModal } from './profile-analysis-collected-data-modal';
 import { ProfileAnalysisProgress } from './profile-analysis-progress';
 import { ProfileAnalysisInsightsModal } from './profile-analysis-insights-modal';
@@ -26,7 +21,6 @@ import { LogoutButton } from '@/components/logout-button';
 import Particles from '@/components/particles';
 import { DummyProfileAnalysis, DummyCollectedData } from '../dummy-data';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 
 interface ApiResult {
@@ -59,6 +53,7 @@ export const ProfileAnalysis = () => {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'insights' | 'heatmap' | 'timeline'>('insights');
   const [modalSection, setModalSection] = useState<string | null>(null);
   const [insightsModalOpen, setInsightsModalOpen] = useState(false);
   const { insights, saveInsights } = useInsights();
@@ -252,37 +247,44 @@ export const ProfileAnalysis = () => {
 
         {data && !loading && (
           <div className='mt-2'>
-            <div className='flex items-center gap-2 mb-6 flex-wrap'>
-              <span className='text-xs text-white'>Analysis based on</span>
-              {[
-                `${data.collectedData.posts.length} posts`,
-                `${data.collectedData.comments.length} comments`,
-                `${data.collectedData.reactions.length} reactions`,
-                ...(() => {
-                  const engagementCount = data.collectedData.topPostsEngagement.reduce(
-                    (sum, tpe) => sum + tpe.comments.length + tpe.reactions.length,
-                    0,
-                  );
-                  return engagementCount > 0 ? [`${engagementCount} audience engagements`] : [];
-                })(),
-              ].map((label) => (
-                <Badge key={label} variant='secondary'>
-                  {label}
-                </Badge>
-              ))}
-              <span className='flex items-center gap-1'>
-                <Button
-                  variant='ghost'
-                  size='sm'
-                  onClick={() => setModalSection('profile')}
-                  className='text-xs text-foreground-secondary cursor-pointer px-1.5'
+            <ProfileAnalysisResultHeader
+              analysis={data.analysis}
+              profile={data.collectedData.profile}
+              collectedData={data.collectedData}
+              onViewRawData={() => setModalSection('profile')}
+            />
+
+            {/* Tabs */}
+            <div className='flex gap-6 border-b border-border mb-6'>
+              {(
+                [
+                  ['insights', 'Insights'],
+                  ['heatmap', 'Activity'],
+                  ['timeline', 'Timeline'],
+                ] as const
+              ).map(([tab, label]) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`pb-3 text-sm font-medium transition-colors cursor-pointer ${
+                    activeTab === tab
+                      ? 'text-foreground border-b-2 border-foreground'
+                      : 'text-foreground-secondary hover:text-foreground'
+                  }`}
                 >
-                  View Raw Data
-                  <SquareArrowOutUpRight className='w-3 h-3' />
-                </Button>
-              </span>
+                  {label}
+                </button>
+              ))}
             </div>
-            <ProfileAnalysisResult analysis={data.analysis} profile={data.collectedData.profile} />
+
+            {/* Insights tab */}
+            {activeTab === 'insights' && <ProfileAnalysisResultInsights analysis={data.analysis} />}
+
+            {/* Activity heatmap tab */}
+            {activeTab === 'heatmap' && <ProfileAnalysisResultActivity collectedData={data.collectedData} />}
+
+            {/* Timeline tab */}
+            {activeTab === 'timeline' && <ProfileAnalysisResultTimeline collectedData={data.collectedData} />}
           </div>
         )}
 
