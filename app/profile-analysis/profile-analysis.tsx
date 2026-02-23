@@ -30,7 +30,7 @@ interface ApiResult {
   credits: LinkedInApiCredits | null;
 }
 
-const USE_DUMMY_DATA = false;
+const USE_DUMMY_DATA = true;
 
 export const ProfileAnalysis = () => {
   const [url, setUrl] = useState('');

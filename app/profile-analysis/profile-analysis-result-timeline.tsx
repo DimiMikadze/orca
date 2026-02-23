@@ -12,11 +12,11 @@ const POST_COLOR = '#0084ff';
 const COMMENT_COLOR = '#f59e0b';
 const REACTION_COLOR = '#22c55e';
 
-const LANE_LABEL_W = 80;
 const LANE_HEIGHT = 120;
 const DOT = 12;
-const JITTER_THRESHOLD_PCT = 1.5; // group dots within this % of each other
 const JITTER_STEP = DOT + 3;
+/** Minimum px per month column. Below this the chart scrolls horizontally. */
+const MIN_MONTH_WIDTH = 60;
 
 const LANES = [
   { key: 'posts' as const, label: 'Posts', color: POST_COLOR },
@@ -24,9 +24,15 @@ const LANES = [
   { key: 'reactions' as const, label: 'Reactions', color: REACTION_COLOR },
 ];
 
+interface RawItem {
+  item: LinkedInPost;
+  monthIndex: number;
+  dayFraction: number;
+}
+
 interface PlotItem {
   item: LinkedInPost;
-  pct: number;
+  xPx: number;
   yPx: number;
 }
 
@@ -38,27 +44,28 @@ function formatDate(posted: string): string {
   });
 }
 
-/** Distributes overlapping dots vertically so they don't pile on top of each other.
- *  When a group is too large to fit with full spacing, the step compresses so dots
- *  always stay within the lane bounds. */
-function jitter(items: { item: LinkedInPost; pct: number }[]): PlotItem[] {
-  const sorted = [...items].sort((a, b) => a.pct - b.pct);
+function jitter(rawItems: RawItem[], monthWidth: number): PlotItem[] {
+  const threshold = (3 / 30) * monthWidth; // ~3 days worth of px
+  const items = rawItems
+    .map((r) => ({ item: r.item, xPx: (r.monthIndex + r.dayFraction) * monthWidth }))
+    .sort((a, b) => a.xPx - b.xPx);
+
   const result: PlotItem[] = [];
-  const maxSpread = LANE_HEIGHT - DOT - 4; // max total vertical spread to stay in-lane
+  const maxSpread = LANE_HEIGHT - DOT - 4;
 
   let i = 0;
-  while (i < sorted.length) {
-    const group: typeof sorted = [sorted[i]];
+  while (i < items.length) {
+    const group = [items[i]];
     let j = i + 1;
-    while (j < sorted.length && sorted[j].pct - sorted[i].pct < JITTER_THRESHOLD_PCT) {
-      group.push(sorted[j]);
+    while (j < items.length && items[j].xPx - items[i].xPx < threshold) {
+      group.push(items[j]);
       j++;
     }
     const n = group.length;
     const step = n > 1 ? Math.min(JITTER_STEP, maxSpread / (n - 1)) : 0;
     const totalH = (n - 1) * step;
     group.forEach((el, gi) => {
-      result.push({ ...el, yPx: -totalH / 2 + gi * step });
+      result.push({ item: el.item, xPx: el.xPx, yPx: -totalH / 2 + gi * step });
     });
     i = j;
   }
@@ -67,82 +74,82 @@ function jitter(items: { item: LinkedInPost; pct: number }[]): PlotItem[] {
 }
 
 export const ProfileAnalysisResultTimeline = ({ collectedData }: ProfileAnalysisResultTimelineProps) => {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const [chartWidth, setChartWidth] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollWidth, setScrollWidth] = useState(0);
   const [tooltip, setTooltip] = useState<{ item: LinkedInPost; x: number; y: number } | null>(null);
   const [selected, setSelected] = useState<{ item: LinkedInPost; laneLabel: string; color: string } | null>(null);
 
   useEffect(() => {
-    const el = chartRef.current;
+    const el = scrollRef.current;
     if (!el) return;
-    const observer = new ResizeObserver(([entry]) => setChartWidth(entry.contentRect.width));
+    const observer = new ResizeObserver(([entry]) => setScrollWidth(entry.contentRect.width));
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  const { monthTicks, lanes } = useMemo(() => {
+  // Month array — no pixel positions yet (those depend on container width)
+  const months = useMemo(() => {
     const now = new Date();
-    // Start on the 1st of the month exactly 12 months ago so the first month label is always visible at position 0
-    const rangeStart = new Date(now.getFullYear() - 1, now.getMonth(), 1, 0, 0, 0, 0);
-    const rangeEnd = new Date(now);
-    rangeEnd.setHours(23, 59, 59, 999);
-    const rangeMs = rangeEnd.getTime() - rangeStart.getTime();
-
-    const monthTicks: { key: string; label: string; pct: number }[] = [];
-    const cur = new Date(rangeStart);
-    while (cur <= rangeEnd) {
-      monthTicks.push({
-        key: `${cur.getFullYear()}-${cur.getMonth()}`,
-        label: cur.toLocaleString('default', { month: 'short' }),
-        pct: ((cur.getTime() - rangeStart.getTime()) / rangeMs) * 100,
-      });
+    const result: { year: number; month: number; label: string; index: number }[] = [];
+    const cur = new Date(now.getFullYear() - 1, now.getMonth(), 1);
+    let idx = 0;
+    while (
+      cur.getFullYear() < now.getFullYear() ||
+      (cur.getFullYear() === now.getFullYear() && cur.getMonth() <= now.getMonth())
+    ) {
+      result.push({ year: cur.getFullYear(), month: cur.getMonth(), label: cur.toLocaleString('default', { month: 'short' }), index: idx });
+      idx++;
       cur.setMonth(cur.getMonth() + 1);
     }
+    return result;
+  }, []);
 
-    const toPlotItems = (items: LinkedInPost[]) =>
+  // Raw item positions (month index + day fraction) — independent of container width
+  const laneRaw = useMemo(() => {
+    const toRaw = (items: LinkedInPost[]): RawItem[] =>
       items
         .filter((item) => item.posted)
-        .map((item) => {
-          const t = new Date(item.posted!.slice(0, 10) + 'T00:00:00').getTime();
-          const pct = ((t - rangeStart.getTime()) / rangeMs) * 100;
-          return { item, pct };
-        })
-        .filter(({ pct }) => pct >= 0 && pct <= 100);
+        .flatMap((item) => {
+          const d = new Date(item.posted!.slice(0, 10) + 'T00:00:00');
+          const mi = months.findIndex((m) => m.year === d.getFullYear() && m.month === d.getMonth());
+          if (mi === -1) return [];
+          const daysInMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+          return [{ item, monthIndex: mi, dayFraction: (d.getDate() - 1) / daysInMonth }];
+        });
 
     return {
-      monthTicks,
-      lanes: {
-        posts: jitter(toPlotItems(collectedData.posts)),
-        comments: jitter(toPlotItems(collectedData.comments)),
-        reactions: jitter(toPlotItems(collectedData.reactions)),
-      },
+      posts: toRaw(collectedData.posts),
+      comments: toRaw(collectedData.comments),
+      reactions: toRaw(collectedData.reactions),
     };
-  }, [collectedData]);
+  }, [collectedData, months]);
+
+  const innerWidth = scrollWidth > 0 ? Math.max(scrollWidth, months.length * MIN_MONTH_WIDTH) : months.length * MIN_MONTH_WIDTH;
+  const monthWidth = months.length > 0 ? innerWidth / months.length : MIN_MONTH_WIDTH;
+
+  // Pixel-positioned plot items (recalculated when monthWidth changes)
+  const lanes = useMemo(() => {
+    if (scrollWidth === 0) return { posts: [], comments: [], reactions: [] as PlotItem[] };
+    return {
+      posts: jitter(laneRaw.posts, monthWidth),
+      comments: jitter(laneRaw.comments, monthWidth),
+      reactions: jitter(laneRaw.reactions, monthWidth),
+    };
+  }, [laneRaw, monthWidth, scrollWidth]);
 
   return (
     <div className='pt-2'>
       <div className='flex'>
-        {/* Lane labels */}
-        <div className='shrink-0 flex flex-col' style={{ width: LANE_LABEL_W }}>
-          {LANES.map(({ key, label, color }) => (
-            <div key={key} className='flex items-center justify-end pr-4' style={{ height: LANE_HEIGHT }}>
-              <span className='text-xs font-medium' style={{ color }}>
-                {label}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* Chart area */}
-        <div className='flex-1 min-w-0 relative' ref={chartRef}>
-          {/* Month gridlines — rendered behind all lanes */}
-          {chartWidth > 0 &&
-            monthTicks.map(({ key, pct }) => (
+        {/* Scrollable chart column */}
+        <div className='flex-1 min-w-0 overflow-x-auto' ref={scrollRef}>
+          <div className='relative' style={{ width: innerWidth }}>
+            {/* Month column dividers */}
+            {months.map(({ year, month, index }) => (
               <div
-                key={key}
+                key={`${year}-${month}`}
                 className='absolute top-0 pointer-events-none'
                 style={{
-                  left: `${pct}%`,
+                  left: index * monthWidth,
                   height: LANE_HEIGHT * LANES.length,
                   width: 1,
                   backgroundColor: 'rgba(255,255,255,0.04)',
@@ -150,26 +157,25 @@ export const ProfileAnalysisResultTimeline = ({ collectedData }: ProfileAnalysis
               />
             ))}
 
-          {/* Lanes */}
-          {LANES.map(({ key, color }, li) => (
-            <div
-              key={key}
-              className='relative'
-              style={{
-                height: LANE_HEIGHT,
-                backgroundColor: color + '0a',
-                borderTop: li > 0 ? '1px solid rgba(255,255,255,0.05)' : undefined,
-              }}
-            >
-              {/* Center track line */}
+            {/* Lanes */}
+            {LANES.map(({ key, color }, li) => (
               <div
-                className='absolute inset-x-0 top-1/2 -translate-y-px'
-                style={{ height: 1, backgroundColor: color + '25' }}
-              />
+                key={key}
+                className='relative'
+                style={{
+                  height: LANE_HEIGHT,
+                  backgroundColor: color + '0a',
+                  borderTop: li > 0 ? '1px solid rgba(255,255,255,0.05)' : undefined,
+                }}
+              >
+                {/* Center track line */}
+                <div
+                  className='absolute inset-x-0 top-1/2 -translate-y-px'
+                  style={{ height: 1, backgroundColor: color + '25' }}
+                />
 
-              {/* Dots */}
-              {chartWidth > 0 &&
-                lanes[key].map(({ item, pct, yPx }, i) => (
+                {/* Dots */}
+                {lanes[key].map(({ item, xPx, yPx }, i) => (
                   <div
                     key={i}
                     className='absolute cursor-pointer rounded-full transition-transform hover:scale-150'
@@ -177,7 +183,7 @@ export const ProfileAnalysisResultTimeline = ({ collectedData }: ProfileAnalysis
                       width: DOT,
                       height: DOT,
                       backgroundColor: color,
-                      left: `${pct}%`,
+                      left: xPx,
                       top: `calc(50% + ${yPx}px)`,
                       transform: 'translateX(-50%) translateY(-50%)',
                       zIndex: 10,
@@ -193,22 +199,33 @@ export const ProfileAnalysisResultTimeline = ({ collectedData }: ProfileAnalysis
                     }
                   />
                 ))}
-            </div>
-          ))}
-
-          {/* Month axis */}
-          <div className='relative h-6 mt-1'>
-            {monthTicks.map(({ key, label, pct }) => (
-              <span
-                key={key}
-                className='absolute text-xs text-foreground-secondary/50 -translate-x-1/2'
-                style={{ left: `${pct}%` }}
-              >
-                {label}
-              </span>
+              </div>
             ))}
+
+            {/* Month axis */}
+            <div className='relative h-6 mt-1'>
+              {months.map(({ year, month, label, index }) => (
+                <span
+                  key={`${year}-${month}`}
+                  className='absolute text-xs text-foreground-secondary/50'
+                  style={{ left: index * monthWidth }}
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Legend */}
+      <div className='flex items-center gap-5 mt-3'>
+        {LANES.map(({ key, label, color }) => (
+          <div key={key} className='flex items-center gap-1.5'>
+            <div className='rounded-full' style={{ width: DOT, height: DOT, backgroundColor: color }} />
+            <span className='text-xs text-foreground-secondary'>{label}</span>
+          </div>
+        ))}
       </div>
 
       {/* Detail panel */}
