@@ -23,7 +23,6 @@ The core logic lives in orca-ai/ as a standalone library. You can plug it into a
 - Sales: understand a prospect's real priorities before outreach
 - Recruiting: assess what a candidate actually cares about beyond their résumé
 - Investing: map a founder's thinking and evaluate positioning
-- Job seeking: research a hiring manager or employer before interviews
 
 <p align="center">
   <img src="./demo.gif" alt="Orca Demo" width="80%" />
