@@ -12,6 +12,12 @@
 
 </div>
 
+<p align="center">
+  <a href="https://youtu.be/bNrJuVCOIaU">
+    <img src="https://img.shields.io/badge/Watch%20Demo%20Video-red?style=for-the-badge&logo=youtube" />
+  </a>
+</p>
+
 Orca is an AI agent for deep LinkedIn profile analysis. You define the insights you care about, and Orca extracts them.
 
 It scrapes posts, comments, reactions, and interaction networks, then reasons over the data autonomously to extract structured insights like pain points, current focus, values, expertise, network influence, communication style, and how interests change over time. It calls additional scraping tools on its own when it needs more data.
