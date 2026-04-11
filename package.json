@@ -27,7 +27,7 @@
     "clsx": "^2.1.1",
     "langchain": "^1.2.21",
     "lucide-react": "^0.574.0",
-    "next": "16.1.7",
+    "next": "16.2.3",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
